@@ -2,6 +2,9 @@
 
 const express = require('express');
 const User = require('./model/user');
+var passport = require('passport');
+
+require('./auth/local');
 
 const router = new express.Router();
 
@@ -19,9 +22,9 @@ router.post('/register', (req, res)=> {
     });
 });
 
-router.post('/login', async(req, res)=> {
+router.post('/login', passport.authenticate('local', { session:false }), async(req, res)=> {
     try{
-        const user = await User.findByCredentials(req.body.email, req.body.password);
+        const user = await User.findOne({email:req.body.email});
         res.send(user);
     } catch(e){
         res.status(400).send(); 
