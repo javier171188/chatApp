@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/javier171188/chatApp#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "mongoose": "^5.13.7",
