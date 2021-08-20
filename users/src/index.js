@@ -9,7 +9,7 @@ const USer = require('./model/user');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use((req,res, next)=>{//Basic middleweare
+app.use((req,res, next)=>{//Basic middleweare, delete once you don't forget how to use them
     console.log(req.method, req.path);
     next();
 })

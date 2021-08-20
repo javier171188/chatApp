@@ -34,16 +34,16 @@ router.post('/login', passport.authenticate('local', { session:false }), async(r
         res.status(400).send(); 
     }
 });
-//min 3.55, lesson 111 udemy curse
-router.post('/logout',authToken, async () =>{
+
+router.post('/logout',authToken, async (req, res) =>{
     try{
         req.user.tokens = req.user.tokens.filter((token)=> {
             return token.token !== req.token;
         })
         await req.user.save();
-        res.send()
+        res.send();
     } catch(e){
-
+        res.status(500).send();
     }
 })
 
