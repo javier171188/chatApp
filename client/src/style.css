@@ -1,0 +1,27 @@
+
+.title {
+    color: brown;
+    font-size: 250%;
+    text-decoration: none;
+}
+
+/*Consider mixing login and register properties */
+.login-box, .register-box {
+    width: 30%;
+    border: 10px;
+    display: flex;
+    border: solid;
+    flex-direction: column;
+    margin: auto;
+    padding: 2rem;
+    border-radius: 10%;
+}
+
+.login-form, .register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-button, .register-button {
+    width: 5rem;
+}
