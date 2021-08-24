@@ -7,7 +7,6 @@ const Register = () => {
   const [confPassword, updateConfPassword] = useState("");
   const [email, updateEmail] = useState("");
   const [userName, updateName] = useState('');
-  
   return (
     <div className="register-box">
       <form className="register-form"> 
@@ -52,12 +51,16 @@ const Register = () => {
           />
         </label>
 
-        <button className='register-button'>Register</button>
+        <button className='register-button' onSubmit={test(userName)}>Register</button>
       </form>
-      <div>Already an user? <a href="#">log in</a></div>
+      <div>Already an user? <a href="/login">log in</a></div>
       
     </div>
   );
 };
+
+function test(userName){
+  console.log('hello');
+}
 
 export default Register;
