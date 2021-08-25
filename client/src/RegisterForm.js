@@ -1,31 +1,38 @@
 'use strict';
+import { useForm } from 'react-hook-form';
 
-import { useState } from "react";
+const API = process.env.register || ' https://ig-task-manager.herokuapp.com/';
 
-const Register = () => {
-  const [password, updatePassword] = useState("");
-  const [confPassword, updateConfPassword] = useState("");
-  const [email, updateEmail] = useState("");
-  const [userName, updateName] = useState('');
+function Register(){
+  const {register, handleSubmit} = useForm();
+  const onSubmit = (data) => {
+    const { password, confirmPassword } = data;
+    if (password === confirmPassword){
+      fetch(API + 'register', {
+        method: 'POST',
+        body: data
+     })
+     console.log('user was created');
+     //https://es.stackoverflow.com/questions/202993/fetch-access-control-allow-origin
+    }
+  }
   return (
     <div className="register-box">
-      <form className="register-form"> 
+      <form className="register-form" onSubmit={handleSubmit(onSubmit)}>  
       <label htmlFor="name">
           User Name
           <input
             id="name"
-            value={userName}
             placeholder="Choose an user name"
-            onChange={(e) => updateName(e.target.value)}
+            {...register('userName')}
           />
         </label>
         <label htmlFor="e-mail">
           E-mail
           <input
             id="e-mail"
-            value={email}
             placeholder="Write your e-mail"
-            onChange={(e) => updateEmail(e.target.value)}
+            {...register('email')}
           />
         </label>
 
@@ -34,9 +41,8 @@ const Register = () => {
           <input
             type="password"
             id="password"
-            value={password}
             placeholder="password"
-            onChange={(e) => updatePassword(e.target.value)}
+            {...register('password')}
           />
         </label>
 
@@ -45,22 +51,17 @@ const Register = () => {
           <input
             type="password"
             id="confirm-password"
-            value={confPassword}
             placeholder="confirm your password"
-            onChange={(e) => updateConfPassword(e.target.value)}
+            {...register('confirmPassword')}
           />
         </label>
 
-        <button className='register-button' onSubmit={test(userName)}>Register</button>
+        <button className='register-button' >Register</button>
       </form>
       <div>Already an user? <a href="/login">log in</a></div>
       
     </div>
   );
-};
-
-function test(userName){
-  console.log('hello');
 }
 
 export default Register;
