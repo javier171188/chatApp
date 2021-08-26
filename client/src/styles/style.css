@@ -1,3 +1,7 @@
+*{
+    background-color: linear-gradient(peru, black);
+}
+
 
 .title {
     color: brown;

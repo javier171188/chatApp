@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/components/Login.css';
 
 const Login = () => (
@@ -13,7 +14,7 @@ const Login = () => (
 			</form>
 			
 			<p className='login__container--register'>
-				Not an user yet? <a href=''>Register</a>
+				Not a user yet? <Link to='/register'> Register</Link>
 			</p>
 		</section>
 	</section>
