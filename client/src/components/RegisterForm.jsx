@@ -1,19 +1,17 @@
 'use strict';
 import { useForm } from 'react-hook-form';
 
-const API = process.env.register || ' https://ig-task-manager.herokuapp.com/';
+const API = process.env.register || 'http://localhost:3000/';
 
 function Register(){
   const {register, handleSubmit} = useForm();
   const onSubmit = (data) => {
+    
     const { password, confirmPassword } = data;
     if (password === confirmPassword){
-      fetch(API + 'register', {
-        method: 'POST',
-        body: data
-     })
-     console.log('user was created');
-     //https://es.stackoverflow.com/questions/202993/fetch-access-control-allow-origin
+      fetch(API + 'register')
+        .then(data => data.json())
+        .then(data => console.log(data))  
     }
   }
   return (

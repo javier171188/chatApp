@@ -1,8 +1,8 @@
 'use strict';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { render } from "react-dom";
-import Login from "./LoginForm";
-import Register from "./RegisterForm";
+import Login from "./components/LoginForm";
+import Register from "./components/RegisterForm";
 
 const App = () => {
   return (
