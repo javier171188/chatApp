@@ -1,9 +1,12 @@
 import React from 'react';
-import { BrowserRouter  } from 'react-router-dom';
+import { BrowserRouter, Route  } from 'react-router-dom';
+import Home from '../views/Home';
+import Login from '../views/Login';
 
 const App = () => (
     <BrowserRouter>
-        
+        <Route exact path='/' component={Home} />
+        <Route exact path='/login' component={Login} />
     </BrowserRouter>
 );
 
