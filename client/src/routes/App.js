@@ -5,9 +5,7 @@ import Login from '../views/Login';
 import Register from '../views/Register';
 import NotFound from '../views/NotFound';
 
-const Test = () => (
-    <h1>Testing world!</h1>
-)
+
 
 const App = () => (
     <BrowserRouter>

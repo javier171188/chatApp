@@ -1,3 +1,5 @@
 body{
-    background-color: peru;
+    background-image:linear-gradient(peru, black);
+    color: white;
+    min-height: 100vh; 
 }

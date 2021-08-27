@@ -1,7 +1,23 @@
-const Home = () => (
+import React from 'react';
+import { connect } from 'react-redux';
+
+const Home = ({ username, friends }) => (
     <>
-    Dashboard here
+    <h1>Hello {username}</h1>
+    <div>
+            Friends: 
+            <ul>
+            {friends.map( friend => <li> {friend} </li>)}
+            </ul>
+    </div>
     </>
 )
 
-export default Home;
+const mapStateToProps = state => {
+    return {
+        username: state.users[0].username,
+        friends: state.users[0].friends
+    }
+}
+
+export default connect(mapStateToProps, null)(Home);
