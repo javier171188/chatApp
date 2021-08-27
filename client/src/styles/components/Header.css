@@ -1,3 +1,20 @@
 body{
     background-color: transparent;
 }
+
+.header--logout{
+    color: brown;
+    text-align: right;
+    cursor: pointer;
+    align-items: right;
+
+}
+
+a:link {
+    color: brown;
+  }
+
+.header--logout:hover{
+    text-decoration: underline;
+    text-shadow: 1px 1px brown;
+}

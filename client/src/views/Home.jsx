@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Header from './Header';
+import '../styles/components/Header.css';
+
 
 const Home = ({ username, friends }) => (
     <>
-    <h1>Hello {username}</h1>
-    <div>
-            Friends: 
-            <ul>
-            {friends.map( friend => <li> {friend} </li>)}
-            </ul>
-    </div>
+        <Header />
+        <h1>Hello {username}</h1>
+        <div>
+                Friends: 
+                <ul>
+                {friends.map( friend => <li> {friend} </li>)}
+                </ul>
+        </div>
     </>
 )
 

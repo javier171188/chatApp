@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/components/Header.css'
+import {connect } from 'react-redux';
+import '../styles/components/Header.css';
 
 const Header = () => (
  <>
- <h1 className='test'>Logout</h1>
+ <h1 className='header--logout'> <Link to='login'>Logout</Link></h1>
  </>
 );
 
-export default Header;
+export default connect(null, null)(Header);
