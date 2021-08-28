@@ -19,7 +19,7 @@ const Login = props => {
 	const handleSubmit  = event => {
 		event.preventDefault();
 		props.loginRequest(form);
-		props.history.push('/');
+		props.history.push('/chat');
 		console.log(form);
 	}
 	return (
@@ -45,7 +45,7 @@ const Login = props => {
 				</form>
 				
 				<p className='login__container--register'>
-					Not a user yet? <Link to='/register'> Register</Link>
+					Not a user yet? <Link to='/chat/register'> Register</Link>
 				</p>
 			</section>
 		</section>

@@ -5,7 +5,7 @@ import '../styles/components/Header.css';
 
 const Header = () => (
  <>
- <h1 className='header--logout'> <Link to='login'>Logout</Link></h1>
+ <h1 className='header--logout'> <Link to='/chat/login'>Logout</Link></h1>
  </>
 );
 

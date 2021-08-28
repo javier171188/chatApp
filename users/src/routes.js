@@ -22,6 +22,7 @@ router.post('/register', async (req, res)=> {
         res.status(201).send({user, token}); 
     }catch(e){
         res.status(400).send(e);
+        console.log(e);
     }
 });
 

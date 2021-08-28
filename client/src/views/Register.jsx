@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { registerRequest } from '../actions';
 import { Link } from 'react-router-dom';
 import '../styles/components/Register.css';
+import axios from 'axios';
 
 const Register = (props) => {
 	const [form, setValues] = useState({
 		email: '',
-		username: '',
+		userName: '',
 		password: ''
 	})
 
@@ -21,7 +22,10 @@ const Register = (props) => {
 	const handleSubmit = event => {
 		event.preventDefault();
 		props.registerRequest(form);
-		props.history.push('/');
+		console.log(form);
+		axios.post('http://localhost:3000/register', form)
+			.then(data => console.log(data));
+		props.history.push('/chat');
 	}
 
 	return (
@@ -30,7 +34,7 @@ const Register = (props) => {
 				<h2>Register</h2>
 				<form className='register__container--form' onSubmit={handleSubmit}>
 					<input 
-					name='username'
+					name='userName'
 					className='input' 
 					type='text' 
 					placeholder='User name' 
@@ -53,7 +57,7 @@ const Register = (props) => {
 					<button className='button'>Register</button>
 				</form>
 				<p className='register__container--login'>
-				Already a member?  <Link to='/login'>Log in</Link>
+				Already a member?  <Link to='/chat/login'>Log in</Link>
 				</p>
 			</section>
 		</section>
