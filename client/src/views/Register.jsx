@@ -22,7 +22,6 @@ const Register = (props) => {
 	const handleSubmit = event => {
 		event.preventDefault();
 		props.registerRequest(form);
-		console.log(form);
 		axios.post('http://localhost:3000/register', form)
 			.then(data => console.log(data));
 		props.history.push('/chat');
@@ -39,6 +38,7 @@ const Register = (props) => {
 					type='text' 
 					placeholder='User name' 
 					onChange={handleInput}
+					required
 					/>
 					<input 
 						name="email"
@@ -46,6 +46,7 @@ const Register = (props) => {
 						type='text' 
 						placeholder='E-mail' 
 						onChange={handleInput}
+						required
 					/>
 					<input 
 						name='password'
@@ -53,6 +54,7 @@ const Register = (props) => {
 						type='password' 
 						placeholder='Password' 
 						onChange={handleInput}
+						required
 					/>
 					<button className='button'>Register</button>
 				</form>
