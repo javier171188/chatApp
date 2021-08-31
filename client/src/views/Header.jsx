@@ -9,4 +9,4 @@ const Header = () => (
  </>
 );
 
-export default connect(null, null)(Header);
+export default Header;

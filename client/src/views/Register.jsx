@@ -24,7 +24,6 @@ const Register = (props) => {
 		axios.post('http://localhost:3000/register', form)
 			.then(data => {
 				//console.log(data);
-				props.registerRequest(data);
 				props.history.push('/chat');		
 			}).catch(e => console.log(e));
 		
@@ -69,8 +68,5 @@ const Register = (props) => {
 		</section>
 )};
 	
-const mapDispatchToProps = {
-	registerRequest,
-};	
 
-export default connect(null, mapDispatchToProps)(Register);
+export default Register;

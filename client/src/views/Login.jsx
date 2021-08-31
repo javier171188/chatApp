@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loginRequest } from '../actions';
 import '../styles/components/Login.css';
 
 const Login = props => {
@@ -18,7 +17,6 @@ const Login = props => {
 
 	const handleSubmit  = event => {
 		event.preventDefault();
-		props.loginRequest(form);
 		props.history.push('/chat');
 		console.log(form);
 	}
@@ -51,8 +49,5 @@ const Login = props => {
 		</section>
 )};
 
-const mapDispatchToProps = {
-	loginRequest,
-};
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

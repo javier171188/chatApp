@@ -1,23 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import { homeRequest } from '../actions';
 import '../styles/components/Header.css';
 
 
-const Home = ({ username, friends, token }) => {
+const Home = () => {
     
     return(
     <>
         <Header />
-        <h1>Hello {username}</h1>
+        <h1>Hello generic user!</h1>
         <div>
-                Friends: 
-                <ul>
-                {friends.map( friend => <li> {friend} </li>)}
-                </ul>
+                You can only get here if you are registered.
         </div>
-        <footer>{token}</footer>
+        
     </>
 )}
 
@@ -29,8 +25,4 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = {
-	homeRequest,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

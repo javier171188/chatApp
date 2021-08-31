@@ -6,15 +6,33 @@ import Register from '../views/Register';
 import NotFound from '../views/NotFound';
 
 
+const LoggedUser = ( { children }) => {
+    return children({isAuth: true })
+}
+
+
 const App = () => (
-    <BrowserRouter>
-        <Switch>
-            <Route exact path='/chat' component={Home} />
-            <Route exact path='/chat/login' component={Login} />
-            <Route exact path='/chat/register' component={Register} />
-            <Route component={NotFound} />
-        </Switch>
-    </BrowserRouter>
+    <LoggedUser>
+            {
+                ({ isAuth }) => isAuth 
+                    ? <BrowserRouter>
+                        <Switch>
+                            <Route exact path='/chat' component={Home} /> 
+                            <Route exact path='/chat/login' component={Login} />
+                            <Route exact path='/chat/register' component={Register} />
+                            <Route component={NotFound} />
+                        </Switch>
+                      </BrowserRouter>
+                    : <BrowserRouter>
+                        <Switch>
+                            <Route exact path='/chat' component={Login} /> 
+                            <Route exact path='/chat/login' component={Login} />
+                            <Route exact path='/chat/register' component={Register} />
+                            <Route component={NotFound} />
+                        </Switch>
+                    </BrowserRouter>
+            }
+    </LoggedUser>
 );
 
 export default App;
