@@ -7,3 +7,9 @@ export const registerRequest = payload => ({
     type: 'REGISTER_REQUEST',
     payload,
 });
+
+export const homeRequest = payload => ({
+    type: 'HOME_REQUEST',
+    payload,
+});
+

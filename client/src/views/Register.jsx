@@ -21,10 +21,13 @@ const Register = (props) => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		props.registerRequest(form);
 		axios.post('http://localhost:3000/register', form)
-			.then(data => console.log(data));
-		props.history.push('/chat');
+			.then(data => {
+				//console.log(data);
+				props.registerRequest(data);
+				props.history.push('/chat');		
+			}).catch(e => console.log(e));
+		
 	}
 
 	return (
@@ -55,6 +58,7 @@ const Register = (props) => {
 						placeholder='Password' 
 						onChange={handleInput}
 						required
+						minLength='6'
 					/>
 					<button className='button'>Register</button>
 				</form>

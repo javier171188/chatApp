@@ -8,10 +8,12 @@ const reducer = (state, action) => {
             }
            } 
         case 'REGISTER_REQUEST':
-            {
+            {   
+                console.log(state);
+                console.log(action.payload.data.token);
                 return {
                     ...state,
-                    user: action.payload
+                    token:action.payload.data.token
                 }
             }
         default: {

@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
+import { homeRequest } from '../actions';
 import '../styles/components/Header.css';
 
 
-const Home = ({ username, friends }) => (
+const Home = ({ username, friends, token }) => {
+    
+    return(
     <>
         <Header />
         <h1>Hello {username}</h1>
@@ -14,14 +17,20 @@ const Home = ({ username, friends }) => (
                 {friends.map( friend => <li> {friend} </li>)}
                 </ul>
         </div>
+        <footer>{token}</footer>
     </>
-)
+)}
 
 const mapStateToProps = state => {
     return {
-        username: state.users[0].username,
-        friends: state.users[0].friends
+        username: state.username,
+        friends: state.friends,
+        token: state.token,
     }
 }
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchToProps = {
+	homeRequest,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

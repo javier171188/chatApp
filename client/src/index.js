@@ -7,25 +7,21 @@ import reducer from './reducers';
 import App from './routes/App';
 import axios from 'axios';
 
-const initialState = {'users': [{
+const initialState = {
     'id': 1,
     'username': 'Tom',
     'email': 'test@test.com',
     'password':'123',
     'friends': ['Andy', 'Bob'],
-    'Token': ''
-}]};
+    'token': 'original',
+};
 
 
-axios.get('http://localhost:3000/users')
-    .then(response => {
-        console.log(response.data);
-    })
 
 const store = createStore(reducer, initialState);
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+        <Provider store={store}>
+            <App />
+        </Provider>,
     document.getElementById("root"));

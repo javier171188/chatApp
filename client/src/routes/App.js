@@ -6,7 +6,6 @@ import Register from '../views/Register';
 import NotFound from '../views/NotFound';
 
 
-
 const App = () => (
     <BrowserRouter>
         <Switch>
