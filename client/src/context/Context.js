@@ -42,6 +42,10 @@ const Provider = ({ children }) => {
                 }).catch(e => console.log(e));
             
         },
+        logOut: () => {
+            setIsAuth(false);
+            window.sessionStorage.removeItem('token');
+        }
     }
 
     return (

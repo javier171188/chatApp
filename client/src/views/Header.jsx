@@ -1,12 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import {connect } from 'react-redux';
 import '../styles/components/Header.css';
+import Context from '../context/Context';
+
 
 const Header = () => (
- <>
- <h1 className='header--logout'> <Link to='/chat/login'>Logout</Link></h1>
- </>
+<Context.Consumer>
+    {
+        ({ logOut }) => {
+            return (
+                <button onClick={logOut} className='header--logout'> Logout</button>
+            )
+        }
+    }   
+</Context.Consumer>
 );
 
 export default Header;
