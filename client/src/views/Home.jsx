@@ -16,12 +16,5 @@ const Home = () => {
     </>
 )}
 
-const mapStateToProps = state => {
-    return {
-        username: state.username,
-        friends: state.friends,
-        token: state.token,
-    }
-}
 
 export default Home;

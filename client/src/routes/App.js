@@ -5,8 +5,8 @@ import Home from '../views/Home';
 import Login from '../views/Login';
 import Register from '../views/Register';
 import NotFound from '../views/NotFound';
+import GoHome from '../views/GoHome';
 import Context from '../context/Context';
-
 
 
 
@@ -17,8 +17,8 @@ const App = () => (
                     ? <BrowserRouter>
                         <Switch>
                             <Route exact path='/chat' component={Home} /> 
-                            <Route exact path='/chat/login' component={Login} />
-                            <Route exact path='/chat/register' component={Register} />
+                            <Route exact path='/chat/login' component={GoHome} />
+                            <Route exact path='/chat/register' component={GoHome} />
                             <Route component={NotFound} />
                         </Switch>
                       </BrowserRouter>
