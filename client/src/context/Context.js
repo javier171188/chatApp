@@ -43,6 +43,15 @@ const Provider = ({ children }) => {
             
         },
         logOut: () => {
+            const conf = {
+                headers: {
+                            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+                        }
+            }
+            console.log(conf);
+            axios.post('http://localhost:3000/logoutAll',{} ,conf).catch( e => {
+                console.log(e);
+            });
             setIsAuth(false);
             window.sessionStorage.removeItem('token');
         }
