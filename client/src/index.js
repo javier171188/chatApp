@@ -1,12 +1,12 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from './reducers';
+import Context from './context/Context';
 import App from './routes/App';
 
 
 ReactDOM.render(
-        <App />,
+        <Context.Provider >
+            <App />
+        </Context.Provider>,
     document.getElementById("root"));
