@@ -38,7 +38,7 @@ const Provider = ({ children }) => {
                     console.log(data.data);
                     window.sessionStorage.setItem('token', data.data.token);
                     setIsAuth(true);
-                    //window.location.href = '/chat';		
+                    window.location.href = '/chat';		
                 }).catch(e => console.log(e));
             
         },
