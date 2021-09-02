@@ -77,8 +77,7 @@ router.get('/getUserById', authToken, async (req, res) => {
 router.get('/getUserByName', authToken, async (req, res) => {
     try {
         const user = await User.findOne({userName:req.body.userName});
-        //res.send(user);
-        res.send('not your user');
+        res.send(user);
     } catch(e){
         res.status(404).send();
     }   
