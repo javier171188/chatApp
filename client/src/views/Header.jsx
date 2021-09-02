@@ -8,7 +8,10 @@ const Header = () => (
     {
         ({ logOut }) => {
             return (
-                <button onClick={logOut} className='header--logout'> Logout</button>
+                <header className='header'>
+                <h1>Chat App</h1>
+                <button onClick={logOut}> Logout</button>
+                </header>
             )
         }
     }   

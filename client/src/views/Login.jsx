@@ -5,7 +5,7 @@ import Context from '../context/Context';
 import { useInputValue } from '../hooks/useInputValue';
 
 
-const Login = props => {
+const Login = () => {
 	const email = useInputValue('')
 	const password = useInputValue('')
 	/*

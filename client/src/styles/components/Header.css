@@ -2,6 +2,21 @@ body{
     background-color: transparent;
 }
 
+.header {
+    align-items: right;
+    border: solid;
+    display: flex;
+    font-size: 100%;
+    justify-content: space-between;
+    border-radius: 2%;
+}
+
+button {
+    margin: 20px;
+}
+
+
+/*
 .header--logout{
     color: brown;
     text-align: right;
@@ -17,4 +32,4 @@ a:link {
 .header--logout:hover{
     text-decoration: underline;
     text-shadow: 1px 1px brown;
-}
+}*/

@@ -20,7 +20,6 @@ const Provider = ({ children }) => {
             }
             axios.post('http://localhost:3000/register', form)
                 .then(data => {
-                    console.log(data.data);
                     window.sessionStorage.setItem('token', data.data.token);
                     setIsAuth(true);
                     window.location.href = '/chat';		
