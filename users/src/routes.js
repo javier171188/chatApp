@@ -65,5 +65,35 @@ router.post('/logoutAll',authToken, async (req, res) =>{
     }
 });
 
+router.get('/getUserById', authToken, async (req, res) => {
+    try {
+        const user = await User.findOne({_id:req.body._id});
+        res.send(user);
+    } catch(e){
+        res.status(404).send();
+    }   
+});
+
+router.get('/getUserByName', authToken, async (req, res) => {
+    try {
+        const user = await User.findOne({userName:req.body.userName});
+        //res.send(user);
+        res.send('not your user');
+    } catch(e){
+        res.status(404).send();
+    }   
+});
+
+router.get('/getUserByPattern', authToken, async (req, res) => {
+    try {
+        const s = req.body.userName;
+        const regex = new RegExp(s, 'i');
+        const user = await User.find({userName: {$regex: regex}});
+        res.send(user);
+    } catch(e){
+        res.status(404).send();
+    }   
+});
+
 
 module.exports = router;
