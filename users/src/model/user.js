@@ -38,7 +38,10 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }],
-    friends: []
+    friends: [],
+    avatar:{
+        type:Buffer
+    }
 });
 
 userSchema.methods.toJSON = function (){

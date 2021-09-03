@@ -3,9 +3,24 @@
 const express = require('express');
 const User = require('./model/user');
 const authToken = require('./auth/token');
-var passport = require('passport');
+const passport = require('passport');
+const multer = require('multer');
 
 require('./auth/local');
+
+const upload = multer({
+    limits:{
+        fileSize: 20000000
+    },
+    fileFilter(req, file, cb){
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+            return cb(new Error('Please upload an image'));
+        }
+
+        cb(undefined, true)
+    }
+})
+
 
 const router = new express.Router();
 
@@ -93,6 +108,14 @@ router.get('/getUserByPattern', authToken, async (req, res) => {
         res.status(404).send();
     }   
 });
+
+router.post('/avatar', authToken, upload.single('avatar'), async (req, res) => {
+    req.user.avatar = req.file.buffer;
+    await req.user.save();
+    res.send();
+}, (error, req, res, next) => {
+    res.status(400).send({ error:error.message })
+} )
 
 
 module.exports = router;
