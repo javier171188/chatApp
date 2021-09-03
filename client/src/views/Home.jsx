@@ -2,8 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Profile from './Profile';
 import '../styles/components/Header.css';
-
-
+import '../styles/components/Home.css';
 
 
 const Home = () => {
@@ -16,10 +15,11 @@ const Home = () => {
     return(
     <>
         <Header />
+        <section className='main-area'>
         <Profile userName={user.userName}>
             {user.friends}
         </Profile>
-       
+        </section>
         
     </>
 )}
