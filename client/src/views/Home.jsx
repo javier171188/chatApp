@@ -1,19 +1,25 @@
 import React from 'react';
 import Header from './Header';
+import Profile from './Profile';
 import '../styles/components/Header.css';
-import axios from 'axios';
+
 
 
 
 const Home = () => {
+    const mockUser = {
+        userName: 'Tom',
+        friends: ['Andy', 'Daniel', 'Homer', 'Bob', 'Jessica']
+    };
     
+    const user = mockUser; //Here the axios request;
     return(
     <>
         <Header />
-        <h1>Hello generic user!</h1>
-        <div>
-                You can only get here if you are registered.
-        </div>
+        <Profile userName={user.userName}>
+            {user.friends}
+        </Profile>
+       
         
     </>
 )}

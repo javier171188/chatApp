@@ -6,13 +6,27 @@ body{
     align-items: right;
     border: solid;
     display: flex;
-    font-size: 100%;
+    font-size: 150%;
     justify-content: space-between;
     border-radius: 2%;
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
+}
+
+.header-title{
+    margin-left: calc(50% - 8rem); ;
 }
 
 button {
     margin: 20px;
+    height: 200%;
+    color: rgb(70, 69, 69);
+    background-color: white;
+}
+button:hover {
+    box-shadow: 2px -2px 2px rgb(71, 70, 70);;
+    color: rgb(71, 70, 70);;
+    cursor: pointer;
 }
 
 

@@ -1,0 +1,47 @@
+.user {
+   /* border: solid;
+    max-width: 200px;*/
+}
+
+.user-picture {
+    border: solid;
+    width: 230px;
+    height: 220px;
+    background-image: url('../../../media/genuser.png');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    border-radius: 10%;
+    margin-bottom: 10px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
+}
+
+.user-picture:hover {
+    cursor: pointer;
+}
+
+.user-name--text {
+    font-size: 300%;
+    width: 220px;
+    padding-left: 0px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.user-friends{
+    font-size: 120%;
+}
+.friend:hover {
+    cursor: pointer;
+    color: rgb(71, 70, 70);
+    font-size: 125%;
+}
+
+.user-info {
+    border: solid;
+    width: 220px;
+    border-radius: 15%;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
+}

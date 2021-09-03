@@ -9,7 +9,7 @@ const Header = () => (
         ({ logOut }) => {
             return (
                 <header className='header'>
-                <h1>Chat App</h1>
+                <h1 className='header-title'>Chat App</h1>
                 <button onClick={logOut}> Logout</button>
                 </header>
             )
