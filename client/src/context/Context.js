@@ -21,12 +21,13 @@ const Provider = ({ children }) => {
             axios.post('http://localhost:3000/register', form)
                 .then(data => {
                     window.sessionStorage.setItem('token', data.data.token);
+                    window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
                     setIsAuth(true);
                     window.location.href = '/chat';		
                 }).catch(e => console.log(e));
             
         },
-        logIn: (event) => {
+        logIn: (event) => { 
             event.preventDefault();
             const form = {
                 email: event.target[0].value,
@@ -36,6 +37,7 @@ const Provider = ({ children }) => {
                 .then(data => {
                     console.log(data.data);
                     window.sessionStorage.setItem('token', data.data.token);
+                    window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
                     setIsAuth(true);
                     window.location.href = '/chat';		
                 }).catch(e => console.log(e));

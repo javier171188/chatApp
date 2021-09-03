@@ -37,7 +37,8 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }] 
+    }],
+    friends: []
 });
 
 userSchema.methods.toJSON = function (){
