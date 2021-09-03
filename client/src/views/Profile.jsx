@@ -16,6 +16,7 @@ const Profile = (props) => {
                 <hr/>
                 <div className='user-friends'>
                     <ul>
+                        <h2>Friends:</h2>
                         {props.children.map( child => (
                             <li key={child} className='friend'> {child} </li>
                         ))}
