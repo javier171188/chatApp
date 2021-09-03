@@ -5,6 +5,7 @@ const Profile = (props) => {
     return (
         <aside className='user'>
             <div className='user-picture'>
+                
             </div>
             <div className='user-info'>
                 <div className='user-name--container'>

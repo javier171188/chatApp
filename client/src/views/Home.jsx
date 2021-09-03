@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Profile from './Profile';
+import WorkingArea from './WorkingArea';
 import '../styles/components/Header.css';
 import '../styles/components/Home.css';
 
@@ -19,6 +20,7 @@ const Home = () => {
         <Profile userName={user.userName}>
             {user.friends}
         </Profile>
+        <WorkingArea />
         </section>
         
     </>
