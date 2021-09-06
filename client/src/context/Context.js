@@ -23,7 +23,7 @@ const Provider = ({ children }) => {
                     window.sessionStorage.setItem('token', data.data.token);
                     window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
                     setIsAuth(true);
-                    window.location.href = '/chat';		
+                    window.location.href = '/chat/upload/avatar';		
                 }).catch(e => console.log(e));
             
         },
@@ -54,7 +54,32 @@ const Provider = ({ children }) => {
             });
             setIsAuth(false);
             window.sessionStorage.removeItem('token');
-        }
+        },
+
+        saveAvatarImage (event){
+            event.preventDefault();
+            const selectedFile = event.target[0].files[0];
+            const formData = new FormData();
+    
+            formData.append(
+                "avatar",
+                selectedFile,
+                selectedFile.name
+              );
+    
+            const conf = {
+               headers: {
+                            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+                        }
+            }
+            axios.post("http://localhost:3000/avatar", formData, conf).then(()=>{
+                
+                window.location.href = '/chat';
+            }).catch(e => console.error(e));
+            
+        },
+    
+
     }
 
     return (
