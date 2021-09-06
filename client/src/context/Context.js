@@ -18,13 +18,19 @@ const Provider = ({ children }) => {
                 email: event.target[1].value,
                 password: event.target[2].value,
             }
-            axios.post('http://localhost:3000/register', form)
-                .then(data => {
-                    window.sessionStorage.setItem('token', data.data.token);
-                    window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
-                    setIsAuth(true);
-                    window.location.href = '/chat/upload/avatar';		
-                }).catch(e => console.log(e));
+            if (event.target[2].value === event.target[3].value){
+                axios.post('http://localhost:3000/register', form)
+                    .then(data => {
+                        window.sessionStorage.setItem('token', data.data.token);
+                        window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
+                        setIsAuth(true);
+                        window.location.href = '/chat/upload/avatar';		
+                    }).catch(e => console.log(e));
+            } else{
+                console.log('Not found');
+            }
+
+            
             
         },
         logIn: (event) => { 

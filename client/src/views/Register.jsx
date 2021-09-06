@@ -64,6 +64,15 @@ const Register = () => {
 									required
 									minLength='6'
 								/>
+
+								<input 
+									name='confirm-password'
+									className='input' 
+									type='password' 
+									placeholder='Confirm your password' 
+									required
+									minLength='6'
+								/>
 								<button className='button'>Register</button>
 							</form>
 							<p className='register__container--login'>
