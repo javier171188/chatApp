@@ -72,14 +72,13 @@ const Provider = ({ children }) => {
                             'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
                         }
             }
-            axios.post("http://localhost:3000/avatar", formData, conf).then(()=>{
-                
+            axios.post("http://localhost:3000/avatar", formData, conf).then((user)=>{
+                let parsedUser = JSON.stringify(user.data);
+                sessionStorage.setItem('user', parsedUser);
                 window.location.href = '/chat';
             }).catch(e => console.error(e));
             
         },
-    
-
     }
 
     return (
