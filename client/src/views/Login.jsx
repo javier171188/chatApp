@@ -24,8 +24,9 @@ const Login = () => {
 	return (
 		<Context.Consumer>
 			{
-				({ logIn }) => {
+				({ logIn, errorMessage }) => {
 					return (<section className='login'>
+								
 								<section className='login__container'>
 									<h2>Login</h2>
 									<form className='login__container--form' onSubmit={logIn}>
@@ -44,6 +45,11 @@ const Login = () => {
 											{...password}
 										/>
 										<button className='button'>Login</button>
+										{ errorMessage 
+											? <div className='login--error' >Incorrect e-mail or password, try again.</div>
+											: ''
+										}
+										
 									</form>
 									
 									<p className='login__container--register'>

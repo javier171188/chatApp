@@ -8,9 +8,10 @@ const Provider = ({ children }) => {
     const [ isAuth, setIsAuth ] = useState(()=>{
         return sessionStorage.getItem('token');
     });
-
+    const [ errorMessage, setErrorMessage ] = useState('');
     const value = {
         isAuth,
+        errorMessage,
         registerUser: (event) => {
             event.preventDefault();
             const form = {
@@ -46,7 +47,7 @@ const Provider = ({ children }) => {
                     setIsAuth(true);
                     window.location.href = '/chat';		
                 }).catch(e => {
-                    console.log('incorrect user or password');
+                    setErrorMessage('Incorrect user or password');
                 });
         },
         logOut: () => {
