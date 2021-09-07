@@ -49,13 +49,13 @@ router.post('/register', async (req, res)=> {
     }
 });
 
-router.post('/login', passport.authenticate('local', { session:false }), async(req, res)=> {
+router.post('/login', passport.authenticate('local', { session:false }), async(req,res)=> {
     try{
         const user = await User.findOne({email:req.body.email});
         const token = await user.generateAuthToken();
         res.send({ user, token });
     } catch(e){
-        res.status(400).send(); 
+        res.status(400).send('Incorrect user or password'); 
     }
 });
 

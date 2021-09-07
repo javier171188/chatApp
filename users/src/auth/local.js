@@ -13,11 +13,13 @@ passport.use(new LocalStrategy( {
         if (err) { return done(err); }
         if (!user) {
             return done(null, false, { message: 'Incorrect email or password.' });
+            //throw new Error('Incorrect email or password.');
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return done(null, false, { message: 'Incorrect email or password.' });
+            //throw new Error('Incorrect email or password.');
         }
 
         return done(null, user);

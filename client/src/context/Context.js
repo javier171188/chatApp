@@ -41,13 +41,13 @@ const Provider = ({ children }) => {
             }
             axios.post('http://localhost:3000/login', form)
                 .then(data => {
-                    console.log(data.data);
                     window.sessionStorage.setItem('token', data.data.token);
                     window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
                     setIsAuth(true);
                     window.location.href = '/chat';		
-                }).catch(e => console.log(e));
-            
+                }).catch(e => {
+                    console.log('incorrect user or password');
+                });
         },
         logOut: () => {
             const conf = {
