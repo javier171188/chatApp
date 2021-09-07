@@ -19,7 +19,7 @@ const Provider = ({ children }) => {
                 password: event.target[2].value,
             }
             if (event.target[2].value === event.target[3].value){
-                axios.post('http://localhost/register', form)
+                axios.post('http://localhost:3000/register', form)
                     .then(data => {
                         window.sessionStorage.setItem('token', data.data.token);
                         window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
@@ -39,7 +39,7 @@ const Provider = ({ children }) => {
                 email: event.target[0].value,
                 password: event.target[1].value,
             }
-            axios.post('http://localhost/login', form)
+            axios.post('http://localhost:3000/login', form)
                 .then(data => {
                     console.log(data.data);
                     window.sessionStorage.setItem('token', data.data.token);
@@ -55,7 +55,7 @@ const Provider = ({ children }) => {
                             'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
                         }
             }
-            axios.post('http://localhost/logoutAll',{} ,conf).catch( e => {
+            axios.post('http://localhost:3000/logoutAll',{} ,conf).catch( e => {
                 console.log(e);
             });
             setIsAuth(false);
@@ -78,7 +78,7 @@ const Provider = ({ children }) => {
                             'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
                         }
             }
-            axios.post("http://localhost/avatar", formData, conf).then((user)=>{
+            axios.post("http://localhost:3000/avatar", formData, conf).then((user)=>{
                 let parsedUser = JSON.stringify(user.data);
                 sessionStorage.setItem('user', parsedUser);
                 window.location.href = '/chat';
