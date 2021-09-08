@@ -44,8 +44,8 @@ router.post('/register', async (req, res)=> {
         const token = await user.generateAuthToken();
         res.status(201).send({user, token}); 
     }catch(e){
-        res.status(400).send(e);
-        console.log(e);
+        let strError = e.toString();
+        res.status(400).send(strError);
     }
 });
 

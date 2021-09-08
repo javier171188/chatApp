@@ -36,7 +36,7 @@ const Register = () => {
 	return (
 	<Context.Consumer>
 		{
-			({ registerUser }) => {
+			({ registerUser, errorMessages }) => {
 				return (
 					<section className='register'>
 						<section className='register__container'>
@@ -74,6 +74,11 @@ const Register = () => {
 									minLength='6'
 								/>
 								<button className='button'>Register</button>
+								<div>errors: {errorMessages}</div>
+								{ errorMessages.length >= 1
+											? <div className='login--error' >Incorrect e-mail or password, try again.</div>
+											: ''
+										}
 							</form>
 							<p className='register__container--login'>
 							Already a member?  <Link to='/chat/login'>Log in</Link>

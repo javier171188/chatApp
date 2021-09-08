@@ -8,10 +8,10 @@ const Provider = ({ children }) => {
     const [ isAuth, setIsAuth ] = useState(()=>{
         return sessionStorage.getItem('token');
     });
-    const [ errorMessage, setErrorMessage ] = useState('');
+    const [ errorMessages, setErrorMessages ] = useState([]);
     const value = {
         isAuth,
-        errorMessage,
+        errorMessages,
         registerUser: (event) => {
             event.preventDefault();
             const form = {
@@ -26,9 +26,11 @@ const Provider = ({ children }) => {
                         window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
                         setIsAuth(true);
                         window.location.href = '/chat/upload/avatar';		
-                    }).catch(e => console.log(e));
+                    }).catch(e => {
+                            console.log(e.response.data);
+                        });
             } else{
-                console.log('Not found');
+                console.log(errorMessages);
             }
 
             
@@ -47,7 +49,7 @@ const Provider = ({ children }) => {
                     setIsAuth(true);
                     window.location.href = '/chat';		
                 }).catch(e => {
-                    setErrorMessage('Incorrect user or password');
+                    setErrorMessages(['Incorrect user or password']);
                 });
         },
         logOut: () => {

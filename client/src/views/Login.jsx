@@ -24,7 +24,7 @@ const Login = () => {
 	return (
 		<Context.Consumer>
 			{
-				({ logIn, errorMessage }) => {
+				({ logIn, errorMessages }) => {
 					return (<section className='login'>
 								
 								<section className='login__container'>
@@ -45,8 +45,8 @@ const Login = () => {
 											{...password}
 										/>
 										<button className='button'>Login</button>
-										{ errorMessage 
-											? <div className='login--error' >Incorrect e-mail or password, try again.</div>
+										{ errorMessages.length >= 1
+											? <div className='login--error'> Wait. </div>
 											: ''
 										}
 										
