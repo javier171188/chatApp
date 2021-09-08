@@ -74,9 +74,9 @@ const Register = () => {
 									minLength='6'
 								/>
 								<button className='button'>Register</button>
-								<div>errors: {errorMessages}</div>
+								
 								{ errorMessages.length >= 1
-											? <div className='login--error' >Incorrect e-mail or password, try again.</div>
+											? <div className='login--error' >{errorMessages[0]}</div>
 											: ''
 										}
 							</form>

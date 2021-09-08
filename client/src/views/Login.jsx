@@ -46,7 +46,7 @@ const Login = () => {
 										/>
 										<button className='button'>Login</button>
 										{ errorMessages.length >= 1
-											? <div className='login--error'> Wait. </div>
+											? <div className='login--error'> Incorrect credentials </div>
 											: ''
 										}
 										

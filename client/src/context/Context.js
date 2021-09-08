@@ -27,10 +27,14 @@ const Provider = ({ children }) => {
                         setIsAuth(true);
                         window.location.href = '/chat/upload/avatar';		
                     }).catch(e => {
-                            console.log(e.response.data);
+                            let strError = e.response.data;
+                            strError = strError.replace('Error: ','');
+                            if (!errorMessages.includes(strError)){
+                                setErrorMessages([strError]);
+                            }
                         });
             } else{
-                console.log(errorMessages);
+                setErrorMessages(['The password does not match the confirmation']);
             }
 
             

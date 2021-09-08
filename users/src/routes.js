@@ -34,9 +34,6 @@ router.post('/register', async (req, res)=> {
     const sameMail = await User.findOne({email:req.body.email});
     const sameName = await User.findOne({email:req.body.userName});
     try {
-        if (sameName){
-            throw new Error('That user name is already taken');
-        }
         if (sameMail){
             throw new Error('That e-mail is already registered');
         }
