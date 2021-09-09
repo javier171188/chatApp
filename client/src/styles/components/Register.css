@@ -82,3 +82,7 @@
     letter-spacing: 1px;
     margin: 10px 0px;
   }
+
+  .avatar-input {
+    margin-left: -1em;
+  }

@@ -73,12 +73,18 @@ const Register = () => {
 									required
 									minLength='6'
 								/>
+
+								<input 
+                                    name='avatar'
+                                    className='input avatar-input' 
+                                    type='file' 
+                                />
+
 								<button className='button'>Register</button>
 								
 								{ errorMessages.length >= 1
-											? <div className='login--error' >{errorMessages[0]}</div>
-											: ''
-										}
+											&& <div className='login--error' >{errorMessages[0]}</div>
+								}
 							</form>
 							<p className='register__container--login'>
 							Already a member?  <Link to='/chat/login'>Log in</Link>

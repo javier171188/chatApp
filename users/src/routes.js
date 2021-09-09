@@ -15,7 +15,7 @@ const upload = multer({
     },
     fileFilter(req, file, cb){
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)){
-            return cb(new Error('Please upload an image'));
+            return cb(new Error('Only images can be used as avatar'));
         }
 
         cb(undefined, true)
@@ -30,10 +30,12 @@ router.get('/home', authToken, (req,res) =>{
 })
 
 router.post('/register', async (req, res)=> {
-    const user = new User(req.body);
-    const sameMail = await User.findOne({email:req.body.email});
-    const sameName = await User.findOne({email:req.body.userName});
     try {
+        let userData =req.body;
+        const user = new User(userData);
+        const sameMail = await User.findOne({email:req.body.email});
+
+
         if (sameMail){
             throw new Error('That e-mail is already registered');
         }
@@ -109,11 +111,20 @@ router.get('/getUserByPattern', authToken, async (req, res) => {
 
 router.post('/avatar', authToken, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer();
+    console.log(req.file);
     req.user.avatar = buffer;
     await req.user.save();
     res.send(req.user);
 }, (error, req, res, next) => {
     res.status(400).send({ error:error.message })
+} );
+
+
+router.post('/avatar/check',  upload.single('avatar'), async (req, res) => {
+    res.send(true);
+}, (error, req, res, next) => {
+    error.toString()
+    res.status(400).send(error.toString())
 } );
 
 router.get('/:id/avatar', async (req, res) => {
