@@ -91,10 +91,25 @@ router.get('/getUserById', authToken, async (req, res) => {
 
 router.get('/getUserByName', authToken, async (req, res) => {
     try {
-        const user = await User.findOne({userName:req.body.userName});
-        res.send(user);
+        const users = await User.find({userName:req.body.userName});
+        const usersInfo = users.map( user => {
+            return { userName: user.userName,
+                     _id: user._id
+            }
+        })
+        res.send(usersInfo);
     } catch(e){
         res.status(404).send();
+    }   
+});
+
+router.get('/getUserByEmail', authToken, async (req, res) => {
+    try {
+        const user = await User.findOne({email:req.body.email});
+        
+        res.send(user);
+    } catch(e){
+        res.status(404).send(e);
     }   
 });
 
@@ -111,7 +126,6 @@ router.get('/getUserByPattern', authToken, async (req, res) => {
 
 router.post('/avatar', authToken, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer();
-    console.log(req.file);
     req.user.avatar = buffer;
     await req.user.save();
     res.send(req.user);

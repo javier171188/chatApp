@@ -9,7 +9,7 @@ const Profile = (props) => {
         <aside className='user'>
             <div className='user-picture'>
                 {
-                    avatar ? <img className='user-picture' src={"data:image/jpg;base64,"+avatar} alt="User's avatar" /> : ''
+                    avatar && <img className='user-picture' src={"data:image/jpg;base64,"+avatar} alt="User's avatar" />
                 
                 }
                 
@@ -21,11 +21,11 @@ const Profile = (props) => {
                     </h1>
                 </div>
                 <hr/>
-                <div className='user-friends'>
+                <div className='user-contacts'>
                     <ul>
-                        <h2>Friends:</h2>
+                        <h2>Contacts:</h2>
                         {props.children.map( child => (
-                            <li key={child} className='friend'> {child} </li>
+                            <li key={child} className='contact'> {child} </li>
                         ))}
                     </ul>
                 </div>
