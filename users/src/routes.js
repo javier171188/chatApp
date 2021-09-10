@@ -82,14 +82,22 @@ router.post('/logoutAll',authToken, async (req, res) =>{
 
 router.post('/addContactNoConf', authToken, async(req,res) => {
     try{
-        console.log(req.body);
         let loggedId = req.body.logged;
         let searched = req.body.searched;
         let user = await User.findOne({_id:loggedId});
         let contacts = user.contacts;
+
+        let alreadyAddedList = contacts.filter( u => u._id === searched._id);
+        let alreadyAdded = alreadyAddedList.length > 0;
+
+        if (alreadyAdded) {
+            throw new Error('The user is already added')
+        }
+
         contacts.push(searched);
         user.contacts = contacts;
         await user.save();
+        res.send();
     } catch(error){
         console.log(error.toString());
     }
@@ -103,7 +111,8 @@ router.get('/getUserByEmail',authToken, async (req, res) => {
         }
 
         const userInfo = { userName: user.userName,
-                            _id: user._id
+                            _id: user._id,
+                            email:req.query.email
                         }
 
         res.send(userInfo);

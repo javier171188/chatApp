@@ -41,9 +41,16 @@ const WorkingArea = () => {
                             'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
                         }
                 };
-            axios.post('/addContactNoConf', {}, conf)
-                .then()
-                .catch()
+            axios.post('http://localhost:3000/addContactNoConf', { 
+                                    "logged": currentId,
+                                    "searched": searchUser
+                                }, conf)
+                .then( data =>{
+                    console.log(data.data)
+                })
+                .catch( e => {
+                    console.log(e);
+                })
         }
     }
 

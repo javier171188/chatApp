@@ -25,7 +25,7 @@ const Sideview = (props) => {
                     <ul>
                         <h1>Contacts:</h1>
                         {props.children.map( child => (
-                            <li key={child} className='contact'> {child} </li>
+                            <li key={child._id} className='contact'> {child.userName} </li>
                         ))}
                     </ul>
                 </div>
