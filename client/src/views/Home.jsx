@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import Profile from './Profile';
+import Sideview from './Sideview';
 import WorkingArea from './WorkingArea';
 import '../styles/components/Header.css';
 import '../styles/components/Home.css';
@@ -17,9 +17,9 @@ const Home = () => {
     <>
         <Header />
         <section className='main-area'>
-        <Profile userName={user.userName}>
-            {user.friends}
-        </Profile>
+        <Sideview userName={user.userName}>
+            {user.contacts}
+        </Sideview>
         <WorkingArea />
         </section>
         

@@ -24,8 +24,8 @@ button {
     background-color: white;
 }
 button:hover {
-    box-shadow: 2px -2px 2px rgb(71, 70, 70);;
-    color: rgb(71, 70, 70);;
+    box-shadow: 2px -2px 2px rgb(71, 70, 70);
+    color: rgb(71, 70, 70);
     cursor: pointer;
 }
 

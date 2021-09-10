@@ -31,10 +31,12 @@
     margin-bottom: -18px;
 }
 
-.chats {
-    border: solid;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
+.found-user__user{
+    text-align: center;
+}
 
+.found-user__user:hover {
+    color: gray;
+    text-shadow: 0px 0px 10px white;
+    cursor: default;
 }

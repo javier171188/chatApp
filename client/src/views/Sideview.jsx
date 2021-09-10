@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/components/Profile.css'
+import '../styles/components/Sideview.css'
 
-const Profile = (props) => {
+const Sideview = (props) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const avatar = user.avatar ? user.avatar : undefined;
     
@@ -23,15 +23,19 @@ const Profile = (props) => {
                 <hr/>
                 <div className='user-contacts'>
                     <ul>
-                        <h2>Contacts:</h2>
+                        <h1>Contacts:</h1>
                         {props.children.map( child => (
                             <li key={child} className='contact'> {child} </li>
                         ))}
                     </ul>
                 </div>
             </div>
+            <div className='chats'>
+                <h1>Chats:</h1>
+                <nav className='chats-nav'>You have not started any chat. Click a user to start one!</nav>
+            </div>
         </aside>
     );
 };
 
-export default Profile;
+export default Sideview;

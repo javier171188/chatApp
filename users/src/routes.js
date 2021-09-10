@@ -80,6 +80,39 @@ router.post('/logoutAll',authToken, async (req, res) =>{
     }
 });
 
+router.post('/addContactNoConf', authToken, async(req,res) => {
+    try{
+        console.log(req.body);
+        let loggedId = req.body.logged;
+        let searched = req.body.searched;
+        let user = await User.findOne({_id:loggedId});
+        let contacts = user.contacts;
+        contacts.push(searched);
+        user.contacts = contacts;
+        await user.save();
+    } catch(error){
+        console.log(error.toString());
+    }
+})
+
+router.get('/getUserByEmail',authToken, async (req, res) => {
+    try {
+        const user = await User.findOne({email:req.query.email});
+        if (!user) {
+            throw new Error('No user was found');
+        }
+
+        const userInfo = { userName: user.userName,
+                            _id: user._id
+                        }
+
+        res.send(userInfo);
+    } catch(e){
+        let strError = e.toString();
+        res.status(404).send(strError);
+    }   
+});
+
 router.get('/getUserById', authToken, async (req, res) => {
     try {
         const user = await User.findOne({_id:req.body._id});
@@ -103,15 +136,7 @@ router.get('/getUserByName', authToken, async (req, res) => {
     }   
 });
 
-router.get('/getUserByEmail', authToken, async (req, res) => {
-    try {
-        const user = await User.findOne({email:req.body.email});
-        
-        res.send(user);
-    } catch(e){
-        res.status(404).send(e);
-    }   
-});
+
 
 router.get('/getUserByPattern', authToken, async (req, res) => {
     try {
@@ -154,6 +179,8 @@ router.get('/:id/avatar', async (req, res) => {
         res.status(404).send(e);
     }
 });
+
+
 
 
 module.exports = router;

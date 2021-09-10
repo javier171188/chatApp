@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }],
-    friends: [],
+    contacts: [],
     avatar:{
         type:Buffer
     }
