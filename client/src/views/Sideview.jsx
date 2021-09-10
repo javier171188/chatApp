@@ -1,4 +1,5 @@
 import React from 'react';
+import Context from '../context/Context';
 import '../styles/components/Sideview.css'
 
 const Sideview = (props) => {
@@ -6,6 +7,8 @@ const Sideview = (props) => {
     const avatar = user.avatar ? user.avatar : undefined;
     
     return (
+        <Context.Consumer>
+			{ ({userState}) => (
         <aside className='user'>
             <div className='user-picture'>
                 {
@@ -17,14 +20,14 @@ const Sideview = (props) => {
             <div className='user-info'>
                 <div className='user-name--container'>
                     <h1 className='user-name--text'>
-                        {props.userName}
+                        {user.userName}
                     </h1>
                 </div>
                 <hr/>
                 <div className='user-contacts'>
                     <ul>
                         <h1>Contacts:</h1>
-                        {props.children.map( child => (
+                        {user.contacts.map( child => (
                             <li key={child._id} className='contact'> {child.userName} </li>
                         ))}
                     </ul>
@@ -35,6 +38,11 @@ const Sideview = (props) => {
                 <nav className='chats-nav'>You have not started any chat. Click a user to start one!</nav>
             </div>
         </aside>
+             
+            )
+        }
+    </Context.Consumer>
+
     );
 };
 

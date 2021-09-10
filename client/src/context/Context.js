@@ -9,7 +9,17 @@ const Provider = ({ children }) => {
         return sessionStorage.getItem('token');
     });
     const [ errorMessages, setErrorMessages ] = useState([]);
+    const [ userState, setUserState ] = useState(() => {
+        return JSON.parse(sessionStorage.getItem('user'));
+    });
+        
     const value = {
+        userState,
+        updateUser: (newUser) => {
+            sessionStorage.setItem('user', JSON.stringify(newUser));
+            console.log(newUser);
+            setUserState(newUser);
+        },
         isAuth,
         errorMessages,
         registerUser: async (event) => {
@@ -67,12 +77,14 @@ const Provider = ({ children }) => {
             }
             axios.post('http://localhost:3000/login', form)
                 .then(data => {
-                    window.sessionStorage.setItem('token', data.data.token);
                     window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
+                    setUserState(data.data.user);
+                    console.log(userState);
+                    window.sessionStorage.setItem('token', data.data.token);
+                    //window.location.href = '/chat';		
                     setIsAuth(true);
-                    window.location.href = '/chat';		
                 }).catch(e => {
-                    setErrorMessages(['Incorrect user or password']);
+                    setErrorMessages(['']);
                 });
         },
         logOut: () => {
@@ -86,6 +98,7 @@ const Provider = ({ children }) => {
             });
             setIsAuth(false);
             window.sessionStorage.removeItem('token');
+            window.sessionStorage.removeItem('user');
         },
 
         saveAvatarImage (event){

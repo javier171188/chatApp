@@ -12,15 +12,12 @@ const Home = () => {
         friends: ['Andy', 'Daniel', 'Homer', 'Bob', 'Jessica']
     };*/
     
-    const user = JSON.parse( window.sessionStorage.getItem('user') );
     return(
     <>
         <Header />
         <section className='main-area'>
-        <Sideview userName={user.userName}>
-            {user.contacts}
-        </Sideview>
-        <WorkingArea />
+            <Sideview />
+            <WorkingArea />
         </section>
         
     </>

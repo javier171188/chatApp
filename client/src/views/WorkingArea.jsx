@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Context from "../context/Context";
 import '../styles/components/WorkingArea.css';
 
 
@@ -30,31 +31,32 @@ const WorkingArea = () => {
             })
     }
 
-    function addContact(){
-        let currentId = JSON.parse(sessionStorage.getItem('user'))._id;
-        
-        if (currentId === searchUser._id){
-            setSearchMessage('You cannot add yourself, try another e-mail address.')
-        } else{
-            const conf = {
-                headers: {
-                            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
-                        }
-                };
-            axios.post('http://localhost:3000/addContactNoConf', { 
-                                    "logged": currentId,
-                                    "searched": searchUser
-                                }, conf)
-                .then( data =>{
-                    console.log(data.data)
-                })
-                .catch( e => {
-                    console.log(e);
-                })
+    async function  addContact( userState, updateUser ){
+        try {
+            let currentId = userState._id;
+            if (currentId === searchUser._id){
+                setSearchMessage('You cannot add yourself, try another e-mail address.')
+            } else{
+                const conf = {
+                    headers: {
+                                'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+                            }
+                    };
+                const data = await axios.post('http://localhost:3000/addContactNoConf', { 
+                                        "logged": currentId,
+                                        "searched": searchUser
+                                    }, conf)
+                //sessionStorage.setItem('user', data.data);
+                updateUser(data.data);
+            }
+        } catch (e){
+            console.error(e);
         }
-    }
+   }
 
     return (
+        <Context.Consumer>
+        { ({ userState, updateUser}) => (
         <div className='working'>
             <form className='working-nav' onSubmit={lookForUser}>
                 <input id='email-search' className='working-search' type="text" placeholder='Type an e-mail...' />
@@ -66,7 +68,7 @@ const WorkingArea = () => {
                                             <h2 className='found-user__user'> 
                                                     {searchUser.userName} 
                                             </h2>
-                                            <button onClick={addContact}>Add contact</button>
+                                            <button onClick={() => addContact(userState, updateUser)}>Add contact</button>
                                             </>}
             </div>
             <div className='chat'>
@@ -75,6 +77,9 @@ const WorkingArea = () => {
                 <button className='chat-button'>Send</button>
             </div>
         </div>
+        )
+        }
+        </Context.Consumer>
     );
 };
 
