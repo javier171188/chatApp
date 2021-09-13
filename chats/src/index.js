@@ -1,11 +1,49 @@
-import express from 'express';
-import path from 'path';
+'use strict';
+
+const express = require("express");
+const http = require("http");
+const { clearInterval } = require("timers");
+const socketIo = require("socket.io");
+const cors = require("cors");
+
+
+const port = process.env.PORT || 3001;
+const routes = require('./routes.js');
 
 const app = express();
 
-const port = process.env.PORT || 3001;
-const publicDirectoryPath = path.join(__dirname, '../public');
+app.use(cors());
 
-app.use(express.static(publicDirectoryPath), () => {
-    console.log(`Server is up on port ${port}`);
+
+app.use(routes);
+
+const server = http.createServer(app);
+
+const io = socketIo(server,  {
+    allowRequest: (req, callback) => {
+      const noOriginHeader = req.headers.origin === undefined;
+      callback(null, noOriginHeader);
+    }
+  });
+
+
+let interval;
+
+io.on("connection", (socket) => {
+    console.log("new client connected");
+    if (interval){
+        clearInterval(interval);
+    }
+    interval = setInterval(() => getApiAndEmit(socket), 1000);
+    socket.on("disconnect", () => {
+        console.log("client disconnected");
+        clearInterval(interval);
+    });
 });
+
+const getApiAndEmit = socket => {
+    const response = new Date();
+    socket.emit("FromAPI",response);
+};
+
+server.listen(port, () => console.log(`Listening on port ${port}`));

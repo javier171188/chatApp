@@ -25,11 +25,11 @@ const upload = multer({
 
 const router = new express.Router();
 
-router.get('/home', authToken, (req,res) =>{
+router.get('/users/home', authToken, (req,res) =>{
     res.send('home');
 })
 
-router.post('/register', async (req, res)=> {
+router.post('/users/register', async (req, res)=> {
     try {
         let userData =req.body;
         const user = new User(userData);
@@ -48,7 +48,7 @@ router.post('/register', async (req, res)=> {
     }
 });
 
-router.post('/login', passport.authenticate('local', { session:false }), async(req,res)=> {
+router.post('/users/login', passport.authenticate('local', { session:false }), async(req,res)=> {
     try{
         const user = await User.findOne({email:req.body.email});
         const token = await user.generateAuthToken();
@@ -58,7 +58,7 @@ router.post('/login', passport.authenticate('local', { session:false }), async(r
     }
 });
 
-router.post('/logout',authToken, async (req, res) =>{
+router.post('/users/logout',authToken, async (req, res) =>{
     try{
         req.user.tokens = req.user.tokens.filter((token)=> {
             return token.token !== req.token;
@@ -70,7 +70,7 @@ router.post('/logout',authToken, async (req, res) =>{
     }
 });
 
-router.post('/logoutAll',authToken, async (req, res) =>{
+router.post('/users/logoutAll',authToken, async (req, res) =>{
     try{
         req.user.tokens = [];
         await req.user.save();
@@ -80,7 +80,7 @@ router.post('/logoutAll',authToken, async (req, res) =>{
     }
 });
 
-router.post('/addContactNoConf', authToken, async(req,res) => {
+router.post('/users/addContactNoConf', authToken, async(req,res) => {
     try{
         let loggedId = req.body.logged;
         let searched = req.body.searched;
@@ -105,7 +105,7 @@ router.post('/addContactNoConf', authToken, async(req,res) => {
     }
 })
 
-router.get('/getUserByEmail',authToken, async (req, res) => {
+router.get('/users/getUserByEmail',authToken, async (req, res) => {
     try {
         const user = await User.findOne({email:req.query.email});
         if (!user) {
@@ -124,7 +124,7 @@ router.get('/getUserByEmail',authToken, async (req, res) => {
     }   
 });
 
-router.get('/getUserById', authToken, async (req, res) => {
+router.get('/users/getUserById', authToken, async (req, res) => {
     try {
         const user = await User.findOne({_id:req.body._id});
         res.send(user);
@@ -133,7 +133,7 @@ router.get('/getUserById', authToken, async (req, res) => {
     }   
 });
 
-router.get('/getUserByName', authToken, async (req, res) => {
+router.get('/users/getUserByName', authToken, async (req, res) => {
     try {
         const users = await User.find({userName:req.body.userName});
         const usersInfo = users.map( user => {
@@ -149,7 +149,7 @@ router.get('/getUserByName', authToken, async (req, res) => {
 
 
 
-router.get('/getUserByPattern', authToken, async (req, res) => {
+router.get('/users/getUserByPattern', authToken, async (req, res) => {
     try {
         const s = req.body.userName;
         const regex = new RegExp(s, 'i');
@@ -160,7 +160,7 @@ router.get('/getUserByPattern', authToken, async (req, res) => {
     }   
 });
 
-router.post('/avatar', authToken, upload.single('avatar'), async (req, res) => {
+router.post('/users/avatar', authToken, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer();
     req.user.avatar = buffer;
     await req.user.save();
@@ -170,14 +170,14 @@ router.post('/avatar', authToken, upload.single('avatar'), async (req, res) => {
 } );
 
 
-router.post('/avatar/check',  upload.single('avatar'), async (req, res) => {
+router.post('/users/avatar/check',  upload.single('avatar'), async (req, res) => {
     res.send(true);
 }, (error, req, res, next) => {
     error.toString()
     res.status(400).send(error.toString())
 } );
 
-router.get('/:id/avatar', async (req, res) => {
+router.get('/users/:id/avatar', async (req, res) => {
     try{
         const user = await User.findById(req.params.id);
         if(!user || !user.avatar){
@@ -190,8 +190,5 @@ router.get('/:id/avatar', async (req, res) => {
         res.status(404).send(e);
     }
 });
-
-
-
 
 module.exports = router;

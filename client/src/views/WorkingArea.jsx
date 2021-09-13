@@ -19,7 +19,7 @@ const WorkingArea = () => {
             }
         }
         event.target[0].value = '';
-        axios.get('http://localhost:3000/getUserByEmail', conf )
+        axios.get('http://localhost/users/getUserByEmail', conf )
             .then(user => {
                 setSearchUser(user.data);
                 setSearchMessage('One user found: ')
@@ -42,7 +42,7 @@ const WorkingArea = () => {
                                 'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
                             }
                     };
-                const data = await axios.post('http://localhost:3000/addContactNoConf', { 
+                const data = await axios.post('http://localhost/users/addContactNoConf', { 
                                         "logged": currentId,
                                         "searched": searchUser
                                     }, conf)

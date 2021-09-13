@@ -8,6 +8,7 @@ import NotFound from '../views/NotFound';
 import GoHome from '../views/GoHome';
 import UploadAvatar from '../views/UploadAvatar';
 import Context from '../context/Context';
+import ChatView from '../views/ChatView';
 
 
 
@@ -21,12 +22,12 @@ const App = () => (
                             <Route exact path='/chat' component={Home} /> 
                             <Route exact path='/chat/login' component={GoHome} />
                             <Route exact path='/chat/register' component={GoHome} />
+                            <Route exact path='/chat/testing' component={ChatView} />
                             <Route component={NotFound} />
                         </Switch>
                       </BrowserRouter>
                     : <BrowserRouter>
                         <Switch>
-                            <Route exact path='/' component={Login} /> 
                             <Route exact path='/chat' component={Login} /> 
                             <Route exact path='/chat/login' component={Login} />
                             <Route exact path='/chat/register' component={Register} />
