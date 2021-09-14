@@ -23,7 +23,7 @@
 
 .chat-messages{
     margin-top: 20px;
-    background-color: white;
+    background-color: gray;
     border: solid;
     height: 300px;
     color: rgb(66, 65, 65);

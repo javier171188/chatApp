@@ -12,7 +12,7 @@ const routes = require('./routes.js');
 
 const app = express();
 
-app.use(cors());
+app.use(cors());//This should not be necessary anymore
 
 
 app.use(routes);

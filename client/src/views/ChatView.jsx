@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
-const ENDPOINT = "";
+const ENDPOINT = ""; //<---------why does this work?
 
 function ChatView() {
     const [response, setResponse] = useState("");

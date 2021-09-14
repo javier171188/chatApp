@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Context from "../context/Context";
+import ChatView from "./ChatView";
 import '../styles/components/WorkingArea.css';
 
 
@@ -72,7 +73,9 @@ const WorkingArea = () => {
                                             </>}
             </div>
             <div className='chat'>
-                <div className='chat-messages'></div>
+                <div className='chat-messages'>
+                    <ChatView />
+                </div>
                 <input  className='chat-writing' type="text" placeholder='Type a message...' />
                 <button className='chat-button'>Send</button>
             </div>
