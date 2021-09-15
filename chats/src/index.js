@@ -2,48 +2,33 @@
 
 const express = require("express");
 const http = require("http");
-const { clearInterval } = require("timers");
 const socketIo = require("socket.io");
-const cors = require("cors");
 
 
 const port = process.env.PORT || 3001;
-const routes = require('./routes.js');
+//const routes = require('./routes.js');
 
 const app = express();
-
-app.use(cors());//This should not be necessary anymore
-
-
-app.use(routes);
-
+//app.use(routes);
 const server = http.createServer(app);
-
-const io = socketIo(server,  {
-    allowRequest: (req, callback) => {
-      const noOriginHeader = req.headers.origin === undefined;
-      callback(null, noOriginHeader);
-    }
-  });
-
-
-let interval;
-
-io.on("connection", (socket) => {
-    console.log("new client connected");
-    if (interval){
-        clearInterval(interval);
-    }
-    interval = setInterval(() => getApiAndEmit(socket), 1000);
-    socket.on("disconnect", () => {
-        console.log("client disconnected");
-        clearInterval(interval);
-    });
+const io = socketIo(server, {
+    path: '/mysocket'
 });
 
-const getApiAndEmit = socket => {
-    const response = new Date();
-    socket.emit("FromAPI",response);
-};
+
+io.on('connection', (socket) => {
+    console.log('New connection');
+    socket.emit('message', 'Welcome!');
+    socket.broadcast.emit('message', '"Username" has joined!');
+
+    socket.on('sendMessage', (message, callback) => {
+        io.emit('message', message);
+        callback('Delivered!');
+    });
+
+    socket.on('disconnect', () => {
+        io.emit('message', '"Username" has left');
+    });
+});
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

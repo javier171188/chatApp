@@ -79,7 +79,6 @@ const Provider = ({ children }) => {
                 .then(data => {
                     window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
                     setUserState(data.data.user);
-                    console.log(userState);
                     window.sessionStorage.setItem('token', data.data.token);
                     //window.location.href = '/chat';		
                     setIsAuth(true);

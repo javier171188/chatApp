@@ -72,13 +72,7 @@ const WorkingArea = () => {
                                             <button onClick={() => addContact(userState, updateUser)}>Add contact</button>
                                             </>}
             </div>
-            <div className='chat'>
-                <div className='chat-messages'>
-                    <ChatView />
-                </div>
-                <input  className='chat-writing' type="text" placeholder='Type a message...' />
-                <button className='chat-button'>Send</button>
-            </div>
+            <ChatView />
         </div>
         )
         }
