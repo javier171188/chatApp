@@ -1,14 +1,14 @@
 'use strict';
 import React from 'react';
 import { BrowserRouter, Switch, Route  } from 'react-router-dom';
-import Home from '../views/Home';
-import Login from '../views/Login';
-import Register from '../views/Register';
-import NotFound from '../views/NotFound';
-import GoHome from '../views/GoHome';
-import UploadAvatar from '../views/UploadAvatar';
+import Home from '../components/Home';
+import Login from '../components/Login';
+import Register from '../components/Register';
+import NotFound from '../components/NotFound';
+import GoHome from '../components/GoHome';
+import UploadAvatar from '../components/UploadAvatar';
 import Context from '../context/Context';
-import ChatView from '../views/ChatView';
+import ChatView from '../components/ChatView';
 
 
 

@@ -16,10 +16,25 @@ const io = socketIo(server, {
 });
 
 
+
+            
+var serverData = {
+        sender: {
+            _id: '0',
+            userName: 'Chat'
+        },
+};
+
+
 io.on('connection', (socket) => {
-    console.log('New connection');
-    socket.emit('message', 'Welcome!');
-    socket.broadcast.emit('message', '"Username" has joined!');
+    //console.log('New connection');
+    let date = new Date();
+    let dateStr = date.getTime().toString();
+    serverData.date = dateStr;
+    serverData.message = 'Welcome!';
+    socket.emit('message', serverData);
+    serverData.message = 'An user has joined!'
+    socket.broadcast.emit('message', serverData);
 
     socket.on('sendMessage', (message, callback) => {
         io.emit('message', message);
@@ -27,7 +42,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        io.emit('message', '"Username" has left');
+        let date = new Date();
+        let dateStr = date.getTime().toString();
+        serverData.date = dateStr;
+        serverData.message = 'An user hs left';
+        io.emit('message', serverData);
     });
 });
 
