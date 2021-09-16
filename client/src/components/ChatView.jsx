@@ -5,18 +5,23 @@ import MessageForm from './MessageForm';
 
 function ChatView({ socket }) {
     
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState( () => {
+                        return JSON.parse(localStorage.getItem('messages')) || [];
+                        });
 
-
+    console.log(messages);
     useEffect(() => {
         socket.on('message', (msg) => {
-            console.log(msg);
-            setMessages([ msg, ...messages]);
+            saveMessage(msg)
         });
     }, [])
 
     function saveMessage(msg){
-        console.log('TODO')
+        let prevMessages = JSON.parse(sessionStorage.getItem('messages')) ||[];
+        let newMessages = [ msg, ...prevMessages];
+        sessionStorage.setItem('messages', JSON.stringify(newMessages));
+        setMessages(newMessages);
+        
     }
 
 
