@@ -1,5 +1,6 @@
 
 import Context from "../context/Context";
+import '../styles/components/MessageForm.css';
 
 function MessageForm(props) {
     return (<Context.Consumer>
@@ -11,9 +12,18 @@ function MessageForm(props) {
                         messageClass = 'self-user';
                     }
                     return(
-                        <p  className={messageClass}  >
-                            {`${props.sender.userName}: ${props.message}`}
-                        </p>
+                        <>
+                        {selfUser 
+                                ? 
+                                <p  className='self-user'  >
+                                    {`You: ${props.message}`}
+                                </p>
+                                : 
+                                <p  className='sender-user'  >
+                                    {`${props.sender.userName}: ${props.message}`}
+                                </p>
+                        }
+                        </>
                     );
                 }
             }
