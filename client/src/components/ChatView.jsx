@@ -1,30 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
-
 import socketIOClient from 'socket.io-client';
 const ENDPOINT = "http://localhost";
-
-const messages = [{
-                        sender:{
-                            _id:2,
-                            userName: 'Usering'
-                        },
-                        message:'hellou',
-                        date: 'today'
-                    }]
 
 
 
 
 function ChatView() {
-    const socket = socketIOClient(ENDPOINT, {
-        path: '/mysocket'
-    });
+    const [messages, setMessages] = useState([]);
+    
+    useEffect(() => {
+        const socket = socketIOClient(ENDPOINT, {
+            path: '/mysocket'
+        });
+        socket.on('message', (message) => {
+            console.log(message);
+            let newMessages = [...messages];
+            newMessages.push(message);
+            setMessages([...newMessages]);
+        });
 
-    socket.on('message', (message) => {
-        console.log(message);
-    });
+        function fastEmit(e,value){
+            e.preventDefault();
+            console.log(value)
+        }
+        return () => socket.disconnect();
+    }, []);
+
+   
+    
     function sendNewMessage(event, userState){
         event.preventDefault();
         const message = event.target[0].value;
@@ -63,7 +68,8 @@ function ChatView() {
                                     />
                                 ))}
                                 </div>
-                                <form onSubmit={(event)=>sendNewMessage(event,userState)}>
+                                {/*<form onSubmit={(event)=>sendNewMessage(event,userState)}>*/}
+                                 <form onSubmit={(e)=>fastEmit(e,'hello')}>
                                     <input  className='chat-writing' type="text" placeholder='Type a message...' />
                                     <button className='chat-button'>Send</button>
                                 </form>

@@ -27,13 +27,13 @@ var serverData = {
 
 
 io.on('connection', (socket) => {
-    //console.log('New connection');
+    console.log('New connection');
     let date = new Date();
     let dateStr = date.getTime().toString();
     serverData.date = dateStr;
     serverData.message = 'Welcome!';
     socket.emit('message', serverData);
-    serverData.message = 'An user has joined!'
+    serverData.message = 'A user has joined!'
     socket.broadcast.emit('message', serverData);
 
     socket.on('sendMessage', (message, callback) => {
@@ -42,10 +42,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
+        console.log('A user has disconnected')
         let date = new Date();
         let dateStr = date.getTime().toString();
         serverData.date = dateStr;
-        serverData.message = 'An user hs left';
+        serverData.message = 'A user hs left';
         io.emit('message', serverData);
     });
 });
