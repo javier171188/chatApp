@@ -38,6 +38,7 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', (message, callback) => {
         io.emit('message', message);
+        
         callback('Delivered!');
     });
 
@@ -46,7 +47,7 @@ io.on('connection', (socket) => {
         let date = new Date();
         let dateStr = date.getTime().toString();
         serverData.date = dateStr;
-        serverData.message = 'A user hs left';
+        serverData.message = 'A user has left';
         io.emit('message', serverData);
     });
 });

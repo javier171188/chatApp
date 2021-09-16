@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Context from "../context/Context";
 import ChatView from "./ChatView";
 import '../styles/components/WorkingArea.css';
+import socketIOClient from 'socket.io-client';
+const ENDPOINT = "http://localhost";
 
 
+    
 const WorkingArea = () => {
+    const socket = socketIOClient(ENDPOINT, {
+        path: '/mysocket'
+    });
+    
+
     const [ searchMessage, setSearchMessage ] = useState('Look for a user to chat.');
     const [ searchUser, setSearchUser ] = useState(null);
     function lookForUser(event) {
@@ -55,6 +63,8 @@ const WorkingArea = () => {
         }
    }
 
+   
+    
     return (
         <Context.Consumer>
         { ({ userState, updateUser}) => (
@@ -72,7 +82,7 @@ const WorkingArea = () => {
                                             <button onClick={() => addContact(userState, updateUser)}>Add contact</button>
                                             </>}
             </div>
-            <ChatView />
+            <ChatView socket={socket} />
         </div>
         )
         }

@@ -29,6 +29,7 @@
     color: rgb(66, 65, 65);
     border-radius: 20px;
     margin-bottom: -18px;
+    overflow: auto;
 }
 
 .found-user__user{

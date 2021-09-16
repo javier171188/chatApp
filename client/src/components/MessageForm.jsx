@@ -6,7 +6,7 @@ function MessageForm(props) {
             {
                 ({userState})=>{
                     const selfUser = userState._id === props.sender._id;
-                    const messageClass = 'sender-user';
+                    var messageClass = 'sender-user';
                     if (selfUser){
                         messageClass = 'self-user';
                     }
