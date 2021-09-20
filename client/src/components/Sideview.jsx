@@ -5,10 +5,16 @@ import '../styles/components/Sideview.css'
 const Sideview = (props) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const avatar = user.avatar ? user.avatar : undefined;
+
+    function openOneToOneChat(current, receiver, socket){
+        
+        socket.emit('join', {current, receiver});
+    }
+
     
     return (
         <Context.Consumer>
-			{ ({userState}) => (
+			{ ({userState, socket }) => (
         <aside className='user'>
             <div className='user-picture'>
                 {
@@ -28,7 +34,7 @@ const Sideview = (props) => {
                     <ul>
                         <h1>Contacts:</h1>
                         {user.contacts.map( child => (
-                            <li key={child._id} className='contact'> {child.userName} </li>
+                            <li key={child._id} className='contacts' onClick={() => openOneToOneChat(user._id, child._id, socket)}> {child.userName} </li>
                         ))}
                     </ul>
                 </div>

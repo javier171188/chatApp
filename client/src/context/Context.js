@@ -1,7 +1,8 @@
 'use strict';
 import React, { createContext, useState } from 'react';
 import axios from 'axios';
-
+import socketIOClient from 'socket.io-client';
+const ENDPOINT = "http://localhost";
 
 
 
@@ -16,8 +17,13 @@ const Provider = ({ children }) => {
     const [ userState, setUserState ] = useState(() => {
         return JSON.parse(sessionStorage.getItem('user'));
     });
+
+    const socket = socketIOClient(ENDPOINT, {
+        path: '/mysocket'
+    });
         
     const value = {
+        socket,
         userState,
         updateUser: (newUser) => {
             sessionStorage.setItem('user', JSON.stringify(newUser));

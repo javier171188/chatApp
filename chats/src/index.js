@@ -3,7 +3,8 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-
+const Chat = require('./model/chat');
+require('./db/mongoose');
 
 const port = process.env.PORT || 3001;
 //const routes = require('./routes.js');
@@ -28,20 +29,33 @@ var serverData = {
 
 io.on('connection', (socket) => {
     console.log('New connection');
-    let date = new Date();
+    /*let date = new Date();
     let dateStr = date.getTime().toString();
     serverData.date = dateStr;
     serverData.message = 'Welcome!';
     socket.emit('message', serverData);
     serverData.message = 'A user has joined!'
-    socket.broadcast.emit('message', serverData);
+    socket.broadcast.emit('message', serverData);*/
+
+    socket.on('join',  async ({current, receiver})=> {
+        try{
+            var chat = await Chat.findOne({$and: [{"participants":current}, {"participants": receiver}]});
+            if (!chat){
+                chat = new Chat({"participants":[current, receiver]});
+            }
+            console.log(chat);
+        }catch (e){
+            console.log(e.toString());
+        }
+        
+    })
+
 
     socket.on('sendMessage', (message, callback) => {
         io.emit('message', message);
         
         callback('Delivered!');
     });
-
     socket.on('disconnect', () => {
         console.log('A user has disconnected')
         let date = new Date();

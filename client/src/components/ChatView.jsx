@@ -15,7 +15,6 @@ function ChatView({ socket }) {
             saveMessage(msg)
         });
     }, [])
-
     function saveMessage(msg){
         let prevMessages = JSON.parse(sessionStorage.getItem('messages')) ||[];
         let newMessages = [ msg, ...prevMessages];
@@ -23,8 +22,6 @@ function ChatView({ socket }) {
         setMessages(newMessages);
         
     }
-
-
     function sendNewMessage(event, userState){
         event.preventDefault();
         let message = event.target[0].value;
@@ -48,6 +45,9 @@ function ChatView({ socket }) {
         }
     }
     
+    
+
+
     return (
         <Context.Consumer>
             {

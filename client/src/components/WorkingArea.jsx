@@ -3,15 +3,12 @@ import axios from "axios";
 import Context from "../context/Context";
 import ChatView from "./ChatView";
 import '../styles/components/WorkingArea.css';
-import socketIOClient from 'socket.io-client';
-const ENDPOINT = "http://localhost";
+
 
 
     
 const WorkingArea = () => {
-    const socket = socketIOClient(ENDPOINT, {
-        path: '/mysocket'
-    });
+    
     
 
     const [ searchMessage, setSearchMessage ] = useState('Look for a user to chat.');
@@ -63,11 +60,10 @@ const WorkingArea = () => {
         }
    }
 
-   
-    
+       
     return (
         <Context.Consumer>
-        { ({ userState, updateUser}) => (
+        { ({ userState, updateUser, socket}) => (
         <div className='working'>
             <form className='working-nav' onSubmit={lookForUser}>
                 <input id='email-search' className='working-search' type="text" placeholder='Type an e-mail...' />
