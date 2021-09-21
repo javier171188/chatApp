@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+//import React, { useState, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
 
 
-function ChatView({ socket }) {
+function ChatView({ socket, setCurrentMessages }) {
+
+    socket.on('updateMessages', returnedMessages => {
+        //remember to render only the current conversation's messages
+        setCurrentMessages(returnedMessages);
+    })
+
     
     function sendNewMessage(event, userState, currentRoomId, setCurrentMessages){
         event.preventDefault();
@@ -23,7 +29,7 @@ function ChatView({ socket }) {
                     roomId: currentRoomId
             };
             socket.emit('sendMessage', messageData, (returnedMessages) => {
-                setCurrentMessages(returnedMessages);
+                //setCurrentMessages(returnedMessages);
                 //console.log(returnedMessages);
                 
             });
@@ -38,19 +44,22 @@ function ChatView({ socket }) {
                     return (<div className='chat'>
                                 <div className='chat-messages'>
                                 {currentMessages.map(message => (
-                                <MessageForm 
-                                        key={message.date+message.sender._id}
-                                        userState={message.userState}
-                                        sender={message.sender}
-                                        message={message.message}
-                                        date={message.date.toString()}
-                                    />
-                                ))}
+                                    <MessageForm 
+                                            key={message.date+message.sender._id}
+                                            userState={message.userState}
+                                            sender={message.sender}
+                                            message={message.message}
+                                            date={message.date.toString()}
+                                        />
+                                    ))
+                                }  
                                 </div>
+                               
                                 <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId, setCurrentMessages)}>
                                     <input autoFocus className='chat-writing' type="text" placeholder='Type a message...' />
                                     <button className='chat-button'>Send</button>
                                 </form>
+                                
                             </div>)
                 }
             }

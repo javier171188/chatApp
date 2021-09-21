@@ -63,7 +63,7 @@ const WorkingArea = () => {
        
     return (
         <Context.Consumer>
-        { ({ userState, updateUser, socket}) => (
+        { ({ userState, updateUser, socket, setCurrentMessages}) => (
         <div className='working'>
             <form className='working-nav' onSubmit={lookForUser}>
                 <input id='email-search' className='working-search' type="text" placeholder='Type an e-mail...' />
@@ -78,7 +78,7 @@ const WorkingArea = () => {
                                             <button onClick={() => addContact(userState, updateUser)}>Add contact</button>
                                             </>}
             </div>
-            <ChatView socket={socket} />
+            <ChatView socket={socket} setCurrentMessages={setCurrentMessages} />
         </div>
         )
         }

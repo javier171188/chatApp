@@ -55,13 +55,14 @@ io.on('connection', (socket) => {
     
 
     socket.on('sendMessage', async (message, callback) => {
-        io.to(message.roomId).emit('message', message);
+        
         var chat = await Chat.findById(message.roomId);
         let prevMessages = chat.messages;
         prevMessages.push(message);
         chat.messages = prevMessages;
         chat.save();
-        callback(prevMessages);
+        io.to(message.roomId).emit('updateMessages',prevMessages);
+        //callback(prevMessages);
     });
     /*socket.on('disconnect', () => {
         console.log('A user has disconnected')
