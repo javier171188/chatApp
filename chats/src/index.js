@@ -46,7 +46,8 @@ io.on('connection', (socket) => {
                 
             }
             socket.join(chat._id.toString());
-            callback(chat._id.toString());
+            const lastMessages = chat.messages.slice(-20);
+            callback({_id:chat._id.toString(), lastMessages});
         }catch (e){
             console.log(e.toString());
         }
@@ -55,9 +56,11 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', async (message, callback) => {
         io.to(message.roomId).emit('message', message);
-        var chat = Chat.findById(message.roomId);
-        console.log(chat);
-
+        var chat = await Chat.findById(message.roomId);
+        let prevMessages = chat.messages;
+        prevMessages.push(message);
+        chat.messages = prevMessages;
+        chat.save();
         callback('Delivered!');
     });
     /*socket.on('disconnect', () => {

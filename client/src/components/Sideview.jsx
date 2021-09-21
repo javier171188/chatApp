@@ -8,8 +8,9 @@ const Sideview = (props) => {
     
 
     function openOneToOneChat(current, receiver, socket, setCurrentRoomId){
-        socket.emit('joinPersonal', {current, receiver}, (joinedRoom) => {
-            setCurrentRoomId(joinedRoom);
+        socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
+            setCurrentRoomId(_id);
+            console.log(lastMessages);
         });
         
     }
@@ -21,9 +22,7 @@ const Sideview = (props) => {
             <div className='user-picture'>
                 {
                     avatar && <img className='user-picture' src={"data:image/jpg;base64,"+avatar} alt="User's avatar" />
-                
                 }
-                
             </div> 
             <div className='user-info'>
                 <div className='user-name--container'>

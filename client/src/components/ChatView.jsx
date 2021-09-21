@@ -8,6 +8,7 @@ function ChatView({ socket }) {
     const [messages, setMessages] = useState( () => {
                         return JSON.parse(localStorage.getItem('messages')) || [];
                         });
+    
 
     useEffect(() => {
         socket.on('message', (msg) => {
@@ -43,6 +44,7 @@ function ChatView({ socket }) {
                 //console.log('The message was delivered', answer);
             });
         }
+        
     }
 
     return (
