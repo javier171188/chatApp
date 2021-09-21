@@ -13,11 +13,11 @@ function ChatView({ socket, setCurrentMessages,  currentMessages}) {
     socket.on('updateMessages', returnedMessages => {
         //remember to render only the current conversation's messages
         setCurrentMessages(returnedMessages);
-        console.log(returnedMessages);
+        //console.log(returnedMessages);
     })
 
     
-    function sendNewMessage(event, userState, currentRoomId, setCurrentMessages){
+    function sendNewMessage(event, userState, currentRoomId){
         event.preventDefault();
         let message = event.target[0].value;
         event.target[0].value = '';
@@ -34,7 +34,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages}) {
                     date: dateStr, 
                     roomId: currentRoomId
             };
-            socket.emit('sendMessage', messageData, (returnedMessages) => {
+            socket.emit('sendMessage', messageData, (answer) => {
                 //setCurrentMessages(returnedMessages);
                 //console.log(returnedMessages);
                 
@@ -46,7 +46,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages}) {
     return (
         <Context.Consumer>
             {
-                ({userState, currentRoomId, currentMessages, setCurrentMessages}) => {
+                ({userState, currentRoomId, currentMessages}) => {
                     return (<div className='chat'>
                                 <div className='chat-messages'>
                                 {currentMessages.map(message => (
@@ -62,7 +62,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages}) {
                                 <div ref={messagesEndRef} />
                                 </div>
                                
-                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId, setCurrentMessages)}>
+                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
                                     <input autoFocus className='chat-writing' type="text" placeholder='Type a message...' />
                                     <button className='chat-button'>Send</button>
                                 </form>

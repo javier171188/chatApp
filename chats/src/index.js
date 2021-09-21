@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
         prevMessages.push(message);
         chat.messages = prevMessages;
         chat.save();
-        io.to(message.roomId).emit('updateMessages',prevMessages);
+        io.to(message.roomId).emit('updateMessages',prevMessages.slice(-20));
         //callback(prevMessages);
     });
     /*socket.on('disconnect', () => {
