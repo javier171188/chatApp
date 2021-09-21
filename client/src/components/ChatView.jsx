@@ -1,13 +1,19 @@
-//import React, { useState, useEffect } from 'react';
+import  { useRef, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
 
 
-function ChatView({ socket, setCurrentMessages }) {
+function ChatView({ socket, setCurrentMessages,  currentMessages}) {
+    const messagesEndRef = useRef(null);
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+      }
+      useEffect(scrollToBottom, [currentMessages]);
 
     socket.on('updateMessages', returnedMessages => {
         //remember to render only the current conversation's messages
         setCurrentMessages(returnedMessages);
+        console.log(returnedMessages);
     })
 
     
@@ -53,6 +59,7 @@ function ChatView({ socket, setCurrentMessages }) {
                                         />
                                     ))
                                 }  
+                                <div ref={messagesEndRef} />
                                 </div>
                                
                                 <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId, setCurrentMessages)}>
