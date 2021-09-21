@@ -9,8 +9,6 @@ import '../styles/components/WorkingArea.css';
     
 const WorkingArea = () => {
     
-    
-
     const [ searchMessage, setSearchMessage ] = useState('Look for a user to chat.');
     const [ searchUser, setSearchUser ] = useState(null);
     function lookForUser(event) {
@@ -59,7 +57,7 @@ const WorkingArea = () => {
             console.error(e);
         }
    }
-
+   
        
     return (
         <Context.Consumer>
@@ -82,6 +80,7 @@ const WorkingArea = () => {
                 socket={socket} 
                 setCurrentMessages={setCurrentMessages} 
                 currentMessages={currentMessages} 
+                userState = {userState}
             />
         </div>
         )

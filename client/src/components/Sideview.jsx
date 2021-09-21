@@ -6,13 +6,19 @@ const Sideview = (props) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const avatar = user.avatar ? user.avatar : undefined;
     
+    
+   
 
-    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages){
-        socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
+    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages, currentRoomId){
+        /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
+            setCurrentRoomId(_id);
+            setCurrentMessages(lastMessages);
+        });*/
+        
+        socket.emit('getRoom', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
         });
-        
     }
 
     return (

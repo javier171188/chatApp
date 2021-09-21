@@ -1,9 +1,11 @@
 'use strict';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useLayoutEffect } from 'react';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
 const ENDPOINT = "http://localhost";
-
+socket = socketIOClient(ENDPOINT, {
+    path: '/mysocket'
+});
 
 
 
@@ -19,11 +21,15 @@ const Provider = ({ children }) => {
         return JSON.parse(sessionStorage.getItem('user'));
     });
     const [currentMessages, setCurrentMessages ] = useState([]);
+    
+    /*var socket = {};
+    if (isAuth){
+        socket = socketIOClient(ENDPOINT, {
+            path: '/mysocket'
+        });
+    } */
 
-
-    const socket = socketIOClient(ENDPOINT, {
-        path: '/mysocket'
-    });
+    
     const value = {
         currentMessages,
         setCurrentMessages,
@@ -114,6 +120,7 @@ const Provider = ({ children }) => {
             setIsAuth(false);
             window.sessionStorage.removeItem('token');
             window.sessionStorage.removeItem('user');
+            socket.disconnect();
         },
 
         saveAvatarImage (event){

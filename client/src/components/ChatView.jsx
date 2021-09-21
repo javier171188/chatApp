@@ -3,7 +3,7 @@ import Context from '../context/Context';
 import MessageForm from './MessageForm';
 
 
-function ChatView({ socket, setCurrentMessages,  currentMessages}) {
+function ChatView({ socket, setCurrentMessages,  currentMessages, userState}) {
     const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
@@ -12,6 +12,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages}) {
 
     socket.on('updateMessages', returnedMessages => {
         //remember to render only the current conversation's messages
+        //console.log(returnedMessages);
         setCurrentMessages(returnedMessages);
         //console.log(returnedMessages);
     })
@@ -37,12 +38,14 @@ function ChatView({ socket, setCurrentMessages,  currentMessages}) {
             socket.emit('sendMessage', messageData, (answer) => {
                 //setCurrentMessages(returnedMessages);
                 //console.log(returnedMessages);
-                
             });
         }
-
-    }
-
+    };
+    userState.contacts.forEach( c => {
+        socket.emit('joinPersonal', {current:userState._id, receiver:c._id}, ({_id, lastMessages}) => {
+                    });
+    });
+        
     return (
         <Context.Consumer>
             {
@@ -61,11 +64,13 @@ function ChatView({ socket, setCurrentMessages,  currentMessages}) {
                                 }  
                                 <div ref={messagesEndRef} />
                                 </div>
-                               
+                               { currentRoomId &&
                                 <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
-                                    <input autoFocus className='chat-writing' type="text" placeholder='Type a message...' />
-                                    <button className='chat-button'>Send</button>
-                                </form>
+                                   <input autoFocus className='chat-writing' type="text" placeholder='Type a message...' />
+                                   <button className='chat-button'>Send</button>
+                               </form>
+                               }
+                                
                                 
                             </div>)
                 }
