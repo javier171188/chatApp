@@ -5,24 +5,7 @@ import MessageForm from './MessageForm';
 
 function ChatView({ socket }) {
     
-    const [messages, setMessages] = useState( () => {
-                        return JSON.parse(localStorage.getItem('messages')) || [];
-                        });
-    
-
-    useEffect(() => {
-        socket.on('message', (msg) => {
-            saveMessage(msg)
-        });
-    }, [])
-    function saveMessage(msg){
-        let prevMessages = JSON.parse(sessionStorage.getItem('messages')) ||[];
-        let newMessages = [ msg, ...prevMessages];
-        sessionStorage.setItem('messages', JSON.stringify(newMessages));
-        setMessages(newMessages);
-        
-    }
-    function sendNewMessage(event, userState, currentRoomId){
+    function sendNewMessage(event, userState, currentRoomId, setCurrentMessages){
         event.preventDefault();
         let message = event.target[0].value;
         event.target[0].value = '';
@@ -39,21 +22,22 @@ function ChatView({ socket }) {
                     date: dateStr, 
                     roomId: currentRoomId
             };
-            socket.emit('sendMessage', messageData, (answer) => {
-                //function to confirm the message 
-                //console.log('The message was delivered', answer);
+            socket.emit('sendMessage', messageData, (returnedMessages) => {
+                setCurrentMessages(returnedMessages);
+                //console.log(returnedMessages);
+                
             });
         }
-        
+
     }
 
     return (
         <Context.Consumer>
             {
-                ({userState, currentRoomId}) => {
+                ({userState, currentRoomId, currentMessages, setCurrentMessages}) => {
                     return (<div className='chat'>
                                 <div className='chat-messages'>
-                                {messages.map(message => (
+                                {currentMessages.map(message => (
                                 <MessageForm 
                                         key={message.date+message.sender._id}
                                         userState={message.userState}
@@ -63,7 +47,7 @@ function ChatView({ socket }) {
                                     />
                                 ))}
                                 </div>
-                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
+                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId, setCurrentMessages)}>
                                     <input autoFocus className='chat-writing' type="text" placeholder='Type a message...' />
                                     <button className='chat-button'>Send</button>
                                 </form>

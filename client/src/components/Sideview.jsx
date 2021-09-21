@@ -7,17 +7,17 @@ const Sideview = (props) => {
     const avatar = user.avatar ? user.avatar : undefined;
     
 
-    function openOneToOneChat(current, receiver, socket, setCurrentRoomId){
+    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages){
         socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
-            console.log(lastMessages);
+            setCurrentMessages(lastMessages);
         });
         
     }
 
     return (
         <Context.Consumer>
-			{ ({userState, socket,currentRoomId, setCurrentRoomId }) => (
+			{ ({userState, socket,currentRoomId, setCurrentRoomId, setCurrentMessages }) => (
         <aside className='user'>
             <div className='user-picture'>
                 {
@@ -35,7 +35,7 @@ const Sideview = (props) => {
                     <ul>
                         <h1>Contacts:</h1>
                         {user.contacts.map( child => (
-                            <li key={child._id} className='contacts' onClick={() => openOneToOneChat(user._id, child._id, socket, setCurrentRoomId)}> {child.userName} </li>
+                            <li key={child._id} className='contacts' onClick={() => openOneToOneChat(user._id, child._id, socket, setCurrentRoomId, setCurrentMessages)}> {child.userName} </li>
                         ))}
                     </ul>
                 </div>

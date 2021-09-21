@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
         prevMessages.push(message);
         chat.messages = prevMessages;
         chat.save();
-        callback('Delivered!');
+        callback(prevMessages);
     });
     /*socket.on('disconnect', () => {
         console.log('A user has disconnected')

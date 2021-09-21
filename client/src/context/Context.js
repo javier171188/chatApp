@@ -18,11 +18,15 @@ const Provider = ({ children }) => {
     const [ userState, setUserState ] = useState(() => {
         return JSON.parse(sessionStorage.getItem('user'));
     });
+    const [currentMessages, setCurrentMessages ] = useState([]);
+
 
     const socket = socketIOClient(ENDPOINT, {
         path: '/mysocket'
     });
     const value = {
+        currentMessages,
+        setCurrentMessages,
         socket,
         currentRoomId,
         setCurrentRoomId,
