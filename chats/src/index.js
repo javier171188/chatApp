@@ -37,33 +37,37 @@ io.on('connection', (socket) => {
     serverData.message = 'A user has joined!'
     socket.broadcast.emit('message', serverData);*/
 
-    socket.on('join',  async ({current, receiver})=> {
+    socket.on('joinPersonal',  async ({current, receiver}, callback)=> {
         try{
             var chat = await Chat.findOne({$and: [{"participants":current}, {"participants": receiver}]});
             if (!chat){
                 chat = new Chat({"participants":[current, receiver]});
+                await chat.save();
+                
             }
-            console.log(chat);
+            socket.join(chat._id.toString());
+            callback(chat._id.toString());
         }catch (e){
             console.log(e.toString());
         }
-        
     })
+    
 
+    socket.on('sendMessage', async (message, callback) => {
+        io.to(message.roomId).emit('message', message);
+        var chat = Chat.findById(message.roomId);
+        console.log(chat);
 
-    socket.on('sendMessage', (message, callback) => {
-        io.emit('message', message);
-        
         callback('Delivered!');
     });
-    socket.on('disconnect', () => {
+    /*socket.on('disconnect', () => {
         console.log('A user has disconnected')
         let date = new Date();
         let dateStr = date.getTime().toString();
         serverData.date = dateStr;
         serverData.message = 'A user has left';
         io.emit('message', serverData);
-    });
+    });*/
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

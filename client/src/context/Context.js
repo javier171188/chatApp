@@ -14,6 +14,7 @@ const Provider = ({ children }) => {
         return sessionStorage.getItem('token');
     });
     const [ errorMessages, setErrorMessages ] = useState([]);
+    const [ currentRoomId, setCurrentRoomId ] = useState('');
     const [ userState, setUserState ] = useState(() => {
         return JSON.parse(sessionStorage.getItem('user'));
     });
@@ -21,9 +22,10 @@ const Provider = ({ children }) => {
     const socket = socketIOClient(ENDPOINT, {
         path: '/mysocket'
     });
-        
     const value = {
         socket,
+        currentRoomId,
+        setCurrentRoomId,
         userState,
         updateUser: (newUser) => {
             sessionStorage.setItem('user', JSON.stringify(newUser));

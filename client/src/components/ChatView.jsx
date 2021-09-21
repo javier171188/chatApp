@@ -9,7 +9,6 @@ function ChatView({ socket }) {
                         return JSON.parse(localStorage.getItem('messages')) || [];
                         });
 
-    console.log(messages);
     useEffect(() => {
         socket.on('message', (msg) => {
             saveMessage(msg)
@@ -22,7 +21,7 @@ function ChatView({ socket }) {
         setMessages(newMessages);
         
     }
-    function sendNewMessage(event, userState){
+    function sendNewMessage(event, userState, currentRoomId){
         event.preventDefault();
         let message = event.target[0].value;
         event.target[0].value = '';
@@ -36,7 +35,8 @@ function ChatView({ socket }) {
                         userName: userState.userName
                     },
                     message,
-                    date: dateStr
+                    date: dateStr, 
+                    roomId: currentRoomId
             };
             socket.emit('sendMessage', messageData, (answer) => {
                 //function to confirm the message 
@@ -44,14 +44,11 @@ function ChatView({ socket }) {
             });
         }
     }
-    
-    
-
 
     return (
         <Context.Consumer>
             {
-                ({userState}) => {
+                ({userState, currentRoomId}) => {
                     return (<div className='chat'>
                                 <div className='chat-messages'>
                                 {messages.map(message => (
@@ -64,7 +61,7 @@ function ChatView({ socket }) {
                                     />
                                 ))}
                                 </div>
-                                <form onSubmit={(event)=>sendNewMessage(event,userState)}>
+                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
                                     <input autoFocus className='chat-writing' type="text" placeholder='Type a message...' />
                                     <button className='chat-button'>Send</button>
                                 </form>
