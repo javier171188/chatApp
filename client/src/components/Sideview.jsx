@@ -6,7 +6,7 @@ const Sideview = (props) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const avatar = user.avatar ? user.avatar : undefined;
     
-    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages,  setCurrentUserChat){
+    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages,  setCurrentUserChat, lastRoomChanged){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
@@ -15,14 +15,14 @@ const Sideview = (props) => {
         socket.emit('getRoom', {current, receiver}, ({_id:_idRoom, lastMessages, participants}) => {
             setCurrentRoomId(_idRoom);
             setCurrentMessages(lastMessages);
-            console.log('The messages were changed in the sideview')
+            //console.log(`The messages were changed in the sideview. Current room: ${_idRoom}. Last changed room: ${lastRoomChanged}`);
             //setCurrentUserChat(receiver);
         });
     }
 
     return (
         <Context.Consumer>
-			{ ({userState, socket,currentRoomId, setCurrentRoomId, setCurrentMessages, setCurrentUserChat }) => (
+			{ ({userState, socket,currentRoomId, setCurrentRoomId, setCurrentMessages, setCurrentUserChat, lastRoomChanged }) => (
         <aside className='user'>
             <div className='user-picture'>
                 {
@@ -41,7 +41,17 @@ const Sideview = (props) => {
                         <h1>Contacts:</h1>
                         {user.contacts.map( child => (
                             <li key={child._id} className='contacts' onClick={() => {
-                                                        openOneToOneChat(user._id, child._id, socket, setCurrentRoomId, setCurrentMessages, setCurrentUserChat)}}> {child.userName} </li>
+                                                        openOneToOneChat(user._id, 
+                                                                child._id, 
+                                                                socket, 
+                                                                setCurrentRoomId, 
+                                                                setCurrentMessages, 
+                                                                setCurrentUserChat, 
+                                                                lastRoomChanged, 
+                                                                )}}
+                            > 
+                                {child.userName} 
+                            </li>
                         ))}
                     </ul>
                 </div>

@@ -4,25 +4,17 @@ import MessageForm from './MessageForm';
 import './../styles/components/ChatView.css';
 
 
+
 function ChatView({ socket, setCurrentMessages,  currentMessages, userState, currentRoomId }) {
     const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
-        //messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-        messagesEndRef.current.scrollIntoView()
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+        //messagesEndRef.current.scrollIntoView()
       }
       useEffect(scrollToBottom, [currentMessages]);
 
-    socket.on('updateMessages', ({participants, returnedMessages, roomId}) => {
-        //participants = participants.filter((pId) => pId !== userState._id );
-        console.log(currentRoomId);
-        if (roomId === currentRoomId){
-            setCurrentMessages(returnedMessages);
-        }else{
-            //notify that other conversation has been updated
-            setCurrentMessages(currentMessages);
-        }
-    })
-
+    
+    
     
     function sendNewMessage(event, userState, currentRoomId){
         event.preventDefault();
@@ -53,6 +45,9 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                     });
     });
         
+
+
+
     return (
         <Context.Consumer>
             {

@@ -3,9 +3,30 @@ import React, { createContext, useState, useLayoutEffect } from 'react';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
 const ENDPOINT = "http://localhost";
-socket = socketIOClient(ENDPOINT, {
+const socket = socketIOClient(ENDPOINT, {
     path: '/mysocket'
 });
+
+
+var updateLastRoom = function(){
+    console.log('executed before');
+};
+
+socket.on('updateMessages', ({participants, returnedMessages, roomId}) => {
+    //participants = participants.filter((pId) => pId !== userState._id );
+    /*console.log(currentRoomId);
+    if (roomId === currentRoomId){
+        setCurrentMessages(returnedMessages);
+    }else{
+        //notify that other conversation has been updated
+        //setCurrentMessages(currentMessages);
+    }*/
+    //sessionStorage.setItem('lastRoomChanged', roomId);
+    updateLastRoom(roomId, returnedMessages);
+})
+
+
+
 
 
 
@@ -22,12 +43,20 @@ const Provider = ({ children }) => {
     });
     const [currentMessages, setCurrentMessages ] = useState([]);
     //const [currentUserChat, setCurrentUserChat] = useState('');
-    
+    const [lastRoomChanged, setLastRoomChanged] = useState('');
 
+    updateLastRoom = function(roomId, returnedMessages){
+        setLastRoomChanged(roomId);
+        if ( roomId === currentRoomId){
+            setCurrentMessages(returnedMessages);
+        }
+        console.log('times');
+    }
     
     const value = {
         //currentUserChat,
         //setCurrentUserChat,
+        lastRoomChanged,
         currentMessages,
         setCurrentMessages,
         socket,
