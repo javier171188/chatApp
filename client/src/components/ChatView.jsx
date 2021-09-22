@@ -7,7 +7,8 @@ import './../styles/components/ChatView.css';
 function ChatView({ socket, setCurrentMessages,  currentMessages, userState, currentRoomId }) {
     const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+        //messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+        messagesEndRef.current.scrollIntoView()
       }
       useEffect(scrollToBottom, [currentMessages]);
 
@@ -18,6 +19,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
             setCurrentMessages(returnedMessages);
         }else{
             //notify that other conversation has been updated
+            setCurrentMessages(currentMessages);
         }
     })
 
