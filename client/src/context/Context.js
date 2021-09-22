@@ -21,13 +21,13 @@ const Provider = ({ children }) => {
         return JSON.parse(sessionStorage.getItem('user'));
     });
     const [currentMessages, setCurrentMessages ] = useState([]);
-    const [currentUserChat, setCurrentUserChat] = useState('');
+    //const [currentUserChat, setCurrentUserChat] = useState('');
     
-    
+
     
     const value = {
-        currentUserChat,
-        setCurrentUserChat,
+        //currentUserChat,
+        //setCurrentUserChat,
         currentMessages,
         setCurrentMessages,
         socket,

@@ -6,19 +6,17 @@ const Sideview = (props) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const avatar = user.avatar ? user.avatar : undefined;
     
-    
-   
-
     function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages,  setCurrentUserChat){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
         });*/
         
-        socket.emit('getRoom', {current, receiver}, ({_idRoom, lastMessages, participants}) => {
+        socket.emit('getRoom', {current, receiver}, ({_id:_idRoom, lastMessages, participants}) => {
             setCurrentRoomId(_idRoom);
             setCurrentMessages(lastMessages);
-            setCurrentUserChat(receiver);
+            console.log('The messages were changed in the sideview')
+            //setCurrentUserChat(receiver);
         });
     }
 
@@ -50,7 +48,7 @@ const Sideview = (props) => {
             </div>
             <div className='chats'>
                 <h1>Group Chats:</h1>
-                <nav className='chats-nav'>You have not started any group chat. Click a user to start one!</nav>
+                <nav className='chats-nav'>You have not started any group chat.</nav>
             </div>
         </aside>
              

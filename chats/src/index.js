@@ -16,16 +16,12 @@ const io = socketIo(server, {
     path: '/mysocket'
 });
 
-
-
-            
 var serverData = {
         sender: {
             _id: '0',
             userName: 'Chat'
         },
 };
-
 
 io.on('connection', (socket) => {
     console.log('New connection');
@@ -43,7 +39,6 @@ io.on('connection', (socket) => {
             if (!chat){
                 chat = new Chat({"participants":[current, receiver]});
                 await chat.save();
-                
             }
             socket.join(chat._id.toString());
             const lastMessages = chat.messages.slice(-20);
@@ -68,20 +63,27 @@ io.on('connection', (socket) => {
         }
     })
     
+    socket.on('getMessagesByRoomId', async (roomId, callback) => {
+        var chat = await Chat.findById(roomId);
+        let messages = chat.messages.slice(-20);
+        callback(messages);
+    })
+
+
 
     socket.on('sendMessage', async (message, callback) => {
-        
         var chat = await Chat.findById(message.roomId);
         let prevMessages = chat.messages;
         let participants = chat.participants
         prevMessages.push(message);
         chat.messages = prevMessages;
         chat.save();
-        io.to(message.roomId).emit('updateMessages', participants);
+        io.to(message.roomId).emit('updateMessages', { participants, roomId:message.roomId, returnedMessages:prevMessages.slice(-20)});
         //io.to(message.roomId).emit('updateMessages',prevMessages.slice(-20));
         //io.emit('updateMessages',prevMessages.slice(-20));
         //callback(prevMessages);
     });
+
     socket.on('disconnect', () => {
         console.log('A user has disconnected')
         /*let date = new Date();

@@ -4,27 +4,27 @@ import MessageForm from './MessageForm';
 import './../styles/components/ChatView.css';
 
 
-function ChatView({ socket, setCurrentMessages,  currentMessages, userState, currentUserChat}) {
+function ChatView({ socket, setCurrentMessages,  currentMessages, userState, currentRoomId }) {
     const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
       }
       useEffect(scrollToBottom, [currentMessages]);
 
-    socket.on('updateMessages', participants => {
-        participants = participants.filter((pId) => pId !== userState._id );
-        if (participants[0] === currentUserChat){
-            console.log(currentUserChat);
+    socket.on('updateMessages', ({participants, returnedMessages, roomId}) => {
+        //participants = participants.filter((pId) => pId !== userState._id );
+        console.log(currentRoomId);
+        if (roomId === currentRoomId){
+            setCurrentMessages(returnedMessages);
+        }else{
+            //notify that other conversation has been updated
         }
-        //remember to render only the current conversation's messages
-        //console.log(returnedMessages);
-        //setCurrentMessages(returnedMessages);
-        //console.log(returnedMessages);
     })
 
     
     function sendNewMessage(event, userState, currentRoomId){
         event.preventDefault();
+        //console.log(`Sended room id: ${currentRoomId}`);
         let message = event.target[0].value;
         event.target[0].value = '';
         if (message !== ''){
@@ -78,8 +78,6 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                    <button className='chat-button'>Send</button>
                                </form>
                                }
-                                
-                                
                             </div>)
                 }
             }
