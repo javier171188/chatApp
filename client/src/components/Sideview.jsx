@@ -9,21 +9,22 @@ const Sideview = (props) => {
     
    
 
-    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages, currentRoomId){
+    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages,  setCurrentUserChat){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
         });*/
         
-        socket.emit('getRoom', {current, receiver}, ({_id, lastMessages}) => {
-            setCurrentRoomId(_id);
+        socket.emit('getRoom', {current, receiver}, ({_idRoom, lastMessages, participants}) => {
+            setCurrentRoomId(_idRoom);
             setCurrentMessages(lastMessages);
+            setCurrentUserChat(receiver);
         });
     }
 
     return (
         <Context.Consumer>
-			{ ({userState, socket,currentRoomId, setCurrentRoomId, setCurrentMessages }) => (
+			{ ({userState, socket,currentRoomId, setCurrentRoomId, setCurrentMessages, setCurrentUserChat }) => (
         <aside className='user'>
             <div className='user-picture'>
                 {
@@ -41,14 +42,15 @@ const Sideview = (props) => {
                     <ul>
                         <h1>Contacts:</h1>
                         {user.contacts.map( child => (
-                            <li key={child._id} className='contacts' onClick={() => openOneToOneChat(user._id, child._id, socket, setCurrentRoomId, setCurrentMessages)}> {child.userName} </li>
+                            <li key={child._id} className='contacts' onClick={() => {
+                                                        openOneToOneChat(user._id, child._id, socket, setCurrentRoomId, setCurrentMessages, setCurrentUserChat)}}> {child.userName} </li>
                         ))}
                     </ul>
                 </div>
             </div>
             <div className='chats'>
-                <h1>Chats:</h1>
-                <nav className='chats-nav'>You have not started any chat. Click a user to start one!</nav>
+                <h1>Group Chats:</h1>
+                <nav className='chats-nav'>You have not started any group chat. Click a user to start one!</nav>
             </div>
         </aside>
              

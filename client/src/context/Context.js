@@ -21,16 +21,13 @@ const Provider = ({ children }) => {
         return JSON.parse(sessionStorage.getItem('user'));
     });
     const [currentMessages, setCurrentMessages ] = useState([]);
+    const [currentUserChat, setCurrentUserChat] = useState('');
     
-    /*var socket = {};
-    if (isAuth){
-        socket = socketIOClient(ENDPOINT, {
-            path: '/mysocket'
-        });
-    } */
-
+    
     
     const value = {
+        currentUserChat,
+        setCurrentUserChat,
         currentMessages,
         setCurrentMessages,
         socket,

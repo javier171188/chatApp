@@ -47,7 +47,8 @@ io.on('connection', (socket) => {
             }
             socket.join(chat._id.toString());
             const lastMessages = chat.messages.slice(-20);
-            callback({_id:chat._id.toString(), lastMessages});
+            const participants = chat.participants;
+            callback({_id:chat._id.toString(), lastMessages, participants});
         }catch (e){
             console.log(e.toString());
         }
@@ -72,10 +73,12 @@ io.on('connection', (socket) => {
         
         var chat = await Chat.findById(message.roomId);
         let prevMessages = chat.messages;
+        let participants = chat.participants
         prevMessages.push(message);
         chat.messages = prevMessages;
         chat.save();
-        io.to(message.roomId).emit('updateMessages',prevMessages.slice(-20));
+        io.to(message.roomId).emit('updateMessages', participants);
+        //io.to(message.roomId).emit('updateMessages',prevMessages.slice(-20));
         //io.emit('updateMessages',prevMessages.slice(-20));
         //callback(prevMessages);
     });

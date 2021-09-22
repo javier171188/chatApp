@@ -1,19 +1,24 @@
 import  { useRef, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
+import './../styles/components/ChatView.css';
 
 
-function ChatView({ socket, setCurrentMessages,  currentMessages, userState}) {
+function ChatView({ socket, setCurrentMessages,  currentMessages, userState, currentUserChat}) {
     const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
       }
       useEffect(scrollToBottom, [currentMessages]);
 
-    socket.on('updateMessages', returnedMessages => {
+    socket.on('updateMessages', participants => {
+        participants = participants.filter((pId) => pId !== userState._id );
+        if (participants[0] === currentUserChat){
+            console.log(currentUserChat);
+        }
         //remember to render only the current conversation's messages
         //console.log(returnedMessages);
-        setCurrentMessages(returnedMessages);
+        //setCurrentMessages(returnedMessages);
         //console.log(returnedMessages);
     })
 
@@ -62,6 +67,9 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState}) {
                                         />
                                     ))
                                 }  
+                                {
+                                    !currentRoomId && <h1 className='chat-start'>Click a user or a conversation to start chatting.</h1>
+                                }
                                 <div ref={messagesEndRef} />
                                 </div>
                                { currentRoomId &&

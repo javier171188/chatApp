@@ -61,7 +61,7 @@ const WorkingArea = () => {
        
     return (
         <Context.Consumer>
-        { ({ userState, updateUser, socket, setCurrentMessages, currentMessages}) => (
+        { ({ userState, updateUser, socket, setCurrentMessages, currentMessages, currentUserChat}) => (
         <div className='working'>
             <form className='working-nav' onSubmit={lookForUser}>
                 <input id='email-search' className='working-search' type="text" placeholder='Type an e-mail...' />
@@ -81,6 +81,7 @@ const WorkingArea = () => {
                 setCurrentMessages={setCurrentMessages} 
                 currentMessages={currentMessages} 
                 userState = {userState}
+                currentUserChat = {currentUserChat}
             />
         </div>
         )
