@@ -105,18 +105,22 @@ const Provider = ({ children }) => {
                         var user = await axios.post("http://localhost/users/avatar", formData, conf);
                         let parsedUser = JSON.stringify(user.data);
                         window.sessionStorage.setItem('user', parsedUser);
+                        setUserState(user.data);
+                        window.sessionStorage.setItem('user', JSON.stringify(user.data));
+                    } else {
+                        setUserState(data.data.user);
+                        window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
                     }
 
                     //window.location.href = '/chat';
-                    setUserState(user.data);
+                    
                     window.sessionStorage.setItem('token', data.data.token);
-                    window.sessionStorage.setItem('user', JSON.stringify(user.data));
+                    
                     setIsAuth(true);
                 } else {
                     setErrorMessages(['The password does not match the confirmation']);
                 }
             } catch (error) {
-                console.log(error);
                 let strError = error.response.data;
                 strError = strError.replace('Error: ', '');
                 setErrorMessages([strError]);
