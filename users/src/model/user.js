@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
     contacts: [],
     avatar:{
         type:Buffer
+    },
+    hasAvatar: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -49,7 +53,7 @@ userSchema.methods.toJSON = function (){
 
     delete userObject.password;
     delete userObject.tokens;
-    //delete userObject.avatar;
+    delete userObject.avatar;
 
     return userObject;
 }

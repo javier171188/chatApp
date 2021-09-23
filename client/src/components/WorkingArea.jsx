@@ -13,7 +13,7 @@ const WorkingArea = () => {
     const [ searchUser, setSearchUser ] = useState(null);
     function lookForUser(event) {
         event.preventDefault();
-        console.log(event.target[0].value);
+        //console.log(event.target[0].value);
         const conf = {
             headers: {
                         'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
@@ -31,7 +31,7 @@ const WorkingArea = () => {
             .catch( e => {
                 let strError = e.response.data;
                 setSearchMessage('No user was found, try a different e-mail address.');
-                console.log(strError);
+                //console.log(strError);
             })
     }
 

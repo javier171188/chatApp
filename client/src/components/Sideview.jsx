@@ -4,7 +4,7 @@ import '../styles/components/Sideview.css'
 
 const Sideview = (props) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
-    const avatar = user.avatar ? user.avatar : undefined;
+    const hasAvatar = user.hasAvatar;
     
     function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages,  setCurrentUserChat, lastRoomChanged){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
@@ -26,7 +26,7 @@ const Sideview = (props) => {
         <aside className='user'>
             <div className='user-picture'>
                 {
-                    avatar && <img className='user-picture' src={"data:image/jpg;base64,"+avatar} alt="User's avatar" />
+                    hasAvatar && <img className='user-picture' src={`http://localhost/users/${userState._id}/avatar`} alt="User's avatar" />
                 }
             </div> 
             <div className='user-info'>
@@ -42,7 +42,7 @@ const Sideview = (props) => {
                         {userState.contacts.map( child => {
                             let newMsgs = child.newMsgs ? 'new-messages'
                                                         : 'no-messages';
-                            console.log(userState);
+                            //console.log(userState);
                             return(
                             <li key={child._id} className={`contacts ${newMsgs}`} onClick={() => {
                                                         openOneToOneChat(user._id, 
