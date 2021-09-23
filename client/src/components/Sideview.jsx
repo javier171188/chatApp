@@ -6,7 +6,7 @@ const Sideview = (props) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
     const hasAvatar = user.hasAvatar;
     
-    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages,  setCurrentUserChat, lastRoomChanged){
+    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState ){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
@@ -18,11 +18,17 @@ const Sideview = (props) => {
             //console.log(`The messages were changed in the sideview. Current room: ${_idRoom}. Last changed room: ${lastRoomChanged}`);
             //setCurrentUserChat(receiver);
         });
+
+        //let newUserState = [...userState];
+        //newUserState.conta.forEach( )
+        console.log(userState);
+        //HERE I have to update userState so the (M) disappear when I change to that room
+
     }
 
     return (
         <Context.Consumer>
-			{ ({userState, socket,currentRoomId, setCurrentRoomId, setCurrentMessages, setCurrentUserChat, lastRoomChanged }) => (
+			{ ({userState, setUserState,socket,currentRoomId, setCurrentRoomId, setCurrentMessages }) => (
         <aside className='user'>
             <div className='user-picture'>
                 {
@@ -50,8 +56,8 @@ const Sideview = (props) => {
                                                                 socket, 
                                                                 setCurrentRoomId, 
                                                                 setCurrentMessages, 
-                                                                setCurrentUserChat, 
-                                                                lastRoomChanged, 
+                                                                userState, 
+                                                                setUserState
                                                                 )}}
                             > 
                                 {child.userName} 

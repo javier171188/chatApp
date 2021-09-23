@@ -102,15 +102,15 @@ const Provider = ({ children }) => {
 
                     if (selectedFile) {
                         const conf = { headers: { 'Authorization': 'Bearer ' + data.data.token } };
-                        const user = await axios.post("http://localhost/users/avatar", formData, conf);
+                        var user = await axios.post("http://localhost/users/avatar", formData, conf);
                         let parsedUser = JSON.stringify(user.data);
                         window.sessionStorage.setItem('user', parsedUser);
                     }
 
                     //window.location.href = '/chat';
-                    setUserState(data.data.user);
+                    setUserState(user.data);
                     window.sessionStorage.setItem('token', data.data.token);
-                    window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
+                    window.sessionStorage.setItem('user', JSON.stringify(user.data));
                     setIsAuth(true);
                 } else {
                     setErrorMessages(['The password does not match the confirmation']);
