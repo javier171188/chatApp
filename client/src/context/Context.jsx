@@ -8,11 +8,11 @@ const socket = socketIOClient(ENDPOINT, {
 });
 
 
-var updateLastRoom = function(){
+var updateLastRoom = function () {
     console.log('executed before');
 };
 
-socket.on('updateMessages', ({participants, returnedMessages, roomId}) => {
+socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
     //participants = participants.filter((pId) => pId !== userState._id );
     /*console.log(currentRoomId);
     if (roomId === currentRoomId){
@@ -30,36 +30,35 @@ socket.on('updateMessages', ({participants, returnedMessages, roomId}) => {
 const Context = createContext();
 
 const Provider = ({ children }) => {
-    const [ isAuth, setIsAuth ] = useState(()=>{
+    const [isAuth, setIsAuth] = useState(() => {
         return sessionStorage.getItem('token');
     });
-    const [ errorMessages, setErrorMessages ] = useState([]);
-    const [ currentRoomId, setCurrentRoomId ] = useState('');
-    const [ userState, setUserState ] = useState(() => {
+    const [errorMessages, setErrorMessages] = useState([]);
+    const [currentRoomId, setCurrentRoomId] = useState('');
+    const [userState, setUserState] = useState(() => {
         return JSON.parse(sessionStorage.getItem('user'));
     });
-    const [currentMessages, setCurrentMessages ] = useState([]);
+    const [currentMessages, setCurrentMessages] = useState([]);
     //const [currentUserChat, setCurrentUserChat] = useState('');
     const [lastRoomChanged, setLastRoomChanged] = useState('');
 
-    updateLastRoom = function(roomId, returnedMessages, participants){
+    updateLastRoom = function (roomId, returnedMessages, participants) {
         setLastRoomChanged(roomId);
-        if ( roomId === currentRoomId){
+        if (roomId === currentRoomId) {
             setCurrentMessages(returnedMessages);
         } else {
-            let userWithNewMsgId = participants.filter( p => p !== userState._id)[0];
-            let newState = {...userState};
+            let userWithNewMsgId = participants.filter(p => p !== userState._id)[0];
+            let newState = { ...userState };
             newState.contacts.forEach(c => {
-                if (c._id === userWithNewMsgId){
+                if (c._id === userWithNewMsgId) {
                     c.newMsgs = true;
                 }
                 setUserState(newState);
             });
         }
     }
-    
-    console.log('new file');
 
+    
     const value = {
         //currentUserChat,
         //setCurrentUserChat,
@@ -72,7 +71,7 @@ const Provider = ({ children }) => {
         userState,
         updateUser: (newUser) => {
             sessionStorage.setItem('user', JSON.stringify(newUser));
-            console.log(newUser);
+            //console.log(newUser);
             setUserState(newUser);
         },
         isAuth,
@@ -88,44 +87,43 @@ const Provider = ({ children }) => {
                         selectedFile,
                         selectedFile.name
                     );
-                            
+
                     await axios.post("http://localhost/users/avatar/check", formData);
                 }
-                
+
                 const form = {
                     userName: event.target[0].value,
                     email: event.target[1].value,
                     password: event.target[2].value,
                 }
 
-                if (event.target[2].value === event.target[3].value){
+                if (event.target[2].value === event.target[3].value) {
                     const data = await axios.post('http://localhost/users/register', form)
-                    
-                    if (selectedFile){
-                        const conf = {headers: {'Authorization': 'Bearer ' + data.data.token }};
+
+                    if (selectedFile) {
+                        const conf = { headers: { 'Authorization': 'Bearer ' + data.data.token } };
                         const user = await axios.post("http://localhost/users/avatar", formData, conf);
                         let parsedUser = JSON.stringify(user.data);
                         window.sessionStorage.setItem('user', parsedUser);
                     }
-                    
+
                     //window.location.href = '/chat';
                     setUserState(data.data.user);
                     window.sessionStorage.setItem('token', data.data.token);
                     window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
-                    console.log('userState');
                     setIsAuth(true);
-                } else{
+                } else {
                     setErrorMessages(['The password does not match the confirmation']);
                 }
-            }catch (error){
+            } catch (error) {
                 console.log(error);
                 let strError = error.response.data;
-                strError = strError.replace('Error: ','');
+                strError = strError.replace('Error: ', '');
                 setErrorMessages([strError]);
             }
-            
+
         },
-        logIn: (event) => { 
+        logIn: (event) => {
             event.preventDefault();
             const form = {
                 email: event.target[0].value,
@@ -145,10 +143,10 @@ const Provider = ({ children }) => {
         logOut: () => {
             const conf = {
                 headers: {
-                            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
-                        }
+                    'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+                }
             }
-            axios.post('http://localhost/users/logoutAll',{} ,conf).catch( e => {
+            axios.post('http://localhost/users/logoutAll', {}, conf).catch(e => {
                 console.log(e);
             });
             setIsAuth(false);
@@ -158,29 +156,29 @@ const Provider = ({ children }) => {
             socket.disconnect();
         },
 
-        saveAvatarImage (event){
+        saveAvatarImage(event) {
             event.preventDefault();
             const selectedFile = event.target[0].files[0];
             const formData = new FormData();
-    
+
             formData.append(
                 "avatar",
                 selectedFile,
                 selectedFile.name
-              );
+            );
             const conf = {
-               headers: {
-                            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
-                        }
+                headers: {
+                    'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+                }
             }
 
-            
-            axios.post("http://localhost/users/avatar", formData, conf).then((user)=>{
+
+            axios.post("http://localhost/users/avatar", formData, conf).then((user) => {
                 let parsedUser = JSON.stringify(user.data);
                 sessionStorage.setItem('user', parsedUser);
                 //window.location.href = '/chat';
             }).catch(e => console.error(e));
-            
+
         },
     }
 

@@ -42,7 +42,7 @@ const Sideview = (props) => {
                         {userState.contacts.map( child => {
                             let newMsgs = child.newMsgs ? 'new-messages'
                                                         : 'no-messages';
-                            console.log(userState);
+                            //console.log(userState);
                             return(
                             <li key={child._id} className={`contacts ${newMsgs}`} onClick={() => {
                                                         openOneToOneChat(user._id, 
