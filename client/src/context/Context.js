@@ -22,7 +22,7 @@ socket.on('updateMessages', ({participants, returnedMessages, roomId}) => {
         //setCurrentMessages(currentMessages);
     }*/
     //sessionStorage.setItem('lastRoomChanged', roomId);
-    updateLastRoom(roomId, returnedMessages);
+    updateLastRoom(roomId, returnedMessages, participants);
 })
 
 
@@ -45,12 +45,20 @@ const Provider = ({ children }) => {
     //const [currentUserChat, setCurrentUserChat] = useState('');
     const [lastRoomChanged, setLastRoomChanged] = useState('');
 
-    updateLastRoom = function(roomId, returnedMessages){
+    updateLastRoom = function(roomId, returnedMessages, participants){
         setLastRoomChanged(roomId);
         if ( roomId === currentRoomId){
             setCurrentMessages(returnedMessages);
+        } else {
+            let userWithNewMsgId = participants.filter( p => p !== userState._id)[0];
+            userState.contacts.forEach(c => {
+                if (c._id === userWithNewMsgId){
+                    c.newMsgs = true;
+                }
+                setUserState(userState);
+            });
         }
-        console.log('times');
+        console.log(userState);
     }
     
     const value = {

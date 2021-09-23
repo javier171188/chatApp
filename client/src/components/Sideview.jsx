@@ -39,8 +39,14 @@ const Sideview = (props) => {
                 <div className='user-contacts'>
                     <ul>
                         <h1>Contacts:</h1>
-                        {user.contacts.map( child => (
-                            <li key={child._id} className='contacts' onClick={() => {
+                        {userState.contacts.map( child => {
+                            let newMsgs = child.newMsgs ? 'new-messages'
+                                                        : 'no-messages';
+                            console.log(child);
+                            console.log('times');
+                            console.log(newMsgs);
+                            return(
+                            <li key={child._id} className={`contacts ${newMsgs}`} onClick={() => {
                                                         openOneToOneChat(user._id, 
                                                                 child._id, 
                                                                 socket, 
@@ -52,7 +58,7 @@ const Sideview = (props) => {
                             > 
                                 {child.userName} 
                             </li>
-                        ))}
+                        )})}
                     </ul>
                 </div>
             </div>
