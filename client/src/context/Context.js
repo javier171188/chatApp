@@ -59,7 +59,7 @@ const Provider = ({ children }) => {
                 setUserState(newState);
             });
         }
-        console.log(userState);
+        console.log('where?');
     }
     
     const value = {
