@@ -163,6 +163,7 @@ router.get('/users/getUserByPattern', authToken, async (req, res) => {
 router.post('/users/avatar', authToken, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer();
     req.user.avatar = buffer;
+    req.user.hasAvatar = true;
     await req.user.save();
     res.send(req.user);
 }, (error, req, res, next) => {
