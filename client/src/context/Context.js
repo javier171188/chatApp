@@ -51,11 +51,12 @@ const Provider = ({ children }) => {
             setCurrentMessages(returnedMessages);
         } else {
             let userWithNewMsgId = participants.filter( p => p !== userState._id)[0];
-            userState.contacts.forEach(c => {
+            let newState = {...userState};
+            newState.contacts.forEach(c => {
                 if (c._id === userWithNewMsgId){
                     c.newMsgs = true;
                 }
-                setUserState(userState);
+                setUserState(newState);
             });
         }
         console.log(userState);
