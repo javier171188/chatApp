@@ -3,7 +3,7 @@ This is a web app in which a user can add contacts, chat in one to one conversat
 ## Setup
 The app is formed by 4 services:  users, chats, notifications, and client. The services are (will be) mounted in their own docker container and the communication is through an Nginx proxy service. 
 
-![Diagram](./chatAV1.png)
+![Diagram](./chatAV1.png) {:height="36px"
 ### Required Technologies (so far)
 * Chats:
 	- node
