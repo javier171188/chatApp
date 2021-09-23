@@ -27,9 +27,6 @@ socket.on('updateMessages', ({participants, returnedMessages, roomId}) => {
 
 
 
-
-
-
 const Context = createContext();
 
 const Provider = ({ children }) => {
@@ -59,9 +56,10 @@ const Provider = ({ children }) => {
                 setUserState(newState);
             });
         }
-        console.log(userState);
     }
     
+    console.log('new file');
+
     const value = {
         //currentUserChat,
         //setCurrentUserChat,
@@ -102,9 +100,6 @@ const Provider = ({ children }) => {
 
                 if (event.target[2].value === event.target[3].value){
                     const data = await axios.post('http://localhost/users/register', form)
-                    window.sessionStorage.setItem('token', data.data.token);
-                    window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
-
                     
                     if (selectedFile){
                         const conf = {headers: {'Authorization': 'Bearer ' + data.data.token }};
@@ -114,6 +109,10 @@ const Provider = ({ children }) => {
                     }
                     
                     //window.location.href = '/chat';
+                    setUserState(data.data.user);
+                    window.sessionStorage.setItem('token', data.data.token);
+                    window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
+                    console.log('userState');
                     setIsAuth(true);
                 } else{
                     setErrorMessages(['The password does not match the confirmation']);
@@ -155,6 +154,7 @@ const Provider = ({ children }) => {
             setIsAuth(false);
             window.sessionStorage.removeItem('token');
             window.sessionStorage.removeItem('user');
+
             socket.disconnect();
         },
 
