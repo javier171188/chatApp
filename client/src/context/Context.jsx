@@ -71,7 +71,7 @@ const Provider =  ({ children }) => {
 
     const [currentMessages, setCurrentMessages] = useState([]);
     //const [currentUserChat, setCurrentUserChat] = useState('');
-    const [lastRoomChanged, setLastRoomChanged] = useState('');
+    const [lastRoomChanged, setLastRoomChanged] = useState('');// I think I am not using this.
 
     updateLastRoom = function (roomId, returnedMessages, participants) {
         setLastRoomChanged(roomId);
@@ -84,8 +84,21 @@ const Provider =  ({ children }) => {
                 if (c._id === userWithNewMsgId) {
                     c.newMsgs = true;
                 }
-                setUserState(newState);
             });
+
+            setUserState(newState);
+            
+            let conf = {
+                headers: {
+                            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                        },
+                params:{
+                    email: JSON.parse(sessionStorage.getItem('email')),
+                    contactId: userWithNewMsgId
+                }
+            }
+            console.log(conf);
+            axios.post('http://localhost/users/updateUser', conf ).then(data => console.log(data)).catch( e => console.log(e));
         }
     }
 
@@ -102,7 +115,7 @@ const Provider =  ({ children }) => {
         setUserState,
         userState,
         updateUser: (newUser) => {
-            sessionStorage.setItem('user', JSON.stringify(newUser));
+            //sessionStorage.setItem('user', JSON.stringify(newUser));
             //console.log(newUser);
             setUserState(newUser);
         },
@@ -169,7 +182,7 @@ const Provider =  ({ children }) => {
                     window.sessionStorage.setItem('token', data.data.token);
                     setIsAuth(true);
                 }).catch(e => {
-                    setErrorMessages(['']);
+                    setErrorMessages([e]);
                 });
         },
         logOut: () => {

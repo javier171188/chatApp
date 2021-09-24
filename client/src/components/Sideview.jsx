@@ -30,8 +30,7 @@ const Sideview = (props) => {
     return (
         <Context.Consumer>
 			{ ({userState, setUserState,socket,currentRoomId, setCurrentRoomId, setCurrentMessages }) => {
-                console.log('times');
-                
+                console.log('times'); //just to be sure the element does not render many times
                 return  (
                     <aside className='user'>
                         <div className='user-picture'>

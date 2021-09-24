@@ -25,6 +25,7 @@ const WorkingArea = () => {
         event.target[0].value = '';
         axios.get('http://localhost/users/getUser', conf )
             .then(user => {
+                user.data.newMsgs = false;
                 setSearchUser(user.data);
                 setSearchMessage('One user found: ')
                 console.log(user);

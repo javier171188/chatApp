@@ -172,6 +172,29 @@ router.get('/users/getUserByPattern', authToken, async (req, res) => {
 });*/
 /////////////////////////////////////////////////////////////////////////////////
 
+router.post('/users/updateUser',  async (req, res) => {
+try {
+    //console.log(req.body);
+    let user = await User.findOne({email:req.body.params.email});
+    let contacts = user.contacts;
+    contacts.forEach(c => {
+        if (c._id === req.body.params.contactId) {
+            c.newMsgs = true;
+        }
+    });
+    user.contacts = contacts;
+    user.markModified('contacts');
+    console.log(user);
+    await user.save();
+    res.send(user);
+} catch (e){
+    let strError = e.toString();
+    console.log(strError);
+    res.status(404).send(strError);
+}});
+
+
+
 
 router.post('/users/avatar', authToken, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer();
