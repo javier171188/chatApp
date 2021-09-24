@@ -179,21 +179,18 @@ try {
     let contacts = user.contacts;
     contacts.forEach(c => {
         if (c._id === req.body.params.contactId) {
-            c.newMsgs = true;
+            c.newMsgs = req.body.params.newStatus;
         }
     });
     user.contacts = contacts;
     user.markModified('contacts');
-    console.log(user);
     await user.save();
-    res.send(user);
+    res.send();
 } catch (e){
     let strError = e.toString();
     console.log(strError);
     res.status(404).send(strError);
 }});
-
-
 
 
 router.post('/users/avatar', authToken, upload.single('avatar'), async (req, res) => {

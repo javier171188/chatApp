@@ -19,6 +19,15 @@ const Sideview = (props) => {
             setCurrentMessages(lastMessages);
             //console.log(`The messages were changed in the sideview. Current room: ${_idRoom}. Last changed room: ${lastRoomChanged}`);
             //setCurrentUserChat(receiver);
+            let newUserState = {...userState};
+            newUserState.contacts.forEach(c => {
+                if (c._id === receiver) {
+                    c.newMsgs = false;
+                }
+            });
+            
+            setUserState(newUserState);
+
         });
 
         //let newUserState = [...userState];

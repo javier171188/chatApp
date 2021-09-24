@@ -94,10 +94,10 @@ const Provider =  ({ children }) => {
                         },
                 params:{
                     email: JSON.parse(sessionStorage.getItem('email')),
-                    contactId: userWithNewMsgId
+                    contactId: userWithNewMsgId,
+                    newStatus: true
                 }
             }
-            console.log(conf);
             axios.post('http://localhost/users/updateUser', conf ).then(data => console.log(data)).catch( e => console.log(e));
         }
     }
