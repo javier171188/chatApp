@@ -98,7 +98,7 @@ const Provider =  ({ children }) => {
                     newStatus: true
                 }
             }
-            axios.post('http://localhost/users/updateUser', conf ).then(data => console.log(data)).catch( e => console.log(e));
+            axios.post('http://localhost/users/updateUser', conf ).catch( e => console.log(e));
         }
     }
 

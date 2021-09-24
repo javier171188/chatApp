@@ -27,6 +27,17 @@ const Sideview = (props) => {
             });
             
             setUserState(newUserState);
+            let conf = {
+                headers: {
+                            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                        },
+                params:{
+                    email: JSON.parse(sessionStorage.getItem('email')),
+                    contactId: receiver,
+                    newStatus: false
+                }
+            }
+            axios.post('http://localhost/users/updateUser', conf ).catch( e => console.log(e));
 
         });
 
