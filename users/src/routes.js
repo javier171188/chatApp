@@ -58,28 +58,32 @@ router.post('/users/login', passport.authenticate('local', { session:false }), a
     }
 });
 
-router.post('/users/logout',authToken, async (req, res) =>{
-    try{
-        req.user.tokens = req.user.tokens.filter((token)=> {
-            return token.token !== req.token;
-        })
-        await req.user.save();
-        res.send();
-    } catch(e){
-        res.status(500).send();
-    }
-});
+//This two could be joined in one. However /logout is not being used, it could be deleted.
+router.post('/users/logout',authToken, async (req, res) =>{         //
+    try{                                                            //        
+        req.user.tokens = req.user.tokens.filter((token)=> {        //
+            return token.token !== req.token;                       //
+        })                                                          //                    
+        await req.user.save();                                      //                
+        res.send();                                                 //       
+    } catch(e){                                                     //                    
+        res.status(500).send();                                     //    
+    }                                                               //
+});                                                                 //    
+router.post('/users/logoutAll',authToken, async (req, res) =>{      //
+    try{                                                            //        
+        req.user.tokens = [];                                       // 
+        await req.user.save();                                      //    
+        res.send();                                                 //    
+    } catch(e){                                                     //    
+        res.status(500).send();                                     //        
+    }                                                               //    
+});                                                                 //            
+//////////////////////////////////////////////////////////////////////
 
-router.post('/users/logoutAll',authToken, async (req, res) =>{
-    try{
-        req.user.tokens = [];
-        await req.user.save();
-        res.send();
-    } catch(e){
-        res.status(500).send();
-    }
-});
 
+
+//This must be fixed to ask for confirmation.
 router.post('/users/addContactNoConf', authToken, async(req,res) => {
     try{
         let loggedId = req.body.logged;
@@ -105,7 +109,11 @@ router.post('/users/addContactNoConf', authToken, async(req,res) => {
     }
 })
 
-router.get('/users/getUserByEmail',authToken, async (req, res) => {
+
+// All the get user must be merged in one endpoint.
+//Currently only getUserByEmail is in use.
+// This will be the base and will be modified if needed
+router.get('/users/getUser',authToken, async (req, res) => {
     try {
         const user = await User.findOne({email:req.query.email});
         if (!user) {
@@ -123,7 +131,7 @@ router.get('/users/getUserByEmail',authToken, async (req, res) => {
         res.status(404).send(strError);
     }   
 });
-
+/*
 router.get('/users/getUserById', authToken, async (req, res) => {
     try {
         const user = await User.findOne({_id:req.body._id});
@@ -146,9 +154,6 @@ router.get('/users/getUserByName', authToken, async (req, res) => {
         res.status(404).send();
     }   
 });
-
-
-
 router.get('/users/getUserByPattern', authToken, async (req, res) => {
     try {
         const s = req.body.userName;
@@ -158,7 +163,9 @@ router.get('/users/getUserByPattern', authToken, async (req, res) => {
     } catch(e){
         res.status(404).send();
     }   
-});
+});*/
+/////////////////////////////////////////////////////////////////////////////////
+
 
 router.post('/users/avatar', authToken, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer();
@@ -169,7 +176,6 @@ router.post('/users/avatar', authToken, upload.single('avatar'), async (req, res
 }, (error, req, res, next) => {
     res.status(400).send({ error:error.message })
 } );
-
 
 router.post('/users/avatar/check',  upload.single('avatar'), async (req, res) => {
     res.send(true);
@@ -191,5 +197,7 @@ router.get('/users/:id/avatar', async (req, res) => {
         res.status(404).send(e);
     }
 });
+
+
 
 module.exports = router;
