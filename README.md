@@ -31,6 +31,65 @@ The app is formed by 4 services:  users, chats, notifications, and client. The s
 	-	react-router-dom: ^5.2.0
 	-	socket.io-client: ^4.2.0
 
+### Nginx
+In the file /etc/nginx/sites-available/default, after 
+```
+server_name _;
+
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		try_files $uri $uri/ =404;
+	}
+```
+add the following
+
+```
+
+	location ~ \.s?css$ {
+		proxy_pass http://localhost:1234;
+	}
+
+	location ~ \.png$ {
+                proxy_pass http://localhost:1234;
+        }
+
+
+	location ~ \.map$ {
+		proxy_pass http://localhost:1234;
+	}
+
+	location ~ \.jsx?$ {
+		proxy_pass http://localhost:1234;
+	}
+	
+	location ~ \/chat\/.* {
+		proxy_pass http://localhost:1234;
+	}
+
+	location ~ \/users\/.* {
+		proxy_pass http://localhost:3000;
+	}
+
+	location ~ \/chats\/.* {
+                proxy_pass http://localhost:3001;
+        }
+
+	#location ~ \/socket\.io\/.* {
+        #        proxy_pass http://localhost:3001;
+        #}
+
+	location /mysocket/ {
+     		proxy_pass http://localhost:3001; 
+      		proxy_http_version 1.1;
+      		proxy_set_header Upgrade $http_upgrade;
+      		proxy_set_header Connection 'upgrade';
+      		proxy_set_header Host $host;
+      		proxy_cache_bypass $http_upgrade;
+    	} 
+
+```
+
 ### Environment Variables
 - (I have not implemented them yet)
 
