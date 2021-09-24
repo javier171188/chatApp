@@ -47,6 +47,10 @@ const Sideview = (props) => {
 
     }
 
+    function openGroupChat(){
+        console.log('opening a group chat');
+    }
+
     return (
         <Context.Consumer>
 			{ ({userState, setUserState,socket,currentRoomId, setCurrentRoomId, setCurrentMessages }) => {
@@ -90,7 +94,8 @@ const Sideview = (props) => {
                             </div>
                         </div>
                         <div className='chats'>
-                            <h1>Group Chats:</h1>
+                            <div className='chats-header'><h1>Group Chats:</h1> <div className='chats-button' onClick={openGroupChat}>+</div></div>
+                            <hr/>
                             <nav className='chats-nav'>You have not started any group chat.</nav>
                         </div>
                     </aside>
