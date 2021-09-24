@@ -27,6 +27,7 @@ const WorkingArea = () => {
             .then(user => {
                 setSearchUser(user.data);
                 setSearchMessage('One user found: ')
+                console.log(user);
             })
             .catch( e => {
                 let strError = e.response.data;

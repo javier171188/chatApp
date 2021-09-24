@@ -1,5 +1,5 @@
 'use strict';
-import React, { createContext, useState, useLayoutEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
 const ENDPOINT = "http://localhost";
@@ -29,15 +29,46 @@ socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
 
 const Context = createContext();
 
-const Provider = ({ children }) => {
+var countUserLoad = 0;
+const Provider =  ({ children }) => {
     const [isAuth, setIsAuth] = useState(() => {
         return sessionStorage.getItem('token');
     });
     const [errorMessages, setErrorMessages] = useState([]);
     const [currentRoomId, setCurrentRoomId] = useState('');
-    const [userState, setUserState] = useState(() => {
-        return JSON.parse(sessionStorage.getItem('user'));
+    const [userState, setUserState] = useState({
+        contacts:[],
+        email: "",
+        hasAvatar: false,
+        userName: "",
+        _id: ""
     });
+
+    
+    async function getUserState(){
+        let email = JSON.parse(sessionStorage.getItem('email'));
+        let token = sessionStorage.getItem('token');
+        if (!email || !token){
+            return
+        }
+        let conf = {
+            headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+            params:{
+                email,
+                selfUser: true
+            }
+        }
+        let user = await axios.get('http://localhost/users/getUser', conf );
+        if (countUserLoad === 0){
+            setUserState(user.data)
+            countUserLoad++;
+        }
+    };
+    getUserState();
+
+
     const [currentMessages, setCurrentMessages] = useState([]);
     //const [currentUserChat, setCurrentUserChat] = useState('');
     const [lastRoomChanged, setLastRoomChanged] = useState('');
@@ -68,6 +99,7 @@ const Provider = ({ children }) => {
         socket,
         currentRoomId,
         setCurrentRoomId,
+        setUserState,
         userState,
         updateUser: (newUser) => {
             sessionStorage.setItem('user', JSON.stringify(newUser));
@@ -103,16 +135,13 @@ const Provider = ({ children }) => {
                     if (selectedFile) {
                         const conf = { headers: { 'Authorization': 'Bearer ' + data.data.token } };
                         var user = await axios.post("http://localhost/users/avatar", formData, conf);
-                        let parsedUser = JSON.stringify(user.data);
-                        window.sessionStorage.setItem('user', parsedUser);
                         setUserState(user.data);
-                        window.sessionStorage.setItem('user', JSON.stringify(user.data));
+                        window.sessionStorage.setItem('email', JSON.stringify(user.data.email));
                     } else {
                         setUserState(data.data.user);
-                        window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
+                        window.sessionStorage.setItem('email', JSON.stringify(data.data.user.email));
                     }
 
-                    //window.location.href = '/chat';
                     
                     window.sessionStorage.setItem('token', data.data.token);
                     
@@ -135,10 +164,9 @@ const Provider = ({ children }) => {
             }
             axios.post('http://localhost/users/login', form)
                 .then(data => {
-                    window.sessionStorage.setItem('user', JSON.stringify(data.data.user));
+                    window.sessionStorage.setItem('email', JSON.stringify(data.data.user.email));
                     setUserState(data.data.user);
                     window.sessionStorage.setItem('token', data.data.token);
-                    //window.location.href = '/chat';		
                     setIsAuth(true);
                 }).catch(e => {
                     setErrorMessages(['']);
@@ -155,7 +183,7 @@ const Provider = ({ children }) => {
             });
             setIsAuth(false);
             window.sessionStorage.removeItem('token');
-            window.sessionStorage.removeItem('user');
+            window.sessionStorage.removeItem('email');
 
             socket.disconnect();
         },

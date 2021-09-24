@@ -113,19 +113,25 @@ router.post('/users/addContactNoConf', authToken, async(req,res) => {
 // All the get user must be merged in one endpoint.
 //Currently only getUserByEmail is in use.
 // This will be the base and will be modified if needed
+//Check if user is asking for its own profile or another one to decide what info return
 router.get('/users/getUser',authToken, async (req, res) => {
     try {
         const user = await User.findOne({email:req.query.email});
+        
         if (!user) {
             throw new Error('No user was found');
         }
 
-        const userInfo = { userName: user.userName,
-                            _id: user._id,
-                            email:req.query.email
-                        }
-
-        res.send(userInfo);
+        if (req.query.selfUser){
+            res.send(user);
+        } else {
+            const userInfo = { userName: user.userName,
+                _id: user._id,
+                email:req.query.email
+            }
+            res.send(userInfo);
+        }
+                        
     } catch(e){
         let strError = e.toString();
         res.status(404).send(strError);
