@@ -10,7 +10,7 @@ const User = require('./model/user');
 const app = express();
 
 //app.use(cors());
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.use((req,res, next)=>{//Basic middleweare, delete once you don't forget how to use them
     console.log(req.method, req.path);
