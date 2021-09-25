@@ -6,7 +6,7 @@ const socketIo = require("socket.io");
 const Chat = require('./model/chat');
 require('./db/mongoose');
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 //const routes = require('./routes.js');
 
 const app = express();
