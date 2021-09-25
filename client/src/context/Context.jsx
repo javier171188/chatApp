@@ -44,7 +44,9 @@ const Provider =  ({ children }) => {
         _id: ""
     });
 
-    
+    console.log(process.env.TEST);
+    //Need to use this https://github.com/motdotla/dotenv
+    //https://parceljs.org/env.html
     async function getUserState(){
         let email = JSON.parse(sessionStorage.getItem('email'));
         let token = sessionStorage.getItem('token');
