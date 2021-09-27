@@ -10,7 +10,7 @@ const NotFound = () => (
     </h1>
     <div>
         Go &nbsp;
-        <Link to='/chat'>
+        <Link to='/chat/'>
              Home!
         </Link>        
     </div> 

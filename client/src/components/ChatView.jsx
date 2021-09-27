@@ -46,8 +46,6 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     });
         
 
-
-
     return (
         <Context.Consumer>
             {

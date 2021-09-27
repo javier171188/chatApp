@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Context from '../context/Context';
 import axios from 'axios';
 import '../styles/components/Sideview.css'
+import { Redirect } from 'react-router-dom';
 require('dotenv').config();
 
 const USER_PATH=process.env.USER_PATH;
@@ -49,8 +50,8 @@ const Sideview = (props) => {
 
     }
 
-    function openGroupChat(){
-        console.log('opening a group chat');
+    function createGroupChat(){
+        window.location.href = '/chat/create-room';
     }
 
     return (
@@ -96,7 +97,7 @@ const Sideview = (props) => {
                             </div>
                         </div>
                         <div className='chats'>
-                            <div className='chats-header'><h1>Group Chats:</h1> <div className='chats-button' onClick={openGroupChat}>+</div></div>
+                            <div className='chats-header'><h1>Group Chats:</h1> <div className='chats-button' onClick={createGroupChat}>+</div></div>
                             <hr/>
                             <nav className='chats-nav'>You have not started any group chat.</nav>
                         </div>

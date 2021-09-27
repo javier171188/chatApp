@@ -84,6 +84,14 @@ io.on('connection', (socket) => {
         //callback(prevMessages);
     });
 
+    socket.on('newRoom', async (data, callback) => {
+        let chat = new Chat(data);
+        await chat.save();
+        callback(chat._id);
+    });
+
+
+
     socket.on('disconnect', () => {
         console.log('A user has disconnected')
         /*let date = new Date();

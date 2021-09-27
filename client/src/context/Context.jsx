@@ -39,12 +39,12 @@ const Provider =  ({ children }) => {
     const [errorMessages, setErrorMessages] = useState([]);
     const [currentRoomId, setCurrentRoomId] = useState('');
     const [userState, setUserState] = useState({
-        contacts:[],
-        email: "",
-        hasAvatar: false,
-        userName: "",
-        _id: ""
-    });
+                                        contacts:[],
+                                        email: "",
+                                        hasAvatar: false,
+                                        userName: "",
+                                        _id: ""
+                                    });
 
     
     
@@ -202,6 +202,7 @@ const Provider =  ({ children }) => {
             window.sessionStorage.removeItem('email');
 
             socket.disconnect();
+            window.location.href = '/chat/';
         },
 
         saveAvatarImage(event) {
@@ -224,7 +225,7 @@ const Provider =  ({ children }) => {
             axios.post(USER_PATH+"/avatar", formData, conf).then((user) => {
                 let parsedUser = JSON.stringify(user.data);
                 sessionStorage.setItem('user', parsedUser);
-                //window.location.href = '/chat';
+                //window.location.href = '/chat/';
             }).catch(e => console.error(e));
 
         },
