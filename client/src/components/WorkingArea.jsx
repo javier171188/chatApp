@@ -3,7 +3,9 @@ import axios from "axios";
 import Context from "../context/Context";
 import ChatView from "./ChatView";
 import '../styles/components/WorkingArea.css';
+require('dotenv').config();
 
+const USER_PATH=process.env.USER_PATH;
 
 
     
@@ -23,7 +25,7 @@ const WorkingArea = () => {
             }
         }
         event.target[0].value = '';
-        axios.get('http://localhost/users/getUser', conf )
+        axios.get(USER_PATH+'/getUser', conf )
             .then(user => {
                 user.data.newMsgs = false;
                 setSearchUser(user.data);
@@ -48,7 +50,7 @@ const WorkingArea = () => {
                                 'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
                             }
                     };
-                const data = await axios.post('http://localhost/users/addContactNoConf', { 
+                const data = await axios.post(USER_PATH+'/addContactNoConf', { 
                                         "logged": currentId,
                                         "searched": searchUser
                                     }, conf)

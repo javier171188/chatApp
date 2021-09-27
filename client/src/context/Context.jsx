@@ -2,10 +2,12 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
-const ENDPOINT = "http://localhost";
-const socket = socketIOClient(ENDPOINT, {
-    path: '/mysocket'
+require('dotenv').config();
+
+const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
+    path: process.env.SOCKET_PATH
 });
+
 
 
 var updateLastRoom = function () {
@@ -25,7 +27,7 @@ socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
     updateLastRoom(roomId, returnedMessages, participants);
 })
 
-
+const USER_PATH=process.env.USER_PATH;
 
 const Context = createContext();
 
@@ -44,9 +46,8 @@ const Provider =  ({ children }) => {
         _id: ""
     });
 
-    console.log(process.env.TEST);
-    //Need to use this https://github.com/motdotla/dotenv
-    //https://parceljs.org/env.html
+    
+    
     async function getUserState(){
         let email = JSON.parse(sessionStorage.getItem('email'));
         let token = sessionStorage.getItem('token');
@@ -62,7 +63,7 @@ const Provider =  ({ children }) => {
                 selfUser: true
             }
         }
-        let user = await axios.get('http://localhost/users/getUser', conf );
+        let user = await axios.get(USER_PATH+'/getUser', conf );
         if (countUserLoad === 0){
             setUserState(user.data)
             countUserLoad++;
@@ -100,7 +101,7 @@ const Provider =  ({ children }) => {
                     newStatus: true
                 }
             }
-            axios.post('http://localhost/users/updateUser', conf ).catch( e => console.log(e));
+            axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
         }
     }
 
@@ -135,7 +136,7 @@ const Provider =  ({ children }) => {
                         selectedFile.name
                     );
 
-                    await axios.post("http://localhost/users/avatar/check", formData);
+                    await axios.post(USER_PATH+"/avatar/check", formData);
                 }
 
                 const form = {
@@ -145,11 +146,11 @@ const Provider =  ({ children }) => {
                 }
 
                 if (event.target[2].value === event.target[3].value) {
-                    const data = await axios.post('http://localhost/users/register', form)
+                    const data = await axios.post(USER_PATH+'/register', form)
 
                     if (selectedFile) {
                         const conf = { headers: { 'Authorization': 'Bearer ' + data.data.token } };
-                        var user = await axios.post("http://localhost/users/avatar", formData, conf);
+                        var user = await axios.post(USER_PATH+"/avatar", formData, conf);
                         setUserState(user.data);
                         window.sessionStorage.setItem('email', JSON.stringify(user.data.email));
                     } else {
@@ -177,7 +178,7 @@ const Provider =  ({ children }) => {
                 email: event.target[0].value,
                 password: event.target[1].value,
             }
-            axios.post('http://localhost/users/login', form)
+            axios.post(USER_PATH+'/login', form)
                 .then(data => {
                     window.sessionStorage.setItem('email', JSON.stringify(data.data.user.email));
                     setUserState(data.data.user);
@@ -193,7 +194,7 @@ const Provider =  ({ children }) => {
                     'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
                 }
             }
-            axios.post('http://localhost/users/logoutAll', {}, conf).catch(e => {
+            axios.post(USER_PATH+'/logoutAll', {}, conf).catch(e => {
                 console.log(e);
             });
             setIsAuth(false);
@@ -220,7 +221,7 @@ const Provider =  ({ children }) => {
             }
 
 
-            axios.post("http://localhost/users/avatar", formData, conf).then((user) => {
+            axios.post(USER_PATH+"/avatar", formData, conf).then((user) => {
                 let parsedUser = JSON.stringify(user.data);
                 sessionStorage.setItem('user', parsedUser);
                 //window.location.href = '/chat';

@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import Context from '../context/Context';
 import axios from 'axios';
 import '../styles/components/Sideview.css'
+require('dotenv').config();
 
+const USER_PATH=process.env.USER_PATH;
 
 
 const Sideview = (props) => {
@@ -37,7 +39,7 @@ const Sideview = (props) => {
                     newStatus: false
                 }
             }
-            axios.post('http://localhost/users/updateUser', conf ).catch( e => console.log(e));
+            axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
 
         });
 
@@ -59,7 +61,7 @@ const Sideview = (props) => {
                     <aside className='user'>
                         <div className='user-picture'>
                             {
-                                userState.hasAvatar && <img className='user-picture' src={`http://localhost/users/${userState._id}/avatar`} alt="User's avatar" />
+                                userState.hasAvatar && <img className='user-picture' src={USER_PATH+`/${userState._id}/avatar`} alt="User's avatar" />
                             }
                         </div> 
                         <div className='user-info'>
