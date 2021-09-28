@@ -1,7 +1,9 @@
+import axios from 'axios';
 import Header from './Header';
 import '../styles/components/Header.css';
 import Context from '../context/Context';
-
+require('dotenv').config();
+const USER_PATH=process.env.USER_PATH;
 
 const CreateRoom = () => {
     function goBack(e){
@@ -20,9 +22,20 @@ const CreateRoom = () => {
             return {userName: c.value, _id: c.id, joinDate: dateStr};
         });
         participants.push({userName: userState.userName, _id: userState._id, joinDate: dateStr});
-        socket.emit('newRoom', { roomName, participants}, (answer) => {
-            console.log(answer);
+        socket.emit('newRoom', { roomName, participants}, (roomId) => {
+            
+            let conf = {
+                headers: {
+                            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                        },
+            }
+            
+            axios.post(USER_PATH+'/newRoom', {roomName, participants, roomId }, conf)
+                    .then( window.location.href = '/chat/' )
+                    .catch( e => console.log(e));
         });
+
+        
         
     }
 

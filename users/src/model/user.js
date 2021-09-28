@@ -44,7 +44,8 @@ const userSchema = new mongoose.Schema({
     hasAvatar: {
         type: Boolean,
         default: false
-    }
+    },
+    conversations: []
 });
 
 userSchema.methods.toJSON = function (){

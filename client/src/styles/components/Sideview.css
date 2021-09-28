@@ -73,3 +73,8 @@
 .chats-button:hover {
     cursor: pointer;
 }
+
+.room:hover {
+    cursor: pointer;
+    color: rgb(71, 70, 70);
+}

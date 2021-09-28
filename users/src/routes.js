@@ -192,6 +192,33 @@ try {
     res.status(404).send(strError);
 }});
 
+router.post('/users/newRoom', authToken, async (req, res) => {
+try {
+    let participants = req.body.participants;
+    participants.forEach( async p => {
+        let user = await User.findById(p._id);
+        var conversations;
+        if (!user.conversations){
+            conversations = [];
+        } else {
+            conversations = user.conversations;
+        }
+
+        conversations.push(req.body);
+
+        user.conversations = conversations;
+
+        await user.save();
+    } )
+    res.send();
+} catch (error){
+    console.log(error);
+    let strError = e.toString();
+    console.log(strError);
+    res.status(404).send(strError);
+}
+});
+
 
 router.post('/users/avatar', authToken, upload.single('avatar'), async (req, res) => {
     const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer();
@@ -223,5 +250,6 @@ router.get('/users/:id/avatar', async (req, res) => {
         res.status(404).send(e);
     }
 });
+
 
 module.exports = router;

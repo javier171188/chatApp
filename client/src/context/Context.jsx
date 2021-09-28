@@ -43,7 +43,8 @@ const Provider =  ({ children }) => {
                                         email: "",
                                         hasAvatar: false,
                                         userName: "",
-                                        _id: ""
+                                        _id: "",
+                                        conversations: []
                                     });
 
     

@@ -46,13 +46,18 @@ const Sideview = (props) => {
 
         //let newUserState = [...userState];
         //newUserState.conta.forEach( )
-        //HERE I have to update userState so the (M) disappear when I change to that room
 
+    }
+
+    function openGroupChat(roomId){
+        console.log(roomId);
     }
 
     function createGroupChat(){
         window.location.href = '/chat/create-room';
     }
+
+
 
     return (
         <Context.Consumer>
@@ -99,7 +104,24 @@ const Sideview = (props) => {
                         <div className='chats'>
                             <div className='chats-header'><h1>Group Chats:</h1> <div className='chats-button' onClick={createGroupChat}>+</div></div>
                             <hr/>
-                            <nav className='chats-nav'>You have not started any group chat.</nav>
+                            <nav className='chats-nav'>{
+                                userState.conversations.length < 1 ?
+                                "You have not started any group chat." :
+                                <ul>
+                                {userState.conversations.map( c => {
+                                    return (<li 
+                                                key={c.roomId} 
+                                                id={c.roomId} 
+                                                className="room"
+                                                onClick={()=>openGroupChat(c.roomId)}
+                                            >
+                                                {c.roomName}
+                                            </li>)
+                                })}
+                                </ul>
+                            }
+                                
+                            </nav>
                         </div>
                     </aside>
                          

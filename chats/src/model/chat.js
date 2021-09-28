@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 
 const chatSchema = new mongoose.Schema({
     participants: [String], 
-    messages: []
+    messages: [],
+    roomName: {
+        type: String,
+        default: 'oneToOne'
+    }
     
 });
 
