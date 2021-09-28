@@ -103,7 +103,8 @@ const Provider =  ({ children }) => {
                 params:{
                     email: JSON.parse(sessionStorage.getItem('email')),
                     contactId: userWithNewMsgId,
-                    newStatus: true, roomId
+                    newStatus: true, 
+                    roomId
                 }
             }
             axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));

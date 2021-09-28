@@ -176,7 +176,7 @@ router.post('/users/updateUser',  async (req, res) => {
 try {
     //console.log(req.body);
     var user = await User.findOne({email:req.body.params.email});
-    if (req.body.params.contactId){
+    if (!req.body.params.roomId){ //This means there must be userId
         let contacts = user.contacts;
         contacts.forEach(c => {
             if (c._id === req.body.params.contactId) {
