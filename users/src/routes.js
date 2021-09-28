@@ -175,15 +175,27 @@ router.get('/users/getUserByPattern', authToken, async (req, res) => {
 router.post('/users/updateUser',  async (req, res) => {
 try {
     //console.log(req.body);
-    let user = await User.findOne({email:req.body.params.email});
-    let contacts = user.contacts;
-    contacts.forEach(c => {
-        if (c._id === req.body.params.contactId) {
-            c.newMsgs = req.body.params.newStatus;
-        }
-    });
-    user.contacts = contacts;
-    user.markModified('contacts');
+    var user = await User.findOne({email:req.body.params.email});
+    if (req.body.params.contactId){
+        let contacts = user.contacts;
+        contacts.forEach(c => {
+            if (c._id === req.body.params.contactId) {
+                c.newMsgs = req.body.params.newStatus;
+            }
+        });
+        user.contacts = contacts;
+        user.markModified('contacts');
+    } else{
+        let conversations = user.conversations;
+        conversations.forEach(c => {
+            if (c.roomId === req.body.params.roomId) {
+                c.newMsgs = req.body.params.newStatus;
+            }
+        });
+        user.conversations = conversations;
+        user.markModified('conversations');
+    }
+    
     await user.save();
     res.send();
 } catch (e){

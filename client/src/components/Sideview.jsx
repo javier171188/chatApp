@@ -50,8 +50,27 @@ const Sideview = (props) => {
         socket.emit('getRoom', {roomId}, ({ lastMessages, participants}) => {
             setCurrentRoomId(roomId);
             setCurrentMessages(lastMessages);
-            
         });
+
+        let newUserState = {...userState};
+        newUserState.conversations.forEach(c => {
+            if (c.roomId === roomId) {
+                    c.newMsgs = false;
+                }
+            });
+            
+        setUserState(newUserState);
+        let conf = {
+            headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    },
+            params:{
+                email: JSON.parse(sessionStorage.getItem('email')),
+                roomId,
+                newStatus: false
+            }
+        }
+        axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
     }
 
     function createGroupChat(){
@@ -64,6 +83,7 @@ const Sideview = (props) => {
         <Context.Consumer>
 			{ ({userState, setUserState,socket,currentRoomId, setCurrentRoomId, setCurrentMessages }) => {
                 console.log('times'); //just to be sure the element does not render many times
+                console.log(userState);
                 return  (
                     <aside className='user'>
                         <div className='user-picture'>
@@ -110,10 +130,12 @@ const Sideview = (props) => {
                                 "You have not started any group chat." :
                                 <ul>
                                 {userState.conversations.map( c => {
+                                    let newMsgs = c.newMsgs ? 'new-messages'
+                                                                : 'no-messages';
                                     return (<li 
                                                 key={c.roomId} 
                                                 id={c.roomId} 
-                                                className="room"
+                                                className={`room ${newMsgs}`}
                                                 onClick={()=>openGroupChat(c.roomId,
                                                                             socket, 
                                                                             setCurrentRoomId, 

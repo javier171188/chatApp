@@ -30,7 +30,7 @@ const CreateRoom = () => {
                         },
             }
             
-            axios.post(USER_PATH+'/newRoom', {roomName, participants, roomId }, conf)
+            axios.post(USER_PATH+'/newRoom', {roomName, participants, roomId, newMsgs:false }, conf)
                     .then( window.location.href = '/chat/' )
                     .catch( e => console.log(e));
         });
