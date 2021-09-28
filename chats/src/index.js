@@ -86,6 +86,7 @@ io.on('connection', (socket) => {
 
     socket.on('newRoom', async (data, callback) => {
         let chat = new Chat(data);
+        console.log(chat);
         await chat.save();
         callback(chat._id);
     });

@@ -205,9 +205,8 @@ try {
         }
 
         conversations.push(req.body);
-        console
         user.conversations = conversations;
-
+        
         await user.save();
     } )
     res.send();
