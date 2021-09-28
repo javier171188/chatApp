@@ -45,7 +45,10 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                     });
     });
         
-    console.log(userState.conversations[0]);
+    userState.conversations.forEach( c => {
+        socket.emit('joinGroup', {roomId:c.roomId}, ({_id, lastMessages}) => {
+                    });
+    });
     return (
         <Context.Consumer>
             {

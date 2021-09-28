@@ -41,16 +41,17 @@ const Sideview = (props) => {
                 }
             }
             axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
-
         });
-
         //let newUserState = [...userState];
         //newUserState.conta.forEach( )
-
     }
 
-    function openGroupChat(roomId){
-        console.log(roomId);
+    function openGroupChat(roomId, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState){
+        socket.emit('getRoom', {roomId}, ({ lastMessages, participants}) => {
+            setCurrentRoomId(roomId);
+            setCurrentMessages(lastMessages);
+            
+        });
     }
 
     function createGroupChat(){
@@ -113,7 +114,12 @@ const Sideview = (props) => {
                                                 key={c.roomId} 
                                                 id={c.roomId} 
                                                 className="room"
-                                                onClick={()=>openGroupChat(c.roomId)}
+                                                onClick={()=>openGroupChat(c.roomId,
+                                                                            socket, 
+                                                                            setCurrentRoomId, 
+                                                                            setCurrentMessages, 
+                                                                            userState, 
+                                                                            setUserState)}
                                             >
                                                 {c.roomName}
                                             </li>)

@@ -33,14 +33,19 @@ io.on('connection', (socket) => {
     serverData.message = 'A user has joined!'
     socket.broadcast.emit('message', serverData);*/
 
-    socket.on('getRoom',  async ({current, receiver}, callback)=> {
+    socket.on('getRoom',  async ({current, receiver, roomId}, callback)=> {
         try{
-            var chat = await Chat.findOne({$and: [{"participants":current}, {"participants": receiver}]});
-            if (!chat){
-                chat = new Chat({"participants":[current, receiver]});
-                await chat.save();
+            if (!roomId){
+                var chat = await Chat.findOne({$and: [{"participants":current}, {"participants": receiver}]});
+                if (!chat){
+                    chat = new Chat({"participants":[current, receiver]});
+                    await chat.save();
+                }
+            } else {
+                var chat = await Chat.findById(roomId);
             }
-            socket.join(chat._id.toString());
+            
+            //socket.join(chat._id.toString()); I think this is done in joinPersonal and joinGroup
             const lastMessages = chat.messages.slice(-20);
             const participants = chat.participants;
             callback({_id:chat._id.toString(), lastMessages, participants});
