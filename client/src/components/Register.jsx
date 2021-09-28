@@ -36,7 +36,7 @@ const Register = () => {
 	return (
 	<Context.Consumer>
 		{
-			({ registerUser, errorMessages }) => {
+			({ registerUser, errorMessages, setErrorMessages }) => {
 				return (
 					<section className='register'>
 						<section className='register__container'>
@@ -83,11 +83,12 @@ const Register = () => {
 								<button className='button'>Register</button>
 								
 								{ errorMessages.length >= 1
-											&& <div className='login--error' >{errorMessages[0]}</div>
+										&& <div className='login--error' >{errorMessages[0]}</div>
+										
 								}
 							</form>
 							<p className='register__container--login'>
-							Already a member?  <Link to='/chat/login'>Log in</Link>
+							Already a member?  <Link to='/chat/login' onClick={()=>setErrorMessages([])}>Log in</Link>
 							</p>
 						</section>
 					</section>

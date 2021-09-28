@@ -48,7 +48,6 @@ const Provider =  ({ children }) => {
                                     });
 
     
-    
     async function getUserState(){
         let email = JSON.parse(sessionStorage.getItem('email'));
         let token = sessionStorage.getItem('token');
@@ -125,6 +124,7 @@ const Provider =  ({ children }) => {
         },
         isAuth,
         errorMessages,
+        setErrorMessages,
         registerUser: async (event) => {
             try {
                 event.preventDefault();
@@ -161,7 +161,7 @@ const Provider =  ({ children }) => {
 
                     
                     window.sessionStorage.setItem('token', data.data.token);
-                    
+                    setErrorMessages([]);
                     setIsAuth(true);
                 } else {
                     setErrorMessages(['The password does not match the confirmation']);
@@ -184,6 +184,7 @@ const Provider =  ({ children }) => {
                     window.sessionStorage.setItem('email', JSON.stringify(data.data.user.email));
                     setUserState(data.data.user);
                     window.sessionStorage.setItem('token', data.data.token);
+                    setErrorMessages([]);
                     setIsAuth(true);
                 }).catch(e => {
                     setErrorMessages([e]);

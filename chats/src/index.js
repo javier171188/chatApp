@@ -62,6 +62,17 @@ io.on('connection', (socket) => {
             console.log(e.toString());
         }
     })
+
+    socket.on('joinGroup',  async ({roomId}, callback)=> {
+        try{
+            var chat = await Chat.findOne({_id:roomId});
+            socket.join(chat._id.toString());
+        }catch (e){
+            console.log(e.toString());
+        }
+    })
+
+
     
     socket.on('getMessagesByRoomId', async (roomId, callback) => {
         var chat = await Chat.findById(roomId);

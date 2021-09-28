@@ -45,7 +45,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                     });
     });
         
-
+    console.log(userState.conversations[0]);
     return (
         <Context.Consumer>
             {

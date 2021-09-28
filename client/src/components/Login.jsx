@@ -21,10 +21,16 @@ const Login = () => {
 		props.history.push('/chat');
 		console.log(form);
 	}*/
+	function goRegister(setErrorMessages){
+		setErrorMessages([]);
+		//window.location.href ='/chat/register';
+	}
+
 	return (
 		<Context.Consumer>
 			{
-				({ logIn, errorMessages }) => {
+				({ logIn, errorMessages, setErrorMessages }) => {
+					
 					return (<section className='login'>
 								
 								<section className='login__container'>
@@ -53,7 +59,7 @@ const Login = () => {
 									</form>
 									
 									<p className='login__container--register'>
-										Not a user yet? <Link to='/chat/register'> Register</Link>
+										Not a user yet? <Link to='/chat/register' onClick={() => goRegister(setErrorMessages)}> Register</Link>
 									</p>
 								</section>
 							</section>
