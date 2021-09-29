@@ -13,6 +13,9 @@ const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
 var updateLastRoom = function () {
     console.log('executed before');
 };
+var subscribeRoom = function() {
+    console.log('executed before');
+}
 
 socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
     //participants = participants.filter((pId) => pId !== userState._id );
@@ -26,6 +29,11 @@ socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
     //sessionStorage.setItem('lastRoomChanged', roomId);
     updateLastRoom(roomId, returnedMessages, participants);
 })
+
+socket.on('newRoom',({participants, roomId}) => {
+    subscribeRoom(participants, roomId)
+})
+
 
 const USER_PATH=process.env.USER_PATH;
 
@@ -47,7 +55,34 @@ const Provider =  ({ children }) => {
                                         conversations: []
                                     });
 
-    
+    subscribeRoom = async function(participants, roomId){
+        try{
+            console.log(participants, userState._id);
+            console.log(participants.includes(userState._id));
+            let participantIds =participants.map( p => p._id);
+        if (participantIds.includes(userState._id)){
+                
+                let conf = {
+                    headers: {
+                                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                            },
+                    params:{
+                        email: sessionStorage.getItem('email'),
+                        selfUser: true
+                    }
+                }
+                let user = await axios.get(USER_PATH+'/getUser', conf );
+                setUserState(user.data);
+                    
+                socket.emit('joinGroup', {roomId}, ({_id, lastMessages}) => {
+                });
+            }
+        } catch (e){
+            console.log(e);
+        }
+    }
+
+                                    
     async function getUserState(){
         let email = JSON.parse(sessionStorage.getItem('email'));
         let token = sessionStorage.getItem('token');

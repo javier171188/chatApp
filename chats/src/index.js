@@ -104,6 +104,7 @@ io.on('connection', (socket) => {
         let chat = new Chat(data);
         console.log(chat);
         await chat.save();
+        socket.broadcast.emit('newRoom', {participants:data.participants, roomId:data.roomId});
         callback(chat._id);
     });
 
