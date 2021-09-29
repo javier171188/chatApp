@@ -52,10 +52,9 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     return (
         <Context.Consumer>
             {
-                ({userState, currentRoomId, currentMessages}) => {
-                    console.log(userState);
+                ({userState, currentRoomId, currentMessages, currentRoomName}) => {
                     return (<div className='chat'>
-                                <h1>Room name - buttons</h1>
+                                {currentRoomId && <h1>{currentRoomName} - buttons</h1>}
                                 <div className='chat-messages'>
                                 {currentMessages.map(message => (
                                     <MessageForm 

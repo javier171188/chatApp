@@ -46,6 +46,7 @@ const Provider =  ({ children }) => {
     });
     const [errorMessages, setErrorMessages] = useState([]);
     const [currentRoomId, setCurrentRoomId] = useState('');
+    const [currentRoomName, setCurrentRoomName] = useState('');
     const [userState, setUserState] = useState({
                                         contacts:[],
                                         email: "",
@@ -150,6 +151,8 @@ const Provider =  ({ children }) => {
     const value = {
         //currentUserChat,
         //setCurrentUserChat,
+        setCurrentRoomName,
+        currentRoomName,
         lastRoomChanged,
         currentMessages,
         setCurrentMessages,

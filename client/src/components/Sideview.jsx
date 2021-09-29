@@ -11,7 +11,7 @@ const USER_PATH=process.env.USER_PATH;
 const Sideview = (props) => {
     
     
-    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState ){
+    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState, setCurrentRoomName){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
@@ -22,6 +22,10 @@ const Sideview = (props) => {
             setCurrentMessages(lastMessages);
             //console.log(`The messages were changed in the sideview. Current room: ${_idRoom}. Last changed room: ${lastRoomChanged}`);
             //setCurrentUserChat(receiver);
+            let participantId = participants.filter( p => p !== userState._id)[0];
+            
+            let newNameObj = userState.contacts.filter( c => (c._id === participantId ));
+            setCurrentRoomName(newNameObj[0].userName);
             let newUserState = {...userState};
             newUserState.contacts.forEach(c => {
                 if (c._id === receiver) {
@@ -46,10 +50,11 @@ const Sideview = (props) => {
         //newUserState.conta.forEach( )
     }
 
-    function openGroupChat(roomId, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState){
-        socket.emit('getRoom', {roomId}, ({ lastMessages, participants}) => {
+    function openGroupChat(roomId, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState, setCurrentRoomName){
+        socket.emit('getRoom', {roomId}, ({ lastMessages, participants, roomName}) => {
             setCurrentRoomId(roomId);
             setCurrentMessages(lastMessages);
+            setCurrentRoomName(roomName);
         });
 
         let newUserState = {...userState};
@@ -81,7 +86,7 @@ const Sideview = (props) => {
 
     return (
         <Context.Consumer>
-			{ ({userState, setUserState,socket,currentRoomId, setCurrentRoomId, setCurrentMessages }) => {
+			{ ({userState, setUserState,socket,currentRoomId, setCurrentRoomId, setCurrentMessages, setCurrentRoomName }) => {
                 console.log('times'); //just to be sure the element does not render many times
                 
                 return  (
@@ -113,7 +118,8 @@ const Sideview = (props) => {
                                                                             setCurrentRoomId, 
                                                                             setCurrentMessages, 
                                                                             userState, 
-                                                                            setUserState
+                                                                            setUserState,
+                                                                            setCurrentRoomName
                                                                             )}}
                                         > 
                                             {child.userName} 
@@ -141,7 +147,8 @@ const Sideview = (props) => {
                                                                             setCurrentRoomId, 
                                                                             setCurrentMessages, 
                                                                             userState, 
-                                                                            setUserState)}
+                                                                            setUserState,
+                                                                            setCurrentRoomName)}
                                             >
                                                 {c.roomName}
                                             </li>)
