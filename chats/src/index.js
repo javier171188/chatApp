@@ -102,12 +102,16 @@ io.on('connection', (socket) => {
 
     socket.on('newRoom', async (data, callback) => {
         let chat = new Chat(data);
-        console.log(chat);
+        //console.log(chat);
         await chat.save();
-        socket.broadcast.emit('newRoom', {participants:data.participants, roomId:data.roomId});
         callback(chat._id);
+        //socket.broadcast.emit('newRoom', {participants:data.participants, roomId:data.roomId});
     });
 
+    socket.on('updateRooms', ({participants, roomId}, callback) =>{
+        socket.broadcast.emit('newRoom', { participants, roomId});
+        callback();
+    })
 
 
     socket.on('disconnect', () => {

@@ -2,10 +2,12 @@ import axios from 'axios';
 import Header from './Header';
 import '../styles/components/Header.css';
 import Context from '../context/Context';
+
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 const CreateRoom = () => {
+
     function goBack(e){
         e.preventDefault();
         window.location.href = '/chat/'
@@ -29,9 +31,12 @@ const CreateRoom = () => {
                             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                         },
             }
-            
             axios.post(USER_PATH+'/newRoom', {roomName, participants, roomId, newMsgs:false }, conf)
-                    .then( window.location.href = '/chat/' )
+                    .then( () => {
+                        socket.emit('updateRooms', {participants, roomId}, () => {
+                            window.location.href = '/chat/';
+                        })
+                        })
                     .catch( e => console.log(e));
         });
         

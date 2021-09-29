@@ -57,21 +57,21 @@ const Provider =  ({ children }) => {
 
     subscribeRoom = async function(participants, roomId){
         try{
-            console.log(participants, userState._id);
-            console.log(participants.includes(userState._id));
             let participantIds =participants.map( p => p._id);
-        if (participantIds.includes(userState._id)){
+            //console.log(participantsId.includes(userState._id));
+            if (participantIds.includes(userState._id)){
                 
                 let conf = {
                     headers: {
                                 'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                             },
                     params:{
-                        email: sessionStorage.getItem('email'),
+                        email: JSON.parse(sessionStorage.getItem('email')),
                         selfUser: true
                     }
                 }
                 let user = await axios.get(USER_PATH+'/getUser', conf );
+                console.log(user.data);
                 setUserState(user.data);
                     
                 socket.emit('joinGroup', {roomId}, ({_id, lastMessages}) => {
