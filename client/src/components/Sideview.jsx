@@ -74,7 +74,7 @@ const Sideview = (props) => {
     }
 
     function createGroupChat(){
-        window.location.href = '/chat/create-room';
+        window.location.href = '/chat/create-room'; 
     }
 
 

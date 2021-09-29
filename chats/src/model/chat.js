@@ -7,7 +7,7 @@ const chatSchema = new mongoose.Schema({
     messages: [],
     roomName: {
         type: String,
-        default: 'oneToOne'
+        default: ''
     }
     
 });

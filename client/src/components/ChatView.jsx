@@ -53,7 +53,9 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
         <Context.Consumer>
             {
                 ({userState, currentRoomId, currentMessages}) => {
+                    console.log(userState);
                     return (<div className='chat'>
+                                <h1>Room name - buttons</h1>
                                 <div className='chat-messages'>
                                 {currentMessages.map(message => (
                                     <MessageForm 

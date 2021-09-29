@@ -48,7 +48,8 @@ io.on('connection', (socket) => {
             //socket.join(chat._id.toString()); I think this is done in joinPersonal and joinGroup
             const lastMessages = chat.messages.slice(-20);
             const participants = chat.participants;
-            callback({_id:chat._id.toString(), lastMessages, participants});
+            const roomName = chat.roomName;
+            callback({_id:chat._id.toString(), lastMessages, participants, roomName});
         }catch (e){
             console.log(e.toString());
         }
