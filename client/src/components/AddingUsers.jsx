@@ -8,7 +8,7 @@ const USER_PATH=process.env.USER_PATH;
 const AddingUsers = ({currentUsers}) => {
     
     
-    function addUser(event, userState, socket, currentRoomId, currentRoomName){
+    function addUser(event, userState, socket, currentRoomId, currentRoomName, setAddingUser){
         event.preventDefault();
         let allTarget = Object.values(event.target);
         let contactsList = allTarget.filter(c => c.checked);
@@ -32,36 +32,47 @@ const AddingUsers = ({currentUsers}) => {
                         })
                     .catch( e => console.log(e));
         });
-        console.log('Close the adding user window');
+        setAddingUser(false);
     }
-    function goBack(){
-        console.log('close the adding window');
+    function goBack(setAddingUser){
+        setAddingUser(false);
     }
     return (
     <Context.Consumer>
         {
-            ({userState, socket, currentRoomId, currentRoomName}) => {
+            ({userState, socket, currentRoomId, currentRoomName, setAddingUser}) => {
                 
             
                 const currentUsersIds = currentUsers.map( c => c._id);
-                return (<div className='adding-path'>
-                    <h1>Add users to {currentRoomName}</h1>
-                    {<form onSubmit={(event)=>addUser(event, userState, socket, currentRoomId, currentRoomName)}>
-                            
-                            {userState.contacts.map(c =>{
-                                if(!currentUsersIds.includes(c._id)){
-                                    return (<label htmlFor={c._id} key={c._id}>
-                                        <input 
-                                            id={c._id} 
-                                            type="checkbox" 
-                                            name="participants" 
-                                            value={c.userName}/> {c.userName}
-                                        </label>)
-                                }
-                            })}
-                            <button >Add</button>
-                        </form>}
-                    <button onClick={goBack}>Cancel</button>
+                return (<div className='adding-mod'>
+                    <div className='adding-box'>
+                        <h1 className='adding-title'>Add users to {currentRoomName}</h1>
+                        <hr/>
+                        {<form className='adding-form' 
+                               onSubmit={(event)=>addUser(event, 
+                                                          userState, 
+                                                          socket, 
+                                                          currentRoomId, 
+                                                          currentRoomName, 
+                                                          setAddingUser)}
+                         >
+                             <div className='adding-contacts'>
+                                {userState.contacts.map(c =>{
+                                    if(!currentUsersIds.includes(c._id)){
+                                        return (<label htmlFor={c._id} key={c._id} className='adding-contacts__contact'>
+                                            <input 
+                                                id={c._id} 
+                                                type="checkbox" 
+                                                name="participants" 
+                                                value={c.userName}/> {c.userName}
+                                            </label>)
+                                    }
+                                })}
+                             </div>
+                                <button className='adding-button'>Add</button>
+                            </form>}
+                        <button className='adding-button__cancel' onClick={() => goBack(setAddingUser)}>Cancel</button>
+                    </div>
                 </div>)
             }
         }

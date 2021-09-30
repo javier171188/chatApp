@@ -18,10 +18,11 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     const [currentUsers, setCurrentUsers] = useState([]);
     
 
-    function addUserToRoom({roomId, userState}){
+    function addUserToRoom({roomId, userState, setAddingUser}){
         socket.emit('getRoom', {roomId}, ({participants})=>{
             setCurrentUsers(participants);
         })
+        setAddingUser(true);
     }
     
     function removeUserFromRoom(){
@@ -64,13 +65,13 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     return (
         <Context.Consumer>
             {
-                ({userState, currentRoomId, currentMessages, currentRoomName, groupRoom }) => {
+                ({userState, currentRoomId, currentMessages, currentRoomName, groupRoom, addingUser, setAddingUser }) => {
                     return (<div className='chat'>
                                 {currentRoomId && (groupRoom ?
                                                             <div className='chat-header'>
                                                                 <h1 className='chat-header__name'>{currentRoomName}</h1> 
                                                                 <div className='chat-header__buttons'>
-                                                                    <button className='chat-header__add' onClick={()=>{addUserToRoom({roomId:currentRoomId, userState})}}>Add</button>
+                                                                    <button className='chat-header__add' onClick={()=>{addUserToRoom({roomId:currentRoomId, userState, setAddingUser})}}>Add</button>
                                                                     <button className='chat-header__remove' onClick={()=>{removeUserFromRoom()}}>Remove</button>
                                                                 </div>
                                                             </div>
@@ -101,7 +102,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                    <button className='chat-button'>Send</button>
                                </form>
                                }
-                               {true && 
+                               {addingUser && 
                                    <AddingUsers currentUsers={currentUsers}/>
                                 }
                             </div>)
