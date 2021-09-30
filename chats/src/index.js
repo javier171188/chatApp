@@ -109,6 +109,14 @@ io.on('connection', (socket) => {
         //socket.broadcast.emit('newRoom', {participants:data.participants, roomId:data.roomId});
     });
 
+    socket.on('addUsers', async ({roomId, newUsers}, callback) => {
+        let chat = await Chat.findById(roomId);
+        let newUsersList = chat.participants.concat(newUsers);
+        chat.participants = newUsersList;
+        await chat.save();
+        callback(newUsersList);
+    })
+
     socket.on('updateRooms', ({participants, roomId}, callback) =>{
         socket.broadcast.emit('newRoom', { participants, roomId});
         callback();
