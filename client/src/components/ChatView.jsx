@@ -1,6 +1,7 @@
 import  { useRef, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
+import AddingUsers from './AddingUsers';
 import './../styles/components/ChatView.css';
 
 
@@ -94,6 +95,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                    <button className='chat-button'>Send</button>
                                </form>
                                }
+                               <AddingUsers/>
                             </div>)
                 }
             }
