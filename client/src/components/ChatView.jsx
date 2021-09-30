@@ -1,4 +1,4 @@
-import  { useRef, useEffect } from 'react';
+import  { useState, useRef, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
@@ -11,11 +11,17 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
         //messagesEndRef.current.scrollIntoView()
-      }
-      useEffect(scrollToBottom, [currentMessages]);
+    }
+    useEffect(scrollToBottom, [currentMessages]);
+
+
+    const [currentUsers, setCurrentUsers] = useState([]);
+    
 
     function addUserToRoom({roomId, userState}){
-        console.log('Adding users');
+        socket.emit('getRoom', {roomId}, ({participants})=>{
+            setCurrentUsers(participants);
+        })
     }
     
     function removeUserFromRoom(){
@@ -95,7 +101,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                    <button className='chat-button'>Send</button>
                                </form>
                                }
-                               <AddingUsers/>
+                               <AddingUsers currentUsers={currentUsers}/>
                             </div>)
                 }
             }
