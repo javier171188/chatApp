@@ -8,10 +8,18 @@ require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 
-const Sideview = (props) => {
+const Sideview = () => {
     
     
-    function openOneToOneChat(current, receiver, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState, setCurrentRoomName){
+    function openOneToOneChat(current, 
+                              receiver, 
+                              socket, 
+                              setCurrentRoomId, 
+                              setCurrentMessages, 
+                              userState, 
+                              setUserState, 
+                              setCurrentRoomName, 
+                              setGroupRoom){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
@@ -32,7 +40,7 @@ const Sideview = (props) => {
                     c.newMsgs = false;
                 }
             });
-            
+            setGroupRoom(false);
             setUserState(newUserState);
             let conf = {
                 headers: {
@@ -50,7 +58,14 @@ const Sideview = (props) => {
         //newUserState.conta.forEach( )
     }
 
-    function openGroupChat(roomId, socket, setCurrentRoomId, setCurrentMessages, userState, setUserState, setCurrentRoomName){
+    function openGroupChat(roomId, 
+                           socket, 
+                           setCurrentRoomId, 
+                           setCurrentMessages, 
+                           userState, 
+                           setUserState, 
+                           setCurrentRoomName,
+                           setGroupRoom){
         socket.emit('getRoom', {roomId}, ({ lastMessages, participants, roomName}) => {
             setCurrentRoomId(roomId);
             setCurrentMessages(lastMessages);
@@ -63,7 +78,7 @@ const Sideview = (props) => {
                     c.newMsgs = false;
                 }
             });
-            
+        setGroupRoom(true);
         setUserState(newUserState);
         let conf = {
             headers: {
@@ -86,7 +101,14 @@ const Sideview = (props) => {
 
     return (
         <Context.Consumer>
-			{ ({userState, setUserState,socket,currentRoomId, setCurrentRoomId, setCurrentMessages, setCurrentRoomName }) => {
+			{ ({userState, 
+                setUserState,
+                socket,
+                currentRoomId, 
+                setCurrentRoomId, 
+                setCurrentMessages, 
+                setCurrentRoomName, 
+                setGroupRoom })  => {
                 console.log('times'); //just to be sure the element does not render many times
                 
                 return  (
@@ -119,7 +141,8 @@ const Sideview = (props) => {
                                                                             setCurrentMessages, 
                                                                             userState, 
                                                                             setUserState,
-                                                                            setCurrentRoomName
+                                                                            setCurrentRoomName,
+                                                                            setGroupRoom
                                                                             )}}
                                         > 
                                             {child.userName} 
@@ -148,7 +171,8 @@ const Sideview = (props) => {
                                                                             setCurrentMessages, 
                                                                             userState, 
                                                                             setUserState,
-                                                                            setCurrentRoomName)}
+                                                                            setCurrentRoomName,
+                                                                            setGroupRoom)}
                                             >
                                                 {c.roomName}
                                             </li>)

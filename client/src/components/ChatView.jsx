@@ -13,8 +13,13 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
       }
       useEffect(scrollToBottom, [currentMessages]);
 
+    function addUserToRoom({roomId, userState}){
+        console.log('Adding users');
+    }
     
-    
+    function removeUserFromRoom(){
+        console.log('Deleting user');
+    }
     
     function sendNewMessage(event, userState, currentRoomId){
         event.preventDefault();
@@ -52,9 +57,21 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     return (
         <Context.Consumer>
             {
-                ({userState, currentRoomId, currentMessages, currentRoomName}) => {
+                ({userState, currentRoomId, currentMessages, currentRoomName, groupRoom }) => {
                     return (<div className='chat'>
-                                {currentRoomId && <h1>{currentRoomName} - buttons</h1>}
+                                {currentRoomId && (groupRoom ?
+                                                            <div className='chat-header'>
+                                                                <h1 className='chat-header__name'>{currentRoomName}</h1> 
+                                                                <div className='chat-header__buttons'>
+                                                                    <button className='chat-header__add' onClick={()=>{addUserToRoom({roomId:currentRoomId, userState})}}>Add</button>
+                                                                    <button className='chat-header__remove' onClick={()=>{removeUserFromRoom()}}>Remove</button>
+                                                                </div>
+                                                            </div>
+                                                            :
+                                                            <div className='chat-header'>
+                                                                <h1 className='chat-header__name'>{currentRoomName}</h1> 
+                                                            </div>
+                                                            )}
                                 <div className='chat-messages'>
                                 {currentMessages.map(message => (
                                     <MessageForm 

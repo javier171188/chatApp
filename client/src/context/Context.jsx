@@ -111,6 +111,7 @@ const Provider =  ({ children }) => {
     const [currentMessages, setCurrentMessages] = useState([]);
     //const [currentUserChat, setCurrentUserChat] = useState('');
     const [lastRoomChanged, setLastRoomChanged] = useState('');// I think I am not using this.
+    const [groupRoom, setGroupRoom] = useState(false);
 
     updateLastRoom = function (roomId, returnedMessages, participants) {
         setLastRoomChanged(roomId);
@@ -151,6 +152,8 @@ const Provider =  ({ children }) => {
     const value = {
         //currentUserChat,
         //setCurrentUserChat,
+        groupRoom, 
+        setGroupRoom,
         setCurrentRoomName,
         currentRoomName,
         lastRoomChanged,
