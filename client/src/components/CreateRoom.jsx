@@ -31,7 +31,7 @@ const CreateRoom = () => {
                             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                         },
             }
-            axios.post(USER_PATH+'/newRoom', {roomName, participants, roomId, newMsgs:false }, conf)
+            axios.post(USER_PATH+'/newRoom', {roomName, participants, roomId, newMsgs:true }, conf)
                     .then( () => {
                         socket.emit('updateRooms', {participants, roomId}, () => {
                             window.location.href = '/chat/';

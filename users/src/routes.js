@@ -215,9 +215,11 @@ try {
             conversations = user.conversations;
         }
 
-        conversations.push(req.body);
-        user.conversations = conversations;
-        
+        let conversationsIds = conversations.map( c => c.roomId );
+        if ( !conversationsIds.includes(req.body.roomId)){
+            conversations.push(req.body);
+            user.conversations = conversations;
+        }
         await user.save();
     } )
     res.send();

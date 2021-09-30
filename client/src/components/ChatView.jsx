@@ -101,7 +101,9 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                    <button className='chat-button'>Send</button>
                                </form>
                                }
-                               <AddingUsers currentUsers={currentUsers}/>
+                               {true && 
+                                   <AddingUsers currentUsers={currentUsers}/>
+                                }
                             </div>)
                 }
             }

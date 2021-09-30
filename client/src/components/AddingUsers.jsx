@@ -1,6 +1,7 @@
 import Context from '../context/Context';
 import {useState} from 'react';
 import axios from 'axios';
+import './../styles/components/AddingUsers.css';
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
@@ -43,12 +44,11 @@ const AddingUsers = ({currentUsers}) => {
                 
             
                 const currentUsersIds = currentUsers.map( c => c._id);
-                return (<div>
+                return (<div className='adding-path'>
                     <h1>Add users to {currentRoomName}</h1>
                     {<form onSubmit={(event)=>addUser(event, userState, socket, currentRoomId, currentRoomName)}>
                             
                             {userState.contacts.map(c =>{
-                                
                                 if(!currentUsersIds.includes(c._id)){
                                     return (<label htmlFor={c._id} key={c._id}>
                                         <input 
