@@ -7,13 +7,24 @@ import './../styles/components/ChatView.css';
 
 
 function ChatView({ socket, setCurrentMessages,  currentMessages, userState, currentRoomId }) {
-    const messagesEndRef = useRef(null);
+    /*const messagesEndRef = useRef(null);
     const scrollToBottom = () => {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-        //messagesEndRef.current.scrollIntoView()
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth",
+                                                alignToTop: false });
+        messagesEndRef.current.scrollTo(0,5000);
     }
     useEffect(scrollToBottom, [currentMessages]);
+    console.log('5000t');*/
 
+    
+    useEffect(() => {
+        let $messages = document.querySelector('.chat-messages');
+        if ($messages){
+            $messages.scrollTop = $messages.scrollHeight;    
+        }
+      }, [currentMessages]);
+    
+    
 
     const [currentUsers, setCurrentUsers] = useState([]);
     
@@ -81,20 +92,20 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                                             </div>
                                                             )}
                                 <div className='chat-messages'>
-                                {currentMessages.map(message => (
-                                    <MessageForm 
-                                            key={message.date+message.sender._id}
-                                            userState={message.userState}
-                                            sender={message.sender}
-                                            message={message.message}
-                                            date={message.date.toString()}
-                                        />
-                                    ))
-                                }  
-                                {
-                                    !currentRoomId && <h1 className='chat-start'>Click a user or a conversation to start chatting.</h1>
-                                }
-                                <div ref={messagesEndRef} />
+                                    {currentMessages.map(message => (
+                                        <MessageForm 
+                                                key={message.date+message.sender._id}
+                                                userState={message.userState}
+                                                sender={message.sender}
+                                                message={message.message}
+                                                date={message.date.toString()}
+                                            />
+                                        ))
+                                    }  
+                                    {
+                                        !currentRoomId && <h1 className='chat-start'>Click a user or a conversation to start chatting.</h1>
+                                    }
+                                    {/*<div ref={messagesEndRef} />*/}
                                 </div>
                                { currentRoomId &&
                                 <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
