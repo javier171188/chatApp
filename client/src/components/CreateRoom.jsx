@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Header from './Header';
 import '../styles/components/Header.css';
+import '../styles/components/CreateRoom.css';
 import Context from '../context/Context';
 
 require('dotenv').config();
@@ -49,22 +50,34 @@ const CreateRoom = () => {
                     return (
                         <>
                         <Header />
-                        <h1>Create New Room</h1>
+                        <h1 className='new-room__title'>Create New Room</h1>
                         <form onSubmit={(e)=>createRoom(e, userState, socket)}>
-                            <input type="text" placeholder='Room name' required/>
-                            {userState.contacts.map(c =>{
-                                return (<label htmlFor={c._id} key={c._id}>
-                                        <input 
-                                            id={c._id} 
-                                            type="checkbox" 
-                                            name="participants" 
-                                            value={c.userName}/> {c.userName}
-                                        </label>)
-                            })}
-
-                            <button >Create</button>
+                            <div className='new-room__name'>
+                                <label>Room Name </label>
+                                <input 
+                                    type="text" 
+                                    placeholder='Write a name for the room...' 
+                                    required
+                                    className='new-room__input-name'
+                                />
+                            </div>
+                            <div className='new-room__contacts'>
+                                <h2 className='new-room__title-users'>Choose people for the new chat room</h2>
+                                <div className='new-room__contacts-list'>
+                                    {userState.contacts.map(c =>{
+                                    return (<label htmlFor={c._id} key={c._id} className='new-room__contacts-label'>
+                                            <input 
+                                                id={c._id} 
+                                                type="checkbox" 
+                                                name="participants" 
+                                                value={c.userName}/> {c.userName}
+                                            </label>)
+                                })}
+                                </div>
+                                <button className='new-room__create-button'>Create</button>
+                            </div>
                         </form>
-                        <button onClick={goBack}>Cancel</button>
+                        <button onClick={goBack} className='new-room__cancel-button'>Cancel</button>
                         </>
                     )
                 }

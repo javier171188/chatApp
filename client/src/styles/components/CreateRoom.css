@@ -1,0 +1,57 @@
+.new-room__title{
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.new-room__name{
+    margin: 1rem;
+    font-size: 2em;
+}
+
+.new-room__input-name{
+    display: block;
+    background-color: white;
+}
+
+.new-room__input-name::placeholder {
+    color: rgb(82, 80, 80);
+    opacity: 1;
+  }
+
+.new-room__contacts{
+    display: block;
+    margin: 1em;
+}
+
+.new-room__create-button{
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.new-room__title-users{
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
+.new-room__contacts-list{
+    overflow-x: scroll;
+    box-shadow: -5px -5px -5px rgba(0, 0, 0, 0.9);
+    background-color: rgb(83, 82, 82);
+    height: 3em;
+    padding-top: 1em;
+    border-radius: 5px;
+    margin-top: 0.5em;
+}
+
+.new-room__contacts-label{
+    margin-left: 1em;
+}
+
+.new-room__create-button{
+    margin-top: 0.3em;
+}
+
+.new-room__cancel-button{
+    position: relative;
+    float: right;
+}

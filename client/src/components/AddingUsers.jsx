@@ -44,6 +44,7 @@ const AddingUsers = ({currentUsers}) => {
                 
             
                 const currentUsersIds = currentUsers.map( c => c._id);
+
                 return (<div className='adding-mod'>
                     <div className='adding-box'>
                         <h1 className='adding-title'>Add users to {currentRoomName}</h1>
@@ -56,19 +57,21 @@ const AddingUsers = ({currentUsers}) => {
                                                           currentRoomName, 
                                                           setAddingUser)}
                          >
-                             <div className='adding-contacts'>
-                                {userState.contacts.map(c =>{
-                                    if(!currentUsersIds.includes(c._id)){
-                                        return (<label htmlFor={c._id} key={c._id} className='adding-contacts__contact'>
-                                            <input 
-                                                id={c._id} 
-                                                type="checkbox" 
-                                                name="participants" 
-                                                value={c.userName}/> {c.userName}
-                                            </label>)
-                                    }
-                                })}
+                             { <div className='adding-contacts'>
+                                {   userState.contacts.map(c =>{
+                                        if(!currentUsersIds.includes(c._id)){
+                                            return (<label htmlFor={c._id} key={c._id} className='adding-contacts__contact'>
+                                                <input 
+                                                    id={c._id} 
+                                                    type="checkbox" 
+                                                    name="participants" 
+                                                    value={c.userName}/> {c.userName}
+                                                </label>)
+                                        }
+                                    })
+                                }
                              </div>
+                             }
                                 <button className='adding-button'>Add</button>
                             </form>}
                         <button className='adding-button__cancel' onClick={() => goBack(setAddingUser)}>Cancel</button>
