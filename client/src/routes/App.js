@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import { BrowserRouter, Switch, Route  } from 'react-router-dom';
+import { withNamespaces } from 'react-i18next';
 import Home from '../components/Home';
 import Login from '../components/Login';
 import Register from '../components/Register';
@@ -38,4 +39,4 @@ const App = () => (
     </Context.Consumer>
 );
 
-export default App;
+export default withNamespaces()(App);
