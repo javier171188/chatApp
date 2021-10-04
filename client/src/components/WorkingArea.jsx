@@ -3,14 +3,17 @@ import axios from "axios";
 import Context from "../context/Context";
 import ChatView from "./ChatView";
 import '../styles/components/WorkingArea.css';
+import { useTranslation } from 'react-i18next';
+
 require('dotenv').config();
+
 
 const USER_PATH=process.env.USER_PATH;
 
 
     
 const WorkingArea = () => {
-    
+    const { t, i18n } = useTranslation();
     const [ searchMessage, setSearchMessage ] = useState('Look for a user to chat.');
     const [ searchUser, setSearchUser ] = useState(null);
     function lookForUser(event) {
@@ -30,7 +33,7 @@ const WorkingArea = () => {
                 user.data.newMsgs = false;
                 setSearchUser(user.data);
                 setSearchMessage('One user found: ')
-                console.log(user);
+                //console.log(user);
             })
             .catch( e => {
                 let strError = e.response.data;
@@ -77,7 +80,7 @@ const WorkingArea = () => {
                                             <h2 className='found-user__user'> 
                                                     {searchUser.userName} 
                                             </h2>
-                                            <button onClick={() => addContact(userState, updateUser)}>Add contact</button>
+                                            <button onClick={() => addContact(userState, updateUser)}>{t('Add contact')}</button>
                                             </>}
             </div>
             <ChatView 

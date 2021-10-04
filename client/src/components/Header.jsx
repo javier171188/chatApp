@@ -12,7 +12,7 @@ const Header = () => {
                 ({ logOut }) => {
                     return (
                         <header className='header'>
-                        <h1 className='header-title'>{t('Welcome to React')}</h1>
+                        <h1 className='header-title'>{t('App name')}</h1>
                         <button onClick={logOut}> Logout</button>
                         </header>
                     )

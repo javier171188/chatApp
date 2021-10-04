@@ -1,17 +1,20 @@
 {
     "en": {
       "translation": {
-        "Welcome to React": "Welcome to React in English"
+        "App name": "Chat App",
+        "Add contact": "Add contact"
       }
     },
     "es": {
       "translation": {
-          "Welcome to React": "Bienvenido a React y react-i18next"
+          "App name": "Chatea",
+          "Add contact": "Agregar contacto"
         }
     },
     "fr": {
       "translation": {
-        "Welcome to React": "Bienvenue à React et react-i18next"
+        "App name": "Application Chat",
+        "Add contact": "Ajouter le contact"
       }
     }
   }
