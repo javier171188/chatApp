@@ -13,7 +13,7 @@ import CreateRoom from '../components/CreateRoom';
 
 
 
-const App = ({t}) => (
+const App = () => (
     <Context.Consumer>
             {
                 ({ isAuth }) => isAuth 
