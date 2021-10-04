@@ -4,9 +4,8 @@ import Context from '../context/Context';
 
 import { useTranslation } from 'react-i18next';
 
-const Header = ({t}) => {
-    //const { t, i18n } = useTranslation();
-    //https://react.i18next.com/legacy-v9/step-by-step-guide
+const Header = () => {
+    const { t, i18n } = useTranslation();
     return(
         <Context.Consumer>
             {
