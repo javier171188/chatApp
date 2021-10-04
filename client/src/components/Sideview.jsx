@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import Context from '../context/Context';
 import axios from 'axios';
-import '../styles/components/Sideview.css'
+import { useTranslation } from 'react-i18next';
+import '../styles/components/Sideview.css';
 import { Redirect } from 'react-router-dom';
+
 require('dotenv').config();
 
 const USER_PATH=process.env.USER_PATH;
 
 
 const Sideview = () => {
-    
+    const { t, i18n } = useTranslation();
     
     function openOneToOneChat(current, 
                               receiver, 
@@ -126,8 +128,8 @@ const Sideview = () => {
                             </div>
                             <hr/>
                             <div className='user-contacts'>
+                                <h1>{t('ContactHeader')}</h1>  
                                 <ul>
-                                    <h1>Contacts:</h1>
                                     {userState.contacts.map( child => {
                                         let newMsgs = child.newMsgs ? 'new-messages'
                                                                     : 'no-messages';
@@ -152,11 +154,11 @@ const Sideview = () => {
                             </div>
                         </div>
                         <div className='chats'>
-                            <div className='chats-header'><h1>Group Chats:</h1> <div className='chats-button' onClick={createGroupChat}>+</div></div>
+                            <div className='chats-header'><h1>{t('Group Chats:')}</h1> <div className='chats-button' onClick={createGroupChat}>+</div></div>
                             <hr/>
                             <nav className='chats-nav'>{
                                 userState.conversations.length < 1 ?
-                                "You have not started any group chat." :
+                                t("You have not started any group chat.") :
                                 <ul>
                                 {userState.conversations.map( c => {
                                     let newMsgs = c.newMsgs ? 'new-messages'

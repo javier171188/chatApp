@@ -2,19 +2,55 @@
     "en": {
       "translation": {
         "App name": "Chat App",
-        "Add contact": "Add contact"
+        "Add contact": "Add contact",
+        "One user found: ": "One user found: ",
+        "Search!": "Search!",
+        "Type an e-mail...": "Type an e-mail...",
+        "You cannot add yourself, try another e-mail address.": "You cannot add yourself, try another e-mail address.",
+        "No user was found, try a different e-mail address.": "No user was found, try a different e-mail address.",
+        "Look for a user to chat.": "Look for a user to chat.",
+        "Skip": "Skip",
+        "Save": "Save",
+        "Upload an Avatar Image": "Upload an Avatar Image",
+        "You have not started any group chat.": "You have not started any group chat.",
+        "Group Chats:": "Group Chats:",
+        "ContactHeader": "Contacts:"
       }
     },
     "es": {
       "translation": {
           "App name": "Chatea",
-          "Add contact": "Agregar contacto"
+          "Add contact": "Agregar contacto",
+          "One user found: ": "Un usuario encontrado",
+          "Search!": "¡Buscar!",
+          "Type an e-mail...": "Escribe un correo electrónico...",
+          "You cannot add yourself, try another e-mail address.": "No te puedes agregar a ti mismo, intenta con otra dirección de correo electrónico.",
+          "No user was found, try a different e-mail address.": "No se encontró ningún usuario, prueba con otra dirección de correo.",
+          "Look for a user to chat.": "Busca un usuario para chatear.",
+          "Skip":"Omitir",
+          "Save": "Guardar",
+          "Upload an Avatar Image": "Cargar una imagen como Avatar",
+          "You have not started any group chat.": "No has empezado ningún chat grupal.",
+          "Group Chats:": "Chats Grupales",
+          "ContactHeader": "Contactos:"
         }
     },
     "fr": {
       "translation": {
         "App name": "Application Chat",
-        "Add contact": "Ajouter le contact"
+        "Add contact": "Ajouter le contact",
+        "One user found: ": "Un utilisateur a été trouvé",
+        "Search!": "Chercher!",
+        "Type an e-mail...": "Ecrire un e-mail...",
+        "You cannot add yourself, try another e-mail address.": "Vous ne pouvez pas vous ajouter, essayez une autre adresse e-mail.",
+        "No user was found, try a different e-mail address.": "Aucun utilisateur trouvé, essayez une autre adresse e-mail.",
+        "Look for a user to chat.": "Trouvez un utilisateur avec qui chatter.",
+        "Skip": "Sauter",
+        "Save": "Sauver",
+        "Upload an Avatar Image": "Télécharger une image Avatar",
+        "You have not started any group chat.":"Vous n'avez pas commencé une discussion de groupe.",
+        "Group Chats:": "Chats de Groupe",
+        "ContactHeader": "Contacts:"
       }
     }
   }

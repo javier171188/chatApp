@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Context from '../context/Context';
+import { useTranslation } from 'react-i18next';
 import '../styles/components/UploadAvatar.css';
 
 const UploadAvatar = () => {
-    
+    const { t, i18n } = useTranslation();
     return (
         <Context.Consumer>
             {
@@ -13,7 +14,7 @@ const UploadAvatar = () => {
                     return (
                         <section className='profile'>
                             <section className='profile__container'>
-                                <h2>Upload an Avatar Image</h2>
+                                <h2>{t('Upload an Avatar Image')}</h2>
                                 <form className='profile__container--form' onSubmit={saveAvatarImage} >
                                     <input 
                                     name='avatar'
@@ -22,10 +23,10 @@ const UploadAvatar = () => {
                                     required
                                     />
                                     
-                                    <button className='button'>Save</button>
+                                    <button className='button'>{t('Save')}</button>
                                 </form>
                                 <p className='profile__container--login'>
-                                <Link to='/chat'>Skip</Link>
+                                <Link to='/chat'>{t('Skip')}</Link>
                                 </p>
                             </section>
                         </section>

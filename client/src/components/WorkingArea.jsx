@@ -14,7 +14,7 @@ const USER_PATH=process.env.USER_PATH;
     
 const WorkingArea = () => {
     const { t, i18n } = useTranslation();
-    const [ searchMessage, setSearchMessage ] = useState('Look for a user to chat.');
+    const [ searchMessage, setSearchMessage ] = useState(t('Look for a user to chat.'));
     const [ searchUser, setSearchUser ] = useState(null);
     function lookForUser(event) {
         event.preventDefault();
@@ -32,12 +32,12 @@ const WorkingArea = () => {
             .then(user => {
                 user.data.newMsgs = false;
                 setSearchUser(user.data);
-                setSearchMessage('One user found: ')
+                setSearchMessage(t('One user found: '))
                 //console.log(user);
             })
             .catch( e => {
                 let strError = e.response.data;
-                setSearchMessage('No user was found, try a different e-mail address.');
+                setSearchMessage(t('No user was found, try a different e-mail address.'));
                 //console.log(strError);
             })
     }
@@ -46,7 +46,7 @@ const WorkingArea = () => {
         try {
             let currentId = userState._id;
             if (currentId === searchUser._id){
-                setSearchMessage('You cannot add yourself, try another e-mail address.')
+                setSearchMessage(t('You cannot add yourself, try another e-mail address.'))
             } else{
                 const conf = {
                     headers: {
@@ -71,12 +71,12 @@ const WorkingArea = () => {
         { ({ userState, updateUser, socket, setCurrentMessages, currentMessages, currentRoomId}) => (
         <div className='working'>
             <form className='working-nav' onSubmit={lookForUser}>
-                <input id='email-search' className='working-search' type="text" placeholder='Type an e-mail...' />
-                <button className='working-button'>Search!</button>
+                <input id='email-search' className='working-search' type="text" placeholder={t('Type an e-mail...')} />
+                <button className='working-button'>{t('Search!')}</button>
             </form>
             <div className="found-user">
                 {searchMessage}
-                { searchMessage === 'One user found: ' && <>
+                { searchMessage === t('One user found: ') && <>
                                             <h2 className='found-user__user'> 
                                                     {searchUser.userName} 
                                             </h2>
