@@ -2,6 +2,8 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
+
 require('dotenv').config();
 
 const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
@@ -41,6 +43,7 @@ const Context = createContext();
 
 var countUserLoad = 0;
 const Provider =  ({ children }) => {
+    const { t, i18n } = useTranslation();
     const [isAuth, setIsAuth] = useState(() => {
         return sessionStorage.getItem('token');
     });
@@ -214,12 +217,21 @@ const Provider =  ({ children }) => {
                     setErrorMessages([]);
                     setIsAuth(true);
                 } else {
-                    setErrorMessages(['The password does not match the confirmation']);
+                    setErrorMessages([t('The password does not match the confirmation')]);
                 }
             } catch (error) {
                 let strError = error.response.data;
                 strError = strError.replace('Error: ', '');
-                setErrorMessages([strError]);
+                console.log(strError)
+                switch (strError){
+                    case 'That e-mail is already registered':
+                        setErrorMessages([t('That e-mail is already registered')]);
+                    break;
+                    default: 
+                        setErrorMessages([t('Something went wrong')]);
+                    break;
+                }
+                
             }
 
         },

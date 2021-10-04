@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/Register.css';
+import { useTranslation } from 'react-i18next';
 import Context from '../context/Context';
 
 const Register = () => {
@@ -32,7 +33,7 @@ const Register = () => {
 	}
 	*/
 
-	
+	const { t, i18n } = useTranslation();
 	return (
 	<Context.Consumer>
 		{
@@ -40,27 +41,27 @@ const Register = () => {
 				return (
 					<section className='register'>
 						<section className='register__container'>
-							<h2>Register</h2>
+							<h2>{t('Register')}</h2>
 							<form className='register__container--form' onSubmit={ registerUser }>
 								<input 
 								name='userName'
 								className='input' 
 								type='text' 
-								placeholder='User name' 
+								placeholder={t('User name')} 
 								required
 								/>
 								<input 
 									name="email"
 									className='input' 
 									type='text' 
-									placeholder='E-mail' 
+									placeholder={t('E-mail')} 
 									required
 								/>
 								<input 
 									name='password'
 									className='input' 
 									type='password' 
-									placeholder='Password' 
+									placeholder={t('Password')} 
 									required
 									minLength='6'
 								/>
@@ -69,18 +70,21 @@ const Register = () => {
 									name='confirm-password'
 									className='input' 
 									type='password' 
-									placeholder='Confirm your password' 
+									placeholder={t('Confirm your password')}
 									required
 									minLength='6'
 								/>
-
+								<label className='avatar-label'> 
+									{t('Choose a profile image:')}
+								</label>
 								<input 
                                     name='avatar'
                                     className='input avatar-input' 
                                     type='file' 
                                 />
+								
 
-								<button className='button'>Register</button>
+								<button className='button'>{t('Register')}</button>
 								
 								{ errorMessages.length >= 1
 										&& <div className='login--error' >{errorMessages[0]}</div>
@@ -88,7 +92,7 @@ const Register = () => {
 								}
 							</form>
 							<p className='register__container--login'>
-							Already a member?  <Link to='/chat/login' onClick={()=>setErrorMessages([])}>Log in</Link>
+							{t('Already a member?')}  <Link to='/chat/login' onClick={()=>setErrorMessages([])}>{t('Log in')}</Link>
 							</p>
 						</section>
 					</section>

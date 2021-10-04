@@ -14,7 +14,18 @@
         "Upload an Avatar Image": "Upload an Avatar Image",
         "You have not started any group chat.": "You have not started any group chat.",
         "Group Chats:": "Group Chats:",
-        "ContactHeader": "Contacts:"
+        "ContactHeader": "Contacts:",
+        "Already a member?": "Already a member?",
+        "Log in": "Log in",
+        "Register": "Register",
+        "Confirm your password": "Confirm your password",
+        "Choose a profile image:": "Choose a profile image:",
+        "Password": "Password",
+        "E-mail": "E-mail",
+        "User name": "User name",
+        "The password does not match the confirmation": "The password does not match the confirmation",
+        "That e-mail is already registered": "That e-mail is already registered",
+        "Something went wrong": "Something went wrong"
       }
     },
     "es": {
@@ -32,7 +43,18 @@
           "Upload an Avatar Image": "Cargar una imagen como Avatar",
           "You have not started any group chat.": "No has empezado ningún chat grupal.",
           "Group Chats:": "Chats Grupales",
-          "ContactHeader": "Contactos:"
+          "ContactHeader": "Contactos:",
+          "Already a member?": "¿Ya eres miembro?",
+          "Log in": "Inicia sesión",
+          "Register": "Registrarse",
+          "Confirm your password": "Confirma tu contraseña",
+          "Choose a profile image:": "Elige una imagen de perfil:",
+          "Password": "Contraseña",
+          "E-mail": "Correo electrónico",
+          "User name": "Nombre de usuario",
+          "The password does not match the confirmation": "La contraseña y la confirmación no coinciden",
+          "That e-mail is already registered": "Ese correo electrónico ya está registrado",
+          "Something went wrong": "Algo salió mal"
         }
     },
     "fr": {
@@ -50,7 +72,18 @@
         "Upload an Avatar Image": "Télécharger une image Avatar",
         "You have not started any group chat.":"Vous n'avez pas commencé une discussion de groupe.",
         "Group Chats:": "Chats de Groupe",
-        "ContactHeader": "Contacts:"
+        "ContactHeader": "Contacts:",
+        "Already a member?": "Déjà membre?",
+        "Log in":"Connectez-vous",
+        "Register":"Registre",
+        "Confirm your password": "Confirmez votre mot de passe",
+        "Choose a profile image:":"Choisissez une photo de profil:",
+        "Password": "Mot de passe",
+        "E-mail": "E-mail",
+        "User name": "Nom de l'utilisateur",
+        "The password does not match the confirmation": "Le mot de passe et la confirmation ne correspondent pas",
+        "That e-mail is already registered": "Cette adresse e-mail est déjà enregistrée",
+        "Something went wrong":"Quelque chose a mal tourné"
       }
     }
   }
