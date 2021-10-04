@@ -11,6 +11,7 @@
 .new-room__input-name{
     display: block;
     background-color: white;
+    width: 25em;
 }
 
 .new-room__input-name::placeholder {

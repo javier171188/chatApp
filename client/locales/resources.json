@@ -25,7 +25,22 @@
         "User name": "User name",
         "The password does not match the confirmation": "The password does not match the confirmation",
         "That e-mail is already registered": "That e-mail is already registered",
-        "Something went wrong": "Something went wrong"
+        "Something went wrong": "Something went wrong",
+        "Home!": "Home!",
+        "Go": "Go",
+        "Did you spell correctly the address?": "Did you spell correctly the address?",
+        "We could not find what you are looking for.": "We could not find what you are looking for.",
+        "SelfUser": "You: ",
+        "Not a user yet?": "Not a user yet?",
+        "Incorrect credentials": "Incorrect credentials",
+        "Login": "Login",
+        "Logout": "Logout",
+        "Cancel": "Cancel",
+        "Create": "Create",
+        "Choose people for the new chat room": "Choose people for the new chat room",
+        "Write a name for the room...": "Write a name for the room...",
+        "Room Name": "Room Name",
+        "Create New Room": "Create New Room"
       }
     },
     "es": {
@@ -54,7 +69,22 @@
           "User name": "Nombre de usuario",
           "The password does not match the confirmation": "La contraseña y la confirmación no coinciden",
           "That e-mail is already registered": "Ese correo electrónico ya está registrado",
-          "Something went wrong": "Algo salió mal"
+          "Something went wrong": "Algo salió mal",
+          "Home!":"¡Inicio!",
+          "Go": "Ir a: ",
+          "Did you spell correctly the address?": "¿Escribiste correctamente la dirección?",
+          "We could not find what you are looking for.":"No pudimos encontrar lo que estás buscando.",
+          "SelfUser": "Tú: ",
+          "Not a user yet?": "¿Aún no eres usuario?",
+          "Incorrect credentials": "Credenciales incorrectas", 
+          "Login": "Inicio de sesión",
+          "Logout": "Cerrar sesión",
+          "Cancel": "Cancelar",
+          "Create": "Crear",
+          "Choose people for the new chat room": "Elige personas para el nuevo chat grupal",
+          "Write a name for the room...": "Escribe un nombre para el nuevo chat grupal",
+          "Room Name": "Nombre del chat",
+          "Create New Room": "Crea un Chat Grupal Nuevo"
         }
     },
     "fr": {
@@ -83,7 +113,22 @@
         "User name": "Nom de l'utilisateur",
         "The password does not match the confirmation": "Le mot de passe et la confirmation ne correspondent pas",
         "That e-mail is already registered": "Cette adresse e-mail est déjà enregistrée",
-        "Something went wrong":"Quelque chose a mal tourné"
+        "Something went wrong":"Quelque chose a mal tourné",
+        "Home!":"l'Accueil!",
+        "Go": "Aller à ",
+        "Did you spell correctly the address?": "Avez-vous écrit l'adresse correctement ?",
+        "We could not find what you are looking for.": "Nous n'avons pas pu trouver ce que vous cherchez.",
+        "SelfUser": "Vous: ",
+        "Not a user yet?": "Vous n'êtes pas encore utilisateur?",
+        "Incorrect credentials": "Informations d'identification erronées",
+        "Login": "Connexion",
+        "Logout": "Déconnexion",
+        "Cancel": "Annuler",
+        "Create":"Créer",
+        "Choose people for the new chat room": "Sélectionnez des personnes pour le nouveau chat de groupe",
+        "Write a name for the room...": "Saisissez un nom pour le nouveau chat de groupe",
+        "Room Name":"Nom du chat",
+        "Create New Room":"Créer un Nouveau Chat de Groupe"
       }
     }
   }

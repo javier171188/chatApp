@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/Login.css';
 import Context from '../context/Context';
+import { useTranslation } from 'react-i18next';
 import { useInputValue } from '../hooks/useInputValue';
 
 
@@ -25,7 +26,7 @@ const Login = () => {
 		setErrorMessages([]);
 		//window.location.href ='/chat/register';
 	}
-
+	const { t, i18n } = useTranslation();
 	return (
 		<Context.Consumer>
 			{
@@ -34,32 +35,32 @@ const Login = () => {
 					return (<section className='login'>
 								
 								<section className='login__container'>
-									<h2>Login</h2>
+									<h2>{t('Login')}</h2>
 									<form className='login__container--form' onSubmit={logIn}>
 										<input 
 											name='email'
 											className='input' 
 											type='text' 
-											placeholder='E-mail' 
+											placeholder={t('E-mail')} 
 											{...email}
 										/>
 										<input 
 											name='password'
 											className='input' 
 											type='password' 
-											placeholder='Password' 
+											placeholder={t('Password')} 
 											{...password}
 										/>
-										<button className='button'>Login</button>
+										<button className='button'>{t('Log in')}</button>
 										{ errorMessages.length >= 1
-											? <div className='login--error'> Incorrect credentials </div>
+											? <div className='login--error'> {t('Incorrect credentials')} </div>
 											: ''
 										}
 										
 									</form>
 									
 									<p className='login__container--register'>
-										Not a user yet? <Link to='/chat/register' onClick={() => goRegister(setErrorMessages)}> Register</Link>
+										{t('Not a user yet?')} <Link to='/chat/register' onClick={() => goRegister(setErrorMessages)}> {t('Register')}</Link>
 									</p>
 								</section>
 							</section>

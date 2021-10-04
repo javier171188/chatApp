@@ -1,8 +1,10 @@
 
 import Context from "../context/Context";
+import { useTranslation } from 'react-i18next';
 import '../styles/components/MessageForm.css';
 
 function MessageForm(props) {
+    const { t, i18n } = useTranslation();
     return (<Context.Consumer>
             {
                 ({userState})=>{
@@ -16,7 +18,7 @@ function MessageForm(props) {
                         {selfUser 
                                 ? 
                                 <p  className='self-user'  >
-                                    {`You: ${props.message}`}
+                                    {t('SelfUser') + props.message}
                                 </p>
                                 : 
                                 <p  className='sender-user'  >

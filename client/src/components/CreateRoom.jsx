@@ -3,12 +3,13 @@ import Header from './Header';
 import '../styles/components/Header.css';
 import '../styles/components/CreateRoom.css';
 import Context from '../context/Context';
+import { useTranslation } from 'react-i18next';
 
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 const CreateRoom = () => {
-
+    const { t, i18n } = useTranslation();
     function goBack(e){
         e.preventDefault();
         window.location.href = '/chat/'
@@ -50,19 +51,19 @@ const CreateRoom = () => {
                     return (
                         <>
                         <Header />
-                        <h1 className='new-room__title'>Create New Room</h1>
+                        <h1 className='new-room__title'>{t('Create New Room')}</h1>
                         <form onSubmit={(e)=>createRoom(e, userState, socket)}>
                             <div className='new-room__name'>
-                                <label>Room Name </label>
+                                <label>{t('Room Name')} </label>
                                 <input 
                                     type="text" 
-                                    placeholder='Write a name for the room...' 
+                                    placeholder={t('Write a name for the room...')} 
                                     required
                                     className='new-room__input-name'
                                 />
                             </div>
                             <div className='new-room__contacts'>
-                                <h2 className='new-room__title-users'>Choose people for the new chat room</h2>
+                                <h2 className='new-room__title-users'>{t('Choose people for the new chat room')}</h2>
                                 <div className='new-room__contacts-list'>
                                     {userState.contacts.map(c =>{
                                     return (<label htmlFor={c._id} key={c._id} className='new-room__contacts-label'>
@@ -74,10 +75,10 @@ const CreateRoom = () => {
                                             </label>)
                                 })}
                                 </div>
-                                <button className='new-room__create-button'>Create</button>
+                                <button className='new-room__create-button'>{t('Create')}</button>
                             </div>
                         </form>
-                        <button onClick={goBack} className='new-room__cancel-button'>Cancel</button>
+                        <button onClick={goBack} className='new-room__cancel-button'>{t('Cancel')}</button>
                         </>
                     )
                 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/components/Header.css';
 import Context from '../context/Context';
-
 import { useTranslation } from 'react-i18next';
 
 const Header = () => {
@@ -13,7 +12,7 @@ const Header = () => {
                     return (
                         <header className='header'>
                         <h1 className='header-title'>{t('App name')}</h1>
-                        <button onClick={logOut}> Logout</button>
+                        <button onClick={logOut}> {t('Logout')}</button>
                         </header>
                     )
                 }
