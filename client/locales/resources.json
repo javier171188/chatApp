@@ -40,7 +40,13 @@
         "Choose people for the new chat room": "Choose people for the new chat room",
         "Write a name for the room...": "Write a name for the room...",
         "Room Name": "Room Name",
-        "Create New Room": "Create New Room"
+        "Create New Room": "Create New Room",
+        "Send": "Send",
+        "Type a message...": "Type a message...",
+        "Click a user or a conversation to start chatting.": "Click a user or a conversation to start chatting.",
+        "Remove": "Remove",
+        "Add": "Add",
+        "Add users to": "Add users to "
       }
     },
     "es": {
@@ -84,7 +90,13 @@
           "Choose people for the new chat room": "Elige personas para el nuevo chat grupal",
           "Write a name for the room...": "Escribe un nombre para el nuevo chat grupal",
           "Room Name": "Nombre del chat",
-          "Create New Room": "Crea un Chat Grupal Nuevo"
+          "Create New Room": "Crea un Chat Grupal Nuevo",
+          "Send":"Enviar",
+          "Type a message...": "Escribe un mensaje...",
+          "Click a user or a conversation to start chatting.": "Da clic en un chat grupal o usuario para empezar a chatear",
+          "Remove": "Remover",
+          "Add":"Agregar",
+          "Add users to": "Agregar usuarios a "
         }
     },
     "fr": {
@@ -128,7 +140,13 @@
         "Choose people for the new chat room": "Sélectionnez des personnes pour le nouveau chat de groupe",
         "Write a name for the room...": "Saisissez un nom pour le nouveau chat de groupe",
         "Room Name":"Nom du chat",
-        "Create New Room":"Créer un Nouveau Chat de Groupe"
+        "Create New Room":"Créer un Nouveau Chat de Groupe",
+        "Send": "Envoyer",
+        "Type a message...": "Écrire un message...",
+        "Click a user or a conversation to start chatting.":"Cliquez sur un chat de groupe ou un utilisateur pour commencer à chatter.",
+        "Remove":"Retirer",
+        "Add": "Ajouter",
+        "Add users to": "Ajouter des utilisateurs à "
       }
     }
   }

@@ -2,12 +2,13 @@ import Context from '../context/Context';
 import {useState} from 'react';
 import axios from 'axios';
 import './../styles/components/AddingUsers.css';
+import { useTranslation } from 'react-i18next';
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 const AddingUsers = ({currentUsers}) => {
     
-    
+    const { t, i18n } = useTranslation();
     function addUser(event, userState, socket, currentRoomId, currentRoomName, setAddingUser){
         event.preventDefault();
         let allTarget = Object.values(event.target);
@@ -47,7 +48,7 @@ const AddingUsers = ({currentUsers}) => {
 
                 return (<div className='adding-mod'>
                     <div className='adding-box'>
-                        <h1 className='adding-title'>Add users to {currentRoomName}</h1>
+                        <h1 className='adding-title'>{t('Add users to')} {currentRoomName}</h1>
                         <hr/>
                         {<form className='adding-form' 
                                onSubmit={(event)=>addUser(event, 
@@ -72,9 +73,9 @@ const AddingUsers = ({currentUsers}) => {
                                 }
                              </div>
                              }
-                                <button className='adding-button'>Add</button>
+                                <button className='adding-button'>{t('Add')}</button>
                             </form>}
-                        <button className='adding-button__cancel' onClick={() => goBack(setAddingUser)}>Cancel</button>
+                        <button className='adding-button__cancel' onClick={() => goBack(setAddingUser)}>{t('Cancel')}</button>
                     </div>
                 </div>)
             }

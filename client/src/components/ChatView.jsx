@@ -2,6 +2,7 @@ import  { useState, useRef, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
+import { useTranslation } from 'react-i18next';
 import './../styles/components/ChatView.css';
 
 
@@ -15,7 +16,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     }
     useEffect(scrollToBottom, [currentMessages]);
     console.log('5000t');*/
-
+    const { t, i18n } = useTranslation();
     
     useEffect(() => {
         let $messages = document.querySelector('.chat-messages');
@@ -82,8 +83,8 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                                             <div className='chat-header'>
                                                                 <h1 className='chat-header__name'>{currentRoomName}</h1> 
                                                                 <div className='chat-header__buttons'>
-                                                                    <button className='chat-header__add' onClick={()=>{addUserToRoom({roomId:currentRoomId, userState, setAddingUser})}}>Add</button>
-                                                                    <button className='chat-header__remove' onClick={()=>{removeUserFromRoom()}}>Remove</button>
+                                                                    <button className='chat-header__add' onClick={()=>{addUserToRoom({roomId:currentRoomId, userState, setAddingUser})}}>{t('Add')}</button>
+                                                                    <button className='chat-header__remove' onClick={()=>{removeUserFromRoom()}}>{t('Remove')}</button>
                                                                 </div>
                                                             </div>
                                                             :
@@ -103,14 +104,14 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                         ))
                                     }  
                                     {
-                                        !currentRoomId && <h1 className='chat-start'>Click a user or a conversation to start chatting.</h1>
+                                        !currentRoomId && <h1 className='chat-start'>{t('Click a user or a conversation to start chatting.')}</h1>
                                     }
                                     {/*<div ref={messagesEndRef} />*/}
                                 </div>
                                { currentRoomId &&
                                 <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
-                                   <input autoFocus className='chat-writing' type="text" placeholder='Type a message...' />
-                                   <button className='chat-button'>Send</button>
+                                   <input autoFocus className='chat-writing' type="text" placeholder={t('Type a message...')} />
+                                   <button className='chat-button'>{t('Send')}</button>
                                </form>
                                }
                                {addingUser && 
