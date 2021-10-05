@@ -45,7 +45,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    conversations: []
+    conversations: [],
+    language: {
+        type:String,
+        default: 'en'
+    }
+
 });
 
 userSchema.methods.toJSON = function (){

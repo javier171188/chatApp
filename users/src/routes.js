@@ -170,8 +170,21 @@ router.get('/users/getUserByPattern', authToken, async (req, res) => {
     }   
 });*/
 /////////////////////////////////////////////////////////////////////////////////
+router.post('/users/changeLanguage', authToken,  async (req, res) => {
+try{
+    var user = await User.findOne({email:req.body.email});
+    user.language = req.body.language;
+    await user.save();
+    res.send();
+} catch (e){
+    let strError = e.toString();
+    console.log(strError);
+    res.status(404).send(strError);
+}
+});
 
-router.post('/users/updateUser',  async (req, res) => {
+
+router.post('/users/updateUser',  async (req, res) => {//I forgot to add auth
 try {
     //console.log(req.body);
     var user = await User.findOne({email:req.body.params.email});
@@ -184,7 +197,7 @@ try {
         });
         user.contacts = contacts;
         user.markModified('contacts');
-    } else{
+    } else {
         let conversations = user.conversations;
         conversations.forEach(c => {
             if (c.roomId === req.body.params.roomId) {

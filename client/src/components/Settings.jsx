@@ -8,7 +8,6 @@ import { useState } from 'react';
 
 require('dotenv').config();
 
-
 const USER_PATH=process.env.USER_PATH;
 
 const LANGUAGES = [
@@ -17,9 +16,16 @@ const LANGUAGES = [
                     {code: 'fr', name:'French'},
                 ];
 
+const conf = {
+    headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            }
+};
+
 const Settings = () => {
     const { t, i18n } = useTranslation();
-    const [userLanguage, setUserLanguage] = useState('en');
+    const [language, setLanguage] = useState('en');
+    
     function goBack(e){
         e.preventDefault();
         window.location.href = '/chat/'
@@ -29,11 +35,22 @@ const Settings = () => {
         event.preventDefault();
         let languages = Object.values(event.target);
         let chosenLanguage = languages.filter(l => l.checked)[0];
+        
+        
+        /*axios.get(USER_PATH+'/getUser', confLang )
+            .then(user => setUserLanguage(user.data.language));*/
+
+        
+        let paramsLang = {
+            email: JSON.parse(sessionStorage.getItem('email')),
+            language: chosenLanguage.value
+        };
+        axios.post(USER_PATH+'/changeLanguage', paramsLang ,conf ).catch( e => console.log(e));
         i18n.changeLanguage(chosenLanguage.value);
     }
 
     function handleChange(e){
-        setUserLanguage(e.target.value);
+        setLanguage(e.target.value);
     }
 
 
@@ -48,7 +65,7 @@ const Settings = () => {
                         <label>{t('User Options')} </label>
                         <div className='setting__user--options'></div>
                     </div>
-                    <form onSubmit={changeLanguage}>
+                    <form onSubmit={(e)=> changeLanguage(e)}>
                         <div className='settings__language'>
                             <h2 className='settings__language-options'>{t('Choose your language')}</h2>
                             <div className='settings__language-list'>
@@ -59,7 +76,7 @@ const Settings = () => {
                                                 type="radio" 
                                                 name="participants" 
                                                 value={l.code}
-                                                checked={l.code === userLanguage}   
+                                                checked={l.code === language}   
                                                 onChange={ e => handleChange(e)} 
                                             /> 
                                             {t(l.name)}
