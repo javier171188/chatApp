@@ -8,7 +8,6 @@ const Header = () => {
     function changeLanguage(event){
         event.preventDefault();
         let language = event.target.id.split('-')[0];
-        console.log(language);
         i18n.changeLanguage(language).then(v => console.log(v));
     }
     return(
