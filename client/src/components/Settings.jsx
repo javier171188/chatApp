@@ -16,11 +16,7 @@ const LANGUAGES = [
                     {code: 'fr', name:'French'},
                 ];
 
-const conf = {
-    headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-            }
-};
+
 
 const Settings = () => {
     const { t, i18n } = useTranslation();
@@ -38,9 +34,13 @@ const Settings = () => {
         
         
         /*axios.get(USER_PATH+'/getUser', confLang )
-            .then(user => setUserLanguage(user.data.language));*/
+            .then(user => i18n.changeLanguage(user.data.language));*/
 
-        
+        const conf = {
+            headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+        };
         let paramsLang = {
             email: JSON.parse(sessionStorage.getItem('email')),
             language: chosenLanguage.value

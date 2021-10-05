@@ -39,6 +39,7 @@ socket.on('newRoom',({participants, roomId}) => {
 
 const USER_PATH=process.env.USER_PATH;
 
+
 const Context = createContext();
 
 var countUserLoad = 0;
@@ -59,8 +60,6 @@ const Provider =  ({ children }) => {
                                         conversations: []
                                     });
     
-    
-
     subscribeRoom = async function(participants, roomId){
         try{
             let participantIds =participants.map( p => p._id);
@@ -77,9 +76,8 @@ const Provider =  ({ children }) => {
                     }
                 }
                 let user = await axios.get(USER_PATH+'/getUser', conf );
-                console.log(user.data);
+                //console.log(user.data);
                 setUserState(user.data);
-                    
                 socket.emit('joinGroup', {roomId}, ({_id, lastMessages}) => {
                 });
             }
@@ -107,6 +105,7 @@ const Provider =  ({ children }) => {
         let user = await axios.get(USER_PATH+'/getUser', conf );
         if (countUserLoad === 0){
             setUserState(user.data)
+            i18n.changeLanguage(user.data.language);
             countUserLoad++;
         }
     };
