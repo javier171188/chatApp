@@ -9,6 +9,7 @@ import GoHome from '../components/GoHome';
 import UploadAvatar from '../components/UploadAvatar';
 import Context from '../context/Context';
 import CreateRoom from '../components/CreateRoom';
+import Settings from '../components/Settings';
 
 
 
@@ -23,6 +24,7 @@ const App = () => (
                             <Route exact path='/chat/login' component={GoHome} />
                             <Route exact path='/chat/register' component={GoHome} />
                             <Route exact path='/chat/create-room' component={CreateRoom} />
+                            <Route exact path='/chat/settings' component={Settings} />
                             <Route component={NotFound} />
                         </Switch>
                       </BrowserRouter>

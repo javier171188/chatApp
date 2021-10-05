@@ -10,6 +10,7 @@ body{
     justify-content: space-between;
     border-radius: 15px;
     margin-bottom: 20px;
+    padding-right: 0px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
 }
 
@@ -40,7 +41,7 @@ button:hover {
     position: absolute;
     width: 100px;
     text-align: right;
-    margin: 0px 0px 0px -14px;
+    margin: 0px 0px 0px -2em;
 }
 
 .header__menu:hover ul, ul:hover{
@@ -48,31 +49,78 @@ button:hover {
 }
 
 .header__menu li {
-    margin: 10px 0px;
+    font-size: 1rem;
+    display: flex;
+    background-color: rgb(66, 65, 65);
+    color: white;   
+    justify-content: center;
 }
 
-.header__menu li a {
+.header__menu--options{
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
+}
+
+.header__menu li a{
     color: white;
     text-decoration: none;
 }
-
-.header__menu li a:hover {
-    text-decoration: underline;
+.header__menu li:hover {
+    color: rgb(66, 65, 65);
+    background-color: white;
+}
+.header__menu li:hover a{
+    color: rgb(66, 65, 65);
+    background-color: white;
 }
 
-.header__menu--profile{
+.header__menu--item:hover {
+    cursor: pointer;
+    color: rgb(66, 65, 65);
+    background-color: white;
+}
+
+
+
+.header__menu--item:hover a{
+    color: rgb(66, 65, 65);
+}
+
+.header__menu--button{
     margin-right: 8px;
     display: flex;
+    justify-content: center;
     align-items: center;
+    padding-bottom: 0.35em;
+    /*border: solid;*/
+    width: 2em;
+    height: 1em;
+    text-align: center;
+    border-radius: 5px;
+    /*border-color: white;*/
+    margin-right: -0.5em;
+    margin-top: 0.5em;
+    /*background-color: rgb(160, 155, 155);*/
+    background-color: rgb(88, 87, 87);
+    /*background-color: rgb(182, 179, 179);*/
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
 }
 
-.header__menu--profile img{
+.header__menu--button:hover{
+    cursor: pointer;
+}
+
+
+.header__menu--button img{
     margin-right: 8px;
     width: 40px;
 }
-.header__menu--profile p{
+.header__menu--button p{
     margin: 0px;
     color: white;
+}
+
+.header__menu--icon{
+
 }
 
 
