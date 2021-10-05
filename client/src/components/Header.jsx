@@ -31,15 +31,3 @@ const Header = () => {
         );
 }
 export default Header;
-
-/*<button onClick={logOut}> {t('Logout')}</button>
-                        <button onClick={changeLanguage} id="en-button"> {t('English')}</button>
-                        <button onClick={changeLanguage} id="es-button"> {t('Spanish')}</button>
-                        <button onClick={changeLanguage} id="fr-button"> {t('French')}</button>
-
-                        function changeLanguage(event){
-        event.preventDefault();
-        let language = event.target.id.split('-')[0];
-        i18n.changeLanguage(language).then(v => console.log(v));
-    }
-*/

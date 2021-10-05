@@ -14,7 +14,7 @@ const USER_PATH=process.env.USER_PATH;
     
 const WorkingArea = () => {
     const { t, i18n } = useTranslation();
-    const [ searchMessage, setSearchMessage ] = useState(t('Look for a user to chat.'));
+    const [ searchMessage, setSearchMessage ] = useState('InitialMessage');
     const [ searchUser, setSearchUser ] = useState(null);
     function lookForUser(event) {
         event.preventDefault();
@@ -75,7 +75,7 @@ const WorkingArea = () => {
                 <button className='working-button'>{t('Search!')}</button>
             </form>
             <div className="found-user">
-                {searchMessage}
+                {searchMessage === 'InitialMessage' && t('InitialMessage')}
                 { searchMessage === t('One user found: ') && <>
                                             <h2 className='found-user__user'> 
                                                     {searchUser.userName} 
