@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Header from './Header';
 import '../styles/components/Header.css';
-import '../styles/components/CreateRoom.css';
+import '../styles/components/Settings.css';
 import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
@@ -62,12 +62,12 @@ const Settings = () => {
                     <Header />
                     <h1 className='settings__title'>{t('Settings')}</h1>
                     <div className='settings__user'>
-                        <label>{t('User Options')} </label>
-                        <div className='setting__user--options'></div>
+                        <h2 className='settings__user-title'>{t('User Options')} </h2>
+                        <div className='setting__user--options'>{t('User Options')}...</div>
                     </div>
-                    <form onSubmit={(e)=> changeLanguage(e)}>
-                        <div className='settings__language'>
-                            <h2 className='settings__language-options'>{t('Choose your language')}</h2>
+                    <form onSubmit={(e)=> changeLanguage(e)} className='settings__language'>
+                        <h2 className='settings__language-title'>{t('Choose your language')}</h2>
+                        <div className='settings__language-container'>
                             <div className='settings__language-list'>
                                 {LANGUAGES.map(l =>{
                                 return (<label htmlFor={l.code} key={l.code} className='settings__language-label'>
