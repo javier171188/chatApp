@@ -6,6 +6,10 @@ import { useTranslation } from 'react-i18next';
 
 const Header = () => {
     const { t, i18n } = useTranslation();
+    function goHome(e){
+        e.preventDefault();
+        window.location.href = '/chat/'
+    }
     
     return(
         <Context.Consumer>
@@ -13,7 +17,7 @@ const Header = () => {
                 ({ logOut }) => {
                     return (
                         <header className='header'>
-                        <h1 className='header-title'>{t('App name')}</h1>
+                        <h1 className='header-title' onClick={goHome}>{t('App name')}</h1>
                         <div className="header__menu">
                             <div className="header__menu--button">
                                 <p className='header__menu--icon'> ...</p>

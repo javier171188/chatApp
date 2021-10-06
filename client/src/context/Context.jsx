@@ -6,9 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 require('dotenv').config();
 
-const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
-    path: process.env.SOCKET_PATH
-});
+
 
 
 
@@ -18,6 +16,10 @@ var updateLastRoom = function () {
 var subscribeRoom = function() {
     console.log('executed before');
 }
+
+const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
+    path: process.env.SOCKET_PATH
+});
 
 socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
     //participants = participants.filter((pId) => pId !== userState._id );

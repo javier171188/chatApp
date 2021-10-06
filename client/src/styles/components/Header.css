@@ -119,10 +119,9 @@ button:hover {
     color: white;
 }
 
-.header__menu--icon{
-
+.header-title:hover{
+    cursor: pointer;
 }
-
 
 
 /*
