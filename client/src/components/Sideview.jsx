@@ -88,7 +88,7 @@ const Sideview = () => {
                     },
             params:{
                 senderId: userState._id,
-                receiver: userState._id,
+                receiver: {_id:userState._id},
                 newStatus: false, 
                 roomId
             }
