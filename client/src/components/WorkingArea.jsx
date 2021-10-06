@@ -14,7 +14,7 @@ const USER_PATH=process.env.USER_PATH;
     
 const WorkingArea = () => {
     const { t, i18n } = useTranslation();
-    const [ searchMessage, setSearchMessage ] = useState('InitialMessage');
+    const [ searchMessage, setSearchMessage ] = useState(t('InitialMessage'));
     const [ searchUser, setSearchUser ] = useState(null);
     function lookForUser(event) {
         event.preventDefault();
@@ -45,9 +45,14 @@ const WorkingArea = () => {
     async function  addContact( userState, updateUser ){
         try {
             let currentId = userState._id;
+            let contactsMails = userState.contacts.map( c => c.email);
             if (currentId === searchUser._id){
                 setSearchMessage(t('You cannot add yourself, try another e-mail address.'))
-            } else{
+            }else if(contactsMails.includes(searchUser.email)){
+                let alreadyContact = userState.contacts.filter(c => c.email === searchUser.email)[0];
+                setSearchMessage(alreadyContact.userName + t(' is already your contact.'))
+            } 
+            else{
                 const conf = {
                     headers: {
                                 'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
@@ -75,7 +80,7 @@ const WorkingArea = () => {
                 <button className='working-button'>{t('Search!')}</button>
             </form>
             <div className="found-user">
-                {searchMessage === 'InitialMessage' && t('InitialMessage')}
+                {searchMessage}
                 { searchMessage === t('One user found: ') && <>
                                             <h2 className='found-user__user'> 
                                                     {searchUser.userName} 

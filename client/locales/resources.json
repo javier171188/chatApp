@@ -54,7 +54,8 @@
         "Spanish": "Spanish",
         "French": "French",
         "Choose your language": "Choose your language",
-        "User Options": "User Options"
+        "User Options": "User Options",
+        " is already your contact.": " is already your contact."
       }
     },
     "es": {
@@ -112,7 +113,8 @@
           "Spanish": "Español",
           "French": "Francés",
           "Choose your language": "Elige tu lenguaje",
-          "User Options": "Opciones de usuario"
+          "User Options": "Opciones de usuario",
+          " is already your contact.": " ya es tu contacto."
         }
     },
     "fr": {
@@ -170,7 +172,8 @@
         "Spanish": "Espagnol",
         "French":"Français",
         "Choose your language": "Choisissez votre langue",
-        "User Options": "Options de l'utilisateur"
+        "User Options": "Options de l'utilisateur",
+        " is already your contact.": " est déjà votre contact."
       }
     }
   }
