@@ -9,7 +9,6 @@ require('dotenv').config();
 
 
 
-
 var updateLastRoom = function () {
     console.log('executed before');
 };
@@ -22,15 +21,6 @@ const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
 });
 
 socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
-    //participants = participants.filter((pId) => pId !== userState._id );
-    /*console.log(currentRoomId);
-    if (roomId === currentRoomId){
-        setCurrentMessages(returnedMessages);
-    }else{
-        //notify that other conversation has been updated
-        //setCurrentMessages(currentMessages);
-    }*/
-    //sessionStorage.setItem('lastRoomChanged', roomId);
     updateLastRoom(roomId, returnedMessages, participants);
 })
 
@@ -108,6 +98,7 @@ const Provider =  ({ children }) => {
         if (countUserLoad === 0){
             setUserState(user.data)
             i18n.changeLanguage(user.data.language);
+            localStorage.setItem('language', user.data.language);
             countUserLoad++;
         }
     };

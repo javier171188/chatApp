@@ -20,7 +20,7 @@ const LANGUAGES = [
 
 const Settings = () => {
     const { t, i18n } = useTranslation();
-    const [language, setLanguage] = useState('en');
+    const [language, setLanguage] = useState(localStorage.getItem('language'));
     
     function goBack(e){
         e.preventDefault();
@@ -33,8 +33,6 @@ const Settings = () => {
         let chosenLanguage = languages.filter(l => l.checked)[0];
         
         
-        /*axios.get(USER_PATH+'/getUser', confLang )
-            .then(user => i18n.changeLanguage(user.data.language));*/
 
         const conf = {
             headers: {
@@ -47,6 +45,7 @@ const Settings = () => {
         };
         axios.post(USER_PATH+'/changeLanguage', paramsLang ,conf ).catch( e => console.log(e));
         i18n.changeLanguage(chosenLanguage.value);
+        localStorage.setItem('language', chosenLanguage.value);
     }
 
     function handleChange(e){
