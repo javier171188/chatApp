@@ -14,9 +14,13 @@ body{
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
 }
 
-.header-title{
-    margin-left: calc(50% - 8rem); ;
+.to-center{
+    color: gray;
 }
+.to-center:hover{
+    cursor: default;
+}
+
 
 button {
     margin: 20px;

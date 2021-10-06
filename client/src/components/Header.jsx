@@ -17,6 +17,11 @@ const Header = () => {
                 ({ logOut }) => {
                     return (
                         <header className='header'>
+                        <div className="to-center">
+                            <div>
+                                <p> ...</p>
+                            </div>
+                        </div>
                         <h1 className='header-title' onClick={goHome}>{t('App name')}</h1>
                         <div className="header__menu">
                             <div className="header__menu--button">
