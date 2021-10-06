@@ -6,15 +6,13 @@ import { useTranslation } from 'react-i18next';
 
 require('dotenv').config();
 
-
-
-
 var updateLastRoom = function () {
     console.log('executed before');
 };
 var subscribeRoom = function() {
     console.log('executed before');
 }
+
 
 const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
     path: process.env.SOCKET_PATH
@@ -27,6 +25,8 @@ socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
 socket.on('newRoom',({participants, roomId}) => {
     subscribeRoom(participants, roomId)
 })
+
+
 
 
 const USER_PATH=process.env.USER_PATH;
@@ -130,8 +130,8 @@ const Provider =  ({ children }) => {
             })
 
             setUserState(newState);
-            
-            let conf = {
+            //This does not work offline
+            /*let conf = {
                 headers: {
                             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                         },
@@ -142,7 +142,7 @@ const Provider =  ({ children }) => {
                     roomId
                 }
             }
-            axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
+            axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));*/
         }
     }
 

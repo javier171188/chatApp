@@ -2,8 +2,12 @@ import  { useState, useRef, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
+import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import './../styles/components/ChatView.css';
+
+require('dotenv').config();
+const USER_PATH=process.env.USER_PATH;
 
 
 
@@ -59,9 +63,32 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                     date: dateStr, 
                     roomId: currentRoomId
             };
-            socket.emit('sendMessage', messageData, (answer) => {
+            socket.emit('sendMessage', messageData, (participants) => {
                 //setCurrentMessages(returnedMessages);
-                //console.log(returnedMessages);
+                let notCurrentParticipants
+                if (typeof participants[0] !== 'object'){
+                    notCurrentParticipants = participants.filter( p => p !== userState._id);
+                } else {
+                    notCurrentParticipants = participants.filter(p => p._id !== userState._id);
+                }
+               
+                let conf = {
+                    headers: {
+                                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                            },
+                    params:{
+                        senderId: userState._id,
+                        receiver: '',
+                        newStatus: true, 
+                        roomId: currentRoomId
+                    }
+                }
+                notCurrentParticipants.forEach( p => {
+                    conf.params.receiver = p;
+                    //console.log(conf.receiver);
+                    axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
+                })
+
             });
         }
     };

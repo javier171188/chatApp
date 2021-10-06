@@ -95,7 +95,8 @@ io.on('connection', (socket) => {
         prevMessages.push(message);
         chat.messages = prevMessages;
         chat.save();
-        io.to(message.roomId).emit('updateMessages', { participants, roomId:message.roomId, returnedMessages:prevMessages.slice(-20)});
+        callback(participants);
+        io.to(message.roomId).emit('updateMessages', { participants, roomId:message.roomId, returnedMessages:prevMessages.slice(-20)}, );
         //io.to(message.roomId).emit('updateMessages',prevMessages.slice(-20));
         //io.emit('updateMessages',prevMessages.slice(-20));
         //callback(prevMessages);

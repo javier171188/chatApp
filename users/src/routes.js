@@ -186,9 +186,32 @@ try{
 
 router.post('/users/updateUser',  async (req, res) => {//I forgot to add auth
 try {
-    //console.log(req.body);
-    var user = await User.findOne({email:req.body.params.email});
-    if (!req.body.params.roomId){ //This means there must be userId
+    console.log(req.body.params);
+    let receiver = req.body.params.receiver;
+    var user;
+    if (typeof receiver === 'string'){ //This means it comes from individual room.
+        user = await User.findById(receiver);
+        let contacts = user.contacts;
+        contacts.forEach(c => {
+            if (c._id === req.body.params.senderId) {
+                c.newMsgs = req.body.params.newStatus;
+            }
+        });
+        user.contacts = contacts;
+        user.markModified('contacts');
+    } else { //Group room.
+        user = await User.findById(receiver._id);
+        let conversations = user.conversations;
+        conversations.forEach(c => {
+            if (c.roomId === req.body.params.roomId) {
+                c.newMsgs = req.body.params.newStatus;
+            }
+        });
+        user.conversations = conversations;
+        user.markModified('conversations');
+    }
+    /*var user = await User.findOne({email:req.body.params.email});
+    if (typeof req.body.params.contactId !== Object){ //This means it comes from individual room
         let contacts = user.contacts;
         contacts.forEach(c => {
             if (c._id === req.body.params.contactId) {
@@ -206,7 +229,7 @@ try {
         });
         user.conversations = conversations;
         user.markModified('conversations');
-    }
+    }*/
     
     await user.save();
     res.send();

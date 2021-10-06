@@ -6,7 +6,6 @@ import '../styles/components/Sideview.css';
 import { Redirect } from 'react-router-dom';
 
 require('dotenv').config();
-
 const USER_PATH=process.env.USER_PATH;
 
 
@@ -49,9 +48,10 @@ const Sideview = () => {
                             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                         },
                 params:{
-                    email: JSON.parse(sessionStorage.getItem('email')),
-                    contactId: receiver,
-                    newStatus: false
+                    senderId: receiver,
+                    receiver: userState._id,
+                    newStatus: false,
+                    roomId: _idRoom
                 }
             }
             axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
@@ -87,9 +87,10 @@ const Sideview = () => {
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
                     },
             params:{
-                email: JSON.parse(sessionStorage.getItem('email')),
-                roomId,
-                newStatus: false
+                senderId: userState._id,
+                receiver: userState._id,
+                newStatus: false, 
+                roomId
             }
         }
         axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
@@ -136,7 +137,8 @@ const Sideview = () => {
                                         //console.log(userState);
                                         return(
                                         <li key={child._id} className={`contacts ${newMsgs}`} onClick={() => {
-                                                                    openOneToOneChat(userState._id, 
+                                                                    openOneToOneChat(
+                                                                            userState._id, 
                                                                             child._id, 
                                                                             socket, 
                                                                             setCurrentRoomId, 
