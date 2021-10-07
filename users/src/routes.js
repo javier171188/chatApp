@@ -91,17 +91,32 @@ router.post('/users/addContactNoConf', authToken, async(req,res) => {
         let user = await User.findOne({_id:loggedId});
         let contacts = user.contacts;
 
+
         let alreadyAddedList = contacts.filter( u => u._id === searched._id);
         let alreadyAdded = alreadyAddedList.length > 0;
-
         if (alreadyAdded) {
             res.status(403);
             throw new Error('The user is already added');
         }
-        searched.pending = true;
+        
+        searched.status = 'pending';
         contacts.push(searched);
         user.contacts = contacts;
         await user.save();
+
+        let searchedUser = await User.findOne({_id: searched._id});
+        let searchedContacts = searchedUser.contacts;
+        let requester = {
+            userName: user.userName,
+            _id: user._id,
+            email: user.email,
+            newMsgs: false,
+            status: 'request'
+        }
+        searchedContacts.push(requester);
+        searchedUser.contacts = searchedContacts;
+        await searchedUser.save();
+
         res.send(user);
     } catch(error){
         console.log(error.toString());

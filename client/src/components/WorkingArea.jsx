@@ -43,7 +43,7 @@ const WorkingArea = () => {
             })
     }
 
-    async function  addContact( userState, updateUser ){
+    async function  addContact( userState, updateUser, socket ){
         try {
             let currentId = userState._id;
             let contactsMails = userState.contacts.map( c => c.email);
@@ -65,7 +65,7 @@ const WorkingArea = () => {
                                     }, conf)
                 //sessionStorage.setItem('user', data.data);
                 updateUser(data.data);
-                
+                //socket.emit('addUser', {requester:currentId, receiver})
             }
         } catch (e){
             console.error(e);
