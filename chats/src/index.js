@@ -38,6 +38,7 @@ io.on('connection', (socket) => {
             if (!roomId){
                 var chat = await Chat.findOne({$and: [{"participants":current}, {"participants": receiver}]});
                 if (!chat){
+                    
                     chat = new Chat({"participants":[current, receiver]});
                     await chat.save();
                 }

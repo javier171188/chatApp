@@ -134,9 +134,11 @@ const Sideview = () => {
                                     {userState.contacts.map( child => {
                                         let newMsgs = child.newMsgs ? 'new-messages'
                                                                     : 'no-messages';
+                                        let pending = child.pending ? 'pending'
+                                                                    : 'accepted';
                                         //console.log(userState);
                                         return(
-                                        <li key={child._id} className={`contacts ${newMsgs}`} onClick={() => {
+                                        <li key={child._id} className={`contacts ${newMsgs} ${pending}`} onClick={() => {
                                                                     openOneToOneChat(
                                                                             userState._id, 
                                                                             child._id, 

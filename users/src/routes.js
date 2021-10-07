@@ -98,7 +98,7 @@ router.post('/users/addContactNoConf', authToken, async(req,res) => {
             res.status(403);
             throw new Error('The user is already added');
         }
-
+        searched.pending = true;
         contacts.push(searched);
         user.contacts = contacts;
         await user.save();

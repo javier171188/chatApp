@@ -16,6 +16,7 @@ const WorkingArea = () => {
     const { t, i18n } = useTranslation();
     const [ searchMessage, setSearchMessage ] = useState(t('InitialMessage'));
     const [ searchUser, setSearchUser ] = useState(null);
+
     function lookForUser(event) {
         event.preventDefault();
         //console.log(event.target[0].value);
@@ -64,6 +65,7 @@ const WorkingArea = () => {
                                     }, conf)
                 //sessionStorage.setItem('user', data.data);
                 updateUser(data.data);
+                
             }
         } catch (e){
             console.error(e);
