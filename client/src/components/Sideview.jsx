@@ -22,7 +22,8 @@ const Sideview = () => {
                               setUserState, 
                               setCurrentRoomName, 
                               setGroupRoom,
-                              setContactStatus){
+                              setContactStatus, 
+                              setCurrentUserChat){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
@@ -30,7 +31,7 @@ const Sideview = () => {
         let contactClasses = e.target.className.split(' ');
 
 
-        
+        setCurrentUserChat(receiver);
 
         socket.emit('getRoom', {current, receiver}, ({_id:_idRoom, lastMessages, participants}) => {
             setCurrentRoomId(_idRoom);
@@ -126,6 +127,7 @@ const Sideview = () => {
                 setContactStatus,
                 socket,
                 currentRoomId, 
+                setCurrentUserChat,
                 setCurrentRoomId, 
                 setCurrentMessages, 
                 setCurrentRoomName, 
@@ -168,7 +170,8 @@ const Sideview = () => {
                                                                             setUserState,
                                                                             setCurrentRoomName,
                                                                             setGroupRoom,
-                                                                            setContactStatus
+                                                                            setContactStatus,
+                                                                            setCurrentUserChat
                                                                             )}}
                                         > 
                                             {child.userName} 

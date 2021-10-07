@@ -29,3 +29,7 @@
 .chat-header__add {
     width: 5em;
 }
+
+.chat-accept{
+    height: 2em;
+}

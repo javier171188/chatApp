@@ -45,6 +45,19 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
         console.log('Deleting user');
     }
     
+    function acceptRequest({currentUserChat}){
+        let conf = {
+            headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    }
+        }
+        let params = {
+            participants:[currentUserChat, userState._id]
+        }
+        axios.patch(USER_PATH+'/confirmAdding', params, conf).then(()=> {}).catch(e=>console.log(e));
+    }
+
+
     function sendNewMessage(event, userState, currentRoomId){
         event.preventDefault();
         //console.log(`Sended room id: ${currentRoomId}`);
@@ -111,7 +124,8 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                   currentRoomName, 
                   groupRoom, 
                   addingUser, 
-                  setAddingUser }) => {
+                  setAddingUser,
+                  currentUserChat }) => {
                     return (<div className='chat'>
                                 {currentRoomId && (groupRoom ?
                                                             <div className='chat-header'>
@@ -144,7 +158,10 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                         contactStatus === 'pending'   && <h1 className='chat-start'>{ currentRoomName + t(' has not accepted your request yet.')}</h1>
                                     }
                                     {
-                                        contactStatus === 'request'   && <h1 className='chat-start'>{ currentRoomName + t(' wants to add you as a contact.')}</h1>
+                                        contactStatus === 'request'   && <>
+                                                                            <h1 className='chat-start'>{ currentRoomName + t(' wants to add you as a contact.')}</h1>
+                                                                            <button className='chat-accept' onClick={() => acceptRequest({currentUserChat, userState})}>{t('Accept')}</button>
+                                                                        </>
                                     }
                                     {/*<div ref={messagesEndRef} />*/}
                                 </div>

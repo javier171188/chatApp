@@ -108,7 +108,7 @@ router.post('/users/addContactNoConf', authToken, async(req,res) => {
         let searchedContacts = searchedUser.contacts;
         let requester = {
             userName: user.userName,
-            _id: user._id,
+            _id: user._id.toString(),
             email: user.email,
             newMsgs: false,
             status: 'request'
@@ -124,6 +124,41 @@ router.post('/users/addContactNoConf', authToken, async(req,res) => {
     }
 })
 
+router.patch('/users/confirmAdding', authToken, async(req,res) => {
+    try{
+        let participants = req.body.participants;
+        let userOne = await User.findById(participants[0]);
+        let contactsOne = userOne.contacts;
+        contactsOne.map( c => {
+            if (c._id === participants[1]){
+                c.status='accepted';
+                c.newMsgs = true;
+            }
+            return c;
+        })
+        userOne.contacts = contactsOne;
+        userOne.markModified('contacts');
+        await userOne.save();
+
+        let userTwo = await User.findById(participants[1]);
+        let contactsTwo = userTwo.contacts;
+        contactsTwo.map( c => {
+            if (c._id === participants[0]){
+                c.status='accepted';
+                c.newMsgs = true;
+            }
+            return c;
+        })
+        userTwo.contacts = contactsTwo;
+        userTwo.markModified('contacts');
+        await userTwo.save();
+        res.send();
+    } catch(e){
+        res.status(500).send(e);
+    }
+    
+
+})
 
 // All the get user must be merged in one endpoint.
 //Currently only getUserByEmail is in use.
@@ -201,7 +236,6 @@ try{
 
 router.post('/users/updateUser',  async (req, res) => {//I forgot to add auth
 try {
-    console.log(req.body.params);
     let receiver = req.body.params.receiver;
     var user;
     if (typeof receiver === 'string'){ //This means it comes from individual room.
