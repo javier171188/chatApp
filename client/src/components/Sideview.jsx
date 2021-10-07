@@ -12,7 +12,8 @@ const USER_PATH=process.env.USER_PATH;
 const Sideview = () => {
     const { t, i18n } = useTranslation();
     
-    function openOneToOneChat(current, 
+    function openOneToOneChat(e,
+                              current, 
                               receiver, 
                               socket, 
                               setCurrentRoomId, 
@@ -20,12 +21,17 @@ const Sideview = () => {
                               userState, 
                               setUserState, 
                               setCurrentRoomName, 
-                              setGroupRoom){
+                              setGroupRoom,
+                              setContactStatus){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
         });*/
+        let contactClasses = e.target.className.split(' ');
+
+
         
+
         socket.emit('getRoom', {current, receiver}, ({_id:_idRoom, lastMessages, participants}) => {
             setCurrentRoomId(_idRoom);
             setCurrentMessages(lastMessages);
@@ -43,6 +49,17 @@ const Sideview = () => {
             });
             setGroupRoom(false);
             setUserState(newUserState);
+            if (contactClasses.includes('pending')){
+                setContactStatus('pending');
+                setCurrentMessages([]);
+                setCurrentRoomId('1');
+                return;
+            } else if(contactClasses.includes('request') ){
+                setContactStatus('request');
+                setCurrentMessages([]);
+                setCurrentRoomId('1');
+                return;
+            }
             let conf = {
                 headers: {
                             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
@@ -106,6 +123,7 @@ const Sideview = () => {
         <Context.Consumer>
 			{ ({userState, 
                 setUserState,
+                setContactStatus,
                 socket,
                 currentRoomId, 
                 setCurrentRoomId, 
@@ -138,8 +156,9 @@ const Sideview = () => {
 
                                         //console.log(userState);
                                         return(
-                                        <li key={child._id} className={`contacts ${newMsgs} ${status}`} onClick={() => {
+                                        <li key={child._id} className={`contacts ${newMsgs} ${status}`} onClick={(e) => {
                                                                     openOneToOneChat(
+                                                                            e,
                                                                             userState._id, 
                                                                             child._id, 
                                                                             socket, 
@@ -148,7 +167,8 @@ const Sideview = () => {
                                                                             userState, 
                                                                             setUserState,
                                                                             setCurrentRoomName,
-                                                                            setGroupRoom
+                                                                            setGroupRoom,
+                                                                            setContactStatus
                                                                             )}}
                                         > 
                                             {child.userName} 

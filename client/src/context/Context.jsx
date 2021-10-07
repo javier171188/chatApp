@@ -51,6 +51,7 @@ const Provider =  ({ children }) => {
                                         _id: "",
                                         conversations: []
                                     });
+    const [contactStatus, setContactStatus] = useState('');
     
     subscribeRoom = async function(participants, roomId){
         try{
@@ -150,6 +151,8 @@ const Provider =  ({ children }) => {
     const value = {
         //currentUserChat,
         //setCurrentUserChat,
+        contactStatus, 
+        setContactStatus,
         addingUser, 
         setAddingUser,
         groupRoom, 

@@ -104,7 +104,14 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     return (
         <Context.Consumer>
             {
-                ({userState, currentRoomId, currentMessages, currentRoomName, groupRoom, addingUser, setAddingUser }) => {
+                ({userState, 
+                  contactStatus, 
+                  currentRoomId, 
+                  currentMessages, 
+                  currentRoomName, 
+                  groupRoom, 
+                  addingUser, 
+                  setAddingUser }) => {
                     return (<div className='chat'>
                                 {currentRoomId && (groupRoom ?
                                                             <div className='chat-header'>
@@ -133,9 +140,15 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                     {
                                         !currentRoomId && <h1 className='chat-start'>{t('Click a user or a conversation to start chatting.')}</h1>
                                     }
+                                    {
+                                        contactStatus === 'pending'   && <h1 className='chat-start'>{ currentRoomName + t(' has not accepted your request yet.')}</h1>
+                                    }
+                                    {
+                                        contactStatus === 'request'   && <h1 className='chat-start'>{ currentRoomName + t(' wants to add you as a contact.')}</h1>
+                                    }
                                     {/*<div ref={messagesEndRef} />*/}
                                 </div>
-                               { currentRoomId &&
+                               { (currentRoomId && currentRoomId !== '1') &&
                                 <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
                                    <input autoFocus className='chat-writing' type="text" placeholder={t('Type a message...')} />
                                    <button className='chat-button'>{t('Send')}</button>
