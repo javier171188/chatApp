@@ -57,7 +57,8 @@
         "User Options": "User Options",
         " is already your contact.": " is already your contact.",
         " has not accepted your request yet.": " has not accepted your request yet.",
-        "  wants to add you as a contact.": " wants to add you as a contact."
+        "  wants to add you as a contact.": " wants to add you as a contact.",
+        "Draw": "Draw"
       }
     },
     "es": {
@@ -118,7 +119,8 @@
           "User Options": "Opciones de usuario",
           " is already your contact.": " ya es tu contacto.",
           " has not accepted your request yet.": " aún no ha aceptado tu solicitud.",
-          "  wants to add you as a contact.":" quiere agregarte como contacto."
+          "  wants to add you as a contact.":" quiere agregarte como contacto.",
+          "Draw": "Dibuja"
         }
     },
     "fr": {
@@ -179,7 +181,8 @@
         "User Options": "Options de l'utilisateur",
         " is already your contact.": " est déjà votre contact.",
         " has not accepted your request yet.": " n'a pas encore accepté votre demande.",
-        "  wants to add you as a contact.": " veut vous ajouter comme contact."
+        "  wants to add you as a contact.": " veut vous ajouter comme contact.",
+        "Draw": "Dessine"
       }
     }
   }
