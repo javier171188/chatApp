@@ -43,7 +43,7 @@ const WorkingArea = () => {
             })
     }
 
-    async function  addContact( userState, updateUser, socket ){
+    async function  addContact( {userState, updateUser, socket} ){
         try {
             let currentId = userState._id;
             let contactsMails = userState.contacts.map( c => c.email);
@@ -65,7 +65,10 @@ const WorkingArea = () => {
                                     }, conf)
                 //sessionStorage.setItem('user', data.data);
                 updateUser(data.data);
-                //socket.emit('addUser', {requester:currentId, receiver})
+
+                socket.emit('userAccepted', {acceptedId:searchUser._id}, ()=>{
+                    
+                });
             }
         } catch (e){
             console.error(e);
@@ -87,7 +90,7 @@ const WorkingArea = () => {
                                             <h2 className='found-user__user'> 
                                                     {searchUser.userName} 
                                             </h2>
-                                            <button onClick={() => addContact(userState, updateUser)}>{t('Add contact')}</button>
+                                            <button onClick={() => addContact({userState, updateUser, socket})}>{t('Add contact')}</button>
                                             </>}
             </div>
             <ChatView 
