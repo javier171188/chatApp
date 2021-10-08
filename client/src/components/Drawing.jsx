@@ -54,8 +54,18 @@ const Drawing = () => {
         contextRef.current.stroke();
     }
 
+
+    function sendDrawing({setDrawingAreaOn}){
+        const canvas = canvasRef.current;
+        setDrawingAreaOn(false);
+        
+        console.log(canvas.toDataURL());
+    }
+
+
     function cancelDrawing({setDrawingAreaOn}){
         setDrawingAreaOn(false);
+
     }
 
     return (
@@ -71,9 +81,10 @@ const Drawing = () => {
                                 onMouseMove={draw}
                                 ref={canvasRef}
                                 className='drawing-area'
+                                id='the-drawing'
                             />
                             <div>
-                                <button>{t('Send')}</button>
+                                <button onClick={()=> sendDrawing({setDrawingAreaOn})}>{t('Send')}</button>
                                 <button onClick={() => cancelDrawing({setDrawingAreaOn})}>{t('Cancel')}</button>
                             </div>
                         </div>
