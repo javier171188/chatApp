@@ -86,13 +86,15 @@ const Sideview = () => {
                            userState, 
                            setUserState, 
                            setCurrentRoomName,
-                           setGroupRoom){
+                           setGroupRoom,
+                           setContactStatus){
+        
         socket.emit('getRoom', {roomId}, ({ lastMessages, participants, roomName}) => {
             setCurrentRoomId(roomId);
             setCurrentMessages(lastMessages);
             setCurrentRoomName(roomName);
         });
-
+        
         let newUserState = {...userState};
         newUserState.conversations.forEach(c => {
             if (c.roomId === roomId) {

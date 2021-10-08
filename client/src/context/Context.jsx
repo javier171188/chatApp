@@ -58,9 +58,9 @@ const Provider =  ({ children }) => {
     const [contactStatus, setContactStatus] = useState('');
     
     checkForUpdates = function(acceptedId){
-        console.log(userState._id === acceptedId)
+        /*console.log(userState._id === acceptedId)
         console.log(userState._id,  acceptedId)
-        console.log(typeof userState._id, typeof acceptedId)
+        console.log(typeof userState._id, typeof acceptedId)*/
         if (userState._id === acceptedId){
             getUserState();
         }

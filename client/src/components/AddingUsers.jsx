@@ -45,6 +45,7 @@ const AddingUsers = ({currentUsers}) => {
                 
             
                 const currentUsersIds = currentUsers.map( c => c._id);
+                
 
                 return (<div className='adding-mod'>
                     <div className='adding-box'>
@@ -60,7 +61,7 @@ const AddingUsers = ({currentUsers}) => {
                          >
                              { <div className='adding-contacts'>
                                 {   userState.contacts.map(c =>{
-                                        if(!currentUsersIds.includes(c._id)){
+                                        if(!currentUsersIds.includes(c._id) && c.status === "accepted"){
                                             return (<label htmlFor={c._id} key={c._id} className='adding-contacts__contact'>
                                                 <input 
                                                     id={c._id} 

@@ -66,13 +66,15 @@ const CreateRoom = () => {
                                 <h2 className='new-room__title-users'>{t('Choose people for the new chat room')}</h2>
                                 <div className='new-room__contacts-list'>
                                     {userState.contacts.map(c =>{
-                                    return (<label htmlFor={c._id} key={c._id} className='new-room__contacts-label'>
+                                    if (c.status === "accepted"){
+                                        return (<label htmlFor={c._id} key={c._id} className='new-room__contacts-label'>
                                             <input 
                                                 id={c._id} 
                                                 type="checkbox" 
                                                 name="participants" 
                                                 value={c.userName}/> {c.userName}
                                             </label>)
+                                    }
                                 })}
                                 </div>
                                 <button className='new-room__create-button'>{t('Create')}</button>
