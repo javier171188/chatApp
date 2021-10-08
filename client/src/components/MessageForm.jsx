@@ -5,6 +5,7 @@ import '../styles/components/MessageForm.css';
 
 function MessageForm(props) {
     const { t, i18n } = useTranslation();
+    
     return (<Context.Consumer>
             {
                 ({userState})=>{
@@ -13,20 +14,26 @@ function MessageForm(props) {
                     if (selfUser){
                         messageClass = 'self-user';
                     }
-                    return(
-                        <>
-                        {selfUser 
-                                ? 
-                                <p  className='self-user'  >
-                                    {t('SelfUser') + props.message}
-                                </p>
-                                : 
-                                <p  className='sender-user'  >
-                                    {`${props.sender.userName}: ${props.message}`}
-                                </p>
-                        }
-                        </>
-                    );
+                    if (props.isImage){
+                        return(
+                            <p  className={messageClass}  >
+                                { selfUser 
+                                            ? <>{t('SelfUser')}  <img src={props.message}/></>
+                                            : <>{props.sender.userName}: <img src={props.message}/> </>
+                                }       
+                            </p>
+                        );
+                    } else{
+                        return(
+                            <p  className={messageClass}  >
+                                { selfUser 
+                                            ? t('SelfUser') + props.message
+                                            : `${props.sender.userName}: ${props.message}`
+                                }       
+                            </p>
+                        );
+                    }
+                    
                 }
             }
         </Context.Consumer>)

@@ -55,11 +55,12 @@ const Drawing = () => {
     }
 
 
-    function sendDrawing({setDrawingAreaOn}){
+    function sendDrawing({setDrawingAreaOn, userState, currentRoomId, event, sendNewMessage}){
         const canvas = canvasRef.current;
         setDrawingAreaOn(false);
+        let imageStr = canvas.toDataURL();
+        sendNewMessage(event, userState, currentRoomId, imageStr)
         
-        console.log(canvas.toDataURL());
     }
 
 
@@ -70,7 +71,7 @@ const Drawing = () => {
 
     return (
         <Context.Consumer>
-            {({setDrawingAreaOn}) => {
+            {({setDrawingAreaOn, sendNewMessage, userState, currentRoomId}) => {
                 return (
                     <div className='drawing-mod'>
                         <div className='drawing-box'>
@@ -84,7 +85,11 @@ const Drawing = () => {
                                 id='the-drawing'
                             />
                             <div>
-                                <button onClick={()=> sendDrawing({setDrawingAreaOn})}>{t('Send')}</button>
+                                <button onClick={(event)=> sendDrawing({event,
+                                                                        setDrawingAreaOn, 
+                                                                        sendNewMessage, 
+                                                                        userState,
+                                                                        currentRoomId})}>{t('Send')}</button>
                                 <button onClick={() => cancelDrawing({setDrawingAreaOn})}>{t('Cancel')}</button>
                             </div>
                         </div>

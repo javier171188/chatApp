@@ -69,53 +69,9 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
     }
 
 
-    function sendNewMessage(event, userState, currentRoomId){
-        event.preventDefault();
-        //console.log(`Sended room id: ${currentRoomId}`);
-        let message = event.target[0].value;
-        event.target[0].value = '';
-        if (message !== ''){
-            let date = new Date();
-            let dateStr = date.getTime().toString();
-            
-            let messageData = {
-                    sender: {
-                        _id: userState._id,
-                        userName: userState.userName
-                    },
-                    message,
-                    date: dateStr, 
-                    roomId: currentRoomId
-            };
-            socket.emit('sendMessage', messageData, (participants) => {
-                //setCurrentMessages(returnedMessages);
-                let notCurrentParticipants
-                if (typeof participants[0] !== 'object'){
-                    notCurrentParticipants = participants.filter( p => p !== userState._id);
-                } else {
-                    notCurrentParticipants = participants.filter(p => p._id !== userState._id);
-                }
-               
-                let conf = {
-                    headers: {
-                                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                            },
-                    params:{
-                        senderId: userState._id,
-                        receiver: '',
-                        newStatus: true, 
-                        roomId: currentRoomId
-                    }
-                }
-                notCurrentParticipants.forEach( p => {
-                    conf.params.receiver = p;
-                    //console.log(conf.receiver);
-                    axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
-                })
+    
 
-            });
-        }
-    };
+
     userState.contacts.forEach( c => {
         socket.emit('joinPersonal', {current:userState._id, receiver:c._id}, ({_id, lastMessages}) => {
                     });
@@ -147,7 +103,8 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                   socket,
                   getUserState,
                   drawingAreaOn, 
-                  setDrawingAreaOn }) => {
+                  setDrawingAreaOn,
+                  sendNewMessage }) => {
                     return (<div className='chat'>
                                 {currentRoomId && (groupRoom ?
                                                             <div className='chat-header'>
@@ -170,6 +127,7 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                                 sender={message.sender}
                                                 message={message.message}
                                                 date={message.date.toString()}
+                                                isImage={message.isImage}
                                             />
                                         ))
                                     }  

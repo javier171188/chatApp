@@ -161,8 +161,67 @@ const Provider =  ({ children }) => {
         }
     }
 
-    
+    function sendNewMessage(event, userState, currentRoomId, imageStr=''){
+        var isImage;
+        if (!imageStr){
+            event.preventDefault();
+            //console.log(`Sended room id: ${currentRoomId}`);
+            var message = event.target[0].value;
+            event.target[0].value = '';
+            isImage = false;
+        } else{
+            var message = imageStr;
+            isImage = true;
+        }
+        
+        if (message !== ''){
+            let date = new Date();
+            let dateStr = date.getTime().toString();
+            
+            let messageData = {
+                    sender: {
+                        _id: userState._id,
+                        userName: userState.userName
+                    },
+                    message,
+                    date: dateStr, 
+                    roomId: currentRoomId,
+                    isImage
+            };
+            socket.emit('sendMessage', messageData, (participants) => {
+                //setCurrentMessages(returnedMessages);
+                let notCurrentParticipants
+                if (typeof participants[0] !== 'object'){
+                    notCurrentParticipants = participants.filter( p => p !== userState._id);
+                } else {
+                    notCurrentParticipants = participants.filter(p => p._id !== userState._id);
+                }
+               
+                let conf = {
+                    headers: {
+                                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                            },
+                    params:{
+                        senderId: userState._id,
+                        receiver: '',
+                        newStatus: true, 
+                        roomId: currentRoomId
+                    }
+                }
+                notCurrentParticipants.forEach( p => {
+                    conf.params.receiver = p;
+                    //console.log(conf.receiver);
+                    axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));
+                })
+
+            });
+        }
+    };
+
+
+
     const value = {
+        sendNewMessage,
         drawingAreaOn, 
         setDrawingAreaOn,
         getUserState,
