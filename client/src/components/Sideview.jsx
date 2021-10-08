@@ -61,6 +61,7 @@ const Sideview = () => {
                 setCurrentRoomId('1');
                 return;
             }
+            setContactStatus('accepted');
             let conf = {
                 headers: {
                             'Authorization': 'Bearer ' + sessionStorage.getItem('token')
@@ -100,6 +101,7 @@ const Sideview = () => {
             });
         setGroupRoom(true);
         setUserState(newUserState);
+        setContactStatus('accepted');
         let conf = {
             headers: {
                         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
@@ -201,7 +203,8 @@ const Sideview = () => {
                                                                             userState, 
                                                                             setUserState,
                                                                             setCurrentRoomName,
-                                                                            setGroupRoom)}
+                                                                            setGroupRoom,
+                                                                            setContactStatus)}
                                             >
                                                 {c.roomName}
                                             </li>)

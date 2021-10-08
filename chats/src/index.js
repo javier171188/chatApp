@@ -32,6 +32,10 @@ io.on('connection', (socket) => {
     socket.emit('message', serverData);
     serverData.message = 'A user has joined!'
     socket.broadcast.emit('message', serverData);*/
+    socket.on('userAccepted', ({acceptedId}, callback) => {
+        io.emit('userAccepted',{acceptedId});
+    })
+
 
     socket.on('getRoom',  async ({current, receiver, roomId}, callback)=> {
         try{
@@ -120,6 +124,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateRooms', ({participants, roomId}, callback) =>{
+        //I think I am not using this.
         socket.broadcast.emit('newRoom', { participants, roomId});
         callback();
     })

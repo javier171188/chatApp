@@ -13,20 +13,24 @@ var subscribeRoom = function() {
     console.log('executed before');
 }
 
-
+var checkForUpdates = function(){
+    console.log('executed before');
+}
 const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
     path: process.env.SOCKET_PATH
 });
 
 socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
     updateLastRoom(roomId, returnedMessages, participants);
-})
+});
 
 socket.on('newRoom',({participants, roomId}) => {
     subscribeRoom(participants, roomId)
-})
+});
 
-
+socket.on('userAccepted', ({acceptedId}) =>{
+    checkForUpdates(acceptedId);
+});
 
 
 const USER_PATH=process.env.USER_PATH;
@@ -53,6 +57,12 @@ const Provider =  ({ children }) => {
                                     });
     const [contactStatus, setContactStatus] = useState('');
     
+    checkForUpdates = function(acceptedId){
+        if (userState._id === acceptedId){
+            getUserState();
+        }
+    };
+
     subscribeRoom = async function(participants, roomId){
         try{
             let participantIds =participants.map( p => p._id);
@@ -80,7 +90,7 @@ const Provider =  ({ children }) => {
     }
 
                                     
-    async function getUserState(){
+    async function getUserState(refresh=true){
         let email = JSON.parse(sessionStorage.getItem('email'));
         let token = sessionStorage.getItem('token');
         if (!email || !token){
@@ -96,14 +106,14 @@ const Provider =  ({ children }) => {
             }
         }
         let user = await axios.get(USER_PATH+'/getUser', conf );
-        if (countUserLoad === 0){
+        if (countUserLoad === 0 || refresh){
             setUserState(user.data)
             i18n.changeLanguage(user.data.language);
             localStorage.setItem('language', user.data.language);
             countUserLoad++;
         }
     };
-    getUserState();
+    getUserState(false);
 
 
     const [currentMessages, setCurrentMessages] = useState([]);
@@ -149,6 +159,7 @@ const Provider =  ({ children }) => {
 
     
     const value = {
+        getUserState,
         currentUserChat,
         setCurrentUserChat,
         contactStatus, 
