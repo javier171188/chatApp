@@ -26,7 +26,6 @@ const App = () => (
                             <Route exact path='/chat/register' component={GoHome} />
                             <Route exact path='/chat/create-room' component={CreateRoom} />
                             <Route exact path='/chat/settings' component={Settings} />
-                            <Route exact path='/chat/draw' component={Drawing} />
                             <Route component={NotFound} />
                         </Switch>
                       </BrowserRouter>

@@ -56,6 +56,7 @@ const Provider =  ({ children }) => {
                                         conversations: []
                                     });
     const [contactStatus, setContactStatus] = useState('');
+    const [drawingAreaOn, setDrawingAreaOn] = useState(false);
     
     checkForUpdates = function(acceptedId){
         /*console.log(userState._id === acceptedId)
@@ -162,6 +163,8 @@ const Provider =  ({ children }) => {
 
     
     const value = {
+        drawingAreaOn, 
+        setDrawingAreaOn,
         getUserState,
         currentUserChat,
         setCurrentUserChat,

@@ -2,6 +2,7 @@ import  { useState, useRef, useEffect } from 'react';
 import Context from '../context/Context';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
+import Drawing from './Drawing';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import './../styles/components/ChatView.css';
@@ -124,6 +125,11 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
         socket.emit('joinGroup', {roomId:c.roomId}, ({_id, lastMessages}) => {
                     });
     });
+
+    function openDrawingArea(setDrawingAreaOn){
+        setDrawingAreaOn(true);
+    }
+
     return (
         <Context.Consumer>
             {
@@ -139,7 +145,9 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                   setAddingUser,
                   currentUserChat,
                   socket,
-                  getUserState }) => {
+                  getUserState,
+                  drawingAreaOn, 
+                  setDrawingAreaOn }) => {
                     return (<div className='chat'>
                                 {currentRoomId && (groupRoom ?
                                                             <div className='chat-header'>
@@ -187,13 +195,19 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                     {/*<div ref={messagesEndRef} />*/}
                                 </div>
                                { (currentRoomId && currentRoomId !== '1') &&
+                               <>
                                 <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
                                    <input autoFocus className='chat-writing' type="text" placeholder={t('Type a message...')} />
                                    <button className='chat-button'>{t('Send')}</button>
                                </form>
+                               <button onClick={() => openDrawingArea(setDrawingAreaOn)}>{t('Draw')}</button>
+                               </>
                                }
                                {addingUser && 
                                    <AddingUsers currentUsers={currentUsers}/>
+                                }
+                                {drawingAreaOn &&
+                                    <Drawing/>
                                 }
                             </div>)
                 }
