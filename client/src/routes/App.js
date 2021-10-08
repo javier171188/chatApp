@@ -10,7 +10,6 @@ import UploadAvatar from '../components/UploadAvatar';
 import Context from '../context/Context';
 import CreateRoom from '../components/CreateRoom';
 import Settings from '../components/Settings';
-import Drawing from '../components/Drawing';
 
 
 
