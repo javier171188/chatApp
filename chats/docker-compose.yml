@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    environment:
+      PORT: "3001"
+      DB_URL: "mongodb://db:27017"
+      DB_NAME: "chats-chat"
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+  db:
+    image: mongo
