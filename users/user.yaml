@@ -25,6 +25,9 @@ spec:
           - name: SECRET_SIGN
             value: "secretsign"
           - name: DB_URL
-            value: "mongodb://10.97.81.75:27017"
+            valueFrom:
+              configMapKeyRef:
+                name: mongodb-configmap
+                key: database_url
           - name: DB_NAME
             value: "users-chat"
