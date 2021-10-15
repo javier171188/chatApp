@@ -20,14 +20,26 @@ spec:
         ports:
         - containerPort: 3000
         env:
-          - name: PORT
-            value: "3000"
-          - name: SECRET_SIGN
-            value: "secretsign"
-          - name: DB_URL
-            valueFrom:
-              configMapKeyRef:
-                name: mongodb-configmap
-                key: database_url
-          - name: DB_NAME
-            value: "users-chat"
+        - name: PORT
+          value: "3000"
+        - name: SECRET_SIGN
+          value: "secretsign"
+        - name: DB_URL
+          value: "mongodb://userdb-service:27017"
+        - name: DB_NAME
+          value: "users-chat"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000 
+      
