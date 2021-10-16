@@ -36,10 +36,7 @@ metadata:
 spec:
   selector:
     app: user
-  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-      nodePort: 30000 
-      
