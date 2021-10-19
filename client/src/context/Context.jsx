@@ -4,7 +4,7 @@ import axios from 'axios';
 import socketIOClient from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 
-require('dotenv').config();
+//require('dotenv').config();
 
 var updateLastRoom = function () {
     console.log('executed before');

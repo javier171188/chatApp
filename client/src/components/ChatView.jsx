@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import './../styles/components/ChatView.css';
 
-require('dotenv').config();
+//require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 

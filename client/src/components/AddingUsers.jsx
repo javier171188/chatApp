@@ -3,7 +3,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import './../styles/components/AddingUsers.css';
 import { useTranslation } from 'react-i18next';
-require('dotenv').config();
+//require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 const AddingUsers = ({currentUsers}) => {

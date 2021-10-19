@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import '../styles/components/Sideview.css';
 import { Redirect } from 'react-router-dom';
 
-require('dotenv').config();
+//require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 

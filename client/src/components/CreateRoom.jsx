@@ -5,7 +5,7 @@ import '../styles/components/CreateRoom.css';
 import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
 
-require('dotenv').config();
+//require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
 const CreateRoom = () => {

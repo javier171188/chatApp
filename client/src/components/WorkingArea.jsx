@@ -5,7 +5,7 @@ import ChatView from "./ChatView";
 import '../styles/components/WorkingArea.css';
 import { useTranslation } from 'react-i18next';
 
-require('dotenv').config();
+//require('dotenv').config();
 
 
 const USER_PATH=process.env.USER_PATH;

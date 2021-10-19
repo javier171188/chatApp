@@ -6,7 +6,7 @@ import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
-require('dotenv').config();
+//require('dotenv').config();
 
 const USER_PATH=process.env.USER_PATH;
 
