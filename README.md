@@ -91,7 +91,10 @@ add the following
 ```
 
 ### Environment Variables
-- (I have not implemented them yet)
+- For the client service:
+		SOCKET_ENDPOINT=http://proxy-service:80
+		SOCKET_PATH=/mysocket
+		USER_PATH=http://proxy-service:80/users
 
  ### Ports
  - 3000: Service users.

@@ -21,11 +21,11 @@ spec:
         - containerPort: 1234
         env:
         - name: SOCKET_ENDPOINT
-          value: "http://proxy-service"
+          value: "http://192.168.49.2:30000/"
         - name: SOCKET_PATH
           value: "/mysocket"
         - name: USER_PATH
-          value: "http://proxy-service:80/users"
+          value: "http://192.168.49.2:30000/users"
         
 ---
 apiVersion: v1

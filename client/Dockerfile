@@ -6,6 +6,8 @@ WORKDIR /usr/src/
 
 RUN npm install
 
+COPY [".env", "/usr/src/"]
+
 COPY [".", "/usr/src/"]
 
 EXPOSE 1234

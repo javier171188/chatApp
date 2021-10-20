@@ -4,8 +4,8 @@ services:
   app:
     build: .
     environment:
-      SOCKET_ENDPOINT: "http://localhost"
+      SOCKET_ENDPOINT: "http://proxy-service"
       SOCKET_PATH: "/mysocket"
-      USER_PATH: "http://localhost/users"
+      USER_PATH: "http://proxy-service/users"
     ports:
       - "1234:1234"

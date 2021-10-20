@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: userdb
+  name: chatsdb
   labels:
-    app: userdb
+    app: chatsdb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: userdb
+      app: chatsdb
   template:
     metadata:
       labels:
-        app: userdb
+        app: chatsdb
     spec:
       containers:
-      - name: userdb
+      - name: chatsdb
         image: mongo
         ports:
         - containerPort: 27017
@@ -23,10 +23,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: userdb-service
+  name: chatsdb-service
 spec:
   selector:
-    app: userdb
+    app: chatsdb
   ports:
     - protocol: TCP
       port: 27017
