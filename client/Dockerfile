@@ -6,9 +6,9 @@ WORKDIR /usr/src/
 
 RUN npm install
 
-COPY [".env", "/usr/src/"]
+COPY [".env", "./locales", "media", "src", "/usr/src/"]
 
-COPY [".", "/usr/src/"]
+#COPY [".", "/usr/src/"]
 
 EXPOSE 1234
 

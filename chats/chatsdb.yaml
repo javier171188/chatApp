@@ -19,6 +19,11 @@ spec:
         image: mongo
         ports:
         - containerPort: 27017
+        volumeMounts:
+        - name: chatsvolume
+          mountPath: /data/db
+      volumes:
+      - name: chatsvolume
 ---
 apiVersion: v1
 kind: Service
