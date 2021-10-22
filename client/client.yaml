@@ -15,17 +15,17 @@ spec:
         app: client
     spec:
       containers:
-      - name: proxy
-        image: javier171188/client
+      - name: client
+        image: javier171188/client:aws
         ports:
         - containerPort: 1234
         env:
         - name: SOCKET_ENDPOINT
-          value: "http://192.168.49.2:30000/"
+          value: "http://a938bdc87604b4c9db73f8ef00edcfb0-1033339092.us-east-2.elb.amazonaws.com:80/"
         - name: SOCKET_PATH
           value: "/mysocket"
         - name: USER_PATH
-          value: "http://192.168.49.2:30000/users"
+          value: "http://a938bdc87604b4c9db73f8ef00edcfb0-1033339092.us-east-2.elb.amazonaws.com:80/users"
         
 ---
 apiVersion: v1
