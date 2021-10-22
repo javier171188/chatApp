@@ -47,40 +47,40 @@ add the following
 ```
 
 	location ~ \.s?css$ {
-		proxy_pass http://localhost:1234;
+		proxy_pass http://client-service:1234;
 	}
 
 	location ~ \.png$ {
-                proxy_pass http://localhost:1234;
+                proxy_pass http://client-service:1234;
         }
 
 
 	location ~ \.map$ {
-		proxy_pass http://localhost:1234;
+		proxy_pass http://client-service:1234;
 	}
 
 	location ~ \.jsx?$ {
-		proxy_pass http://localhost:1234;
+		proxy_pass http://client-service:1234;
 	}
 	
 	location ~ \/chat\/.* {
-		proxy_pass http://localhost:1234;
+		proxy_pass http://client-service:1234;
 	}
 
 	location ~ \/users\/.* {
-		proxy_pass http://localhost:3000;
+		proxy_pass http://chats-service:3000;
 	}
 
 	location ~ \/chats\/.* {
-                proxy_pass http://localhost:3001;
+                proxy_pass http://chats-service:3001;
         }
 
 	#location ~ \/socket\.io\/.* {
-        #        proxy_pass http://localhost:3001;
+        #        proxy_pass http://chats-service:3001;
         #}
 
 	location /mysocket/ {
-     		proxy_pass http://localhost:3001; 
+     		proxy_pass http://chats-service:3001; 
       		proxy_http_version 1.1;
       		proxy_set_header Upgrade $http_upgrade;
       		proxy_set_header Connection 'upgrade';
@@ -90,11 +90,44 @@ add the following
 
 ```
 
+### Deployment in kubernetes
+For deployment in kubernetes, the nginx container copy the following files
+```
+COPY ./proxy.conf /etc/nginx/sites-available/proxy.conf 
+COPY ./proxy.conf /etc/nginx/sites-enabled/proxy.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
+```
+that should set the configuration for nginx.
+
+The services have their yaml files to set up the deployment and the services
+- Users: userdb.yaml, user.yaml
+- Chats: chatsdb.yaml, chats.yaml
+- Nginx: proxy.yaml
+- client: client. yaml
+
+To set the configuration execute with kubectl:
+```kubectl apply -f file.yaml```
+
+There is also a file chat.yaml in the root folder. You can start the services by
+```kubectl apply -f chat.yaml```
+however the address for the proxy service is not set automatically, and you have to set it manually.
+
 ### Environment Variables
 - For the client service:
 		SOCKET_ENDPOINT=http://proxy-service:80
 		SOCKET_PATH=/mysocket
 		USER_PATH=http://proxy-service:80/users
+
+- For the user service:
+		PORT=3000
+		SECRET_SIGN=secretsign
+		DB_URL=mongodb://userdb-service.1:27017
+		DB_NAME=users-chat
+
+- For the chats service: 
+		PORT=3001
+		DB_URL=mongodb://chatsdb-service:27017
+		DB_NAME=chats-chat
 
  ### Ports
  - 3000: Service users.
