@@ -113,21 +113,21 @@ There is also a file chat.yaml in the root folder. You can start all the service
 however the address for the proxy service is not set automatically, and you have to set it manually.
 
 ### Environment Variables
-- For the client service: 
-		- SOCKET_ENDPOINT=http://proxy-service:80 
-		- SOCKET_PATH=/mysocket
-		- USER_PATH=http://proxy-service:80/users 
+- For the client service: \
+		 SOCKET_ENDPOINT=http://proxy-service:80 \
+		SOCKET_PATH=/mysocket \
+		USER_PATH=http://proxy-service:80/users  \
 
 - For the user service:\
-		- PORT=3000\
-		- SECRET_SIGN=secretsign\
-		- DB_URL=mongodb://userdb-service.1:27017\
-		- DB_NAME=users-chat\
+		PORT=3000\
+		SECRET_SIGN=secretsign\
+		DB_URL=mongodb://userdb-service.1:27017\
+		DB_NAME=users-chat\
 
-- For the chats service: 
-		- PORT=3001
-		- DB_URL=mongodb://chatsdb-service:27017
-		- DB_NAME=chats-chat
+- For the chats service: \
+		PORT=3001\
+		DB_URL=mongodb://chatsdb-service:27017\
+		DB_NAME=chats-chat\
 
  ### Ports
  - 3000: Service users.
