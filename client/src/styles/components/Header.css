@@ -164,10 +164,10 @@ a:link {
     .to-center{
         display: none;
     }
-    .header__menu:hover ul, ul:hover{
+    .header__menu:hover ul, .header__menu--options:hover{
         position: absolute;
         right: 20px;
-        top: 40px;
+        top: 37px;
     }
     
 }

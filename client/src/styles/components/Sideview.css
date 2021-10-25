@@ -12,9 +12,6 @@
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
 }
 
-/*.user-picture:hover {
-    cursor: pointer;
-}*/
 
 .user-name--text {
     font-size: 300%;
@@ -75,6 +72,7 @@
 }
 
 .chats-button:hover {
+    /*Create new room button*/
     cursor: pointer;
 }
 
@@ -106,12 +104,10 @@
 
 }*/
 
-@media (max-width: 600px) {
+@media (max-width: 600px){
     .user{
         margin-top: 10px;
-
     }
-
 
     .user-picture__container, .user-info, .chats{
         margin-left: auto;
@@ -120,6 +116,7 @@
     }
 
     .user-info, .chats{
-        width: 80%;
+        width: 100%;
     }
+
 }
