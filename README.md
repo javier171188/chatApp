@@ -116,18 +116,18 @@ however the address for the proxy service is not set automatically, and you have
 - For the client service: \
 		 SOCKET_ENDPOINT=http://proxy-service:80 \
 		SOCKET_PATH=/mysocket \
-		USER_PATH=http://proxy-service:80/users  \
+		USER_PATH=http://proxy-service:80/users  
 
 - For the user service:\
 		PORT=3000\
 		SECRET_SIGN=secretsign\
 		DB_URL=mongodb://userdb-service.1:27017\
-		DB_NAME=users-chat\
+		DB_NAME=users-chat
 
 - For the chats service: \
 		PORT=3001\
 		DB_URL=mongodb://chatsdb-service:27017\
-		DB_NAME=chats-chat\
+		DB_NAME=chats-chat
 
  ### Ports
  - 3000: Service users.
