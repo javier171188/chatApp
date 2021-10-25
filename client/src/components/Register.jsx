@@ -84,7 +84,7 @@ const Register = () => {
                                 />
 								
 
-								<button className='button'>{t('Register')}</button>
+								<button className='button' id='register-button'>{t('Register')}</button>
 								
 								{ errorMessages.length >= 1
 										&& <div className='login--error' >{errorMessages[0]}</div>

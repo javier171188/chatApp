@@ -31,9 +31,7 @@ const Login = () => {
 		<Context.Consumer>
 			{
 				({ logIn, errorMessages, setErrorMessages }) => {
-					
 					return (<section className='login'>
-								
 								<section className='login__container'>
 									<h2>{t('Login')}</h2>
 									<form className='login__container--form' onSubmit={logIn}>
@@ -56,15 +54,12 @@ const Login = () => {
 											? <div className='login--error'> {t('Incorrect credentials')} </div>
 											: ''
 										}
-										
 									</form>
-									
 									<p className='login__container--register'>
 										{t('Not a user yet?')} <Link to='/chat/register' onClick={() => goRegister(setErrorMessages)}> {t('Register')}</Link>
 									</p>
 								</section>
 							</section>
-
 					)
 				}
 			}

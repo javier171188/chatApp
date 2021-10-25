@@ -2,7 +2,7 @@
     text-align: center;
 }
 
-.settings__user h2 {
+.settings__user-title {
     background-color: rgb(194, 192, 192);
     color: rgb(92, 91, 91);
     border-radius: 0.5em;
@@ -59,4 +59,17 @@
 .settings__cancel-button{
     position: relative;
     float: right;
+}
+
+@media (max-width: 560px) and (min-width: 340px) {
+.settings__language-title, .settings__user h2 {
+        width: 75%;
+    }
+}
+
+@media (max-width: 350px){
+    .settings__language-title, .settings__user h2 {
+            width: 80%;
+            font-size: 1em;
+    }   
 }
