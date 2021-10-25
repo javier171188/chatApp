@@ -145,3 +145,35 @@ a:link {
     text-decoration: underline;
     text-shadow: 1px 1px brown;
 }*/
+
+@media (max-width: 500px){
+    .header-title{
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .header__menu--button{
+        width: 1em;
+        height: 0.5em;
+        position: absolute;
+        right: 30px;
+        top: 5px;
+    }
+    .to-center{
+        display: none;
+    }
+    .header__menu:hover ul, ul:hover{
+        position: absolute;
+        right: 20px;
+        top: 40px;
+    }
+    
+}
+
+@media (max-width: 300px){
+    .header-title{
+        font-size: 90%;
+    }
+}
