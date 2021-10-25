@@ -62,6 +62,7 @@ const CreateRoom = () => {
                                     className='new-room__input-name'
                                 />
                             </div>
+                            <br/>
                             <div className='new-room__contacts'>
                                 <h2 className='new-room__title-users'>{t('Choose people for the new chat room')}</h2>
                                 <div className='new-room__contacts-list'>
