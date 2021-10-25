@@ -75,7 +75,7 @@ const Drawing = () => {
                 return (
                     <div className='drawing-mod'>
                         <div className='drawing-box'>
-                            <h2>{t('Draw')}</h2>
+                            <h2 className='drawing-title'>{t('Draw')}</h2>
                             <canvas 
                                 onMouseDown={startDrawing}
                                 onMouseUp={finishDrawing}
@@ -83,6 +83,7 @@ const Drawing = () => {
                                 ref={canvasRef}
                                 className='drawing-area'
                                 id='the-drawing'
+                                width="260"
                             />
                             <div>
                                 <button onClick={(event)=> sendDrawing({event,

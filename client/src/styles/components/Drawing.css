@@ -11,11 +11,15 @@
     align-items: center;
 }
 
+.drawing-title{
+    margin-left: 5px;
+}
+
 .drawing-box{
     border: solid;
     border-radius: 1em;
     border-color: gray;
-    width: 50vw;
+    min-width: 280px;
     background: gray;
 }
 
@@ -24,4 +28,5 @@
     color: rgb(88, 87, 87);
     border-radius: 5px;
     background-color: white;
+    margin: auto;
 }
