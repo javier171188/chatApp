@@ -33,3 +33,24 @@
 .chat-accept{
     height: 2em;
 }
+
+.chat-submit-bar{
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-submit-form{
+    display: block;
+    width: 120%;
+    margin-left: 1%;
+}
+
+
+.chat-button{
+    height: 1.8em;
+}
+
+.chat-button__drawing{
+    margin-left: 0;
+    
+}

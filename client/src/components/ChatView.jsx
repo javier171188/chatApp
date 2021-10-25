@@ -153,13 +153,13 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                     {/*<div ref={messagesEndRef} />*/}
                                 </div>
                                { (currentRoomId && currentRoomId !== '1') &&
-                               <>
-                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)}>
+                               <div className='chat-submit-bar'>
+                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)} className='chat-submit-form'>
                                    <input autoFocus className='chat-writing' type="text" placeholder={t('Type a message...')} />
                                    <button className='chat-button'>{t('Send')}</button>
                                </form>
-                               <button onClick={() => openDrawingArea(setDrawingAreaOn)}>{t('Draw')}</button>
-                               </>
+                               <button className='chat-button__drawing' onClick={() => openDrawingArea(setDrawingAreaOn)}>{t('Draw')}</button>
+                               </ div>
                                }
                                {addingUser && 
                                    <AddingUsers currentUsers={currentUsers}/>

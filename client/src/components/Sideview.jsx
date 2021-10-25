@@ -140,7 +140,7 @@ const Sideview = () => {
                 
                 return  (
                     <aside className='user'>
-                        <div className='user-picture'>
+                        <div className='user-picture user-picture__container'>
                             {
                                 userState.hasAvatar && <img className='user-picture' src={USER_PATH+`/${userState._id}/avatar`} alt="User's avatar" />
                             }
