@@ -46,6 +46,18 @@
 }
 
 
+#add-user-button{
+    text-transform: capitalize;
+    margin-right: 2px;
+    margin-top: 4px;
+}
+
+#remove-user-button{
+    text-transform: capitalize;
+    margin-left: 2px;
+    margin-top: 4px;
+}
+
 #send-message__button{
     height: 1.8em;
     text-transform: capitalize;

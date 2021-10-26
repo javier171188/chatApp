@@ -51,14 +51,20 @@
     padding-bottom: 0;
 }
 
-.settings__language-container button{
+#settings__language-button{
     margin-left: 0.5em;
     margin-bottom: 0em;
+    margin-top: 10px;
+    text-transform: capitalize;
+    color: black;
 }
 
-.settings__cancel-button{
+#settings__cancel-button{
     position: relative;
     float: right;
+    text-transform: capitalize;
+    margin-top: 10px;
+    color: black;
 }
 
 @media (max-width: 560px) and (min-width: 340px) {

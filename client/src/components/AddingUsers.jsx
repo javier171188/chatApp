@@ -3,6 +3,9 @@ import {useState} from 'react';
 import axios from 'axios';
 import './../styles/components/AddingUsers.css';
 import { useTranslation } from 'react-i18next';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
 
@@ -50,7 +53,8 @@ const AddingUsers = ({currentUsers}) => {
                 return (<div className='adding-mod'>
                     <div className='adding-box'>
                         <h1 className='adding-title'>{t('Add users to')} {currentRoomName}</h1>
-                        <hr/>
+                        <Divider />
+                        <Divider />
                         {<form className='adding-form' 
                                onSubmit={(event)=>addUser(event, 
                                                           userState, 
@@ -74,9 +78,25 @@ const AddingUsers = ({currentUsers}) => {
                                 }
                              </div>
                              }
-                                <button className='adding-button'>{t('Add')}</button>
+                                <Button 
+                                    className='adding-button'
+                                    id='adding-button'
+                                    type='submit'
+                                    color='inherit'
+                                    variant='contained'
+                                >
+                                    {t('Add')}
+                                </Button>
                             </form>}
-                        <button className='adding-button__cancel' onClick={() => goBack(setAddingUser)}>{t('Cancel')}</button>
+                        <Button 
+                            className='adding-button__cancel' 
+                            id='adding-button__cancel'
+                            onClick={() => goBack(setAddingUser)}
+                            color='inherit'
+                            variant='contained'
+                        >
+                            {t('Cancel')}
+                        </Button>
                     </div>
                 </div>)
             }

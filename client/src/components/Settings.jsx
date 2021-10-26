@@ -5,6 +5,8 @@ import '../styles/components/Settings.css';
 import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import Button from '@mui/material/Button';
+
 
 require('dotenv').config();
 
@@ -82,10 +84,26 @@ const Settings = () => {
                                         </label>)
                             })}
                             </div>
-                            <button className='settings__language-button'>{t('Choose')}</button>
+                            <Button 
+                                className='settings__language-button'
+                                id='settings__language-button'
+                                type='submit'
+                                color='inherit'
+                                variant='contained'
+                            >
+                                {t('Choose')}
+                            </Button>
                         </div>
                     </form>
-                    <button onClick={goBack} className='settings__cancel-button'>{t('Go back')}</button>
+                    <Button 
+                        onClick={goBack} 
+                        className='settings__cancel-button'
+                        id='settings__cancel-button'
+                        color='inherit'
+                        variant='contained'
+                    >
+                        {t('Go back')}
+                    </Button>
                     </>
                 )
             }

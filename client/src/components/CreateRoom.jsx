@@ -4,6 +4,9 @@ import '../styles/components/Header.css';
 import '../styles/components/CreateRoom.css';
 import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
+import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
+
 
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
@@ -55,7 +58,8 @@ const CreateRoom = () => {
                         <form onSubmit={(e)=>createRoom(e, userState, socket)}>
                             <div className='new-room__name'>
                                 <label>{t('Room Name')} </label>
-                                <input 
+                                <br />
+                                <Input 
                                     type="text" 
                                     placeholder={t('Write a name for the room...')} 
                                     required
@@ -78,10 +82,26 @@ const CreateRoom = () => {
                                     }
                                 })}
                                 </div>
-                                <button className='new-room__create-button'>{t('Create')}</button>
+                                <Button 
+                                    className='new-room__create-button'
+                                    id='new-room__create-button'
+                                    color='inherit'
+                                    variant='contained'
+                                    type='submit'
+                                >
+                                    {t('Create')}
+                                </Button>
                             </div>
                         </form>
-                        <button onClick={goBack} className='new-room__cancel-button'>{t('Cancel')}</button>
+                        <Button 
+                            onClick={goBack} 
+                            className='new-room__cancel-button'
+                            id='new-room__cancel-button'
+                            color='inherit'
+                            variant='contained'
+                        >
+                            {t('Cancel')}
+                        </Button>
                         </>
                     )
                 }

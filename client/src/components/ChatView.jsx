@@ -110,8 +110,24 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                                             <div className='chat-header'>
                                                                 <h1 className='chat-header__name'>{currentRoomName}</h1> 
                                                                 <div className='chat-header__buttons'>
-                                                                    <button className='chat-header__add' onClick={()=>{addUserToRoom({roomId:currentRoomId, userState, setAddingUser})}}>{t('Add')}</button>
-                                                                    <button className='chat-header__remove' onClick={()=>{removeUserFromRoom()}}>{t('Remove')}</button>
+                                                                    <Button 
+                                                                        className='chat-header__add' 
+                                                                        onClick={()=>{addUserToRoom({roomId:currentRoomId, userState, setAddingUser})}}
+                                                                        color='inherit'
+                                                                        variant='contained' 
+                                                                        id='add-user-button'
+                                                                    >
+                                                                        {t('Add')}
+                                                                    </Button>
+                                                                    <Button 
+                                                                        className='chat-header__remove' 
+                                                                        onClick={()=>{removeUserFromRoom()}}
+                                                                        color='inherit'
+                                                                        variant='contained'
+                                                                        id='remove-user-button'
+                                                                    >
+                                                                        {t('Remove')}
+                                                                    </Button>
                                                                 </div>
                                                             </div>
                                                             :

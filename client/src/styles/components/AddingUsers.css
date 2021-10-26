@@ -43,17 +43,21 @@
     margin: 1em;
 }
 
-.adding-button__cancel{
+#adding-button__cancel{
     position: relative;
     float: right;
+    text-transform: capitalize;
+    margin: 10px;
 }
 
-.adding-button{
+#adding-button{
     position: relative;
+    text-transform: capitalize;
+    margin: 10px;
 }
 
 @media (max-width: 450px) {
-    .adding-button__cancel, .adding-button{
+    #adding-button__cancel, #adding-button{
         width: 80%;
         margin-top: 10px;
         margin-bottom: 10px;

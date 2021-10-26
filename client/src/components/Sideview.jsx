@@ -158,6 +158,7 @@ const Sideview = () => {
                                 </h1>
                             </div>
                             <Divider />
+                            <Divider />
                             <div className='user-contacts'>
                                 <h1>{t('ContactHeader')}</h1>  
                                 <List>
@@ -195,6 +196,7 @@ const Sideview = () => {
                         </div>
                         <div className='chats'>
                             <div className='chats-header'><h1>{t('Group Chats:')}</h1> <div className='chats-button' onClick={createGroupChat}>+</div></div>
+                            <Divider />
                             <Divider />
                             <nav className='chats-nav'>{
                                 userState.conversations.length < 1 ?
