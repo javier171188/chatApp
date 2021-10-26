@@ -6,6 +6,10 @@ import Drawing from './Drawing';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import './../styles/components/ChatView.css';
+import Button from '@mui/material/Button';
+import BrushIcon from '@mui/icons-material/Brush';
+import Input from '@mui/material/Input';
+
 
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
@@ -67,10 +71,6 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
         
         
     }
-
-
-    
-
 
     userState.contacts.forEach( c => {
         socket.emit('joinPersonal', {current:userState._id, receiver:c._id}, ({_id, lastMessages}) => {
@@ -154,11 +154,39 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                 </div>
                                { (currentRoomId && currentRoomId !== '1') &&
                                <div className='chat-submit-bar'>
-                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)} className='chat-submit-form'>
-                                   <input autoFocus className='chat-writing' type="text" placeholder={t('Type a message...')} />
-                                   <button className='chat-button'>{t('Send')}</button>
+                                <form onSubmit={(event)=>sendNewMessage(event,userState, currentRoomId)} 
+                                      className='chat-submit-form'
+                                >
+                                   <div className='chat-input__container' >
+                                    <Input 
+                                            autoFocus 
+                                            id='messages-input'
+                                            className='chat-writing' 
+                                            type="text" 
+                                            placeholder={t('Type a message...')}
+                                            fullWidth
+                                        />
+                                    </div>
+                                   <Button 
+                                        className='chat-button'
+                                        id='send-message__button'
+                                        color='inherit'
+                                        variant='contained'
+                                        type="submit"
+                                    >
+                                        {t('Send')}
+                                    </Button>
                                </form>
-                               <button className='chat-button__drawing' onClick={() => openDrawingArea(setDrawingAreaOn)}>{t('Draw')}</button>
+                               <Button 
+                                    className='chat-button__drawing' 
+                                    id='drawing-button'
+                                    onClick={() => openDrawingArea(setDrawingAreaOn)}
+                                    variant="contained"
+                                    color='inherit'
+                                    startIcon={<BrushIcon/>}
+                                >
+                                   {t('Draw')}
+                                </Button>
                                </ div>
                                }
                                {addingUser && 

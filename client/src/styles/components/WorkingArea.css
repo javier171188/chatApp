@@ -3,7 +3,7 @@
     margin-left: 10px;
     width: 100%;
 }
-.working-search, .chat-writing{
+.working-search{
     color: rgb(77, 75, 75);
     background-color: white;
     width: calc(100% - var(--button-width) - 20px);
@@ -15,11 +15,22 @@
     color: rgb(68, 67, 67);
 }
 
-.working-button, .chat-button {
+.chat-button {
     margin-left: 0;
     margin-right: 0;
     width: var(--button-width);
 }
+
+#search-user-button{
+    margin-left: 0;
+    margin-right: 0;
+    width: 70px;
+    background-color: rgb(219, 216, 216);
+    text-transform: capitalize;
+    color: rgb(77, 75, 75);
+    height: 1.8em;
+}
+
 
 .chat-messages{
     margin-top: 20px;

@@ -4,6 +4,9 @@ import Context from "../context/Context";
 import ChatView from "./ChatView";
 import '../styles/components/WorkingArea.css';
 import { useTranslation } from 'react-i18next';
+import Button from '@mui/material/Button';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 require('dotenv').config();
 
@@ -82,7 +85,15 @@ const WorkingArea = () => {
         <div className='working'>
             <form className='working-nav' onSubmit={lookForUser}>
                 <input id='email-search' className='working-search' type="text" placeholder={t('Type an e-mail...')} />
-                <button className='working-button'>{t('Search!')}</button>
+                <Button 
+                    className='working-button'
+                    id='search-user-button'
+                    color='inherit'
+                    variant='contained'
+                    type='submit'
+                >
+                    {t('Search!')}
+                </Button>
             </form>
             <div className="found-user">
                 {searchMessage}

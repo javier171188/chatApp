@@ -40,17 +40,37 @@
 }
 
 .chat-submit-form{
-    display: block;
+    display: flex;
     width: 120%;
     margin-left: 1%;
 }
 
 
-.chat-button{
+#send-message__button{
+    height: 1.8em;
+    text-transform: capitalize;
+    color: rgb(77, 75, 75);
+    margin-top: 25px;
+}
+
+#drawing-button{
+    text-transform: capitalize;
+    color: rgb(77, 75, 75);
+    margin-top: 25px;
+    margin-left: -10px;
     height: 1.8em;
 }
 
-.chat-button__drawing{
-    margin-left: 0;
-    
+
+#messages-input{
+    color: rgb(77, 75, 75);
+    background-color: white;
+    /*width: calc(100% - var(--button-width) - 20px);*/
+    margin-right: 5px;
+    text-align: center;
+    margin-top: 22px;
+}
+
+.chat-input__container{
+    width: calc(100% - var(--button-width) - 20px)
 }
