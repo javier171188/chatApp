@@ -4,6 +4,10 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Context from "../context/Context";
 import '../styles/components/Drawing.css';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import CancelIcon from '@mui/icons-material/Cancel';
+
 
 const Drawing = () => {
     const { t, i18n } = useTranslation();
@@ -85,13 +89,31 @@ const Drawing = () => {
                                 id='the-drawing'
                                 width="260"
                             />
-                            <div>
-                                <button onClick={(event)=> sendDrawing({event,
+                            <div className='drawing-button-container'>
+                                <Button 
+                                    onClick={(event)=> sendDrawing({event,
                                                                         setDrawingAreaOn, 
                                                                         sendNewMessage, 
                                                                         userState,
-                                                                        currentRoomId})}>{t('Send')}</button>
-                                <button onClick={() => cancelDrawing({setDrawingAreaOn})}>{t('Cancel')}</button>
+                                                                        currentRoomId})}
+                                    color='inherit'
+                                    variant='contained'
+                                    className='drawing-button'
+                                    id='drawing-send-button'
+                                    startIcon={<SendIcon/>}
+                                >
+                                    {t('Send')}
+                                </Button>
+                                <Button
+                                    onClick={() => cancelDrawing({setDrawingAreaOn})}
+                                    color='inherit'
+                                    variant='contained'
+                                    className='drawing-button'
+                                    id='cancel-drawing-button'
+                                    startIcon={<CancelIcon/>}
+                                >
+                                    {t('Cancel')}
+                                </Button>
                             </div>
                         </div>
                     </div>

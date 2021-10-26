@@ -3,7 +3,13 @@ import Context from '../context/Context';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import '../styles/components/Sideview.css';
-import { Redirect } from 'react-router-dom';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
+import Box from '@mui/material/Box';
 
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
@@ -139,7 +145,7 @@ const Sideview = () => {
                 console.log('times'); //just to be sure the element does not render many times
                 
                 return  (
-                    <aside className='user'>
+                    <Box className='user'>
                         <div className='user-picture user-picture__container'>
                             {
                                 userState.hasAvatar && <img className='user-picture' src={USER_PATH+`/${userState._id}/avatar`} alt="User's avatar" />
@@ -151,10 +157,10 @@ const Sideview = () => {
                                     {userState.userName}
                                 </h1>
                             </div>
-                            <hr/>
+                            <Divider />
                             <div className='user-contacts'>
                                 <h1>{t('ContactHeader')}</h1>  
-                                <ul>
+                                <List>
                                     {userState.contacts.map( child => {
                                         let newMsgs = child.newMsgs ? 'new-messages'
                                                                     : 'no-messages';
@@ -162,7 +168,7 @@ const Sideview = () => {
 
                                         //console.log(userState);
                                         return(
-                                        <li key={child._id} className={`contacts ${newMsgs} ${status}`} onClick={(e) => {
+                                        <ListItem key={child._id} className={`contacts ${newMsgs} ${status}`} onClick={(e) => {
                                                                     openOneToOneChat(
                                                                             e,
                                                                             userState._id, 
@@ -178,23 +184,26 @@ const Sideview = () => {
                                                                             setCurrentUserChat
                                                                             )}}
                                         > 
-                                            {child.userName} 
-                                        </li>
+                                            <ListItemIcon>
+                                                   <ArrowRightRoundedIcon/> 
+                                            </ListItemIcon>
+                                            <ListItemText primary={child.userName} />
+                                        </ListItem>
                                     )})}
-                                </ul>
+                                </List>
                             </div>
                         </div>
                         <div className='chats'>
                             <div className='chats-header'><h1>{t('Group Chats:')}</h1> <div className='chats-button' onClick={createGroupChat}>+</div></div>
-                            <hr/>
+                            <Divider />
                             <nav className='chats-nav'>{
                                 userState.conversations.length < 1 ?
                                 t("You have not started any group chat.") :
-                                <ul>
+                                <List>
                                 {userState.conversations.map( c => {
                                     let newMsgs = c.newMsgs ? 'new-messages'
                                                                 : 'no-messages';
-                                    return (<li 
+                                    return (<ListItem 
                                                 key={c.roomId} 
                                                 id={c.roomId} 
                                                 className={`room ${newMsgs}`}
@@ -208,15 +217,18 @@ const Sideview = () => {
                                                                             setGroupRoom,
                                                                             setContactStatus)}
                                             >
-                                                {c.roomName}
-                                            </li>)
+                                                <ListItemIcon>
+                                                    <ArrowRightRoundedIcon/> 
+                                                </ListItemIcon>
+                                                <ListItemText primary={c.roomName} />
+                                            </ListItem>)
                                 })}
-                                </ul>
+                                </List>
                             }
                                 
                             </nav>
                         </div>
-                    </aside>
+                    </Box>
                          
                         )
             }

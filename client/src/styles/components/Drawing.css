@@ -31,3 +31,26 @@
     margin: auto;
 }
 
+.drawing-button-container{
+    display: flex;
+    justify-content: space-around;
+}
+
+#cancel-drawing-button.drawing-button, #drawing-send-button.drawing-button{
+    text-transform: capitalize;
+    margin: 10px;
+    
+}
+
+#drawing-send-button.drawing-button{
+    color: black;
+    background-color: white;
+    font-weight: bold;
+}
+
+#cancel-drawing-button.drawing-button{
+    position: relative;
+    right: 0;
+    color: rgb(49, 49, 49);
+    background-color: white;
+}

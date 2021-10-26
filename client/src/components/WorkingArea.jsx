@@ -6,9 +6,8 @@ import '../styles/components/WorkingArea.css';
 import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+
 
 require('dotenv').config();
 
