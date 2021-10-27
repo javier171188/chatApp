@@ -8,68 +8,77 @@
     min-height: calc(100vh - 200px); 
   }
   
-  .register__container {
-    background-color: rgba(255,255,255,0.1);
-    border: 2px solid white;
-    border-radius: 40px;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    min-height: 700px;
-    padding: 60px 60px 40px;
-    width: calc(100% / 2);
-  }
+.register__container {
+  background-color: rgba(255,255,255,0.1);
+  border: 2px solid white;
+  border-radius: 40px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 700px;
+  padding: 60px 60px 40px;
+  width: calc(100% / 2);
+}
+
+.register__container--form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register__container--form label {
+  font-size: 14px;
+}
+
   
-  .register__container--form {
-    display: flex;
-    flex-direction: column;
-  }
   
-  .register__container--form label {
-    font-size: 14px;
-  }
+
+.register__container--login {
+  font-size: 14px;
+}
+
+
+.register__container--login a {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.register__container--login a:hover {
+  text-decoration: underline;
+}
+
+.input {
+  background-color: transparent;
+  border-bottom: 2px solid white;
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  color: white;
+  font-family: 'Muli', sans-serif;
+  font-size: 16px;
+  height: 50px;
+  margin-bottom: 20px;
+  outline: none;
+  padding: 0px 20px;
+  min-width: 100%;
+}
   
-   
-  
-  
-    .register__container--login {
-    font-size: 14px;
-  }
-  
-  .register__container--login a {
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    text-decoration: none;
-  }
-  
-  .register__container--login a:hover {
-    text-decoration: underline;
-  }
-  
-  .input {
-    background-color: transparent;
-    border-bottom: 2px solid white;
-    border-left: 0px;
-    border-right: 0px;
-    border-top: 0px;
-    color: white;
-    font-family: 'Muli', sans-serif;
-    font-size: 16px;
-    height: 50px;
-    margin-bottom: 20px;
-    outline: none;
-    padding: 0px 20px;
-    min-width: 100%;
-  }
-  
-  ::placeholder {
-    color: white;
-  }
-  
-  .button {
+#input-user-name::placeholder, 
+#input-email::placeholder,
+#input-password::placeholder,
+#input-confirm-password::placeholder{
+    color: black;
+    font-weight: bolder;
+}
+
+/*#input-avatar{
+  color: white;
+}*/
+
+.button {
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
     border-radius: 25px;
@@ -81,14 +90,14 @@
     height: 50px;
     letter-spacing: 1px;
     margin: 10px 0px;
-  }
+}
 
-  .avatar-input {
+ .avatar-input {
     margin-left: -1em;
   }
 
 
-  @media (max-width: 600px){
+ @media (max-width: 600px){
     .register__container--form > .input{
       min-width: 50%;
       padding: 0;

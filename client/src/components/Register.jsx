@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/components/Register.css';
 import { useTranslation } from 'react-i18next';
 import Context from '../context/Context';
+import Input from '@mui/material/Input';
 
 const Register = () => {
 	/*const [form, setValues] = useState({
@@ -43,32 +44,36 @@ const Register = () => {
 						<section className='register__container'>
 							<h2>{t('Register')}</h2>
 							<form className='register__container--form' onSubmit={ registerUser }>
-								<input 
+								<Input 
 								name='userName'
 								className='input' 
+								id='input-user-name'
 								type='text' 
 								placeholder={t('User name')} 
 								required
 								/>
-								<input 
+								<Input 
 									name="email"
 									className='input' 
+									id='input-email'
 									type='text' 
 									placeholder={t('E-mail')} 
 									required
 								/>
-								<input 
+								<Input 
 									name='password'
 									className='input' 
+									id='input-password'
 									type='password' 
 									placeholder={t('Password')} 
 									required
 									minLength='6'
 								/>
 
-								<input 
+								<Input 
 									name='confirm-password'
-									className='input' 
+									className='input'
+									id='input-confirm-password'
 									type='password' 
 									placeholder={t('Confirm your password')}
 									required
@@ -77,8 +82,9 @@ const Register = () => {
 								<label className='avatar-label'> 
 									{t('Choose a profile image:')}
 								</label>
-								<input 
+								<Input 
                                     name='avatar'
+									id='input-avatar'
                                     className='input avatar-input' 
                                     type='file' 
                                 />
@@ -88,7 +94,6 @@ const Register = () => {
 								
 								{ errorMessages.length >= 1
 										&& <div className='login--error' >{errorMessages[0]}</div>
-										
 								}
 							</form>
 							<p className='register__container--login'>
@@ -101,6 +106,4 @@ const Register = () => {
 		}
 	</Context.Consumer>
 	)};
-	
-
 export default Register;

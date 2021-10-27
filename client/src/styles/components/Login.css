@@ -64,9 +64,14 @@
     min-width: 100%;
   }
   
-  ::placeholder {
-    color: white;
+#login-input__password{
+    background-color: gba(255,255,255,0.1);
   }
+
+#login-input__password::placeholder, #login-input__mail::placeholder {
+    color: black;
+    font-weight: bolder;
+}
   
   .button {
     background-color: rgba(255, 255, 255, 0.3);

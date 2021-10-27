@@ -4,6 +4,7 @@ import '../styles/components/Login.css';
 import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
 import { useInputValue } from '../hooks/useInputValue';
+import Input from '@mui/material/Input';
 
 
 const Login = () => {
@@ -35,16 +36,18 @@ const Login = () => {
 								<section className='login__container'>
 									<h2>{t('Login')}</h2>
 									<form className='login__container--form' onSubmit={logIn}>
-										<input 
+										<Input 
 											name='email'
 											className='input' 
+											id='login-input__mail'
 											type='text' 
 											placeholder={t('E-mail')} 
 											{...email}
 										/>
-										<input 
+										<Input 
 											name='password'
 											className='input' 
+											id='login-input__password'
 											type='password' 
 											placeholder={t('Password')} 
 											{...password}
