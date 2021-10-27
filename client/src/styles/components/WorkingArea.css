@@ -48,6 +48,7 @@
     border-radius: 20px;
     margin-bottom: -18px;
     overflow: auto;
+    max-width: calc(100vw - 298px);
 }
 
 .found-user__user{
@@ -64,5 +65,11 @@
 @media (max-width: 350px){
     #email-search{
         font-size: 0.65em;
+    }
+}
+
+@media (max-width: 600px){
+    .chat-messages{
+        max-width: calc(100vw - 6px);
     }
 }

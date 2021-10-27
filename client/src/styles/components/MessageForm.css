@@ -2,3 +2,8 @@
     color: black;
     font-weight: bold;
 }
+
+.sender-user, .self-user{
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
