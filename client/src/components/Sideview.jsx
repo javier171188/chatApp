@@ -30,14 +30,22 @@ const Sideview = () => {
                               setCurrentRoomName, 
                               setGroupRoom,
                               setContactStatus, 
-                              setCurrentUserChat){
+                              setCurrentUserChat,
+                              ){
         /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
             setCurrentRoomId(_id);
             setCurrentMessages(lastMessages);
         });*/
-        let contactClasses = e.target.className.split(' ');
 
-
+        
+        let clickedElement = e.target;
+        let localName = clickedElement.localName;
+        while (localName !== 'li'){
+            clickedElement = clickedElement.parentElement;
+            localName = clickedElement.localName;
+        }
+        let contactClasses = clickedElement.className.split(' ');
+        setGroupRoom(false);
         setCurrentUserChat(receiver);
 
         socket.emit('getRoom', {current, receiver}, ({_id:_idRoom, lastMessages, participants}) => {
@@ -49,14 +57,7 @@ const Sideview = () => {
             
             let newNameObj = userState.contacts.filter( c => (c._id === participantId ));
             setCurrentRoomName(newNameObj[0].userName);
-            let newUserState = {...userState};
-            newUserState.contacts.forEach(c => {
-                if (c._id === receiver) {
-                    c.newMsgs = false;
-                }
-            });
-            setGroupRoom(false);
-            setUserState(newUserState);
+            
             if (contactClasses.includes('pending')){
                 setContactStatus('pending');
                 setCurrentMessages([]);
@@ -68,6 +69,14 @@ const Sideview = () => {
                 setCurrentRoomId('1');
                 return;
             }
+
+            let newUserState = {...userState};
+            newUserState.contacts.forEach(c => {
+                if (c._id === receiver) {
+                    c.newMsgs = false;
+                }
+            });
+            setUserState(newUserState);
             setContactStatus('accepted');
             let conf = {
                 headers: {
@@ -183,13 +192,13 @@ const Sideview = () => {
                                                                             setCurrentRoomName,
                                                                             setGroupRoom,
                                                                             setContactStatus,
-                                                                            setCurrentUserChat
+                                                                            setCurrentUserChat,
                                                                             )}}
                                         > 
-                                            <ListItemIcon>
-                                                   <ArrowRightRoundedIcon/> 
+                                            <ListItemIcon >
+                                                   <ArrowRightRoundedIcon /> 
                                             </ListItemIcon>
-                                            <ListItemText primary={child.userName} />
+                                            <ListItemText primary={child.userName}  />
                                         </ListItem>
                                     )})}
                                 </List>

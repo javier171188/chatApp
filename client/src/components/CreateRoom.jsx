@@ -76,9 +76,10 @@ const CreateRoom = () => {
                                         return (<label htmlFor={c._id} key={c._id} className='new-room__contacts-label'>
                                             <input 
                                                 id={c._id} 
-                                                type="checkbox" 
+                                                type='checkbox'
                                                 name="participants" 
-                                                value={c.userName}/> {c.userName}
+                                                value={c.userName}/> 
+                                            {c.userName}
                                             </label>)
                                     }
                                 })}
