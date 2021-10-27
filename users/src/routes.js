@@ -83,7 +83,6 @@ router.post('/users/logoutAll',authToken, async (req, res) =>{      //
 
 
 
-//This must be fixed to ask for confirmation.
 router.post('/users/addContactNoConf', authToken, async(req,res) => {
     try{
         let loggedId = req.body.logged;
