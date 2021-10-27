@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/components/Header.css';
 import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {
     const { t, i18n } = useTranslation();
@@ -25,7 +26,7 @@ const Header = () => {
                             <h1 className='header-title' onClick={goHome}>{t('App name')}</h1>
                             <div className="header__menu">
                                 <div className="header__menu--button">
-                                    <p className='header__menu--icon'> ...</p>
+                                    <p className='header__menu--icon'><MenuIcon></MenuIcon></p>
                                 </div>
                                 <ul className='header__menu--options'>
                                     <li ><Link className='header__menu--item'  to="/chat/settings/">{t('Settings')}</Link></li>

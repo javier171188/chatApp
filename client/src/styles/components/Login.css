@@ -73,7 +73,7 @@
     font-weight: bolder;
 }
   
-  .button {
+  #login-button {
     background-color: rgba(255, 255, 255, 0.3);
     border: none;
     border-radius: 25px;
@@ -85,6 +85,7 @@
     height: 50px;
     letter-spacing: 1px;
     margin: 10px 0px;
+    text-transform: capitalize;
   }
 
   .login--error{

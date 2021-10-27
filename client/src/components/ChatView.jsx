@@ -156,14 +156,20 @@ function ChatView({ socket, setCurrentMessages,  currentMessages, userState, cur
                                     {
                                         contactStatus === 'request'   && <>
                                                                             <h1 className='chat-start'>{ currentRoomName + t(' wants to add you as a contact.')}</h1>
-                                                                            <button className='chat-accept' onClick={() => acceptRequest({currentUserChat, 
-                                                                                                                                          userState, 
-                                                                                                                                          setCurrentRoomId, 
-                                                                                                                                          socket, 
-                                                                                                                                          setContactStatus,
-                                                                                                                                          getUserState})}>
+                                                                            <Button 
+                                                                                className='chat-accept' 
+                                                                                id='chat-accept-button'
+                                                                                color='inherit'
+                                                                                variant='contained'
+                                                                                onClick={() => acceptRequest({currentUserChat, 
+                                                                                                              userState, 
+                                                                                                              setCurrentRoomId, 
+                                                                                                              socket, 
+                                                                                                              setContactStatus,
+                                                                                                              getUserState})}
+                                                                            >
                                                                                 {t('Accept')}
-                                                                            </button>
+                                                                            </Button>
                                                                         </>
                                     }
                                     {/*<div ref={messagesEndRef} />*/}

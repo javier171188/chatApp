@@ -4,6 +4,7 @@ import '../styles/components/Register.css';
 import { useTranslation } from 'react-i18next';
 import Context from '../context/Context';
 import Input from '@mui/material/Input';
+import Button from '@mui/material/Button';
 
 const Register = () => {
 	/*const [form, setValues] = useState({
@@ -90,7 +91,15 @@ const Register = () => {
                                 />
 								
 
-								<button className='button' id='register-button'>{t('Register')}</button>
+								<Button 
+									className='button' 
+									id='register-button'
+									color='inherit'
+                                    variant='contained'
+									type='submit'
+								>
+									{t('Register')}
+								</Button>
 								
 								{ errorMessages.length >= 1
 										&& <div className='login--error' >{errorMessages[0]}</div>

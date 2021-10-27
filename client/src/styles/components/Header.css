@@ -172,6 +172,10 @@ a:link {
     
 }
 
+.header__menu--icon{
+    font-size: 200%;
+}
+
 @media (max-width: 300px){
     .header-title{
         font-size: 90%;

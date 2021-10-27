@@ -30,8 +30,16 @@
     width: 5em;
 }
 
-.chat-accept{
+
+
+#chat-accept-button, #found-user__add-button{
     height: 2em;
+    text-transform: capitalize;
+    margin-left: 25px;
+}
+
+#found-user__add-button{
+    color: rgb(32, 32, 32);
 }
 
 .chat-submit-bar{

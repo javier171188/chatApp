@@ -5,6 +5,7 @@ import Context from '../context/Context';
 import { useTranslation } from 'react-i18next';
 import { useInputValue } from '../hooks/useInputValue';
 import Input from '@mui/material/Input';
+import Button from '@mui/material/Button';
 
 
 const Login = () => {
@@ -52,7 +53,15 @@ const Login = () => {
 											placeholder={t('Password')} 
 											{...password}
 										/>
-										<button className='button'>{t('Log in')}</button>
+										<Button 
+											className='button'
+											color='inherit'
+                                            variant='contained'
+											id='login-button'
+											type='submit'
+										>
+											{t('Log in')}
+										</Button>
 										{ errorMessages.length >= 1
 											? <div className='login--error'> {t('Incorrect credentials')} </div>
 											: ''

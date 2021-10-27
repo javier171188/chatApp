@@ -10,6 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
 import Box from '@mui/material/Box';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 require('dotenv').config();
 const USER_PATH=process.env.USER_PATH;
@@ -195,7 +196,12 @@ const Sideview = () => {
                             </div>
                         </div>
                         <div className='chats'>
-                            <div className='chats-header'><h1>{t('Group Chats:')}</h1> <div className='chats-button' onClick={createGroupChat}>+</div></div>
+                            <div className='chats-header'>
+                                <h1>{t('Group Chats:')}</h1> 
+                                <div className='chats-button' onClick={createGroupChat}>
+                                        <AddCircleIcon></AddCircleIcon>
+                                </div>
+                            </div>
                             <Divider />
                             <Divider />
                             <nav className='chats-nav'>{

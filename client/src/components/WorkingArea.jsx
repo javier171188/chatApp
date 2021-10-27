@@ -107,7 +107,14 @@ const WorkingArea = () => {
                                             <h2 className='found-user__user'> 
                                                     {searchUser.userName} 
                                             </h2>
-                                            <button onClick={() => addContact({userState, updateUser, socket})}>{t('Add contact')}</button>
+                                            <Button 
+                                                onClick={() => addContact({userState, updateUser, socket})}
+                                                id='found-user__add-button'
+                                                color='inherit'
+                                                variant='contained'
+                                            >
+                                                {t('Add contact')}
+                                            </Button>
                                             </>}
             </div>
             <ChatView 
