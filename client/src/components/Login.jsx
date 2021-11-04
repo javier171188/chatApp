@@ -23,9 +23,7 @@ const Login = (props) => {
 
 	function logIn(e) {
 		e.preventDefault();
-		props.setError({
-			errorMessages: 'error to login'
-		})
+		props.setError(['error to login'])
 	}
 	const { t, i18n } = useTranslation();
 	return (

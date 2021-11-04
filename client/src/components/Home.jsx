@@ -7,21 +7,19 @@ import '../styles/components/Home.css';
 
 
 const Home = () => {
-    /*const mockUser = {
-        userName: 'Tom',
-        friends: ['Andy', 'Daniel', 'Homer', 'Bob', 'Jessica']
-    };*/
-    
-    return(
-    <>
-        <Header />
-        <section className='main-area'>
-            <Sideview />
-            <WorkingArea />
-        </section>
-        
-    </>
-)}
+
+
+    return (
+        <>
+            <Header />
+            <section className='main-area'>
+                <Sideview />
+                <WorkingArea />
+            </section>
+
+        </>
+    )
+}
 
 
 export default Home;

@@ -3,7 +3,7 @@ const reducer = (state, action) => {
         case 'SET_ERROR':
             return {
                 ...state,
-                errorMessages: [action.payload]
+                errorMessages: action.payload
             }
         default:
             return state;
