@@ -10,7 +10,11 @@ import App from './routes/App';
 
 const initialState = {
     errorMessages: [],
-    isAuth: false
+    isAuth: false,
+    logIn: (e) => {
+        e.preventDefault();
+        console.log('I am logging in :D');
+    }
 };
 
 const store = createStore(reducer, initialState);

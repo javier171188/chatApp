@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { setError } from '../actions';
 import { Link } from 'react-router-dom';
 import '../styles/components/Login.css';
 import { useTranslation } from 'react-i18next';
@@ -8,13 +9,23 @@ import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 
 
-const Login = ({ logIn, errorMessages }) => {
+const Login = (props) => {
+	const { errorMessages } = props;
 	const email = useInputValue('')
 	const password = useInputValue('')
 
-	function goRegister(setErrorMessages) {
-		setErrorMessages([]);
+	function goRegister() {
+		props.setError({
+			errorMessages: ''
+		})
 
+	}
+
+	function logIn(e) {
+		e.preventDefault();
+		props.setError({
+			errorMessages: 'error to login'
+		})
 	}
 	const { t, i18n } = useTranslation();
 	return (
@@ -53,7 +64,7 @@ const Login = ({ logIn, errorMessages }) => {
 					}
 				</form>
 				<p className='login__container--register'>
-					{t('Not a user yet?')} <Link to='/chat/register' onClick={() => goRegister(setErrorMessages)}> {t('Register')}</Link>
+					{t('Not a user yet?')} <Link to='/chat/register' onClick={goRegister}> {t('Register')}</Link>
 				</p>
 			</section>
 		</section>
@@ -63,10 +74,12 @@ const Login = ({ logIn, errorMessages }) => {
 
 const mapStateToProps = (state) => {
 	return {
-		isAuth: state.isAuth,
-		logIn: state.logIn,
 		errorMessages: state.errorMessages
 	}
 }
 
-export default connect(mapStateToProps, null)(Login);
+const mapDispatchToProps = {
+	setError,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
