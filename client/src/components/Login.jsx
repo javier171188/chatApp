@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setError } from '../actions';
+import { setError } from '../redux/actions';
 import { Link } from 'react-router-dom';
 import '../styles/components/Login.css';
 import { useTranslation } from 'react-i18next';

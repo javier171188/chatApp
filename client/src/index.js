@@ -2,22 +2,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from './reducers';
-//import Context from './context/Context';
+import store from './redux/store'
+
+
 import './i18n';                             //is this being used?
 import App from './routes/App';
 
-const initialState = {
-    errorMessages: [],
-    isAuth: false,
-    logIn: (e) => {
-        e.preventDefault();
-        console.log('I am logging in :D');
-    }
-};
-
-const store = createStore(reducer, initialState);
 
 
 ReactDOM.render(
