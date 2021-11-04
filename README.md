@@ -31,7 +31,12 @@ The app is formed by 4 services:  users, chats, notifications, and client. The s
 	-	react-router-dom: ^5.2.0
 	-	socket.io-client: ^4.2.0
 
+### Mongo db
+If you install the db in a folder, downloads for example, you can start it with:
+/home/javier/Downloads/mongodb/bin/mongod --dbpath=/home/javier/Downloads/mongodb-data
+
 ### Nginx
+To start nginx in localhost,  sudo service nginx start
 In the file /etc/nginx/sites-available/default, after 
 ```
 server_name _;

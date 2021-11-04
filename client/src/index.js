@@ -1,13 +1,23 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Context from './context/Context';
-import './i18n';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducers';
+//import Context from './context/Context';
+import './i18n';                             //is this being used?
 import App from './routes/App';
+
+const initialState = {
+    errorMessages: [],
+    isAuth: false
+};
+
+const store = createStore(reducer, initialState);
 
 
 ReactDOM.render(
-        <Context.Provider >
-            <App />
-        </Context.Provider>,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById("root"));
