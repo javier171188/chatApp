@@ -16,7 +16,10 @@ const Login = (props) => {
 	const email = useInputValue('')
 	const password = useInputValue('')
 
-	const action = (type) => store.dispatch({ type })
+	const action = ({ type, data }) => store.dispatch({
+		type,
+		data
+	})
 
 	function goRegister() {
 		props.setError({
@@ -28,7 +31,10 @@ const Login = (props) => {
 
 	function handleLogin(e) {
 		e.preventDefault();
-		action('LOGIN', 'data');
+		action({
+			type: 'LOGIN',
+			data: e.target
+		});
 	}
 
 
