@@ -1,16 +1,23 @@
 'use strict';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import reducer from './reducers';
+
+import rootSaga from './sagas';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const initialState = {
     errorMessages: [],
     isAuth: false,
-    logIn: (e) => {
-        e.preventDefault();
-        console.log('I am logging in :D');
-    }
 };
 
-const store = createStore(reducer, initialState);
+const store = createStore(
+    reducer,
+    initialState,
+    applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(rootSaga);
+
+
 
 export default store;

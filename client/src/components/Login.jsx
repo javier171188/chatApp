@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import store from '../redux/store';
 import { setError } from '../redux/actions';
 import { Link } from 'react-router-dom';
 import '../styles/components/Login.css';
@@ -9,10 +10,13 @@ import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 
 
+
 const Login = (props) => {
 	const { errorMessages } = props;
 	const email = useInputValue('')
 	const password = useInputValue('')
+
+	const action = (type) => store.dispatch({ type })
 
 	function goRegister() {
 		props.setError({
@@ -20,6 +24,13 @@ const Login = (props) => {
 		})
 
 	}
+
+
+	function handleLogin(e) {
+		e.preventDefault();
+		action('LOGIN', 'data');
+	}
+
 
 	function logIn(e) {
 		e.preventDefault();
@@ -30,7 +41,7 @@ const Login = (props) => {
 		<section className='login'>
 			<section className='login__container'>
 				<h2>{t('Login')}</h2>
-				<form className='login__container--form' onSubmit={logIn}>
+				<form className='login__container--form' onSubmit={handleLogin}>
 					<Input
 						name='email'
 						className='input'
