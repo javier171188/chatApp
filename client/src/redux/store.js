@@ -10,6 +10,14 @@ const sagaMiddleware = createSagaMiddleware();
 const initialState = {
     errorMessages: [],
     isAuth: false,
+    userState: {
+        contacts: [],
+        email: "",
+        hasAvatar: false,
+        userName: "",
+        _id: "",
+        conversations: []
+    }
 };
 
 const store = createStore(

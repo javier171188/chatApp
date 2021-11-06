@@ -1,12 +1,12 @@
 'use strict';
 import { put, takeEvery, all, takeLatest, call } from 'redux-saga/effects'
 import { LOGIN } from '../actions';
-import { SET_ERROR } from '../types';
+import * as type from '../types';
 
 import axios from 'axios';
 
-//require('dotenv').config();
-const USER_PATH = "http://localhost/users";
+require('dotenv').config();
+const USER_PATH = process.env.USER_PATH;
 
 function* helloSaga() {
     console.log('Hello Sagas!')
@@ -28,10 +28,12 @@ function* tryLogin(data) {
         }
 
         const user = yield loginPost('/login', form);
+        yield put({ type: type.SET_ERROR, payload: [] })
+        yield put({ type: type.SET_AUTH, payload: true })
 
     } catch (error) {
         console.log(error.response.data);
-        yield put({ type: SET_ERROR, payload: [error] })
+        yield put({ type: type.SET_ERROR, payload: [error] })
     }
 }
 
