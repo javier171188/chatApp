@@ -1,6 +1,7 @@
 'use strict';
+import * as type from '../types';
 
 export const setError = (payload) => ({
-    type: 'SET_ERROR',
+    type: type.SET_ERROR,
     payload,
 });

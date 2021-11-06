@@ -1,6 +1,7 @@
 'use strict';
 import { put, takeEvery, all, takeLatest, call } from 'redux-saga/effects'
 import { LOGIN } from '../actions';
+import { SET_ERROR } from '../types';
 
 import axios from 'axios';
 
@@ -18,11 +19,6 @@ function loginPost(path, form) {
 
 }
 
-const delay = (ms) => {
-    console.log('Inside delay');
-    return new Promise(res => setTimeout(res, ms))
-}
-
 
 function* tryLogin(data) {
     try {
@@ -31,36 +27,20 @@ function* tryLogin(data) {
             password: data.data[1].value,
         }
 
-
-
-        /*axios.post(USER_PATH + '/login', form)
-            .then(data => {
-                window.sessionStorage.setItem('email', JSON.stringify(data.data.user.email));
-                //setUserState(data.data.user);
-                window.sessionStorage.setItem('token', data.data.token);
-                //setErrorMessages([]);
-                //setIsAuth(true);
-                console.log(data);
-            }).catch(e => {
-                //setErrorMessages([e]);
-                console.log(e);
-            });*/
-
-        console.log('I am being called');
         const user = yield loginPost('/login', form);
-        console.log(user);
 
     } catch (error) {
-
+        console.log(error.response.data);
+        yield put({ type: SET_ERROR, payload: [error] })
     }
 }
 
-function* login() {
+function* loginSaga() {
     yield takeEvery('LOGIN', (data) => tryLogin(data));
 }
 
 export default function* rootSaga() {
     yield all([
-        login()
+        loginSaga()
     ]);
 }

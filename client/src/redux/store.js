@@ -1,5 +1,5 @@
 'use strict';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import reducer from './reducers';
 
@@ -17,7 +17,6 @@ const store = createStore(
     initialState,
     applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(rootSaga);
-
 
 
 export default store;
