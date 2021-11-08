@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { setAuth } from '../redux/actions';
 import { useTranslation } from 'react-i18next';
 import MenuIcon from '@mui/icons-material/Menu';
+import * as type from '../redux/types';
+import store from '../redux/store';
 
 const Header = (props) => {
     const { t, i18n } = useTranslation();
@@ -13,6 +15,9 @@ const Header = (props) => {
         type,
         data
     })
+    action({
+        type: type.GET_USER,
+    });
 
     function goHome(e) {
         e.preventDefault();

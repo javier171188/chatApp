@@ -14,6 +14,11 @@ function postUsersService(path, form) {
         .then(data => data.data)
         .catch((error) => { throw error });
 }
+function getUsersService(path, form) {
+    return axios.get(USER_PATH + path, form)
+        .then(data => data.data)
+        .catch((error) => { throw error });
+}
 
 //Login//////////////////////////////////
 function* tryLogin(data) {
@@ -65,8 +70,8 @@ function* getUserState(refresh = true) {
             selfUser: true
         }
     }
-    const user = yield postUsersService('/getUser', cong);
-    yield put({ type: type.SET_USER, payload: user.user });
+    const user = yield getUsersService('/getUser', conf);
+    yield put({ type: type.SET_USER, payload: user });
     /*if (countUserLoad === 0 || refresh) {
         //setUserState(user.data)
         i18n.changeLanguage(user.data.language);
