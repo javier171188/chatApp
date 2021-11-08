@@ -82,13 +82,31 @@ function* getUserState(refresh = true) {
 function* getUserStateSaga() {
     yield takeEvery(type.GET_USER, getUserState);
 }
-
-
 //logout///////////////////////////////////////////////////////////
+function* logout(data) {
+    try {
+        const conf = {
+            headers: {
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+            }
+        }
+        yield put({ type: type.SET_AUTH, payload: false });
+        window.sessionStorage.removeItem('token');
+        window.sessionStorage.removeItem('email');
+        yield postUsersService('/logoutAll', conf);
+    } catch (error) {
+        console.error(error.response.data);
+    }
+}
+function* logoutSaga() {
+    yield takeEvery(type.LOGOUT, logout);
+}
+////////////////////////////////////////////////////////////////////
 
 export default function* rootSaga() {
     yield all([
         loginSaga(),
-        getUserStateSaga()
+        getUserStateSaga(),
+        logoutSaga()
     ]);
 }

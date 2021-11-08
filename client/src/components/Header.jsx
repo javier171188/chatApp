@@ -26,11 +26,9 @@ const Header = (props) => {
     }
 
     function handleLogOut() {
-        props.setAuth({
-            isAuth: false
-        })
-        window.sessionStorage.removeItem('token');
-        window.sessionStorage.removeItem('email');
+        action({
+            type: type.LOGOUT,
+        });
         window.location.href = '/chat/';
     }
 
