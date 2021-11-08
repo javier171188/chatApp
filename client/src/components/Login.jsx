@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useInputValue } from '../hooks/useInputValue';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
+import * as type from '../redux/types';
 
 
 const Login = (props) => {
@@ -27,20 +28,14 @@ const Login = (props) => {
 
 	}
 
-
 	function handleLogin(e) {
 		e.preventDefault();
 		action({
-			type: 'LOGIN',
+			type: type.LOGIN,
 			data: e.target
 		});
 	}
 
-
-	function logIn(e) {
-		e.preventDefault();
-		props.setError(['error to login'])
-	}
 	const { t, i18n } = useTranslation();
 	return (
 		<section className='login'>
@@ -84,7 +79,6 @@ const Login = (props) => {
 		</section>
 	)
 };
-
 
 const mapStateToProps = (state) => {
 	return {

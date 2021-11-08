@@ -1,18 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/components/Header.css';
-import Context from '../context/Context';
+import { connect } from 'react-redux';
+import { setAuth } from '../redux/actions';
 import { useTranslation } from 'react-i18next';
 import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = (props) => {
     const { t, i18n } = useTranslation();
+
+    const action = ({ type, data }) => store.dispatch({
+        type,
+        data
+    })
+
     function goHome(e) {
         e.preventDefault();
         window.location.href = '/chat/'
+        //props.history.push('/chat/');
     }
+
     function handleLogOut() {
-        console.log('It must set auth= false, and request logout to the backend')
+        props.setAuth({
+            isAuth: false
+        })
+        window.sessionStorage.removeItem('token');
+        window.sessionStorage.removeItem('email');
+        window.location.href = '/chat/';
     }
 
     return (
@@ -36,4 +50,9 @@ const Header = (props) => {
     )
 }
 
-export default Header;
+
+const mapDispatchToProps = {
+    setAuth,
+}
+
+export default connect(null, mapDispatchToProps)(Header);
