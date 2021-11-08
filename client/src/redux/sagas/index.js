@@ -1,6 +1,5 @@
 'use strict';
 import { put, takeEvery, all, takeLatest, call } from 'redux-saga/effects'
-import { LOGIN } from '../actions';
 import * as type from '../types';
 
 import axios from 'axios';

@@ -53,3 +53,9 @@ export default initialState;
         setDrawingAreaOn,
         sendNewMessage
 }
+
+// Settings
+{ userState }
+
+// Create room
+{ userState, socket }
