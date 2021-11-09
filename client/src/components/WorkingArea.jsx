@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import SearchIcon from '@mui/icons-material/Search';
+import * as type from '../redux/types';
 
 
 require('dotenv').config();
@@ -16,12 +17,11 @@ require('dotenv').config();
 const USER_PATH = process.env.USER_PATH;
 
 
-
 const WorkingArea = (props) => {
-    const { userState } = props;
+    const { userState, searchMessage, searchUser } = props;
     const { t, i18n } = useTranslation();
-    const [searchMessage, setSearchMessage] = useState(t('InitialMessage'));
-    const [searchUser, setSearchUser] = useState(null);
+    //const [searchMessage, setSearchMessage] = useState(t('InitialMessage'));
+    //const [searchUser, setSearchUser] = useState(null);
 
     const action = ({ type, data }) => store.dispatch({
         type,
@@ -30,27 +30,13 @@ const WorkingArea = (props) => {
 
     function lookForUser(event) {
         event.preventDefault();
-        const conf = {
-            headers: {
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
-            },
-            params: {
-                email: event.target[0].value
+        action({
+            type: type.LOOK_FOR_USER,
+            data: {
+                event
             }
-        }
-        event.target[0].value = '';
-        axios.get(USER_PATH + '/getUser', conf)
-            .then(user => {
-                user.data.newMsgs = false;
-                setSearchUser(user.data);
-                setSearchMessage(t('One user found: '))
-                //console.log(user);
-            })
-            .catch(e => {
-                let strError = e.response.data;
-                setSearchMessage(t('No user was found, try a different e-mail address.'));
-                //console.log(strError);
-            })
+        });
+
     }
 
     async function addContact({ userState, updateUser, socket }) {
@@ -77,7 +63,6 @@ const WorkingArea = (props) => {
                 updateUser(data.data);
 
                 socket.emit('userAccepted', { acceptedId: searchUser._id }, () => {
-
                 });
             }
         } catch (e) {
@@ -104,8 +89,8 @@ const WorkingArea = (props) => {
                 </Button>
             </form>
             <div className="found-user">
-                {searchMessage}
-                {searchMessage === t('One user found: ') && <>
+                {t(searchMessage)}
+                {searchMessage === 'One user found: ' && <>
                     <h2 className='found-user__user'>
                         {searchUser.userName}
                     </h2>
@@ -128,7 +113,9 @@ export default WorkingArea;
 
 const mapStateToProps = (state) => {
     return {
-        userState: state.userState
+        userState: state.userState,
+        searchMessage: state.searchMessage,
+        searchUser: state.searchUser
     }
 }
 

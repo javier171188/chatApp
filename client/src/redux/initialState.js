@@ -13,7 +13,9 @@ const initialState = {
     currentRoomId: '',
     contactStatus: '',
     addingUser: false,
-    drawingAreaOn: false
+    drawingAreaOn: false,
+    searchMessage: 'InitialMessage',
+    searchUser: null
 };
 
 export default initialState;

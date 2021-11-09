@@ -19,6 +19,16 @@ const reducer = (state, action) => {
                 ...state,
                 userState: action.payload
             }
+        case type.SET_SEARCH_MESSAGE:
+            return {
+                ...state,
+                searchMessage: action.payload
+            }
+        case type.SET_SEARCH_USER:
+            return {
+                ...state,
+                searchUser: action.payload
+            }
         default:
             return state;
     }

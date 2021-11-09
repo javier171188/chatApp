@@ -19,6 +19,8 @@ function getUsersService(path, form) {
         .catch((error) => { throw error });
 }
 
+
+
 //Login//////////////////////////////////
 function* tryLogin(data) {
     try {
@@ -101,11 +103,46 @@ function* logoutSaga() {
     yield takeEvery(type.LOGOUT, logout);
 }
 ////////////////////////////////////////////////////////////////////
+// Search for user
+function* lookForUser({ data }) {
+    let event = data.event;
+    try {
+        const conf = {
+            headers: {
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+            },
+            params: {
+                email: event.target[0].value
+            }
+        }
+        event.target[0].value = '';
+        let user = yield getUsersService('/getUser', conf);
+        user.newMsgs = false;
+
+        //setSearchUser(user.data);
+        yield put({ type: type.SET_SEARCH_USER, payload: user })
+        //setSearchMessage(t('One user found: '))
+        yield put({ type: type.SET_SEARCH_MESSAGE, payload: 'One user found: ' });
+    } catch (error) {
+        //let strError = e.response.data;
+        //setSearchMessage(t('No user was found, try a different e-mail address.'));
+        yield put({
+            type: type.SET_SEARCH_MESSAGE,
+            payload: 'No user was found, try a different e-mail address.'
+        });
+    }
+}
+function* lookForUserSaga() {
+    yield takeEvery(type.LOOK_FOR_USER, (data) => lookForUser(data));
+}
+
+//////////////////////////////////////////////////////////////////////
 
 export default function* rootSaga() {
     yield all([
         loginSaga(),
         getUserStateSaga(),
-        logoutSaga()
+        logoutSaga(),
+        lookForUserSaga()
     ]);
 }

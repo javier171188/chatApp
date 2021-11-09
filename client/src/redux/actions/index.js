@@ -10,3 +10,13 @@ export const setAuth = (payload) => ({
     type: type.SET_AUTH,
     payload,
 });
+
+export const setSearchMessage = (payload) => ({
+    type: type.SET_SEARCH_MESSAGE,
+    payload
+})
+
+export const setSearchUser = (payload) => ({
+    type: type.SET_SEARCH_USER,
+    payload
+})
