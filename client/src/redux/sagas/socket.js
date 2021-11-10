@@ -32,8 +32,8 @@ socket.on('userAccepted', ({ acceptedId }) => {
 });
 
 function* openChat(data) {
-    const { current, receiver, userState, contactClasses } = data.payload.users;
-    socket.emit('getRoom', { current, receiver, roomId: '' }, ({ _id: _idRoom, lastMessages, participants }) => {
+    const { current, receiver, userState, contactClasses, roomId } = data.payload.users;
+    socket.emit('getRoom', { current, receiver, roomId }, ({ _id: _idRoom, lastMessages, participants, roomName }) => {
         action({
             type: type.SET_CURRENT_ROOM_ID,
             data: _idRoom
@@ -46,39 +46,46 @@ function* openChat(data) {
         let participantId = participants.filter(p => p !== userState._id)[0];
         let newNameObj = userState.contacts.filter(c => (c._id === participantId));
 
+        if (newNameObj[0]) {
+            roomName = newNameObj[0].userName;
+        }
+
         action({
             type: type.SET_CURRENT_ROOM_NAME,
-            data: newNameObj[0].userName
+            data: roomName
         })
 
-        if (contactClasses.includes('pending')) {
-            action({
-                type: type.SET_CONTACT_STATUS,
-                payload: 'pending'
-            })
-            action({
-                type: type.SET_CURRENT_MESSAGES,
-                data: []
-            })
-            action({
-                type: type.SET_CURRENT_ROOM_ID,
-                data: '1'
-            })
-            return;
-        } else if (contactClasses.includes('request')) {
-            action({
-                type: type.SET_CONTACT_STATUS,
-                payload: 'request'
-            })
-            action({
-                type: type.SET_CURRENT_MESSAGES,
-                data: []
-            })
-            action({
-                type: type.SET_CURRENT_ROOM_ID,
-                data: '1'
-            })
-            return;
+        if (contactClasses) {
+            if (contactClasses.includes('pending')) {
+                action({
+                    type: type.SET_CONTACT_STATUS,
+                    payload: 'pending'
+                })
+                action({
+                    type: type.SET_CURRENT_MESSAGES,
+                    data: []
+                })
+                action({
+                    type: type.SET_CURRENT_ROOM_ID,
+                    data: '1'
+                })
+                return;
+            } else if (contactClasses.includes('request')) {
+                action({
+                    type: type.SET_CONTACT_STATUS,
+                    payload: 'request'
+                })
+                action({
+                    type: type.SET_CURRENT_MESSAGES,
+                    data: []
+                })
+                action({
+                    type: type.SET_CURRENT_ROOM_ID,
+                    data: '1'
+                })
+                return;
+            }
+
         }
 
         let newUserState = { ...userState };

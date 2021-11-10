@@ -70,11 +70,10 @@ function ChatView(props) {
 
     }
 
-
-
     function openDrawingArea(setDrawingAreaOn) {
         setDrawingAreaOn(true);
     }
+    console.log(groupRoom);
     return (
         <div className='chat'>
             {currentRoomId && (groupRoom ?

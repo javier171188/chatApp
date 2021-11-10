@@ -42,19 +42,17 @@ const Sideview = (props) => {
         })
     }
 
-    function openGroupChat(roomId,
-        userState,
-    ) {
+    function openGroupChat(roomId, userState) {
 
         /*socket.emit('getRoom', { roomId }, ({ lastMessages, participants, roomName }) => {
             setCurrentRoomId(roomId);
             setCurrentMessages(lastMessages);
             setCurrentRoomName(roomName);
         });*/
-
         props.socketGetRoom({
-            users: { roomId }
+            users: { roomId, userState }
         })
+        props.setGroupRoom(true);
         /*
                 let newUserState = { ...userState };
                 newUserState.conversations.forEach(c => {
@@ -147,9 +145,7 @@ const Sideview = (props) => {
                                     key={c.roomId}
                                     id={c.roomId}
                                     className={`room ${newMsgs}`}
-                                    onClick={() => openGroupChat(c.roomId,
-                                        userState,
-                                    )}
+                                    onClick={() => openGroupChat(c.roomId, userState)}
                                 >
                                     <ListItemIcon>
                                         <ArrowRightRoundedIcon />
