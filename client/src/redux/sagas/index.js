@@ -2,7 +2,7 @@
 import { put, takeEvery, all, takeLatest, call, fork } from 'redux-saga/effects'
 import store from '../store';
 import * as type from '../types';
-import { openOneToOneChatSaga } from './socket';
+import { openChatSaga } from './socket';
 
 import axios from 'axios';
 
@@ -142,6 +142,6 @@ export default function* rootSaga() {
         getUserStateSaga(),
         logoutSaga(),
         lookForUserSaga(),
-        openOneToOneChatSaga()
+        openChatSaga()
     ]);
 }

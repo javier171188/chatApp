@@ -17,10 +17,10 @@ const io = socketIo(server, {
 });
 
 var serverData = {
-        sender: {
-            _id: '0',
-            userName: 'Chat'
-        },
+    sender: {
+        _id: '0',
+        userName: 'Chat'
+    },
 };
 
 io.on('connection', (socket) => {
@@ -32,59 +32,58 @@ io.on('connection', (socket) => {
     socket.emit('message', serverData);
     serverData.message = 'A user has joined!'
     socket.broadcast.emit('message', serverData);*/
-    socket.on('userAccepted', ({acceptedId}, callback) => {
-        io.emit('userAccepted',{acceptedId});
+    socket.on('userAccepted', ({ acceptedId }, callback) => {
+        io.emit('userAccepted', { acceptedId });
     })
 
 
-    socket.on('getRoom',  async ({current, receiver, roomId}, callback)=> {
-        try{
-            if (!roomId){
-                var chat = await Chat.findOne({$and: [{"participants":current}, {"participants": receiver}]});
-                if (!chat){
-                    
-                    chat = new Chat({"participants":[current, receiver]});
+    socket.on('getRoom', async ({ current, receiver, roomId }, callback) => {
+        try {
+            if (!roomId) {
+                var chat = await Chat.findOne({ $and: [{ "participants": current }, { "participants": receiver }] });
+                if (!chat) {
+
+                    chat = new Chat({ "participants": [current, receiver] });
                     await chat.save();
                 }
             } else {
                 var chat = await Chat.findById(roomId);
             }
-            
-            //socket.join(chat._id.toString()); I think this is done in joinPersonal and joinGroup
+
             const lastMessages = chat.messages.slice(-20);
             const participants = chat.participants;
             const roomName = chat.roomName;
-            callback({_id:chat._id.toString(), lastMessages, participants, roomName});
-        }catch (e){
+            callback({ _id: chat._id.toString(), lastMessages, participants, roomName });
+        } catch (e) {
             console.log(e.toString());
         }
-    }); 
+    });
 
-    socket.on('joinPersonal',  async ({current, receiver}, callback)=> {
-        try{
-            var chat = await Chat.findOne({$and: [{"participants":current}, {"participants": receiver}]});
-            if (!chat){
-                chat = new Chat({"participants":[current, receiver]});
+    socket.on('joinPersonal', async ({ current, receiver }, callback) => {
+        try {
+            var chat = await Chat.findOne({ $and: [{ "participants": current }, { "participants": receiver }] });
+            if (!chat) {
+                chat = new Chat({ "participants": [current, receiver] });
                 await chat.save();
-                
+
             }
             socket.join(chat._id.toString());
-        }catch (e){
+        } catch (e) {
             console.log(e.toString());
         }
     })
 
-    socket.on('joinGroup',  async ({roomId}, callback)=> {
-        try{
-            var chat = await Chat.findOne({_id:roomId});
+    socket.on('joinGroup', async ({ roomId }, callback) => {
+        try {
+            var chat = await Chat.findOne({ _id: roomId });
             socket.join(chat._id.toString());
-        }catch (e){
+        } catch (e) {
             console.log(e.toString());
         }
     })
 
 
-    
+
     socket.on('getMessagesByRoomId', async (roomId, callback) => {
         var chat = await Chat.findById(roomId);
         let messages = chat.messages.slice(-20);
@@ -101,7 +100,7 @@ io.on('connection', (socket) => {
         chat.messages = prevMessages;
         chat.save();
         callback(participants);
-        io.to(message.roomId).emit('updateMessages', { participants, roomId:message.roomId, returnedMessages:prevMessages.slice(-20)}, );
+        io.to(message.roomId).emit('updateMessages', { participants, roomId: message.roomId, returnedMessages: prevMessages.slice(-20) },);
         //io.to(message.roomId).emit('updateMessages',prevMessages.slice(-20));
         //io.emit('updateMessages',prevMessages.slice(-20));
         //callback(prevMessages);
@@ -115,7 +114,7 @@ io.on('connection', (socket) => {
         //socket.broadcast.emit('newRoom', {participants:data.participants, roomId:data.roomId});
     });
 
-    socket.on('addUsers', async ({roomId, newUsers}, callback) => {
+    socket.on('addUsers', async ({ roomId, newUsers }, callback) => {
         let chat = await Chat.findById(roomId);
         let newUsersList = chat.participants.concat(newUsers);
         chat.participants = newUsersList;
@@ -123,9 +122,9 @@ io.on('connection', (socket) => {
         callback(newUsersList);
     })
 
-    socket.on('updateRooms', ({participants, roomId}, callback) =>{
+    socket.on('updateRooms', ({ participants, roomId }, callback) => {
         //I think I am not using this.
-        socket.broadcast.emit('newRoom', { participants, roomId});
+        socket.broadcast.emit('newRoom', { participants, roomId });
         callback();
     })
 

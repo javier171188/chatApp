@@ -31,9 +31,9 @@ socket.on('userAccepted', ({ acceptedId }) => {
     checkForUpdates(acceptedId);
 });
 
-function* openOneToOneChat(data) {
+function* openChat(data) {
     const { current, receiver, userState, contactClasses } = data.payload.users;
-    socket.emit('getRoom', { current, receiver }, ({ _id: _idRoom, lastMessages, participants }) => {
+    socket.emit('getRoom', { current, receiver, roomId: '' }, ({ _id: _idRoom, lastMessages, participants }) => {
         action({
             type: type.SET_CURRENT_ROOM_ID,
             data: _idRoom
@@ -44,9 +44,7 @@ function* openOneToOneChat(data) {
         })
 
         let participantId = participants.filter(p => p !== userState._id)[0];
-
         let newNameObj = userState.contacts.filter(c => (c._id === participantId));
-        //setCurrentRoomName(newNameObj[0].userName);
 
         action({
             type: type.SET_CURRENT_ROOM_NAME,
@@ -112,8 +110,11 @@ function* openOneToOneChat(data) {
     });
 }
 
-function* openOneToOneChatSaga() {
-    yield takeEvery(type.SOCKET_GET_ROOM, (data) => openOneToOneChat(data));
+function* openChatSaga() {
+    yield takeEvery(type.SOCKET_GET_ROOM, (data) => openChat(data));
 }
 
-module.exports = { openOneToOneChatSaga };
+
+
+
+module.exports = { openChatSaga };

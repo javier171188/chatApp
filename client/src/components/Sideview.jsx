@@ -43,42 +43,40 @@ const Sideview = (props) => {
     }
 
     function openGroupChat(roomId,
-        socket,
-        setCurrentRoomId,
-        setCurrentMessages,
         userState,
-        setUserState,
-        setCurrentRoomName,
-        setGroupRoom,
-        setContactStatus) {
+    ) {
 
-        socket.emit('getRoom', { roomId }, ({ lastMessages, participants, roomName }) => {
+        /*socket.emit('getRoom', { roomId }, ({ lastMessages, participants, roomName }) => {
             setCurrentRoomId(roomId);
             setCurrentMessages(lastMessages);
             setCurrentRoomName(roomName);
-        });
+        });*/
 
-        let newUserState = { ...userState };
-        newUserState.conversations.forEach(c => {
-            if (c.roomId === roomId) {
-                c.newMsgs = false;
-            }
-        });
-        setGroupRoom(true);
-        setUserState(newUserState);
-        setContactStatus('accepted');
-        let conf = {
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-            },
-            params: {
-                senderId: userState._id,
-                receiver: { _id: userState._id },
-                newStatus: false,
-                roomId
-            }
-        }
-        axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));
+        props.socketGetRoom({
+            users: { roomId }
+        })
+        /*
+                let newUserState = { ...userState };
+                newUserState.conversations.forEach(c => {
+                    if (c.roomId === roomId) {
+                        c.newMsgs = false;
+                    }
+                });
+                setGroupRoom(true);
+                setUserState(newUserState);
+                setContactStatus('accepted');
+                let conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                    },
+                    params: {
+                        senderId: userState._id,
+                        receiver: { _id: userState._id },
+                        newStatus: false,
+                        roomId
+                    }
+                }
+                axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));*/
     }
 
     function createGroupChat() {
@@ -150,14 +148,8 @@ const Sideview = (props) => {
                                     id={c.roomId}
                                     className={`room ${newMsgs}`}
                                     onClick={() => openGroupChat(c.roomId,
-                                        socket,
-                                        setCurrentRoomId,
-                                        setCurrentMessages,
                                         userState,
-                                        setUserState,
-                                        setCurrentRoomName,
-                                        setGroupRoom,
-                                        setContactStatus)}
+                                    )}
                                 >
                                     <ListItemIcon>
                                         <ArrowRightRoundedIcon />
