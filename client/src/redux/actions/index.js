@@ -60,3 +60,8 @@ export const setContactStatus = (status) => ({
     type: type.SET_CONTACT_STATUS,
     status
 })
+
+export const socketCreateNewRoom = (payload) => ({
+    type: type.CREATE_NEW_ROOM,
+    payload
+})

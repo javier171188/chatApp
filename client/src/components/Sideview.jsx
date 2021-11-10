@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setGroupRoom, setCurrentUserChat, socketGetRoom } from '../redux/actions';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import '../styles/components/Sideview.css';
 import Divider from '@mui/material/Divider';
@@ -12,7 +11,6 @@ import ListItemText from '@mui/material/ListItemText';
 import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
 import Box from '@mui/material/Box';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import * as type from '../redux/types';
 
 require('dotenv').config();
 const USER_PATH = process.env.USER_PATH;
@@ -43,44 +41,15 @@ const Sideview = (props) => {
     }
 
     function openGroupChat(roomId, userState) {
-
-        /*socket.emit('getRoom', { roomId }, ({ lastMessages, participants, roomName }) => {
-            setCurrentRoomId(roomId);
-            setCurrentMessages(lastMessages);
-            setCurrentRoomName(roomName);
-        });*/
         props.socketGetRoom({
             users: { roomId, userState }
         })
         props.setGroupRoom(true);
-        /*
-                let newUserState = { ...userState };
-                newUserState.conversations.forEach(c => {
-                    if (c.roomId === roomId) {
-                        c.newMsgs = false;
-                    }
-                });
-                setGroupRoom(true);
-                setUserState(newUserState);
-                setContactStatus('accepted');
-                let conf = {
-                    headers: {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                    },
-                    params: {
-                        senderId: userState._id,
-                        receiver: { _id: userState._id },
-                        newStatus: false,
-                        roomId
-                    }
-                }
-                axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));*/
     }
 
     function createGroupChat() {
         window.location.href = '/chat/create-room';
     }
-
     console.log('times'); //just to be sure the element does not render many times
     return (
         <Box className='user'>

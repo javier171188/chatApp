@@ -1,5 +1,5 @@
-import axios from 'axios';
 import Header from './Header';
+import { socketCreateNewRoom } from '../redux/actions';
 import '../styles/components/Header.css';
 import '../styles/components/CreateRoom.css';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 require('dotenv').config();
 const USER_PATH = process.env.USER_PATH;
 
-const CreateRoom = ({ userState }) => {
+const CreateRoom = ({ userState, socketCreateNewRoom }) => {
     const { t, i18n } = useTranslation();
     function goBack(e) {
         e.preventDefault();
@@ -29,6 +29,8 @@ const CreateRoom = ({ userState }) => {
             return { userName: c.value, _id: c.id, joinDate: dateStr };
         });
         participants.push({ userName: userState.userName, _id: userState._id, joinDate: dateStr });
+
+        socketCreateNewRoom({ roomName, participants });
         /*socket.emit('newRoom', { roomName, participants }, (roomId) => {
             let conf = {
                 headers: {
@@ -108,4 +110,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(CreateRoom);
+const mapDispatchToProps = {
+    socketCreateNewRoom
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRoom);

@@ -116,12 +116,32 @@ function* openChat(data) {
         axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));
     });
 }
-
 function* openChatSaga() {
     yield takeEvery(type.SOCKET_GET_ROOM, (data) => openChat(data));
 }
 
 
+function* createNewRoom(data) {
+    let { roomName, participants } = data.payload;
+    socket.emit('newRoom', { roomName, participants }, (roomId) => {
+        let conf = {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            },
+        }
+        axios.post(USER_PATH + '/newRoom', { roomName, participants, roomId, newMsgs: true }, conf)
+            .then(() => {
+                socket.emit('updateRooms', { participants, roomId }, () => {
+                    window.location.href = '/chat/';
+                })
+            })
+            .catch(e => console.error(e));
+    });
+}
+function* createNewRoomSaga() {
+    yield takeEvery(type.CREATE_NEW_ROOM, (data) => createNewRoom(data))
+}
 
 
-module.exports = { openChatSaga };
+
+module.exports = { openChatSaga, createNewRoomSaga };
