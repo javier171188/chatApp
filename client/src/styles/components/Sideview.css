@@ -88,26 +88,7 @@
 }
 
 
-/*@media (max-width: 600px) and (min-width: 450px) {
-    .user{
-        margin-top: 10px;
-    }
 
-
-    .user-picture__container, .user-info, .chats{
-        display: inline-block;
-    }
-
-    .user-picture__container{
-        margin: 25px;
-    }
-
-    .user-info{
-        margin-left: 5px;
-        margin-top: -20px;
-    }
-
-}*/
 
 @media (max-width: 600px){
     .user{

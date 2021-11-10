@@ -1,7 +1,6 @@
 'use strict';
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import socketIOClient from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
 
 require('dotenv').config();

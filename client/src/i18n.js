@@ -1,3 +1,4 @@
+'use strict';
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 const resources = require('../locales/resources.json');
@@ -7,19 +8,16 @@ const resources = require('../locales/resources.json');
 
 
 let lang = localStorage.getItem('language');
-if (!lang){
+if (!lang) {
   lang = navigator.language;
-  if (lang){
+  if (lang) {
     lang = lang.split('-')[0];
   }
 }
 
-if (!['en', 'es', 'fr'].includes(lang)){
+if (!['en', 'es', 'fr'].includes(lang)) {
   lang = 'en';
 }
-
-
-
 
 
 i18n
@@ -35,4 +33,4 @@ i18n
     }
   });
 
-  export default i18n;
+export default i18n;

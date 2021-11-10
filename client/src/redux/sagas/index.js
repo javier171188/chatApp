@@ -2,6 +2,7 @@
 import { put, takeEvery, all, takeLatest, call, fork } from 'redux-saga/effects'
 import * as type from '../types';
 import { openChatSaga, createNewRoomSaga } from './socket';
+import i18n from "i18next";
 
 import axios from 'axios';
 
@@ -46,8 +47,10 @@ function* tryLogin(data) {
 function* loginSaga() {
     yield takeEvery(type.LOGIN, (data) => tryLogin(data));
 }
+
 ////////////////////////////////////////////////////////////////////////
 //Get user data//////////////////////////////////////////////////////
+let countUserLoad = 0;
 function* getUserState(refresh = true) {
     let email = JSON.parse(sessionStorage.getItem('email'));
     let token = sessionStorage.getItem('token');
@@ -73,16 +76,15 @@ function* getUserState(refresh = true) {
         }
     }
     const user = yield getUsersService('/getUser', conf);
+    localStorage.setItem('language', user.language);
     yield put({ type: type.SET_USER_STATE, payload: user });
-    /*if (countUserLoad === 0 || refresh) {
-        //setUserState(user.data)
-        i18n.changeLanguage(user.data.language);
-        localStorage.setItem('language', user.data.language);
+    if (countUserLoad === 0 || refresh) {
+        i18n.changeLanguage(user.language);
         countUserLoad++;
-    }*/
+    }
 };
 function* getUserStateSaga() {
-    yield takeEvery(type.GET_USER, getUserState);
+    yield takeEvery(type.GET_USER, () => getUserState(false));
 }
 //logout///////////////////////////////////////////////////////////
 function* logout(data) {
