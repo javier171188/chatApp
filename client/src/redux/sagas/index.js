@@ -136,6 +136,24 @@ function* lookForUserSaga() {
 }
 
 //////////////////////////////////////////////////////////////////////
+// Change language
+function* setLanguage(data) {
+    const conf = {
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+        }
+    };
+
+    yield axios.post(USER_PATH + '/changeLanguage',
+        data.payload.paramsLang,
+        conf)
+        .catch(e => console.log(e));
+    yield localStorage.setItem('language', data.payload.paramsLang.chosenLanguage);
+}
+function* setLanguageSaga() {
+    yield takeEvery(type.CHANGE_LANGUAGE, (data) => setLanguage(data));
+}
+////////////////////////////////////////////////////////////////
 
 export default function* rootSaga() {
     yield all([
@@ -144,6 +162,7 @@ export default function* rootSaga() {
         logoutSaga(),
         lookForUserSaga(),
         openChatSaga(),
-        createNewRoomSaga()
+        createNewRoomSaga(),
+        setLanguageSaga()
     ]);
 }

@@ -65,3 +65,8 @@ export const socketCreateNewRoom = (payload) => ({
     type: type.CREATE_NEW_ROOM,
     payload
 })
+
+export const changeLanguageAction = (payload) => ({
+    type: type.CHANGE_LANGUAGE,
+    payload
+})

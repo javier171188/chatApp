@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Header from './Header';
+import { changeLanguageAction } from '../redux/actions';
 import '../styles/components/Header.css';
 import '../styles/components/Settings.css';
 import { connect } from 'react-redux';
@@ -19,7 +20,7 @@ const LANGUAGES = [
 
 
 
-const Settings = ({ userState }) => {
+const Settings = ({ userState, changeLanguageAction }) => {
     const { t, i18n } = useTranslation();
     const [language, setLanguage] = useState(localStorage.getItem('language'));
 
@@ -28,25 +29,20 @@ const Settings = ({ userState }) => {
         window.location.href = '/chat/'
     }
 
+
     function changeLanguage(event) {
         event.preventDefault();
         let languages = Object.values(event.target);
         let chosenLanguage = languages.filter(l => l.checked)[0];
 
-
-
-        const conf = {
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-            }
-        };
         let paramsLang = {
             email: JSON.parse(sessionStorage.getItem('email')),
             language: chosenLanguage.value
         };
-        axios.post(USER_PATH + '/changeLanguage', paramsLang, conf).catch(e => console.log(e));
+
+        changeLanguageAction({ paramsLang });
         i18n.changeLanguage(chosenLanguage.value);
-        localStorage.setItem('language', chosenLanguage.value);
+
     }
 
     function handleChange(e) {
@@ -111,4 +107,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(Settings);
+const mapDispatchToProps = {
+    changeLanguageAction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
