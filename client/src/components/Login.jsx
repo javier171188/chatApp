@@ -16,24 +16,25 @@ const Login = (props) => {
 	const email = useInputValue('')
 	const password = useInputValue('')
 
+
+	// Example execute the action directly
 	const action = ({ type, data }) => store.dispatch({
 		type,
 		data
 	})
-
-	function goRegister() {
-		props.setError({
-			errorMessages: ''
-		})
-
-	}
-
 	function handleLogin(e) {
 		e.preventDefault();
 		action({
 			type: type.LOGIN,
 			data: e.target
 		});
+	}
+
+	// Example execute the action with connect, imported from actions
+	function goRegister() {
+		props.setError({
+			errorMessages: ''
+		})
 	}
 
 	const { t, i18n } = useTranslation();

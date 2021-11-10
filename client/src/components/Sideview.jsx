@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { setGroupRoom, setCurrentUserChat, socketGetRoom } from '../redux/actions';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import '../styles/components/Sideview.css';
@@ -11,6 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
 import Box from '@mui/material/Box';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import * as type from '../redux/types';
 
 require('dotenv').config();
 const USER_PATH = process.env.USER_PATH;
@@ -19,25 +21,9 @@ const USER_PATH = process.env.USER_PATH;
 const Sideview = (props) => {
     const { t, i18n } = useTranslation();
     const { userState } = props;
-    function openOneToOneChat(e,
-        current,
-        receiver,
-        socket,
-        setCurrentRoomId,
-        setCurrentMessages,
-        userState,
-        setUserState,
-        setCurrentRoomName,
-        setGroupRoom,
-        setContactStatus,
-        setCurrentUserChat,
-    ) {
-        /*socket.emit('joinPersonal', {current, receiver}, ({_id, lastMessages}) => {
-            setCurrentRoomId(_id);
-            setCurrentMessages(lastMessages);
-        });*/
 
 
+    function openOneToOneChat(e, current, receiver, userState) {
         let clickedElement = e.target;
         let localName = clickedElement.localName;
         while (localName !== 'li') {
@@ -45,54 +31,15 @@ const Sideview = (props) => {
             localName = clickedElement.localName;
         }
         let contactClasses = clickedElement.className.split(' ');
-        setGroupRoom(false);
-        setCurrentUserChat(receiver);
 
-        socket.emit('getRoom', { current, receiver }, ({ _id: _idRoom, lastMessages, participants }) => {
-            setCurrentRoomId(_idRoom);
-            setCurrentMessages(lastMessages);
-            //console.log(`The messages were changed in the sideview. Current room: ${_idRoom}. Last changed room: ${lastRoomChanged}`);
-            //setCurrentUserChat(receiver);
-            let participantId = participants.filter(p => p !== userState._id)[0];
+        props.setGroupRoom(false);
+        props.setCurrentUserChat({
+            currentUserChat: receiver
+        })
 
-            let newNameObj = userState.contacts.filter(c => (c._id === participantId));
-            setCurrentRoomName(newNameObj[0].userName);
-
-            if (contactClasses.includes('pending')) {
-                setContactStatus('pending');
-                setCurrentMessages([]);
-                setCurrentRoomId('1');
-                return;
-            } else if (contactClasses.includes('request')) {
-                setContactStatus('request');
-                setCurrentMessages([]);
-                setCurrentRoomId('1');
-                return;
-            }
-
-            let newUserState = { ...userState };
-            newUserState.contacts.forEach(c => {
-                if (c._id === receiver) {
-                    c.newMsgs = false;
-                }
-            });
-            setUserState(newUserState);
-            setContactStatus('accepted');
-            let conf = {
-                headers: {
-                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                },
-                params: {
-                    senderId: receiver,
-                    receiver: userState._id,
-                    newStatus: false,
-                    roomId: _idRoom
-                }
-            }
-            axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));
-        });
-        //let newUserState = [...userState];
-        //newUserState.conta.forEach( )
+        props.socketGetRoom({
+            users: { current, receiver, userState, contactClasses }
+        })
     }
 
     function openGroupChat(roomId,
@@ -162,22 +109,13 @@ const Sideview = (props) => {
                                 : 'no-messages';
                             let status = child.status;
 
-                            //console.log(userState);
                             return (
                                 <ListItem key={child._id} className={`contacts ${newMsgs} ${status}`} onClick={(e) => {
                                     openOneToOneChat(
                                         e,
                                         userState._id,
                                         child._id,
-                                        socket,
-                                        setCurrentRoomId,
-                                        setCurrentMessages,
                                         userState,
-                                        setUserState,
-                                        setCurrentRoomName,
-                                        setGroupRoom,
-                                        setContactStatus,
-                                        setCurrentUserChat,
                                     )
                                 }}
                                 >
@@ -238,8 +176,15 @@ const Sideview = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        userState: state.userState
+        userState: state.userState,
+        currentUserChat: state.currentUserChat
     }
+};
+
+const mapDispatchToProps = {
+    setGroupRoom,
+    setCurrentUserChat,
+    socketGetRoom
 }
 
-export default connect(mapStateToProps, null)(Sideview);
+export default connect(mapStateToProps, mapDispatchToProps)(Sideview);

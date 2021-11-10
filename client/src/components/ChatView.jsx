@@ -16,13 +16,15 @@ const USER_PATH = process.env.USER_PATH;
 
 
 
-function ChatView({ currentMessages,
-    userState,
-    currentRoomId,
-    contactStatus,
-    addingUser,
-    drawingAreaOn }) {
-    const socket = {}//<----------------------------temporary
+function ChatView(props) {
+    const { currentMessages,
+        userState,
+        currentRoomId,
+        contactStatus,
+        addingUser,
+        drawingAreaOn,
+        currentRoomName,
+        groupRoom } = props;
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -31,8 +33,6 @@ function ChatView({ currentMessages,
             $messages.scrollTop = $messages.scrollHeight;
         }
     }, [currentMessages]);
-
-
 
     const [currentUsers, setCurrentUsers] = useState([]);
 
@@ -70,20 +70,12 @@ function ChatView({ currentMessages,
 
     }
 
-    /*userState.contacts.forEach(c => {
-        socket.emit('joinPersonal', { current: userState._id, receiver: c._id }, ({ _id, lastMessages }) => {
-        });
-    });
 
-    userState.conversations.forEach(c => {
-        socket.emit('joinGroup', { roomId: c.roomId }, ({ _id, lastMessages }) => {
-        });
-    });*/
 
     function openDrawingArea(setDrawingAreaOn) {
         setDrawingAreaOn(true);
     }
-
+    console.log(groupRoom.groupRoom)
     return (
         <div className='chat'>
             {currentRoomId && (groupRoom ?
@@ -124,6 +116,7 @@ function ChatView({ currentMessages,
                         message={message.message}
                         date={message.date.toString()}
                         isImage={message.isImage}
+                        userState={userState}
                     />
                 ))
                 }
@@ -210,7 +203,9 @@ const mapStateToProps = (state) => {
         currentRoomId: state.currentRoomId,
         contactStatus: state.contactStatus,
         addingUser: state.addingUser,
-        drawingAreaOn: state.drawingAreaOn
+        drawingAreaOn: state.drawingAreaOn,
+        groupRoom: state.groupRoom,
+        currentRoomName: state.currentRoomName
     }
 }
 

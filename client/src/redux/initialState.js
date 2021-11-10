@@ -15,49 +15,10 @@ const initialState = {
     addingUser: false,
     drawingAreaOn: false,
     searchMessage: 'InitialMessage',
-    searchUser: null
+    searchUser: null,
+    groupRoom: false,
+    currentUserChat: '',
+    currentRoomName: ''
 };
 
 export default initialState;
-
-// Sideview
-{
-    setUserState,
-        setContactStatus,
-        socket,
-        currentRoomId,
-        setCurrentUserChat,
-        setCurrentRoomId,
-        setCurrentMessages,
-        setCurrentRoomName,
-        setGroupRoom
-}
-
-// Working area
-{ userState, updateUser, socket, setCurrentMessages, currentMessages, currentRoomId }
-
-// ChatView
-{
-    userState,
-        contactStatus,
-        setContactStatus,
-        currentRoomId,
-        setCurrentRoomId,
-        currentMessages,
-        currentRoomName,
-        groupRoom,
-        addingUser,
-        setAddingUser,
-        currentUserChat,
-        socket,
-        getUserState,
-        drawingAreaOn,
-        setDrawingAreaOn,
-        sendNewMessage
-}
-
-// Settings
-{ userState }
-
-// Create room
-{ userState, socket }

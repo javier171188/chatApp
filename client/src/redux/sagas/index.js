@@ -1,6 +1,8 @@
 'use strict';
-import { put, takeEvery, all, takeLatest, call } from 'redux-saga/effects'
+import { put, takeEvery, all, takeLatest, call, fork } from 'redux-saga/effects'
+import store from '../store';
 import * as type from '../types';
+import { openOneToOneChatSaga } from './socket';
 
 import axios from 'axios';
 
@@ -34,7 +36,7 @@ function* tryLogin(data) {
         yield put({ type: type.SET_AUTH, payload: true });
         window.sessionStorage.setItem('email', JSON.stringify(user.user.email));
         window.sessionStorage.setItem('token', user.token);
-        yield put({ type: type.SET_USER, payload: user.user });
+        yield put({ type: type.SET_USER_STATE, payload: user.user });
         yield put({ type: type.SET_ERROR, payload: [] });
 
     } catch (error) {
@@ -52,7 +54,7 @@ function* getUserState(refresh = true) {
     let token = sessionStorage.getItem('token');
     if (!email || !token) {
         yield put({
-            type: type.SET_USER, payload: {
+            type: type.SET_USER_STATE, payload: {
                 contacts: [],
                 email: "",
                 hasAvatar: false,
@@ -72,7 +74,7 @@ function* getUserState(refresh = true) {
         }
     }
     const user = yield getUsersService('/getUser', conf);
-    yield put({ type: type.SET_USER, payload: user });
+    yield put({ type: type.SET_USER_STATE, payload: user });
     /*if (countUserLoad === 0 || refresh) {
         //setUserState(user.data)
         i18n.changeLanguage(user.data.language);
@@ -119,13 +121,9 @@ function* lookForUser({ data }) {
         let user = yield getUsersService('/getUser', conf);
         user.newMsgs = false;
 
-        //setSearchUser(user.data);
         yield put({ type: type.SET_SEARCH_USER, payload: user })
-        //setSearchMessage(t('One user found: '))
         yield put({ type: type.SET_SEARCH_MESSAGE, payload: 'One user found: ' });
     } catch (error) {
-        //let strError = e.response.data;
-        //setSearchMessage(t('No user was found, try a different e-mail address.'));
         yield put({
             type: type.SET_SEARCH_MESSAGE,
             payload: 'No user was found, try a different e-mail address.'
@@ -143,6 +141,7 @@ export default function* rootSaga() {
         loginSaga(),
         getUserStateSaga(),
         logoutSaga(),
-        lookForUserSaga()
+        lookForUserSaga(),
+        openOneToOneChatSaga()
     ]);
 }

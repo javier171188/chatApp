@@ -16,6 +16,8 @@ var subscribeRoom = function () {
 var checkForUpdates = function () {
     console.log('executed before');
 }
+
+/*
 const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
     path: process.env.SOCKET_PATH
 });
@@ -31,7 +33,7 @@ socket.on('newRoom', ({ participants, roomId }) => {
 socket.on('userAccepted', ({ acceptedId }) => {
     checkForUpdates(acceptedId);
 });
-
+*/
 
 const USER_PATH = process.env.USER_PATH;
 
