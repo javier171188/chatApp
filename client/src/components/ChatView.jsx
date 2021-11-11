@@ -207,7 +207,6 @@ function ChatView(props) {
         </div>)
 };
 
-export default ChatView;
 const mapStateToProps = (state) => {
     return {
         userState: state.userState,

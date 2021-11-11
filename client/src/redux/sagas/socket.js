@@ -259,7 +259,8 @@ function* sendMessageFromSaga(data) {
 
 }
 function* sendMessageSaga() {
-    yield takeEvery(type.SEND_MESSAGE, (data) => sendMessageFromSaga(data));
+    yield takeEvery(type.SEND_MESSAGE, (data) => sendMessageFromSaga(data)
+    );
 }
 
 function* subscribeRoomsFS(data) {
