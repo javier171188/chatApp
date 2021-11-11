@@ -64,6 +64,16 @@ const reducer = (state, action) => {
                 ...state,
                 lastRoomChanged: action.payload
             }
+        case type.SET_CURRENT_USERS:
+            return {
+                ...state,
+                currentUsers: action.payload
+            }
+        case type.SET_ADDING_USER:
+            return {
+                ...state,
+                addingUser: action.payload
+            }
         default:
             return state;
     }

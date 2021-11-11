@@ -22,7 +22,6 @@ const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
 
 
 let updateLastRoom = function (roomId, returnedMessages, participants) {
-    //setLastRoomChanged(roomId);
     action({
         type: type.SET_LAST_ROOM_CHANGED,
         payload: roomId
@@ -30,7 +29,6 @@ let updateLastRoom = function (roomId, returnedMessages, participants) {
     const state = store.getState();
     const currentRoomId = state.currentRoomId;
     if (roomId === currentRoomId) {
-        //setCurrentMessages(returnedMessages);
         action({
             type: type.SET_CURRENT_MESSAGES,
             data: returnedMessages
@@ -49,7 +47,6 @@ let updateLastRoom = function (roomId, returnedMessages, participants) {
                 c.newMsgs = true;
             }
         })
-        //setUserState(newState);
         action({
             type: type.SET_USER_STATE,
             payload: newState
@@ -262,7 +259,7 @@ function* sendMessageFromSaga(data) {
 
 }
 function* sendMessageSaga() {
-    yield takeEvery(type.SEND_MESSAGE, (data) => sendMessageFromSaga(data))
+    yield takeEvery(type.SEND_MESSAGE, (data) => sendMessageFromSaga(data));
 }
 
 function* subscribeRoomsFS(data) {
@@ -279,14 +276,32 @@ function* subscribeRoomsFS(data) {
 
 }
 function* subscribeRoomsSaga() {
-    yield takeEvery(type.SUBSCRIBE_ROOMS, (data) => subscribeRoomsFS(data))
+    yield takeEvery(type.SUBSCRIBE_ROOMS, (data) => subscribeRoomsFS(data));
 }
 
+function* addUserToRoomFS(roomId) {
+    socket.emit('getRoom', { roomId }, ({ participants }) => {
+        //setCurrentUsers(participants);
+        action({
+            type: type.SET_CURRENT_USERS,
+            payload: participants
+        })
+    })
+    //setAddingUser(true);
+    action({
+        type: type.SET_ADDING_USER,
+        payload: true
+    })
+}
+function* addUserToRoomSaga() {
+    yield takeEvery(type.ADD_USER_TO_ROOM, (data) => addUserToRoomFS(data));
+}
 
 module.exports = {
     openChatSaga,
     createNewRoomSaga,
     addUserSaga,
     sendMessageSaga,
-    subscribeRoomsSaga
+    subscribeRoomsSaga,
+    addUserToRoomSaga
 };

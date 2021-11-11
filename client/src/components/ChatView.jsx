@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { sendMessageAction, subscribeRoomsAction } from '../redux/actions';
+import { sendMessageAction, subscribeRoomsAction, addUserToRoomAction } from '../redux/actions';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
 import Drawing from './Drawing';
@@ -27,7 +27,8 @@ function ChatView(props) {
         currentRoomName,
         groupRoom,
         sendMessageAction,
-        subscribeRoomsAction } = props;
+        subscribeRoomsAction,
+        addUserToRoomAction } = props;
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -43,11 +44,12 @@ function ChatView(props) {
 
 
     //Add to saga
-    function addUserToRoom({ roomId, userState, setAddingUser }) {
-        socket.emit('getRoom', { roomId }, ({ participants }) => {
-            setCurrentUsers(participants);
-        })
-        setAddingUser(true);
+    function addUserToRoom(roomId) {
+        /* socket.emit('getRoom', { roomId }, ({ participants }) => {
+             setCurrentUsers(participants);
+         })
+         setAddingUser(true);*/
+        addUserToRoomAction(roomId);
     }
 
     function removeUserFromRoom() {
@@ -93,7 +95,7 @@ function ChatView(props) {
                     <div className='chat-header__buttons'>
                         <Button
                             className='chat-header__add'
-                            onClick={() => { addUserToRoom({ roomId: currentRoomId, userState, setAddingUser }) }}
+                            onClick={() => { addUserToRoom(currentRoomId) }}
                             color='inherit'
                             variant='contained'
                             id='add-user-button'
@@ -220,7 +222,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     sendMessageAction,
-    subscribeRoomsAction
+    subscribeRoomsAction,
+    addUserToRoomAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatView);

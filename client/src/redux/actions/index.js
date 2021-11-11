@@ -90,3 +90,18 @@ export const setLastRoomChanged = (payload) => ({
     type: type.SET_LAST_ROOM_CHANGED,
     payload
 })
+
+export const addUserToRoomAction = (payload) => ({
+    type: type.ADD_USER_TO_ROOM,
+    payload
+})
+
+export const setCurrentUsers = (payload) => ({
+    type: type.SET_CURRENT_USERS,
+    payload
+})
+
+export const setAddingUser = (payload) => ({
+    type: type.SET_ADDING_USER,
+    payload
+})

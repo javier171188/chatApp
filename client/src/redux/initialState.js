@@ -21,7 +21,8 @@ const initialState = {
     groupRoom: false,
     currentUserChat: '',
     currentRoomName: '',
-    lastRoomChanged: ''
+    lastRoomChanged: '',
+    currentUsers: []
 };
 
 export default initialState;
