@@ -75,3 +75,8 @@ export const addContactAction = (payload) => ({
     type: type.ADD_CONTACT,
     payload
 })
+
+export const sendMessageAction = (payload) => ({
+    type: type.SEND_MESSAGE,
+    payload
+})

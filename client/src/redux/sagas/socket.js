@@ -20,14 +20,13 @@ const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
 });
 
 socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
+    console.log('I realize');
     updateLastRoom(roomId, returnedMessages, participants);
 });
 
 socket.on('newRoom', ({ participants, roomId }) => {
     subscribeRoom(participants, roomId)
 });
-
-
 
 socket.on('userAccepted', ({ acceptedId }) => {
     let _id = sessionStorage.getItem('_id');
@@ -125,7 +124,6 @@ function* openChatSaga() {
     yield takeEvery(type.SOCKET_GET_ROOM, (data) => openChat(data));
 }
 
-
 function* createNewRoom(data) {
     let { roomName, participants } = data.payload;
     socket.emit('newRoom', { roomName, participants }, (roomId) => {
@@ -171,6 +169,64 @@ function* addUserSaga() {
     yield takeEvery(type.ADD_CONTACT, (data) => addUser(data));
 }
 
+function* sendMessageFromSaga(data) {
+    let { event, userState, currentRoomId, imageStr } = data.payload;
+    var isImage;
+    if (!imageStr) {
+        event.preventDefault();
+        //console.log(`Sended room id: ${currentRoomId}`);
+        var message = event.target[0].value;
+        event.target[0].value = '';
+        isImage = false;
+    } else {
+        var message = imageStr;
+        isImage = true;
+    }
 
+    if (message !== '') {
+        let date = new Date();
+        let dateStr = date.getTime().toString();
 
-module.exports = { openChatSaga, createNewRoomSaga, addUserSaga };
+        let messageData = {
+            sender: {
+                _id: userState._id,
+                userName: userState.userName
+            },
+            message,
+            date: dateStr,
+            roomId: currentRoomId,
+            isImage
+        };
+        socket.emit('sendMessage', messageData, (participants) => {
+            let notCurrentParticipants
+            if (typeof participants[0] !== 'object') {
+                notCurrentParticipants = participants.filter(p => p !== userState._id);
+            } else {
+                notCurrentParticipants = participants.filter(p => p._id !== userState._id);
+            }
+
+            let conf = {
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                },
+                params: {
+                    senderId: userState._id,
+                    receiver: '',
+                    newStatus: true,
+                    roomId: currentRoomId
+                }
+            }
+            notCurrentParticipants.forEach(p => {
+                conf.params.receiver = p;
+                axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));
+            })
+
+        });
+    }
+
+}
+function* sendMessageSaga() {
+    yield takeEvery(type.SEND_MESSAGE, (data) => sendMessageFromSaga(data))
+}
+
+module.exports = { openChatSaga, createNewRoomSaga, addUserSaga, sendMessageSaga };

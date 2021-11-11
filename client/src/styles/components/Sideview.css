@@ -24,6 +24,8 @@
 
 .user-contacts{
     font-size: 120%;
+    overflow: auto;
+    max-height: 220px;
 }
 .contacts:hover {
     cursor: pointer;

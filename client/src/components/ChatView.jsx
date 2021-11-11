@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { sendMessageAction } from '../redux/actions';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
 import Drawing from './Drawing';
@@ -24,7 +25,8 @@ function ChatView(props) {
         addingUser,
         drawingAreaOn,
         currentRoomName,
-        groupRoom } = props;
+        groupRoom,
+        sendMessageAction } = props;
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -36,7 +38,7 @@ function ChatView(props) {
 
     const [currentUsers, setCurrentUsers] = useState([]);
 
-
+    //Add to saga
     function addUserToRoom({ roomId, userState, setAddingUser }) {
         socket.emit('getRoom', { roomId }, ({ participants }) => {
             setCurrentUsers(participants);
@@ -47,7 +49,7 @@ function ChatView(props) {
     function removeUserFromRoom() {
         console.log('Deleting user');
     }
-
+    // Add to saga
     function acceptRequest({ currentUserChat, setCurrentRoomId, userState, socket, setContactStatus, getUserState }) {
         let conf = {
             headers: {
@@ -69,9 +71,15 @@ function ChatView(props) {
 
 
     }
-
+    // Add to saga
     function openDrawingArea(setDrawingAreaOn) {
         setDrawingAreaOn(true);
+    }
+
+
+    function sendNewMessage(event, imageStr = '') {
+        let data = { event, userState, currentRoomId, imageStr }
+        sendMessageAction(data);
     }
     return (
         <div className='chat'>
@@ -148,7 +156,7 @@ function ChatView(props) {
             </div>
             {(currentRoomId && currentRoomId !== '1') &&
                 <div className='chat-submit-bar'>
-                    <form onSubmit={(event) => sendNewMessage(event, userState, currentRoomId)}
+                    <form onSubmit={(event) => sendNewMessage(event)}
                         className='chat-submit-form'
                     >
                         <div className='chat-input__container' >
@@ -206,4 +214,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(ChatView);
+const mapDispatchToProps = {
+    sendMessageAction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatView);
