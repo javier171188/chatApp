@@ -80,3 +80,13 @@ export const sendMessageAction = (payload) => ({
     type: type.SEND_MESSAGE,
     payload
 })
+
+export const subscribeRoomsAction = (payload) => ({
+    type: type.SUBSCRIBE_ROOMS,
+    payload
+})
+
+export const setLastRoomChanged = (payload) => ({
+    type: type.SET_LAST_ROOM_CHANGED,
+    payload
+})

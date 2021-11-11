@@ -120,7 +120,7 @@ const Provider = ({ children }) => {
 
     const [currentMessages, setCurrentMessages] = useState([]);
     const [currentUserChat, setCurrentUserChat] = useState('');
-    const [lastRoomChanged, setLastRoomChanged] = useState('');// I think I am not using this.
+    const [lastRoomChanged, setLastRoomChanged] = useState('');
     const [groupRoom, setGroupRoom] = useState(false);
     const [addingUser, setAddingUser] = useState(false);
 
@@ -143,19 +143,7 @@ const Provider = ({ children }) => {
             })
 
             setUserState(newState);
-            //This does not work offline
-            /*let conf = {
-                headers: {
-                            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                        },
-                params:{
-                    email: JSON.parse(sessionStorage.getItem('email')),
-                    contactId: userWithNewMsgId,
-                    newStatus: true, 
-                    roomId
-                }
-            }
-            axios.post(USER_PATH+'/updateUser', conf ).catch( e => console.log(e));*/
+
         }
     }
 

@@ -2,9 +2,9 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import * as type from '../types'
 import store from '../store';
-import { connect } from "react-redux";
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
+import store from '../store';
 
 let USER_PATH = process.env.USER_PATH;
 
@@ -19,8 +19,44 @@ const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
     path: process.env.SOCKET_PATH
 });
 
+
+
+let updateLastRoom = function (roomId, returnedMessages, participants) {
+    //setLastRoomChanged(roomId);
+    action({
+        type: type.SET_LAST_ROOM_CHANGED,
+        payload: roomId
+    })
+    const state = store.getState();
+    const currentRoomId = state.currentRoomId;
+    if (roomId === currentRoomId) {
+        //setCurrentMessages(returnedMessages);
+        action({
+            type: type.SET_CURRENT_MESSAGES,
+            data: returnedMessages
+        });
+    } else {
+        const userState = state.userState;
+        let userWithNewMsgId = participants.filter(p => p !== userState._id)[0];
+        let newState = { ...userState };
+        newState.contacts.forEach(c => {
+            if (c._id === userWithNewMsgId) {
+                c.newMsgs = true;
+            }
+        });
+        newState.conversations.forEach(c => {
+            if (c.roomId === roomId) {
+                c.newMsgs = true;
+            }
+        })
+        //setUserState(newState);
+        action({
+            type: type.SET_USER_STATE,
+            payload: newState
+        })
+    }
+}
 socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
-    console.log('I realize');
     updateLastRoom(roomId, returnedMessages, participants);
 });
 
@@ -229,4 +265,28 @@ function* sendMessageSaga() {
     yield takeEvery(type.SEND_MESSAGE, (data) => sendMessageFromSaga(data))
 }
 
-module.exports = { openChatSaga, createNewRoomSaga, addUserSaga, sendMessageSaga };
+function* subscribeRoomsFS(data) {
+    let userState = data.payload;
+    userState.contacts.forEach(c => {
+        socket.emit('joinPersonal', { current: userState._id, receiver: c._id }, ({ _id, lastMessages }) => {
+        });
+    });
+
+    userState.conversations.forEach(c => {
+        socket.emit('joinGroup', { roomId: c.roomId }, ({ _id, lastMessages }) => {
+        });
+    });
+
+}
+function* subscribeRoomsSaga() {
+    yield takeEvery(type.SUBSCRIBE_ROOMS, (data) => subscribeRoomsFS(data))
+}
+
+
+module.exports = {
+    openChatSaga,
+    createNewRoomSaga,
+    addUserSaga,
+    sendMessageSaga,
+    subscribeRoomsSaga
+};

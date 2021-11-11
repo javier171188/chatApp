@@ -59,6 +59,11 @@ const reducer = (state, action) => {
                 ...state,
                 contactStatus: action.payload
             }
+        case type.SET_LAST_ROOM_CHANGED:
+            return {
+                ...state,
+                lastRoomChanged: action.payload
+            }
         default:
             return state;
     }

@@ -20,7 +20,8 @@ const initialState = {
     searchUser: null,
     groupRoom: false,
     currentUserChat: '',
-    currentRoomName: ''
+    currentRoomName: '',
+    lastRoomChanged: ''
 };
 
 export default initialState;

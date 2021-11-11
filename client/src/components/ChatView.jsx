@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { sendMessageAction } from '../redux/actions';
+import { sendMessageAction, subscribeRoomsAction } from '../redux/actions';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
 import Drawing from './Drawing';
@@ -26,7 +26,8 @@ function ChatView(props) {
         drawingAreaOn,
         currentRoomName,
         groupRoom,
-        sendMessageAction } = props;
+        sendMessageAction,
+        subscribeRoomsAction } = props;
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -37,6 +38,9 @@ function ChatView(props) {
     }, [currentMessages]);
 
     const [currentUsers, setCurrentUsers] = useState([]);
+
+    subscribeRoomsAction(userState);
+
 
     //Add to saga
     function addUserToRoom({ roomId, userState, setAddingUser }) {
@@ -215,7 +219,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    sendMessageAction
+    sendMessageAction,
+    subscribeRoomsAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatView);

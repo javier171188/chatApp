@@ -1,8 +1,14 @@
 'use strict';
 import { put, takeEvery, all, takeLatest, call, fork } from 'redux-saga/effects'
 import * as type from '../types';
-import { openChatSaga, createNewRoomSaga, addUserSaga, sendMessageSaga } from './socket';
 import i18n from "i18next";
+import {
+    openChatSaga,
+    createNewRoomSaga,
+    addUserSaga,
+    sendMessageSaga,
+    subscribeRoomsSaga
+} from './socket';
 
 import axios from 'axios';
 
@@ -167,6 +173,7 @@ export default function* rootSaga() {
         createNewRoomSaga(),
         setLanguageSaga(),
         addUserSaga(),
-        sendMessageSaga()
+        sendMessageSaga(),
+        subscribeRoomsSaga()
     ]);
 }
