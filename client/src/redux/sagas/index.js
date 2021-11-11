@@ -8,7 +8,8 @@ import {
     addUserSaga,
     sendMessageSaga,
     subscribeRoomsSaga,
-    addUserToRoomSaga
+    addUserToRoomSaga,
+    addUserSocketSaga
 } from './socket';
 
 import axios from 'axios';
@@ -176,6 +177,7 @@ export default function* rootSaga() {
         addUserSaga(),
         sendMessageSaga(),
         subscribeRoomsSaga(),
-        addUserToRoomSaga()
+        addUserToRoomSaga(),
+        addUserSocketSaga()
     ]);
 }

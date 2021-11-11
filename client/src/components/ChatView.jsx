@@ -1,6 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { sendMessageAction, subscribeRoomsAction, addUserToRoomAction } from '../redux/actions';
+import {
+    sendMessageAction,
+    subscribeRoomsAction,
+    addUserToRoomAction,
+    setDrawingAreaOn
+} from '../redux/actions';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
 import Drawing from './Drawing';
@@ -28,7 +33,8 @@ function ChatView(props) {
         groupRoom,
         sendMessageAction,
         subscribeRoomsAction,
-        addUserToRoomAction } = props;
+        addUserToRoomAction,
+        setDrawingAreaOn } = props;
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -37,18 +43,13 @@ function ChatView(props) {
             $messages.scrollTop = $messages.scrollHeight;
         }
     }, [currentMessages]);
-
+    //I have to modify this to get the correct users
     const [currentUsers, setCurrentUsers] = useState([]);
 
     subscribeRoomsAction(userState);
 
 
-    //Add to saga
     function addUserToRoom(roomId) {
-        /* socket.emit('getRoom', { roomId }, ({ participants }) => {
-             setCurrentUsers(participants);
-         })
-         setAddingUser(true);*/
         addUserToRoomAction(roomId);
     }
 
@@ -77,8 +78,8 @@ function ChatView(props) {
 
 
     }
-    // Add to saga
-    function openDrawingArea(setDrawingAreaOn) {
+
+    function openDrawingArea() {
         setDrawingAreaOn(true);
     }
 
@@ -188,7 +189,7 @@ function ChatView(props) {
                     <Button
                         className='chat-button__drawing'
                         id='drawing-button'
-                        onClick={() => openDrawingArea(setDrawingAreaOn)}
+                        onClick={openDrawingArea}
                         variant="contained"
                         color='inherit'
                         startIcon={<BrushIcon />}
@@ -223,7 +224,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     sendMessageAction,
     subscribeRoomsAction,
-    addUserToRoomAction
+    addUserToRoomAction,
+    setDrawingAreaOn
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatView);

@@ -281,13 +281,11 @@ function* subscribeRoomsSaga() {
 
 function* addUserToRoomFS(roomId) {
     socket.emit('getRoom', { roomId }, ({ participants }) => {
-        //setCurrentUsers(participants);
         action({
             type: type.SET_CURRENT_USERS,
             payload: participants
         })
     })
-    //setAddingUser(true);
     action({
         type: type.SET_ADDING_USER,
         payload: true
@@ -297,11 +295,37 @@ function* addUserToRoomSaga() {
     yield takeEvery(type.ADD_USER_TO_ROOM, (data) => addUserToRoomFS(data));
 }
 
+function* addUserSocket(data) {
+    console.log(data);
+    const { currentRoomId, newUsers } = data.payload;
+    socket.emit('addUsers', { roomId: currentRoomId, newUsers }, (participants) => {
+        let conf = {
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+            },
+        }
+        axios.post(USER_PATH + '/newRoom', { roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true }, conf)
+            .then(() => {
+                socket.emit('updateRooms', { participants, currentRoomName }, () => {
+                })
+            })
+            .catch(e => console.log(e));
+    });
+    action({
+        type: type.SET_ADDING_USER,
+        payload: false
+    })
+}
+function* addUserSocketSaga() {
+    yield takeEvery(type.ADD_USERS, (data) => addUserSocket(data))
+}
+
 module.exports = {
     openChatSaga,
     createNewRoomSaga,
     addUserSaga,
     sendMessageSaga,
     subscribeRoomsSaga,
-    addUserToRoomSaga
+    addUserToRoomSaga,
+    addUserSocketSaga
 };

@@ -74,6 +74,11 @@ const reducer = (state, action) => {
                 ...state,
                 addingUser: action.payload
             }
+        case type.SET_DRAWING_AREA_ON:
+            return {
+                ...state,
+                drawingAreaOn: action.payload
+            }
         default:
             return state;
     }

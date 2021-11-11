@@ -105,3 +105,13 @@ export const setAddingUser = (payload) => ({
     type: type.SET_ADDING_USER,
     payload
 })
+
+export const addUsersAction = (payload) => ({
+    type: type.ADD_USERS,
+    payload
+})
+
+export const setDrawingAreaOn = (payload) => ({
+    type: type.SET_DRAWING_AREA_ON,
+    payload
+})
