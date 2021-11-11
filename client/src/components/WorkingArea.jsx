@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { setSearchMessage, addContactAction } from "../redux/actions";
 import { connect } from "react-redux";
 import store from '../redux/store';
 import ChatView from "./ChatView";
@@ -18,10 +18,8 @@ const USER_PATH = process.env.USER_PATH;
 
 
 const WorkingArea = (props) => {
-    const { userState, searchMessage, searchUser } = props;
+    const { userState, searchMessage, searchUser, setSearchMessage, addContactAction } = props;
     const { t, i18n } = useTranslation();
-    //const [searchMessage, setSearchMessage] = useState(t('InitialMessage'));
-    //const [searchUser, setSearchUser] = useState(null);
 
     const action = ({ type, data }) => store.dispatch({
         type,
@@ -38,35 +36,18 @@ const WorkingArea = (props) => {
         });
 
     }
-
-    async function addContact({ userState, updateUser, socket }) {
-        try {
-            let currentId = userState._id;
-            let contactsMails = userState.contacts.map(c => c.email);
-            if (currentId === searchUser._id) {
-                setSearchMessage(t('You cannot add yourself, try another e-mail address.'))
-            } else if (contactsMails.includes(searchUser.email)) {
-                let alreadyContact = userState.contacts.filter(c => c.email === searchUser.email)[0];
-                setSearchMessage(alreadyContact.userName + t(' is already your contact.'))
-            }
-            else {
-                const conf = {
-                    headers: {
-                        'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
-                    }
-                };
-                const data = await axios.post(USER_PATH + '/addContactNoConf', {
-                    "logged": currentId,
-                    "searched": searchUser
-                }, conf)
-                //sessionStorage.setItem('user', data.data);
-                updateUser(data.data);
-
-                socket.emit('userAccepted', { acceptedId: searchUser._id }, () => {
-                });
-            }
-        } catch (e) {
-            console.error(e);
+    function addContact() {
+        let currentId = userState._id;
+        let contactsMails = userState.contacts.map(c => c.email);
+        if (currentId === searchUser._id) {
+            setSearchMessage(t('You cannot add yourself, try another e-mail address.'))
+        } else if (contactsMails.includes(searchUser.email)) {
+            let alreadyContact = userState.contacts.filter(c => c.email === searchUser.email)[0];
+            setSearchMessage(alreadyContact.userName + t(' is already your contact.'))
+        }
+        else {
+            //sagas
+            addContactAction({ currentId, searchUser });
         }
     }
     return (
@@ -109,7 +90,6 @@ const WorkingArea = (props) => {
     );
 };
 
-export default WorkingArea;
 
 const mapStateToProps = (state) => {
     return {
@@ -119,4 +99,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(WorkingArea);
+const mapDispatchToProps = {
+    setSearchMessage,
+    addContactAction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkingArea);

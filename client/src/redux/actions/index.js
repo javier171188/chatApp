@@ -70,3 +70,8 @@ export const changeLanguageAction = (payload) => ({
     type: type.CHANGE_LANGUAGE,
     payload
 })
+
+export const addContactAction = (payload) => ({
+    type: type.ADD_CONTACT,
+    payload
+})

@@ -60,9 +60,6 @@ const Provider = ({ children }) => {
     const [drawingAreaOn, setDrawingAreaOn] = useState(false);
 
     checkForUpdates = function (acceptedId) {
-        /*console.log(userState._id === acceptedId)
-        console.log(userState._id,  acceptedId)
-        console.log(typeof userState._id, typeof acceptedId)*/
         if (userState._id === acceptedId) {
             getUserState();
         }

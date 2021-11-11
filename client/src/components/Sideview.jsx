@@ -142,6 +142,6 @@ const mapDispatchToProps = {
     setGroupRoom,
     setCurrentUserChat,
     socketGetRoom
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sideview);

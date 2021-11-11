@@ -1,7 +1,7 @@
 'use strict';
 import { put, takeEvery, all, takeLatest, call, fork } from 'redux-saga/effects'
 import * as type from '../types';
-import { openChatSaga, createNewRoomSaga } from './socket';
+import { openChatSaga, createNewRoomSaga, addUserSaga } from './socket';
 import i18n from "i18next";
 
 import axios from 'axios';
@@ -77,6 +77,7 @@ function* getUserState(refresh = true) {
     }
     const user = yield getUsersService('/getUser', conf);
     localStorage.setItem('language', user.language);
+    sessionStorage.setItem('_id', user._id);
     yield put({ type: type.SET_USER_STATE, payload: user });
     if (countUserLoad === 0 || refresh) {
         i18n.changeLanguage(user.language);
@@ -97,7 +98,8 @@ function* logout(data) {
         yield put({ type: type.SET_AUTH, payload: false });
         window.sessionStorage.removeItem('token');
         window.sessionStorage.removeItem('email');
-        yield postUsersService('/logoutAll', conf);
+        window.sessionStorage.removeItem('_id');
+        yield axios.post(USER_PATH + '/logoutAll', {}, conf).catch(e => console.error(e));
     } catch (error) {
         console.error(error.response.data);
     }
@@ -163,6 +165,7 @@ export default function* rootSaga() {
         lookForUserSaga(),
         openChatSaga(),
         createNewRoomSaga(),
-        setLanguageSaga()
+        setLanguageSaga(),
+        addUserSaga()
     ]);
 }

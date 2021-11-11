@@ -71,7 +71,7 @@ router.post('/users/logout', authToken, async (req, res) => {         //
     }                                                               //
 });                                                                 //    
 router.post('/users/logoutAll', authToken, async (req, res) => {      //
-    try {                                                            //        
+    try {
         req.user.tokens = [];                                       // 
         await req.user.save();                                      //    
         res.send();                                                 //    

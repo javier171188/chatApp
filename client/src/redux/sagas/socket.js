@@ -1,8 +1,8 @@
 'use strict';
-import { takeEvery } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 import * as type from '../types'
 import store from '../store';
-
+import { connect } from "react-redux";
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
 
@@ -27,8 +27,13 @@ socket.on('newRoom', ({ participants, roomId }) => {
     subscribeRoom(participants, roomId)
 });
 
+
+
 socket.on('userAccepted', ({ acceptedId }) => {
-    checkForUpdates(acceptedId);
+    let _id = sessionStorage.getItem('_id');
+    if (_id === acceptedId) {
+        put({ type: type.SET_USER_STATE });
+    }
 });
 
 function* openChat(data) {
@@ -142,6 +147,30 @@ function* createNewRoomSaga() {
     yield takeEvery(type.CREATE_NEW_ROOM, (data) => createNewRoom(data))
 }
 
+function* addUser(payload) {
+    const { currentId, searchUser } = payload.payload;
+    const conf = {
+        headers: {
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+        }
+    };
+    const data = yield axios.post(USER_PATH + '/addContactNoConf', {
+        "logged": currentId,
+        "searched": searchUser
+    }, conf)
 
 
-module.exports = { openChatSaga, createNewRoomSaga };
+    yield put({ type: type.SET_USER_STATE, payload: data.data });
+
+
+
+    yield socket.emit('userAccepted', { acceptedId: searchUser._id }, () => {
+    });
+}
+function* addUserSaga() {
+    yield takeEvery(type.ADD_CONTACT, (data) => addUser(data));
+}
+
+
+
+module.exports = { openChatSaga, createNewRoomSaga, addUserSaga };
