@@ -339,14 +339,17 @@ function* addUserToRoomSaga() {
 }
 
 function* addUserSocket(data) {
+    const state = store.getState();
+    const { roomId, newUsers } = data.payload;
+    let { currentRoomName, currentRoomId } = state;
 
-    const { currentRoomId, newUsers } = data.payload;
-    socket.emit('addUsers', { roomId: currentRoomId, newUsers }, (participants) => {
+    socket.emit('addUsers', { roomId, newUsers }, (participants) => {
         let conf = {
             headers: {
                 'Authorization': 'Bearer ' + sessionStorage.getItem('token')
             },
         }
+
         axios.post(USER_PATH + '/newRoom', { roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true }, conf)
             .then(() => {
                 socket.emit('updateRooms', { participants, currentRoomName }, () => {

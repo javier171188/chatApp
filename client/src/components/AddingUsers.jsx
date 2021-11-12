@@ -44,7 +44,7 @@ const AddingUsers = (props) => {
                 <Divider />
                 <Divider />
                 {<form className='adding-form'
-                    onSubmit={(event) => addUser(event)}
+                    onSubmit={addUser}
                 >
                     {<div className='adding-contacts'>
                         {userState.contacts.map(c => {
