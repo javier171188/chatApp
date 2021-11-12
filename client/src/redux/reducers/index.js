@@ -15,6 +15,7 @@ const reducer = (state, action) => {
                 isAuth: action.payload
             }
         case type.SET_USER_STATE:
+            console.log(action);
             return {
                 ...state,
                 userState: action.payload

@@ -188,12 +188,12 @@ function* addUser(payload) {
         "searched": searchUser
     }, conf)
 
+    console.log(data);
+    action({ type: type.SET_USER_STATE, payload: data.data });
 
-    yield put({ type: type.SET_USER_STATE, payload: data.data });
 
 
-
-    yield socket.emit('userAccepted', { acceptedId: searchUser._id }, () => {
+    socket.emit('userAccepted', { acceptedId: searchUser._id }, () => {
     });
 }
 function* addUserSaga() {

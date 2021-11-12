@@ -34,7 +34,6 @@ const WorkingArea = (props) => {
                 event
             }
         });
-
     }
     function addContact() {
         let currentId = userState._id;
