@@ -55,8 +55,35 @@ socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
     updateLastRoom(roomId, returnedMessages, participants);
 });
 
-socket.on('newRoom', ({ participants, roomId }) => {
-    subscribeRoom(participants, roomId)
+socket.on('newRoom', async ({ participants, roomId }) => {
+    //subscribeRoom(participants, roomId)
+    try {
+        const state = store.getState();
+        let userState = state.userState;
+        let participantIds = participants.map(p => p._id);
+        if (participantIds.includes(userState._id)) {
+
+            let conf = {
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                },
+                params: {
+                    email: JSON.parse(sessionStorage.getItem('email')),
+                    selfUser: true
+                }
+            }
+            let user = await axios.get(USER_PATH + '/getUser', conf);
+            //setUserState(user.data);
+            action({
+                type: type.SET_USER_STATE,
+                payload: user.data
+            })
+            socket.emit('joinGroup', { roomId }, ({ _id, lastMessages }) => {
+            });
+        }
+    } catch (e) {
+        console.error(e);
+    }
 });
 
 socket.on('userAccepted', ({ acceptedId }) => {
