@@ -118,7 +118,7 @@ function* openChat(data) {
             type: type.SET_CURRENT_ROOM_NAME,
             data: roomName
         })
-
+        let params;
         if (contactClasses) {
             if (contactClasses.includes('pending')) {
                 action({
@@ -149,7 +149,19 @@ function* openChat(data) {
                 })
                 return;
             }
-
+            params = {
+                senderId: receiver,
+                receiver: userState._id,
+                newStatus: false,
+                roomId: _idRoom
+            }
+        } else {
+            params = {
+                senderId: userState._id,
+                receiver: { _id: userState._id },
+                newStatus: false,
+                roomId
+            }
         }
 
         let newUserState = { ...userState };
@@ -158,6 +170,13 @@ function* openChat(data) {
                 c.newMsgs = false;
             }
         });
+
+        newUserState.conversations.forEach(c => {
+            if (c.roomId === roomId) {
+                c.newMsgs = false;
+            }
+        });
+
         action({
             type: type.SET_USER_STATE,
             payload: newUserState
@@ -170,14 +189,9 @@ function* openChat(data) {
             headers: {
                 'Authorization': 'Bearer ' + sessionStorage.getItem('token')
             },
-            params: {
-                senderId: receiver,
-                receiver: userState._id,
-                newStatus: false,
-                roomId: _idRoom
-            }
+            params
         }
-        axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));
+        axios.post(USER_PATH + '/updateUser', conf).catch(e => console.error(e));
     });
 }
 function* openChatSaga() {
