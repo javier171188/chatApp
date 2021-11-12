@@ -62,7 +62,9 @@ socket.on('newRoom', ({ participants, roomId }) => {
 socket.on('userAccepted', ({ acceptedId }) => {
     let _id = sessionStorage.getItem('_id');
     if (_id === acceptedId) {
-        action({ type: type.SET_USER_STATE });
+        action({
+            type: type.GET_USER,
+        });
     }
 });
 

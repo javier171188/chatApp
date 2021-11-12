@@ -15,7 +15,7 @@ const reducer = (state, action) => {
                 isAuth: action.payload
             }
         case type.SET_USER_STATE:
-            
+
             //Check the log of the chat service...
             console.log(action);
             return {
