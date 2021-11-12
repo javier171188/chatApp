@@ -126,6 +126,7 @@ router.post('/users/addContactNoConf', authToken, async (req, res) => {
 router.patch('/users/confirmAdding', authToken, async (req, res) => {
     try {
         let participants = req.body.participants;
+        console.log(participants)
         let acceptedUser = await User.findById(participants[0]);
         let contactsOne = acceptedUser.contacts;
         contactsOne.map(c => {
@@ -153,6 +154,7 @@ router.patch('/users/confirmAdding', authToken, async (req, res) => {
         await acceptingUser.save();
         res.send();
     } catch (e) {
+        console.log(e);
         res.status(500).send(e);
     }
 

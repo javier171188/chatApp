@@ -31,9 +31,9 @@ const Sideview = (props) => {
         let contactClasses = clickedElement.className.split(' ');
 
         props.setGroupRoom(false);
-        props.setCurrentUserChat({
-            currentUserChat: receiver
-        })
+        props.setCurrentUserChat(
+            receiver
+        )
 
         props.socketGetRoom({
             users: { current, receiver, userState, contactClasses }

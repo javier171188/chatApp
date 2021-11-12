@@ -51,9 +51,9 @@ export const setCurrentRoomName = (payload) => ({
     payload
 })
 
-export const setUserStatus = (userStatus) => ({
+export const setUserState = (payload) => ({
     type: type.SET_USER_STATE,
-    userStatus
+    payload
 })
 
 export const setContactStatus = (status) => ({
@@ -113,5 +113,10 @@ export const addUsersAction = (payload) => ({
 
 export const setDrawingAreaOn = (payload) => ({
     type: type.SET_DRAWING_AREA_ON,
+    payload
+})
+
+export const acceptRequestAction = (payload) => ({
+    type: type.ACCEPT_REQUEST,
     payload
 })

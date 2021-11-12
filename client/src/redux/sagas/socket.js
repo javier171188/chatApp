@@ -4,7 +4,6 @@ import * as type from '../types'
 import store from '../store';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
-import store from '../store';
 
 let USER_PATH = process.env.USER_PATH;
 
@@ -64,7 +63,7 @@ socket.on('newRoom', ({ participants, roomId }) => {
 socket.on('userAccepted', ({ acceptedId }) => {
     let _id = sessionStorage.getItem('_id');
     if (_id === acceptedId) {
-        put({ type: type.SET_USER_STATE });
+        action({ type: type.SET_USER_STATE });
     }
 });
 
@@ -318,7 +317,38 @@ function* addUserSocket(data) {
     })
 }
 function* addUserSocketSaga() {
-    yield takeEvery(type.ADD_USERS, (data) => addUserSocket(data))
+    yield takeEvery(type.ADD_USERS, (data) => addUserSocket(data));
+}
+
+function* acceptRequestFS(data) {
+    const participants = data.payload.participants;
+    console.log(participants);
+    let conf = {
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+        }
+    }
+    const state = store.getState();
+    const currentUserChat = state.currentUserChat;
+    axios.patch(USER_PATH + '/confirmAdding', { participants }, conf)
+        .then(() => {
+            socket.emit('userAccepted', { acceptedId: currentUserChat }, () => {
+            });
+            //getUserState();
+            action({
+                type: type.GET_USER
+            })
+        })
+        .catch(e => console.error(e));
+    //setCurrentRoomId('');
+    //setContactStatus('accepted');
+    action({
+        type: type.SET_CONTACT_STATUS,
+        status: 'accepted'
+    })
+}
+function* acceptRequestSaga() {
+    yield takeEvery(type.ACCEPT_REQUEST, (data) => acceptRequestFS(data));
 }
 
 module.exports = {
@@ -328,5 +358,6 @@ module.exports = {
     sendMessageSaga,
     subscribeRoomsSaga,
     addUserToRoomSaga,
-    addUserSocketSaga
+    addUserSocketSaga,
+    acceptRequestSaga
 };

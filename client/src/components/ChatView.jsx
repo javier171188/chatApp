@@ -4,12 +4,12 @@ import {
     sendMessageAction,
     subscribeRoomsAction,
     addUserToRoomAction,
-    setDrawingAreaOn
+    setDrawingAreaOn,
+    acceptRequestAction
 } from '../redux/actions';
 import MessageForm from './MessageForm';
 import AddingUsers from './AddingUsers';
 import Drawing from './Drawing';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import './../styles/components/ChatView.css';
 import Button from '@mui/material/Button';
@@ -34,7 +34,9 @@ function ChatView(props) {
         sendMessageAction,
         subscribeRoomsAction,
         addUserToRoomAction,
-        setDrawingAreaOn } = props;
+        setDrawingAreaOn,
+        acceptRequestAction,
+        currentUserChat } = props;
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -56,26 +58,12 @@ function ChatView(props) {
     function removeUserFromRoom() {
         console.log('Deleting user');
     }
-    // Add to saga
-    function acceptRequest({ currentUserChat, setCurrentRoomId, userState, socket, setContactStatus, getUserState }) {
-        let conf = {
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-            }
-        }
-        let params = {
-            participants: [currentUserChat, userState._id]
-        }
-        axios.patch(USER_PATH + '/confirmAdding', params, conf)
-            .then(() => {
-                socket.emit('userAccepted', { acceptedId: currentUserChat }, () => {
-                });
-                getUserState();
-            })
-            .catch(e => console.log(e));
-        setCurrentRoomId('');
-        setContactStatus('accepted');
 
+    function acceptRequest() {
+        let params = {
+            participants: [userState._id, currentUserChat]
+        }
+        acceptRequestAction(params);
 
     }
 
@@ -105,7 +93,7 @@ function ChatView(props) {
                         </Button>
                         <Button
                             className='chat-header__remove'
-                            onClick={() => { removeUserFromRoom() }}
+                            onClick={removeUserFromRoom}
                             color='inherit'
                             variant='contained'
                             id='remove-user-button'
@@ -146,14 +134,7 @@ function ChatView(props) {
                             id='chat-accept-button'
                             color='inherit'
                             variant='contained'
-                            onClick={() => acceptRequest({
-                                currentUserChat,
-                                userState,
-                                setCurrentRoomId,
-                                socket,
-                                setContactStatus,
-                                getUserState
-                            })}
+                            onClick={acceptRequest}
                         >
                             {t('Accept')}
                         </Button>
@@ -216,7 +197,8 @@ const mapStateToProps = (state) => {
         addingUser: state.addingUser,
         drawingAreaOn: state.drawingAreaOn,
         groupRoom: state.groupRoom,
-        currentRoomName: state.currentRoomName
+        currentRoomName: state.currentRoomName,
+        currentUserChat: state.currentUserChat
     }
 }
 
@@ -224,7 +206,8 @@ const mapDispatchToProps = {
     sendMessageAction,
     subscribeRoomsAction,
     addUserToRoomAction,
-    setDrawingAreaOn
+    setDrawingAreaOn,
+    acceptRequestAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatView);
