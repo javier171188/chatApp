@@ -120,3 +120,8 @@ export const acceptRequestAction = (payload) => ({
     type: type.ACCEPT_REQUEST,
     payload
 })
+
+export const registerAction = (payload) => ({
+    type: type.REGISTER,
+    payload
+})

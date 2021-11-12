@@ -19,7 +19,6 @@ const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
 });
 
 
-
 let updateLastRoom = function (roomId, returnedMessages, participants) {
     action({
         type: type.SET_LAST_ROOM_CHANGED,
@@ -322,7 +321,6 @@ function* addUserSocketSaga() {
 
 function* acceptRequestFS(data) {
     const participants = data.payload.participants;
-    console.log(participants);
     let conf = {
         headers: {
             'Authorization': 'Bearer ' + sessionStorage.getItem('token')

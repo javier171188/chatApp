@@ -12,8 +12,15 @@ import {
     addUserSocketSaga,
     acceptRequestSaga
 } from './socket';
-
+import store from '../store';
 import axios from 'axios';
+
+const action = ({ type, data, payload }) => store.dispatch({
+    type,
+    data,
+    payload
+})
+
 
 require('dotenv').config();
 const USER_PATH = process.env.USER_PATH;
@@ -165,6 +172,95 @@ function* setLanguageSaga() {
     yield takeEvery(type.CHANGE_LANGUAGE, (data) => setLanguage(data));
 }
 ////////////////////////////////////////////////////////////////
+// Register/////////////////////////////////////////////////////
+function* register(data) {
+    const event = data.payload;
+    try {
+        event.preventDefault();
+        const selectedFile = event.target[4].files[0];
+        if (selectedFile) {
+            var formData = new FormData();
+            formData.append(
+                "avatar",
+                selectedFile,
+                selectedFile.name
+            );
+
+            yield axios.post(USER_PATH + "/avatar/check", formData);
+        }
+
+        const form = {
+            userName: event.target[0].value,
+            email: event.target[1].value,
+            password: event.target[2].value,
+        }
+
+        if (event.target[2].value === event.target[3].value) {
+            const data = yield axios.post(USER_PATH + '/register', form)
+
+            if (selectedFile) {
+                const conf = { headers: { 'Authorization': 'Bearer ' + data.data.token } };
+                var user = yield axios.post(USER_PATH + "/avatar", formData, conf);
+                //setUserState(user.data);
+                action({
+                    type: type.SET_USER_STATE,
+                    payload: user.data
+                })
+                window.sessionStorage.setItem('email', JSON.stringify(user.data.email));
+            } else {
+                //setUserState(data.data.user);
+                action({
+                    type: type.SET_USER_STATE,
+                    payload: data.data.user
+                })
+                window.sessionStorage.setItem('email', JSON.stringify(data.data.user.email));
+            }
+
+
+            window.sessionStorage.setItem('token', data.data.token);
+            //setErrorMessages([]);
+            //setIsAuth(true);
+            action({
+                type: type.SET_ERROR,
+                payload: []
+            })
+            action({
+                type: type.SET_AUTH,
+                payload: true
+            })
+        } else {
+            //setErrorMessages([t('The password does not match the confirmation')]);
+            action({
+                type: type.SET_ERROR,
+                payload: ['The password does not match the confirmation']
+            })
+        }
+    } catch (error) {
+        let strError = error.response.data;
+        strError = strError.replace('Error: ', '');
+        //console.log(strError)
+        switch (strError) {
+            case 'That e-mail is already registered':
+                //setErrorMessages([t('That e-mail is already registered')]);
+                action({
+                    type: type.SET_ERROR,
+                    payload: ['That e-mail is already registered']
+                })
+                break;
+            default:
+                //setErrorMessages([t('Something went wrong')]);
+                action({
+                    type: type.SET_ERROR,
+                    payload: ['Something went wrong']
+                })
+                break;
+        }
+    }
+}
+function* registerSaga() {
+    yield takeEvery(type.REGISTER, (data) => register(data));
+}
+////////////////////////////////////////////////////////////////
 
 export default function* rootSaga() {
     yield all([
@@ -180,6 +276,7 @@ export default function* rootSaga() {
         subscribeRoomsSaga(),
         addUserToRoomSaga(),
         addUserSocketSaga(),
-        acceptRequestSaga()
+        acceptRequestSaga(),
+        registerSaga()
     ]);
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { setError } from '../redux/actions';
+import { setError, registerAction } from '../redux/actions';
 import { Link } from 'react-router-dom';
 import '../styles/components/Register.css';
 import { useTranslation } from 'react-i18next';
@@ -12,8 +12,10 @@ const Register = (props) => {
 
 	function registerUser(e) {
 		e.preventDefault();
-		props.setError(['sagas not ready'])
+		props.registerAction(e);
 	}
+
+
 
 	function setErrorMessages(eM) {
 		props.setError(eM)
@@ -81,7 +83,7 @@ const Register = (props) => {
 					</Button>
 
 					{props.errorMessages.length >= 1
-						&& <div className='login--error' >{props.errorMessages[0]}</div>
+						&& <div className='login--error' >{t(props.errorMessages[0])}</div>
 					}
 				</form>
 				<p className='register__container--login'>
@@ -100,6 +102,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
 	setError,
+	registerAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

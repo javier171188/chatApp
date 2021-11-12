@@ -29,3 +29,4 @@ export const SET_ADDING_USER = 'SET_ADDING_USER';
 export const ADD_USERS = 'ADD_USERS';
 export const SET_DRAWING_AREA_ON = 'SET_DRAWING_AREA_ON';
 export const ACCEPT_REQUEST = 'ACCEPT_REQUEST';
+export const REGISTER = 'REGISTER';
