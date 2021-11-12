@@ -322,7 +322,8 @@ function* subscribeRoomsSaga() {
 }
 
 function* addUserToRoomFS(roomId) {
-    socket.emit('getRoom', { roomId }, ({ participants }) => {
+
+    socket.emit('getRoom', { roomId: roomId.payload }, ({ participants }) => {
         action({
             type: type.SET_CURRENT_USERS,
             payload: participants
@@ -338,7 +339,7 @@ function* addUserToRoomSaga() {
 }
 
 function* addUserSocket(data) {
-    console.log(data);
+
     const { currentRoomId, newUsers } = data.payload;
     socket.emit('addUsers', { roomId: currentRoomId, newUsers }, (participants) => {
         let conf = {

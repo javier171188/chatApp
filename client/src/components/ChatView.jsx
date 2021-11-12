@@ -46,7 +46,7 @@ function ChatView(props) {
         }
     }, [currentMessages]);
     //I have to modify this to get the correct users
-    const [currentUsers, setCurrentUsers] = useState([]);
+    //const [currentUsers, setCurrentUsers] = useState([]);
 
     subscribeRoomsAction(userState);
 
@@ -180,7 +180,7 @@ function ChatView(props) {
                 </ div>
             }
             {addingUser &&
-                <AddingUsers currentUsers={currentUsers} />
+                <AddingUsers />
             }
             {drawingAreaOn &&
                 <Drawing />
