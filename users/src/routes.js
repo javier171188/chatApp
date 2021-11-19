@@ -59,29 +59,26 @@ router.post('/users/login', passport.authenticate('local', { session: false }), 
 });
 
 //This two could be joined in one. However /logout is not being used, it could be deleted.
-router.post('/users/logout', authToken, async (req, res) => {         //
-    try {                                                            //        
-        req.user.tokens = req.user.tokens.filter((token) => {        //
-            return token.token !== req.token;                       //
-        })                                                          //                    
-        await req.user.save();                                      //                
-        res.send();                                                 //       
-    } catch (e) {                                                     //                    
-        res.status(500).send();                                     //    
-    }                                                               //
-});                                                                 //    
-router.post('/users/logoutAll', authToken, async (req, res) => {      //
+router.post('/users/logout', authToken, async (req, res) => {
     try {
-        req.user.tokens = [];                                       // 
-        await req.user.save();                                      //    
-        res.send();                                                 //    
-    } catch (e) {                                                     //    
-        res.status(500).send();                                     //        
-    }                                                               //    
-});                                                                 //            
-//////////////////////////////////////////////////////////////////////
-
-
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token !== req.token;
+        })
+        await req.user.save();
+        res.send();
+    } catch (e) {
+        res.status(500).send();
+    }
+});
+router.post('/users/logoutAll', authToken, async (req, res) => {
+    try {
+        req.user.tokens = [];
+        await req.user.save();
+        res.send();
+    } catch (e) {
+        res.status(500).send();
+    }
+});
 
 router.post('/users/addContactNoConf', authToken, async (req, res) => {
     try {
@@ -161,10 +158,6 @@ router.patch('/users/confirmAdding', authToken, async (req, res) => {
 
 })
 
-// All the get user must be merged in one endpoint.
-//Currently only getUserByEmail is in use.
-// This will be the base and will be modified if needed
-//Check if user is asking for its own profile or another one to decide what info return
 router.get('/users/getUser', authToken, async (req, res) => {
     try {
         const user = await User.findOne({ email: req.query.email });
@@ -188,40 +181,8 @@ router.get('/users/getUser', authToken, async (req, res) => {
         res.status(404).send(strError);
     }
 });
-/*
-router.get('/users/getUserById', authToken, async (req, res) => {
-    try {
-        const user = await User.findOne({_id:req.body._id});
-        res.send(user);
-    } catch(e){
-        res.status(404).send();
-    }   
-});
 
-router.get('/users/getUserByName', authToken, async (req, res) => {
-    try {
-        const users = await User.find({userName:req.body.userName});
-        const usersInfo = users.map( user => {
-            return { userName: user.userName,
-                     _id: user._id
-            }
-        })
-        res.send(usersInfo);
-    } catch(e){
-        res.status(404).send();
-    }   
-});
-router.get('/users/getUserByPattern', authToken, async (req, res) => {
-    try {
-        const s = req.body.userName;
-        const regex = new RegExp(s, 'i');
-        const user = await User.find({userName: {$regex: regex}});
-        res.send(user);
-    } catch(e){
-        res.status(404).send();
-    }   
-});*/
-/////////////////////////////////////////////////////////////////////////////////
+
 router.post('/users/changeLanguage', authToken, async (req, res) => {
     try {
         var user = await User.findOne({ email: req.body.email });
@@ -250,7 +211,7 @@ router.post('/users/updateUser', async (req, res) => {//I forgot to add auth
             });
             user.contacts = contacts;
             user.markModified('contacts');
-        } else { //Group room.
+        } else {                             //Group room.
             user = await User.findById(receiver._id);
             let conversations = user.conversations;
             conversations.forEach(c => {

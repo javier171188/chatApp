@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    hello: () => {
-        return 'Hello world'
+    getUser: () => {
+        return 'You have an user';
     }
 }

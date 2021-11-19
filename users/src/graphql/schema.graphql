@@ -1,3 +1,14 @@
+type User{
+  _id: ID
+  userName: String
+  email: String
+  contacts: [String]
+  hasAvatar: Boolean
+  conversations: [String]
+  language: String
+}
+
 type Query {
-    hello: String
+  "Returns a user"
+    getUser: User
   }

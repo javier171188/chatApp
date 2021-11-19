@@ -6,7 +6,6 @@ require('./db/mongoose');
 const { graphqlConf } = require('./graphql/index.js');
 
 const app = express();
-
 const port = process.env.PORT;
 
 app.use((req, res, next) => {
