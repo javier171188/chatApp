@@ -15,14 +15,10 @@ const schema = buildSchema(readFileSync(
   'utf-8'
 ));
 
-
-
-app.use('/api', graphqlHTTP({
+const graphqlConf = graphqlHTTP({
   schema: schema,
   rootValue: resolvers,
   graphiql: true
-}))
-
-app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port}/api`)
 })
+
+module.exports = { graphqlConf };

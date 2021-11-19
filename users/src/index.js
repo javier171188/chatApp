@@ -1,21 +1,20 @@
 'use strict';
 
 const express = require('express');
-//const cors = require("cors");
 const router = require('./routes');
-
 require('./db/mongoose');
-const User = require('./model/user'); 
+const { graphqlConf } = require('./graphql/index.js');
 
 const app = express();
 
-//app.use(cors());
 const port = process.env.PORT;
 
-app.use((req,res, next)=>{//Basic middleweare, delete once you don't forget how to use them
+app.use((req, res, next) => {
     console.log(req.method, req.path);
     next();
 })
+
+app.use('/users/api', graphqlConf);
 app.use(express.json()); // Parse incoming json to object.
 app.use(router);
 
