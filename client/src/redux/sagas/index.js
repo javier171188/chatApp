@@ -45,11 +45,6 @@ function* tryLogin(data) {
     try {
         var email = data.data[0].value;
         var password = data.data[1].value;
-        const form = {
-            email,
-            password
-        }
-
 
         const mutation = `
         mutation{
@@ -86,17 +81,11 @@ function* tryLogin(data) {
             }
           }
         `
-        //const input = { email: 'my email' };
-
-        console.log('trying login');
-
 
         let loginResponse = yield request(USER_PATH + '/api', mutation);
         const { login: user } = loginResponse;
 
 
-        //const user = yield postUsersService('/login', form);
-        console.log(user);
 
         yield put({ type: type.SET_AUTH, payload: true });
         window.sessionStorage.setItem('email', JSON.stringify(user.user.email));
@@ -105,7 +94,7 @@ function* tryLogin(data) {
         yield put({ type: type.SET_ERROR, payload: [] });
 
     } catch (error) {
-        console.log(error);
+        console.error(error);
         yield put({ type: type.SET_ERROR, payload: [error] })
     }
 }
@@ -113,7 +102,6 @@ function* loginSaga() {
     yield takeEvery(type.LOGIN, (data) => tryLogin(data));
 }
 
-////////////////////////////////////////////////////////////////////////
 //Get user data//////////////////////////////////////////////////////
 let countUserLoad = 0;
 function* getUserState(refresh = true) {

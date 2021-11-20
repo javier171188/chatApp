@@ -115,7 +115,7 @@ router.post('/users/addContactNoConf', authToken, async (req, res) => {
 
         res.send(user);
     } catch (error) {
-        console.log(error.toString());
+        console.error(error.toString());
         res.send(error.toString());
     }
 })
@@ -123,7 +123,7 @@ router.post('/users/addContactNoConf', authToken, async (req, res) => {
 router.patch('/users/confirmAdding', authToken, async (req, res) => {
     try {
         let participants = req.body.participants;
-        console.log(participants)
+
         let acceptedUser = await User.findById(participants[0]);
         let contactsOne = acceptedUser.contacts;
         contactsOne.map(c => {
@@ -151,7 +151,7 @@ router.patch('/users/confirmAdding', authToken, async (req, res) => {
         await acceptingUser.save();
         res.send();
     } catch (e) {
-        console.log(e);
+        console.error(e);
         res.status(500).send(e);
     }
 
@@ -191,7 +191,7 @@ router.post('/users/changeLanguage', authToken, async (req, res) => {
         res.send();
     } catch (e) {
         let strError = e.toString();
-        console.log(strError);
+        console.error(strError);
         res.status(404).send(strError);
     }
 });
@@ -227,7 +227,7 @@ router.post('/users/updateUser', async (req, res) => {//I forgot to add auth
         res.send();
     } catch (e) {
         let strError = e.toString();
-        console.log(strError);
+        console.error(strError);
         res.status(404).send(strError);
     }
 });
@@ -253,9 +253,9 @@ router.post('/users/newRoom', authToken, async (req, res) => {
         })
         res.send();
     } catch (error) {
-        console.log(error);
+
         let strError = e.toString();
-        console.log(strError);
+        console.error(strError);
         res.status(404).send(strError);
     }
 });
