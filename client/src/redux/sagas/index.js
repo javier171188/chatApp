@@ -58,9 +58,31 @@ function* tryLogin(data) {
               password: "${password}"
                   
             }){
-              _id
-              userName
-              email
+              user{
+                _id
+                userName
+                email
+                contacts {
+                    email
+                    newMsgs
+                    status
+                    userName
+                    _id
+                }
+                hasAvatar
+                conversations {
+                    newMsgs
+                    participants{
+                        joinDate
+                        userName
+                        _id
+                    }
+                    roomId
+                    roomName
+                }
+                language
+              }
+              token
             }
           }
         `
@@ -68,9 +90,13 @@ function* tryLogin(data) {
 
         console.log('trying login');
 
-        const user = yield request(USER_PATH + '/api', mutation)
+
+        let loginResponse = yield request(USER_PATH + '/api', mutation);
+        const { login: user } = loginResponse;
+
 
         //const user = yield postUsersService('/login', form);
+        console.log(user);
 
         yield put({ type: type.SET_AUTH, payload: true });
         window.sessionStorage.setItem('email', JSON.stringify(user.user.email));

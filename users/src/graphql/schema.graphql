@@ -1,12 +1,40 @@
+type Contact {
+  email: String
+  newMsgs: Boolean
+  status: String
+  userName: String
+  _id: String
+}
+
+type Participant {
+  joinDate: String
+  userName: String
+  _id: String
+}
+
+type Conversation {
+  newMsgs: Boolean
+  participants: [Participant]
+  roomId: String
+  roomName: String
+}
+
 type User{
   _id: ID
   userName: String
   email: String
-  contacts: [String]
+  contacts: [Contact]
   hasAvatar: Boolean
-  conversations: [String]
+  conversations: [Conversation]
   language: String
 }
+
+type LoginReturn {
+  user: User
+  token: String
+}
+
+
 
 type Query {
   "Returns a user"
@@ -19,5 +47,5 @@ input Credentials {
 }
 type Mutation{
     "Login"
-    login(input: Credentials!): User
+    login(input: Credentials!): LoginReturn
  }

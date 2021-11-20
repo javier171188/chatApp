@@ -15,8 +15,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        validate(value){
-            if(!validator.isEmail(value)){
+        validate(value) {
+            if (!validator.isEmail(value)) {
                 throw new Error('Invalid e-mail');
             };
         },
@@ -25,21 +25,21 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        validate(value){
-            if(value.length < 6){
-                throw new Error ('The password most contain at least 6 characters.')
+        validate(value) {
+            if (value.length < 6) {
+                throw new Error('The password most contain at least 6 characters.')
             }
         }
-    }, 
-    tokens:[{
-        token:{
+    },
+    tokens: [{
+        token: {
             type: String,
             required: true
         }
     }],
     contacts: [],
-    avatar:{
-        type:Buffer
+    avatar: {
+        type: Buffer
     },
     hasAvatar: {
         type: Boolean,
@@ -47,13 +47,13 @@ const userSchema = new mongoose.Schema({
     },
     conversations: [],
     language: {
-        type:String,
+        type: String,
         default: 'en'
     }
 
 });
 
-userSchema.methods.toJSON = function (){
+userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();
     delete userObject.password;
@@ -64,19 +64,21 @@ userSchema.methods.toJSON = function (){
 }
 
 
-userSchema.methods.generateAuthToken = async function(){
+userSchema.methods.generateAuthToken = async function () {
     const user = this;
+
     const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_SIGN);
+
     user.tokens = user.tokens.concat({ token });
     await user.save();
-        
+
     return token;
 }
 
-userSchema.pre('save', async function(next){
+userSchema.pre('save', async function (next) {
     const user = this;
 
-    if (user.isModified('password')){
+    if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8);
     }
     next();

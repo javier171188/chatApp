@@ -13,8 +13,8 @@ module.exports = {
             try {
                 //let { email, password } = input;
                 let response = await axios.post('http://localhost:80/users/login', input);
-                console.log('I am resolving');
-                return response;
+                console.log(response.data);
+                return response.data;
             } catch (e) {
                 return e;
             }
