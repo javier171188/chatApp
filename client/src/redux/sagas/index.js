@@ -43,17 +43,19 @@ function getUsersService(path, form) {
 //Login//////////////////////////////////
 function* tryLogin(data) {
     try {
+        var email = data.data[0].value;
+        var password = data.data[1].value;
         const form = {
-            email: data.data[0].value,
-            password: data.data[1].value,
+            email,
+            password
         }
 
-        var email = 'my mail';
+
         const mutation = `
         mutation{
             login(input:{
               email: "${email}"
-              password: "123"
+              password: "${password}"
                   
             }){
               _id
@@ -66,9 +68,9 @@ function* tryLogin(data) {
 
         console.log('trying login');
 
-        request(USER_PATH + '/api', mutation).then(console.log).catch(console.log);
+        const user = yield request(USER_PATH + '/api', mutation)
 
-        const user = yield postUsersService('/login', form);
+        //const user = yield postUsersService('/login', form);
 
         yield put({ type: type.SET_AUTH, payload: true });
         window.sessionStorage.setItem('email', JSON.stringify(user.user.email));

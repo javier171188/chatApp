@@ -11,8 +11,10 @@ module.exports = {
     Mutation: {
         login: async (root, { input }) => {
             try {
-                let { email, password } = input;
-                return { password, email }
+                //let { email, password } = input;
+                let response = await axios.post('http://localhost:80/users/login', input);
+                console.log('I am resolving');
+                return response;
             } catch (e) {
                 return e;
             }
