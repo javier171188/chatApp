@@ -17,7 +17,6 @@ const Login = (props) => {
 	const password = useInputValue('')
 
 
-	// Example execute the action directly
 	const action = ({ type, data }) => store.dispatch({
 		type,
 		data
@@ -30,7 +29,6 @@ const Login = (props) => {
 		});
 	}
 
-	// Example execute the action with connect, imported from actions
 	function goRegister() {
 		props.setError({
 			errorMessages: ''

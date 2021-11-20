@@ -14,6 +14,7 @@ import {
 } from './socket';
 import store from '../store';
 import axios from 'axios';
+import { request } from 'graphql-request';
 
 const action = ({ type, data, payload }) => store.dispatch({
     type,
@@ -47,6 +48,26 @@ function* tryLogin(data) {
             password: data.data[1].value,
         }
 
+        var email = 'my mail';
+        const mutation = `
+        mutation{
+            login(input:{
+              email: "${email}"
+              password: "123"
+                  
+            }){
+              _id
+              userName
+              email
+            }
+          }
+        `
+        //const input = { email: 'my email' };
+
+        console.log('trying login');
+
+        request(USER_PATH + '/api', mutation).then(console.log).catch(console.log);
+
         const user = yield postUsersService('/login', form);
 
         yield put({ type: type.SET_AUTH, payload: true });
@@ -56,7 +77,7 @@ function* tryLogin(data) {
         yield put({ type: type.SET_ERROR, payload: [] });
 
     } catch (error) {
-        console.log(error.response.data);
+        console.log(error);
         yield put({ type: type.SET_ERROR, payload: [error] })
     }
 }

@@ -12,3 +12,12 @@ type Query {
   "Returns a user"
     getUser: User
   }
+
+input Credentials {
+  email: String!,
+  password: String!
+}
+type Mutation{
+    "Login"
+    login(input: Credentials!): User
+ }
