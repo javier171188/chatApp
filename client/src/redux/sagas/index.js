@@ -159,14 +159,9 @@ function* getUserStateSaga() {
 function* logout(data) {
     try {
         let token = window.sessionStorage.getItem('token');
-        const conf = {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        }
         const mutation = `
         mutation{
-            logout(token:${token})
+            logout(token:"${token}")
           }
         `
         yield request(USER_PATH + '/api', mutation);
@@ -174,7 +169,7 @@ function* logout(data) {
         window.sessionStorage.removeItem('token');
         window.sessionStorage.removeItem('email');
         window.sessionStorage.removeItem('_id');
-        yield axios.post(USER_PATH + '/logoutAll', {}, conf).catch(e => console.error(e));
+
     } catch (error) {
         console.error(error);
     }

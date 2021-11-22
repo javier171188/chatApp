@@ -40,7 +40,7 @@ module.exports = {
                         'Authorization': 'Bearer ' + token
                     }
                 }
-                await axios.post(REST_PATH + '/logoutAll', conf);
+                await axios.post(REST_PATH + '/logoutAll', {}, conf);
                 return;
             } catch (e) {
                 return e;
