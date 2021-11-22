@@ -34,8 +34,6 @@ type LoginReturn {
   token: String
 }
 
-
-
 type Query {
   "Returns a user"
     getUser(email:String, token:String): User
@@ -49,3 +47,8 @@ type Mutation{
     "Login"
     login(input: Credentials!): LoginReturn
  }
+
+type Mutation{
+  "Logout"
+  logout(token:String): String
+}

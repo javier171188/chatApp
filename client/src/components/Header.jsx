@@ -29,7 +29,7 @@ const Header = (props) => {
         action({
             type: type.LOGOUT,
         });
-        window.location.href = '/chat/';
+        //window.location.href = '/chat/';
     }
 
     return (

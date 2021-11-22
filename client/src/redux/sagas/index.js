@@ -113,15 +113,6 @@ function* getUserState(refresh = true) {
             }
         });
     }
-    let conf = {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        params: {
-            email,
-            selfUser: true
-        }
-    }
 
     let query = `query{getUser(email:"${email}", 
         token:"${token}") {
@@ -151,7 +142,6 @@ function* getUserState(refresh = true) {
     }`
 
     const userGQL = yield request(USER_PATH + '/api', query);
-    //const user = yield getUsersService('/getUser', conf);
     const user = userGQL.getUser;
 
     localStorage.setItem('language', user.language);
@@ -168,18 +158,25 @@ function* getUserStateSaga() {
 //logout///////////////////////////////////////////////////////////
 function* logout(data) {
     try {
+        let token = window.sessionStorage.getItem('token');
         const conf = {
             headers: {
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+                'Authorization': 'Bearer ' + token
             }
         }
+        const mutation = `
+        mutation{
+            logout(token:${token})
+          }
+        `
+        yield request(USER_PATH + '/api', mutation);
         yield put({ type: type.SET_AUTH, payload: false });
         window.sessionStorage.removeItem('token');
         window.sessionStorage.removeItem('email');
         window.sessionStorage.removeItem('_id');
         yield axios.post(USER_PATH + '/logoutAll', {}, conf).catch(e => console.error(e));
     } catch (error) {
-        console.error(error.response.data);
+        console.error(error);
     }
 }
 function* logoutSaga() {

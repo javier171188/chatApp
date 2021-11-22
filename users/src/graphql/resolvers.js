@@ -32,6 +32,19 @@ module.exports = {
             } catch (e) {
                 return e;
             }
+        },
+        logout: async (root, { token }) => {
+            try {
+                const conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                }
+                await axios.post(REST_PATH + '/logoutAll', conf);
+                return;
+            } catch (e) {
+                return e;
+            }
         }
     }
 }
