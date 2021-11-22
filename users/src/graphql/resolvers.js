@@ -45,6 +45,19 @@ module.exports = {
             } catch (e) {
                 return e;
             }
+        },
+        changeLanguage: async (root, { paramsLang, token }) => {
+            try {
+                const conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                }
+                axios.post(REST_PATH + '/changeLanguage', paramsLang, conf);
+                return;
+            } catch (e) {
+                return e
+            }
         }
     }
 }

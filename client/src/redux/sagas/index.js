@@ -169,7 +169,6 @@ function* logout(data) {
         window.sessionStorage.removeItem('token');
         window.sessionStorage.removeItem('email');
         window.sessionStorage.removeItem('_id');
-
     } catch (error) {
         console.error(error);
     }
@@ -210,17 +209,17 @@ function* lookForUserSaga() {
 //////////////////////////////////////////////////////////////////////
 // Change language
 function* setLanguage(data) {
-    const conf = {
-        headers: {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-        }
-    };
+    let token = sessionStorage.getItem('token')
+    let paramsLang = data.payload.paramsLang;
 
-    yield axios.post(USER_PATH + '/changeLanguage',
-        data.payload.paramsLang,
-        conf)
-        .catch(e => console.log(e));
-    yield localStorage.setItem('language', data.payload.paramsLang.chosenLanguage);
+    let mutation = `
+    mutation{
+        changeLanguage(token:"${token}",
+        paramsLang:{email:"${paramsLang.email}", language:"${paramsLang.language}"})
+      }
+    `
+    yield request(USER_PATH + '/api', mutation);
+    yield localStorage.setItem('language', paramsLang.chosenLanguage);
 }
 function* setLanguageSaga() {
     yield takeEvery(type.CHANGE_LANGUAGE, (data) => setLanguage(data));

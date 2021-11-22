@@ -52,3 +52,12 @@ type Mutation{
   "Logout"
   logout(token:String): String
 }
+
+input ParamsLang{
+  email:String, 
+  language:String
+}
+type Mutation{
+  "Change the language of the ui in the chat"
+  changeLanguage(token:String, paramsLang:ParamsLang): String
+}
