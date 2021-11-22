@@ -4,6 +4,7 @@ import * as type from '../types'
 import store from '../store';
 import axios from 'axios';
 import socketIOClient from 'socket.io-client';
+import { request } from 'graphql-request';
 
 let USER_PATH = process.env.USER_PATH;
 
@@ -367,30 +368,45 @@ function* addUserSocketSaga() {
 }
 
 function* acceptRequestFS(data) {
-    const participants = data.payload.participants;
-    let conf = {
-        headers: {
-            'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-        }
-    }
-    const state = store.getState();
-    const currentUserChat = state.currentUserChat;
-    axios.patch(USER_PATH + '/confirmAdding', { participants }, conf)
-        .then(() => {
-            socket.emit('userAccepted', { acceptedId: currentUserChat }, () => {
-            });
-            //getUserState();
-            action({
-                type: type.GET_USER
-            })
+    try {
+        const participants = data.payload.participants;
+        const token = sessionStorage.getItem('token');
+
+        const mutation = `
+            mutation{
+                confirmAdding(token: "${token}", participants: ["${participants[0]}", "${participants[1]}"] )
+            }`
+
+        const state = store.getState();
+        const currentUserChat = state.currentUserChat;
+
+        yield request(USER_PATH + '/api', mutation);
+
+        socket.emit('userAccepted', { acceptedId: currentUserChat }, () => {
+        });
+        action({
+            type: type.GET_USER
         })
-        .catch(e => console.error(e));
-    //setCurrentRoomId('');
-    //setContactStatus('accepted');
-    action({
-        type: type.SET_CONTACT_STATUS,
-        status: 'accepted'
-    })
+        action({
+            type: type.SET_CONTACT_STATUS,
+            status: 'accepted'
+        })
+        /*axios.patch(USER_PATH + '/confirmAdding', { participants }, conf)
+            .then(() => {
+                socket.emit('userAccepted', { acceptedId: currentUserChat }, () => {
+                });
+                action({
+                    type: type.GET_USER
+                })
+            })
+            .catch(e => console.error(e));
+        action({
+            type: type.SET_CONTACT_STATUS,
+            status: 'accepted'
+        })*/
+    } catch (e) {
+        console.error(e);
+    }
 }
 function* acceptRequestSaga() {
     yield takeEvery(type.ACCEPT_REQUEST, (data) => acceptRequestFS(data));

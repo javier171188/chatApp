@@ -27,14 +27,6 @@ require('dotenv').config();
 const USER_PATH = process.env.USER_PATH;
 
 
-function getUsersService(path, form) {
-    return axios.get(USER_PATH + path, form)
-        .then(data => data.data)
-        .catch((error) => { throw error });
-}
-
-
-
 //Login//////////////////////////////////
 function* tryLogin(data) {
     try {

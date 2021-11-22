@@ -17,7 +17,6 @@ module.exports = {
                         selfUser
                     }
                 }
-                console.log(conf)
                 let user = await axios.get(REST_PATH + '/getUser', conf);
                 return user.data;
             } catch (e) {
@@ -58,6 +57,20 @@ module.exports = {
                 return;
             } catch (e) {
                 return e
+            }
+        },
+        confirmAdding: async (root, { token, participants }) => {
+            try {
+                let conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                }
+
+                await axios.patch(REST_PATH + '/confirmAdding', { participants }, conf)
+                return;
+            } catch (e) {
+                return e;
             }
         }
     }
