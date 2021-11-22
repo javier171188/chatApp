@@ -14,14 +14,11 @@ const authToken = async (req, res, next) => {
         }
         req.token = token;
         req.user = user;
-        /*console.log(token);
-        console.log(Object.keys(user));
-        console.log('##################');*/
         next();
 
     } catch (e) {
         res.status(401).send({ error: 'Please authenticate.' });
-        console.log(e);
+        console.error(e);
     }
 
 }

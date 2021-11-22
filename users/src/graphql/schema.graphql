@@ -38,7 +38,7 @@ type LoginReturn {
 
 type Query {
   "Returns a user"
-    getUser: User
+    getUser(email:String, token:String): User
   }
 
 input Credentials {

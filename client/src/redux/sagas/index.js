@@ -27,11 +27,6 @@ require('dotenv').config();
 const USER_PATH = process.env.USER_PATH;
 
 
-function postUsersService(path, form) {
-    return axios.post(USER_PATH + path, form)
-        .then(data => data.data)
-        .catch((error) => { throw error });
-}
 function getUsersService(path, form) {
     return axios.get(USER_PATH + path, form)
         .then(data => data.data)
@@ -86,7 +81,6 @@ function* tryLogin(data) {
         const { login: user } = loginResponse;
 
 
-
         yield put({ type: type.SET_AUTH, payload: true });
         window.sessionStorage.setItem('email', JSON.stringify(user.user.email));
         window.sessionStorage.setItem('token', user.token);
@@ -128,7 +122,38 @@ function* getUserState(refresh = true) {
             selfUser: true
         }
     }
-    const user = yield getUsersService('/getUser', conf);
+
+    let query = `query{getUser(email:"${email}", 
+        token:"${token}") {
+            _id
+            userName
+            email
+            hasAvatar
+            language
+    				contacts{
+              email
+              newMsgs
+              status
+              userName
+              _id
+            }
+    				conversations{
+              newMsgs
+              participants{
+									joinDate
+                  userName
+                  _id
+              }
+              roomId
+              roomName
+            }
+        }
+    }`
+
+    const userGQL = yield request(USER_PATH + '/api', query);
+    //const user = yield getUsersService('/getUser', conf);
+    const user = userGQL.getUser;
+
     localStorage.setItem('language', user.language);
     sessionStorage.setItem('_id', user._id);
     yield put({ type: type.SET_USER_STATE, payload: user });

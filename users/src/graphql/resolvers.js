@@ -2,17 +2,32 @@
 const User = require('../model/user');
 const axios = require('axios');
 
+const REST_PATH = 'http://localhost/users';
+
 module.exports = {
     Query: {
-        getUser: () => {
-            return 'You have an user';
+        getUser: async (root, { email, token }) => {
+            try {
+                let conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    params: {
+                        email,
+                        selfUser: true
+                    }
+                }
+                let user = await axios.get(REST_PATH + '/getUser', conf);
+                return user.data;
+            } catch (e) {
+                return e;
+            }
         }
     },
     Mutation: {
         login: async (root, { input }) => {
             try {
-                let response = await axios.post('http://localhost:80/users/login', input);
-                console.log(response.data);
+                let response = await axios.post(REST_PATH + '/login', input);
                 return response.data;
             } catch (e) {
                 return e;
