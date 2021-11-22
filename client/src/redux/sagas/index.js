@@ -114,8 +114,7 @@ function* getUserState(refresh = true) {
         });
     }
 
-    let query = `query{getUser(email:"${email}", 
-        token:"${token}") {
+    let query = `query{getUser(email:"${email}", token:"${token}", selfUser:true) {
             _id
             userName
             email
@@ -181,16 +180,20 @@ function* logoutSaga() {
 function* lookForUser({ data }) {
     let event = data.event;
     try {
-        const conf = {
-            headers: {
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
-            },
-            params: {
-                email: event.target[0].value
-            }
-        }
+
+        let token = window.sessionStorage.getItem('token');
+        let email = event.target[0].value;
+
+        let query = `query{getUser(email:"${email}", token:"${token}", selfUser:false) {
+            _id
+            userName
+            email
+                }
+            }`
         event.target[0].value = '';
-        let user = yield getUsersService('/getUser', conf);
+        const userGQL = yield request(USER_PATH + '/api', query);
+        const user = userGQL.getUser;
+
         user.newMsgs = false;
 
         yield put({ type: type.SET_SEARCH_USER, payload: user })

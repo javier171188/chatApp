@@ -6,7 +6,7 @@ const REST_PATH = 'http://localhost/users';
 
 module.exports = {
     Query: {
-        getUser: async (root, { email, token }) => {
+        getUser: async (root, { email, token, selfUser }) => {
             try {
                 let conf = {
                     headers: {
@@ -14,9 +14,10 @@ module.exports = {
                     },
                     params: {
                         email,
-                        selfUser: true
+                        selfUser
                     }
                 }
+                console.log(conf)
                 let user = await axios.get(REST_PATH + '/getUser', conf);
                 return user.data;
             } catch (e) {
