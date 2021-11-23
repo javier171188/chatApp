@@ -57,27 +57,46 @@ socket.on('updateMessages', ({ participants, returnedMessages, roomId }) => {
 });
 
 socket.on('newRoom', async ({ participants, roomId }) => {
-    //subscribeRoom(participants, roomId)
     try {
         const state = store.getState();
         let userState = state.userState;
         let participantIds = participants.map(p => p._id);
         if (participantIds.includes(userState._id)) {
 
-            let conf = {
-                headers: {
-                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                },
-                params: {
-                    email: JSON.parse(sessionStorage.getItem('email')),
-                    selfUser: true
+            let token = sessionStorage.getItem('token');
+            let email = JSON.parse(sessionStorage.getItem('email'));
+
+            let query = `query{getUser(email:"${email}", token:"${token}", selfUser:true) {
+                _id
+                userName
+                email
+                hasAvatar
+                language
+                        contacts{
+                  email
+                  newMsgs
+                  status
+                  userName
+                  _id
+                }
+                        conversations{
+                  newMsgs
+                  participants{
+                                        joinDate
+                      userName
+                      _id
+                  }
+                  roomId
+                  roomName
                 }
             }
-            let user = await axios.get(USER_PATH + '/getUser', conf);
-            //setUserState(user.data);
+               }`
+
+            const userGQL = await request(USER_PATH + '/api', query);
+            const user = userGQL.getUser;
             action({
                 type: type.SET_USER_STATE,
-                payload: user.data
+                payload: user
             })
             socket.emit('joinGroup', { roomId }, ({ _id, lastMessages }) => {
             });
