@@ -281,20 +281,8 @@ function* sendMessageFromSaga(data) {
             }
 
             let token = sessionStorage.getItem('token');
-            let conf = {
-                headers: {
-                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                },
-                params: {
-                    senderId: userState._id,
-                    receiver: '',
-                    newStatus: true,
-                    roomId: currentRoomId
-                }
-            }
+
             notCurrentParticipants.forEach(p => {
-                conf.params.receiver = p;
-                axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));
                 let mutation = `
                 mutation{
                     updateUser(token: "${token}", senderId: "${userState._id}", receiver:"${p}", newStatus:true, roomId:"${currentRoomId}" )

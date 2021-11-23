@@ -89,7 +89,18 @@ module.exports = {
         },
         updateUser: async (root, { token, senderId, receiver, newStatus, roomId }) => {
             try {
-                console.log(receiver);
+                let conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    params: {
+                        senderId,
+                        receiver,
+                        newStatus,
+                        roomId
+                    }
+                }
+                axios.post(REST_PATH + '/updateUser', conf).catch(e => console.log(e));
                 return;
             } catch (e) {
                 return e;
