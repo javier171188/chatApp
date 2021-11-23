@@ -108,7 +108,17 @@ module.exports = {
         },
         addUser: async (root, { token, currentId, searchUser }) => {
             try {
-                console.log(searchUser);
+                const conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                };
+                const data = await axios.post(REST_PATH + '/addContactNoConf', {
+                    "logged": currentId,
+                    "searched": searchUser
+                }, conf)
+
+                return data.data;
             } catch (e) {
                 return e;
             }

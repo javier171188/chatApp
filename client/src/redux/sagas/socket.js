@@ -222,27 +222,39 @@ function* createNewRoomSaga() {
 
 function* addUser(payload) {
     const { currentId, searchUser } = payload.payload;
-    const conf = {
-        headers: {
-            'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
+    let token = window.sessionStorage.getItem('token');
+
+    let mutation = `
+    mutation addUserGql($searchUser:AddedUser){
+        addUser(token: "${token}", currentId: "${currentId}", searchUser:$searchUser ){
+            _id
+            userName
+            email
+            hasAvatar
+            language
+    				contacts{
+              email
+              newMsgs
+              status
+              userName
+              _id
+            }
+    				conversations{
+              newMsgs
+              participants{
+									joinDate
+                  userName
+                  _id
+              }
+              roomId
+              roomName
+            }
         }
-    };
-    console.log(currentId);
-    console.log(searchUser);
-    /*const data = yield axios.post(USER_PATH + '/addContactNoConf', {
-        "logged": currentId,
-        "searched": searchUser
-    }, conf)*/
+    }`
+    const dataGQL = yield request(USER_PATH + '/api', mutation, { searchUser });
+    const data = dataGQL.addUser;
 
-    const data
-
-    console.log(data);
-
-    //uncomment when the data is correct
-    //action({ type: type.SET_USER_STATE, payload: data.data });
-
-
-
+    action({ type: type.SET_USER_STATE, payload: data });
     socket.emit('userAccepted', { acceptedId: searchUser._id }, () => {
     });
 }
