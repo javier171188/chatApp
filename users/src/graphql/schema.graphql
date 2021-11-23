@@ -85,11 +85,6 @@ type Mutation{
   newRoom(token:String, newRoomParams:NewRoomParams):String
 }
 
-type Mutation{
-  "Updates the information of a user"
-  updateUser(token:String, senderId:String, receiver:String, newStatus:Boolean, roomId:String):String
-}
-
 input AddedUser{
   email:String
   newMsgs: Boolean
@@ -105,4 +100,14 @@ type Mutation{
 type Mutation{
   "Create a new room"
   createNewRoom(token:String, roomName:String, participants:[RoomParticipant], roomId:String, newMsgs:Boolean):String
+}
+
+input UpdatedUser{
+  _id: String
+  individualRoom: Boolean
+}
+
+type Mutation{
+  "Update the state of the user"
+  updateUser(token: String, senderId:String, receiver: UpdatedUser, newStatus: Boolean, roomId:String):String
 }

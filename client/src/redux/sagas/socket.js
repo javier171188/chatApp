@@ -152,14 +152,14 @@ function* openChat(data) {
             }
             params = {
                 senderId: receiver,
-                receiver: userState._id,
+                receiver: { _id: userState._id, individualRoom: true },
                 newStatus: false,
                 roomId: _idRoom
             }
         } else {
             params = {
                 senderId: userState._id,
-                receiver: { _id: userState._id },
+                receiver: { _id: userState._id, individualRoom: false },
                 newStatus: false,
                 roomId
             }
@@ -186,13 +186,20 @@ function* openChat(data) {
             type: type.SET_CONTACT_STATUS,
             payload: 'accepted'
         })
+        let token = sessionStorage.getItem('token')
         let conf = {
             headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                'Authorization': 'Bearer ' + token
             },
             params
         }
-        axios.post(USER_PATH + '/updateUser', conf).catch(e => console.error(e));
+
+        let mutation = `
+        mutation updateUserGQL($receiver:UpdatedUser){
+            updateUser(token: "${token}", senderId: "${params.senderId}", receiver:$receiver, newStatus:${params.newStatus}, roomId:"${params.roomId}" )
+            }`
+        request(USER_PATH + '/api', mutation, { receiver: params.receiver });
+
     });
 }
 function* openChatSaga() {
@@ -300,11 +307,12 @@ function* sendMessageFromSaga(data) {
             let token = sessionStorage.getItem('token');
 
             notCurrentParticipants.forEach(p => {
+                let receiver = { _id: p, individualRoom: true }
                 let mutation = `
-                mutation{
-                    updateUser(token: "${token}", senderId: "${userState._id}", receiver:"${p}", newStatus:true, roomId:"${currentRoomId}" )
+                mutation updateUserGQL($receiver:UpdatedUser) {
+                    updateUser(token: "${token}", senderId: "${userState._id}", receiver:$receiver, newStatus:true, roomId:"${currentRoomId}" )
                 }`
-                request(USER_PATH + '/api', mutation);
+                request(USER_PATH + '/api', mutation, { receiver });
             })
 
         });

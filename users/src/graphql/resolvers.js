@@ -87,25 +87,7 @@ module.exports = {
                 return e;
             }
         },
-        updateUser: async (root, { token, senderId, receiver, newStatus, roomId }) => {
-            try {
-                let conf = {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                    params: {
-                        senderId,
-                        receiver,
-                        newStatus,
-                        roomId
-                    }
-                }
-                axios.post(REST_PATH + '/updateUser', conf).catch(e => console.log(e));
-                return;
-            } catch (e) {
-                return e;
-            }
-        },
+
         addUser: async (root, { token, currentId, searchUser }) => {
             try {
                 const conf = {
@@ -136,6 +118,24 @@ module.exports = {
                 return
             } catch (e) {
                 return e
+            }
+        },
+        updateUser: async (root, { token, senderId, receiver, newStatus, roomId }) => {
+            try {
+
+                let conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    params: {
+                        senderId, receiver, newStatus, roomId
+                    }
+                }
+
+                await axios.post(REST_PATH + '/updateUser', conf);
+                return;
+            } catch (e) {
+                return e;
             }
         }
     }

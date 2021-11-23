@@ -198,12 +198,11 @@ router.post('/users/changeLanguage', authToken, async (req, res) => {
 });
 
 
-router.post('/users/updateUser', async (req, res) => {//I forgot to add auth
+router.post('/users/updateUser', async (req, res) => {
     try {
         let receiver = req.body.params.receiver;
-        var user;
-        if (typeof receiver === 'string') { //This means it comes from individual room.
-            user = await User.findById(receiver);
+        var user = await User.findById(receiver._id);
+        if (receiver.individualRoom) {
             let contacts = user.contacts;
             contacts.forEach(c => {
                 if (c._id === req.body.params.senderId) {
@@ -212,8 +211,7 @@ router.post('/users/updateUser', async (req, res) => {//I forgot to add auth
             });
             user.contacts = contacts;
             user.markModified('contacts');
-        } else {                             //Group room.
-            user = await User.findById(receiver._id);
+        } else {                             //It comes from group room.
             let conversations = user.conversations;
             conversations.forEach(c => {
                 if (c.roomId === req.body.params.roomId) {
