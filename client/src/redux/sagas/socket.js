@@ -345,12 +345,6 @@ function* addUserSocket(data) {
     let { currentRoomName, currentRoomId } = state;
 
     socket.emit('addUsers', { roomId, newUsers }, async (participants) => {
-        let conf = {
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-            },
-        }
-
         const token = sessionStorage.getItem('token');
         const newRoomParams = { roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true };
         const mutation = `
@@ -359,15 +353,11 @@ function* addUserSocket(data) {
                 newRoomParams: $newRoomParams)
             }
             `
-        console.log(newRoomParams);
-        axios.post(USER_PATH + '/newRoom', newRoomParams, conf)
-            .then(() => {
-                socket.emit('updateRooms', { participants, currentRoomName }, () => {
-                })
-            })
-            .catch(e => console.log(e));
+
         let data = { newRoomParams };
         await request(USER_PATH + '/api', mutation, data);
+        socket.emit('updateRooms', { participants, currentRoomName }, () => {
+        })
     });
     action({
         type: type.SET_ADDING_USER,

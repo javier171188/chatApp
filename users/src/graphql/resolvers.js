@@ -75,6 +75,14 @@ module.exports = {
         newRoom: async (root, { token, newRoomParams }) => {
             try {
                 console.log(newRoomParams);
+                let conf = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                }
+                axios.post(REST_PATH + '/newRoom', newRoomParams, conf)
+                return;
+
             } catch (e) {
                 return e;
             }
