@@ -45,7 +45,6 @@ const WorkingArea = (props) => {
             setSearchMessage(alreadyContact.userName + t(' is already your contact.'))
         }
         else {
-            //sagas
             addContactAction({ currentId, searchUser });
         }
     }

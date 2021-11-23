@@ -2,7 +2,6 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import * as type from '../types'
 import store from '../store';
-import axios from 'axios';
 import socketIOClient from 'socket.io-client';
 import { request } from 'graphql-request';
 
@@ -321,6 +320,7 @@ function* sendMessageFromSaga(data) {
                 notCurrentParticipants = participants.filter(p => p !== userState._id);
             } else {
                 notCurrentParticipants = participants.filter(p => p._id !== userState._id);
+                notCurrentParticipants = notCurrentParticipants.map(p => p._id);
             }
 
             let token = sessionStorage.getItem('token');
@@ -331,6 +331,7 @@ function* sendMessageFromSaga(data) {
                 mutation updateUserGQL($receiver:UpdatedUser) {
                     updateUser(token: "${token}", senderId: "${userState._id}", receiver:$receiver, newStatus:true, roomId:"${currentRoomId}" )
                 }`
+
                 request(USER_PATH + '/api', mutation, { receiver });
             })
 

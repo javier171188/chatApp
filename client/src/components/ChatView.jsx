@@ -71,7 +71,6 @@ function ChatView(props) {
         setDrawingAreaOn(true);
     }
 
-
     function sendNewMessage(event, imageStr = '') {
         let data = { event, userState, currentRoomId, imageStr }
         sendMessageAction(data);
@@ -140,7 +139,6 @@ function ChatView(props) {
                         </Button>
                     </>
                 }
-                {/*<div ref={messagesEndRef} />*/}
             </div>
             {(currentRoomId && currentRoomId !== '1') &&
                 <div className='chat-submit-bar'>
