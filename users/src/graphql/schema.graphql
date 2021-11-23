@@ -66,3 +66,21 @@ type Mutation{
   "Confirm that a user has accepted a contact request"
   confirmAdding(token:String, participants:[String]):String
 }
+
+
+input RoomParticipant {
+  joinDate: String
+  userName: String
+  _id: String
+}
+input NewRoomParams{
+  roomName: String
+  participants:[RoomParticipant]
+  roomId: String 
+  newMsgs: Boolean
+}
+
+type Mutation{
+  "Creates or modifies a room"
+  newRoom(token:String, newRoomParams:NewRoomParams):String
+}

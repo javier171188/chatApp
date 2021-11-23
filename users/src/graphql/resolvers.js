@@ -66,9 +66,15 @@ module.exports = {
                         'Authorization': 'Bearer ' + token
                     }
                 }
-
                 await axios.patch(REST_PATH + '/confirmAdding', { participants }, conf)
                 return;
+            } catch (e) {
+                return e;
+            }
+        },
+        newRoom: async (root, { token, newRoomParams }) => {
+            try {
+                console.log(newRoomParams);
             } catch (e) {
                 return e;
             }

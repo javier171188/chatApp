@@ -344,19 +344,30 @@ function* addUserSocket(data) {
     const { roomId, newUsers } = data.payload;
     let { currentRoomName, currentRoomId } = state;
 
-    socket.emit('addUsers', { roomId, newUsers }, (participants) => {
+    socket.emit('addUsers', { roomId, newUsers }, async (participants) => {
         let conf = {
             headers: {
                 'Authorization': 'Bearer ' + sessionStorage.getItem('token')
             },
         }
 
-        axios.post(USER_PATH + '/newRoom', { roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true }, conf)
+        const token = sessionStorage.getItem('token');
+        const newRoomParams = { roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true };
+        const mutation = `
+            mutation addUsersToRoom($newRoomParams:NewRoomParams){
+                newRoom(token:"${token}",
+                newRoomParams: $newRoomParams)
+            }
+            `
+        console.log(newRoomParams);
+        axios.post(USER_PATH + '/newRoom', newRoomParams, conf)
             .then(() => {
                 socket.emit('updateRooms', { participants, currentRoomName }, () => {
                 })
             })
             .catch(e => console.log(e));
+        let data = { newRoomParams };
+        await request(USER_PATH + '/api', mutation, data);
     });
     action({
         type: type.SET_ADDING_USER,
@@ -391,19 +402,7 @@ function* acceptRequestFS(data) {
             type: type.SET_CONTACT_STATUS,
             status: 'accepted'
         })
-        /*axios.patch(USER_PATH + '/confirmAdding', { participants }, conf)
-            .then(() => {
-                socket.emit('userAccepted', { acceptedId: currentUserChat }, () => {
-                });
-                action({
-                    type: type.GET_USER
-                })
-            })
-            .catch(e => console.error(e));
-        action({
-            type: type.SET_CONTACT_STATUS,
-            status: 'accepted'
-        })*/
+
     } catch (e) {
         console.error(e);
     }
