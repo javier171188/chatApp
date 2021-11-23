@@ -84,3 +84,8 @@ type Mutation{
   "Creates or modifies a room"
   newRoom(token:String, newRoomParams:NewRoomParams):String
 }
+
+type Mutation{
+  "Updates the information of a user"
+  updateUser(token:String, senderId:String, receiver:String, newStatus:Boolean, roomId:String):String
+}

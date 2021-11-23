@@ -280,6 +280,7 @@ function* sendMessageFromSaga(data) {
                 notCurrentParticipants = participants.filter(p => p._id !== userState._id);
             }
 
+            let token = sessionStorage.getItem('token');
             let conf = {
                 headers: {
                     'Authorization': 'Bearer ' + sessionStorage.getItem('token')
@@ -294,6 +295,11 @@ function* sendMessageFromSaga(data) {
             notCurrentParticipants.forEach(p => {
                 conf.params.receiver = p;
                 axios.post(USER_PATH + '/updateUser', conf).catch(e => console.log(e));
+                let mutation = `
+                mutation{
+                    updateUser(token: "${token}", senderId: "${userState._id}", receiver:"${p}", newStatus:true, roomId:"${currentRoomId}" )
+                }`
+                request(USER_PATH + '/api', mutation);
             })
 
         });

@@ -86,6 +86,14 @@ module.exports = {
             } catch (e) {
                 return e;
             }
+        },
+        updateUser: async (root, { token, senderId, receiver, newStatus, roomId }) => {
+            try {
+                console.log(receiver);
+                return;
+            } catch (e) {
+                return e;
+            }
         }
     }
 }
