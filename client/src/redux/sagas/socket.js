@@ -345,19 +345,22 @@ function* addUserSocket(data) {
     let { currentRoomName, currentRoomId } = state;
 
     socket.emit('addUsers', { roomId, newUsers }, async (participants) => {
-        const token = sessionStorage.getItem('token');
-        const newRoomParams = { roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true };
-        const mutation = `
-            mutation addUsersToRoom($newRoomParams:NewRoomParams){
-                newRoom(token:"${token}",
-                newRoomParams: $newRoomParams)
-            }
-            `
-
-        let data = { newRoomParams };
-        await request(USER_PATH + '/api', mutation, data);
-        socket.emit('updateRooms', { participants, currentRoomName }, () => {
-        })
+        try {
+            const token = sessionStorage.getItem('token');
+            const newRoomParams = { roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true };
+            const mutation = `
+                mutation addUsersToRoom($newRoomParams:NewRoomParams){
+                    newRoom(token:"${token}",
+                    newRoomParams: $newRoomParams)
+                }
+                `
+            let data = { newRoomParams };
+            await request(USER_PATH + '/api', mutation, data);
+            socket.emit('updateRooms', { participants, currentRoomName }, () => {
+            })
+        } catch (e) {
+            console.error(e);
+        }
     });
     action({
         type: type.SET_ADDING_USER,
