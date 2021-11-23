@@ -89,3 +89,15 @@ type Mutation{
   "Updates the information of a user"
   updateUser(token:String, senderId:String, receiver:String, newStatus:Boolean, roomId:String):String
 }
+
+input AddedUser{
+  email:String
+  newMsgs: Boolean
+  userName: String
+  _id: String
+}
+
+type Mutation{
+  "Request a user to be a contact"
+  addUser(token:String, currentId:String, searchUser:AddedUser): User
+}

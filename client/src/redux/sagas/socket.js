@@ -227,13 +227,19 @@ function* addUser(payload) {
             'Authorization': 'Bearer ' + window.sessionStorage.getItem('token')
         }
     };
-    const data = yield axios.post(USER_PATH + '/addContactNoConf', {
+    console.log(currentId);
+    console.log(searchUser);
+    /*const data = yield axios.post(USER_PATH + '/addContactNoConf', {
         "logged": currentId,
         "searched": searchUser
-    }, conf)
+    }, conf)*/
+
+    const data
 
     console.log(data);
-    action({ type: type.SET_USER_STATE, payload: data.data });
+
+    //uncomment when the data is correct
+    //action({ type: type.SET_USER_STATE, payload: data.data });
 
 
 

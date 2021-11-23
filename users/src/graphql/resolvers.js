@@ -105,6 +105,13 @@ module.exports = {
             } catch (e) {
                 return e;
             }
+        },
+        addUser: async (root, { token, currentId, searchUser }) => {
+            try {
+                console.log(searchUser);
+            } catch (e) {
+                return e;
+            }
         }
     }
 }
