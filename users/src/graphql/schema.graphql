@@ -101,3 +101,8 @@ type Mutation{
   "Request a user to be a contact"
   addUser(token:String, currentId:String, searchUser:AddedUser): User
 }
+
+type Mutation{
+  "Create a new room"
+  createNewRoom(token:String, roomName:String, participants:[RoomParticipant], roomId:String, newMsgs:Boolean):String
+}

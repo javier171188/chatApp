@@ -201,19 +201,18 @@ function* openChatSaga() {
 
 function* createNewRoom(data) {
     let { roomName, participants } = data.payload;
-    socket.emit('newRoom', { roomName, participants }, (roomId) => {
-        let conf = {
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-            },
-        }
-        axios.post(USER_PATH + '/newRoom', { roomName, participants, roomId, newMsgs: true }, conf)
-            .then(() => {
-                socket.emit('updateRooms', { participants, roomId }, () => {
-                    window.location.href = '/chat/';
-                })
-            })
-            .catch(e => console.error(e));
+    socket.emit('newRoom', { roomName, participants }, async (roomId) => {
+        let token = sessionStorage.getItem('token');
+
+        let mutation = `
+        mutation createNewRoomGQL($participants:[RoomParticipant]){
+            createNewRoom(token: "${token}", roomName: "${roomName}",  participants:$participants, roomId:"${roomId}", newMsgs:true )
+                           
+        }`
+        await request(USER_PATH + '/api', mutation, { participants });
+        socket.emit('updateRooms', { participants, roomId }, () => {
+            window.location.href = '/chat/';
+        })
     });
 }
 function* createNewRoomSaga() {
