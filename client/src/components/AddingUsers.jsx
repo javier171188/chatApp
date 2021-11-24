@@ -28,7 +28,6 @@ const AddingUsers = (props) => {
         });
 
         addUsersAction({ roomId: currentRoomId, newUsers });
-
     }
 
 

@@ -8,4 +8,3 @@ mongoose.connect(`${connectionURL}/${databaseName}`, {
   useUnifiedTopology: true,
 });
 
-

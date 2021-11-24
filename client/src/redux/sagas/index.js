@@ -25,7 +25,7 @@ require("dotenv").config();
 
 const { USER_PATH } = process.env;
 
-// Login//////////////////////////////////
+
 function* tryLogin(data) {
   try {
     const email = data.data[0].value;
@@ -84,7 +84,7 @@ function* loginSaga() {
   yield takeEvery(type.LOGIN, (data) => tryLogin(data));
 }
 
-// Get user data//////////////////////////////////////////////////////
+
 let countUserLoad = 0;
 function* getUserState(refresh = true) {
   const email = JSON.parse(sessionStorage.getItem("email"));
@@ -143,7 +143,8 @@ function* getUserState(refresh = true) {
 function* getUserStateSaga() {
   yield takeEvery(type.GET_USER, () => getUserState(false));
 }
-// logout///////////////////////////////////////////////////////////
+
+
 function* logout(data) {
   try {
     const token = window.sessionStorage.getItem("token");
@@ -164,8 +165,8 @@ function* logout(data) {
 function* logoutSaga() {
   yield takeEvery(type.LOGOUT, logout);
 }
-/// /////////////////////////////////////////////////////////////////
-// Search for user
+
+
 function* lookForUser({ data }) {
   const { event } = data;
   try {
@@ -197,8 +198,7 @@ function* lookForUserSaga() {
   yield takeEvery(type.LOOK_FOR_USER, (data) => lookForUser(data));
 }
 
-/// ///////////////////////////////////////////////////////////////////
-// Change language
+
 function* setLanguage(data) {
   const token = sessionStorage.getItem("token");
   const { paramsLang } = data.payload;
@@ -215,8 +215,8 @@ function* setLanguage(data) {
 function* setLanguageSaga() {
   yield takeEvery(type.CHANGE_LANGUAGE, (data) => setLanguage(data));
 }
-/// /////////////////////////////////////////////////////////////
-// Register/////////////////////////////////////////////////////
+
+
 function* register(data) {
   const event = data.payload;
   try {
@@ -329,7 +329,6 @@ function* register(data) {
 function* registerSaga() {
   yield takeEvery(type.REGISTER, (data) => register(data));
 }
-/// /////////////////////////////////////////////////////////////
 
 export default function* rootSaga() {
   yield all([

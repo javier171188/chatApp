@@ -22,14 +22,12 @@ const Header = (props) => {
     function goHome(e) {
         e.preventDefault();
         window.location.href = '/chat/'
-        //props.history.push('/chat/');
     }
 
     function handleLogOut() {
         action({
             type: type.LOGOUT,
         });
-        //window.location.href = '/chat/';
     }
 
     return (

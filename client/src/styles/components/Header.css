@@ -95,17 +95,13 @@ button:hover {
     justify-content: center;
     align-items: center;
     padding-bottom: 0.35em;
-    /*border: solid;*/
     width: 2em;
     height: 1em;
     text-align: center;
     border-radius: 5px;
-    /*border-color: white;*/
     margin-right: -0.5em;
     margin-top: 0.5em;
-    /*background-color: rgb(160, 155, 155);*/
     background-color: rgb(88, 87, 87);
-    /*background-color: rgb(182, 179, 179);*/
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
 }
 
@@ -127,24 +123,6 @@ button:hover {
     cursor: pointer;
 }
 
-
-/*
-.header--logout{
-    color: brown;
-    text-align: right;
-    cursor: pointer;
-    align-items: right;
-
-}
-
-a:link {
-    color: brown;
-  }
-
-.header--logout:hover{
-    text-decoration: underline;
-    text-shadow: 1px 1px brown;
-}*/
 
 @media (max-width: 500px){
     .header-title{

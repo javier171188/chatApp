@@ -85,7 +85,6 @@
 #messages-input{
     color: rgb(77, 75, 75);
     background-color: white;
-    /*width: calc(100% - var(--button-width) - 20px);*/
     margin-right: 5px;
     text-align: center;
     margin-top: 22px;

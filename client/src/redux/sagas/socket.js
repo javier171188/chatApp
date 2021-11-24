@@ -292,7 +292,6 @@ function* sendMessageFromSaga(data) {
   let isImage;
   if (!imageStr) {
     event.preventDefault();
-    // console.log(`Sended room id: ${currentRoomId}`);
     var message = event.target[0].value;
     event.target[0].value = "";
     isImage = false;

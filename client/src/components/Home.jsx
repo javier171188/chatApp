@@ -5,10 +5,7 @@ import WorkingArea from './WorkingArea';
 import '../styles/components/Header.css';
 import '../styles/components/Home.css';
 
-
 const Home = () => {
-
-
     return (
         <>
             <Header />
@@ -20,6 +17,5 @@ const Home = () => {
         </>
     )
 }
-
 
 export default Home;

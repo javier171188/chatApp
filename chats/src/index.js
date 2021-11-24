@@ -13,12 +13,6 @@ const io = socketIo(server, {
   path: "/mysocket",
 });
 
-const serverData = {
-  sender: {
-    _id: "0",
-    userName: "Chat",
-  },
-};
 
 io.on("connection", (socket) => {
   console.log("New connection");
@@ -46,7 +40,7 @@ io.on("connection", (socket) => {
         _id: chat._id.toString(), lastMessages, participants, roomName,
       });
     } catch (e) {
-      console.log(e.toString());
+      console.error(e.toString());
     }
   });
 
@@ -59,7 +53,7 @@ io.on("connection", (socket) => {
       }
       socket.join(chat._id.toString());
     } catch (e) {
-      console.log(e.toString());
+      console.error(e.toString());
     }
   });
 
@@ -68,7 +62,7 @@ io.on("connection", (socket) => {
       const chat = await Chat.findOne({ _id: roomId });
       socket.join(chat._id.toString());
     } catch (e) {
-      console.log(e.toString());
+      console.error(e.toString());
     }
   });
 
@@ -86,7 +80,6 @@ io.on("connection", (socket) => {
     chat.messages = prevMessages;
     chat.save();
     callback(participants);
-    console.log(message.roomId);
     io.to(message.roomId).emit("updateMessages", { participants, roomId: message.roomId, returnedMessages: prevMessages.slice(-20) });
   });
 

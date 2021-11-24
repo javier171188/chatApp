@@ -64,7 +64,6 @@ const Drawing = (props) => {
         const canvas = canvasRef.current;
         setDrawingAreaOn(false);
         let imageStr = canvas.toDataURL();
-        //sendNewMessage(event, userState, currentRoomId, imageStr)
         let data = { event, userState, currentRoomId, imageStr };
         sendMessageAction(data);
 

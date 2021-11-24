@@ -6,7 +6,6 @@ import Login from "../components/Login.jsx";
 import Register from "../components/Register.jsx";
 import NotFound from "../components/NotFound.jsx";
 import GoHome from "../components/GoHome.jsx";
-import UploadAvatar from "../components/UploadAvatar.jsx";
 import CreateRoom from "../components/CreateRoom.jsx";
 import Settings from "../components/Settings.jsx";
 
@@ -14,7 +13,6 @@ const App = ({ isAuth }) => (
   isAuth
     ? <BrowserRouter>
       <Switch>
-        <Route exact path='/chat/upload/avatar' component={UploadAvatar} />
         <Route exact path='/chat' component={Home} />
         <Route exact path='/chat/login' component={GoHome} />
         <Route exact path='/chat/register' component={GoHome} />

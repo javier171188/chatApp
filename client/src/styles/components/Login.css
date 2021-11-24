@@ -1,6 +1,4 @@
 .login {
-    /*background-image: linear-gradient(45deg,#0074d9,#39cccc 51%,#0074d9);*/
-    /*background-image: linear-gradient(45deg,gray, rgb(100, 200, 100));*/
     background-color: gray;
     display: flex;
     align-items: center;
