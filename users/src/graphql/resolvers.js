@@ -148,7 +148,8 @@ module.exports = {
                 const data = await axios.post(REST_PATH + '/register', form)
                 return data.data;
             } catch (e) {
-                return e;
+                let strError = e.response.data;
+                return { token: strError };
             }
         }
     }

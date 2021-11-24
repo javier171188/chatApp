@@ -277,6 +277,9 @@ function* register(data) {
               }
             `
             const data = yield request(USER_PATH + '/api', mutation)
+            if (data.registerUser.token.startsWith('Error:')) {
+                throw new Error(data.registerUser.token.replace('Error: ', ''));
+            }
             if (selectedFile) {
                 const conf = { headers: { 'Authorization': 'Bearer ' + data.registerUser.token } };
                 var user = yield axios.post(USER_PATH + "/avatar", formData, conf);
@@ -310,10 +313,9 @@ function* register(data) {
             })
         }
     } catch (error) {
-        let strError = error.response;
-        console.log(strError);
+        let strError = error.toString().replace('Error: ', '');
 
-        switch (error) {
+        switch (strError) {
             case 'That e-mail is already registered':
                 action({
                     type: type.SET_ERROR,
