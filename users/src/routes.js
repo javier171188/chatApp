@@ -37,7 +37,8 @@ router.post('/users/register', async (req, res) => {
 
 
         if (sameMail) {
-            throw new Error('That e-mail is already registered');
+            res.status(400).send({ error: 'That e-mail is already registered' });
+            //throw new Error('That e-mail is already registered');
         }
         await user.save();
         const token = await user.generateAuthToken();

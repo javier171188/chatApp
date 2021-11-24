@@ -310,9 +310,9 @@ function* register(data) {
             })
         }
     } catch (error) {
-        //let strError = error.response.data;
-        //strError = strError.replace('Error: ', '');
-        console.log(error)
+        let strError = error.response;
+        console.log(strError);
+
         switch (error) {
             case 'That e-mail is already registered':
                 action({
