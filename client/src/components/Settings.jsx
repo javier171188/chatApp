@@ -100,7 +100,6 @@ const Settings = ({ userState, changeLanguageAction }) => {
     )
 }
 
-export default Settings;
 const mapStateToProps = (state) => {
     return {
         userState: state.userState
