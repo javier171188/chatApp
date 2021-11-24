@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Header from './Header';
 import { changeLanguageAction } from '../redux/actions';
 import '../styles/components/Header.css';

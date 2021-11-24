@@ -1,6 +1,4 @@
-import {
-  put, takeEvery, all, takeLatest, call, fork,
-} from "redux-saga/effects";
+import { put, takeEvery, all } from "redux-saga/effects";
 import i18n from "i18next";
 import axios from "axios";
 import { request } from "graphql-request";

@@ -1,5 +1,4 @@
 const axios = require("axios");
-const User = require("../model/user");
 
 const REST_PATH = "http://localhost/users";
 

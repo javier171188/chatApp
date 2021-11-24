@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { setSearchMessage, addContactAction } from "../redux/actions";
 import { connect } from "react-redux";
 import store from '../redux/store';

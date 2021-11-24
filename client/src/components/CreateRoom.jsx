@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import Checkbox from "@material-ui/core/Checkbox";
 
 
 require('dotenv').config();
@@ -31,20 +30,7 @@ const CreateRoom = ({ userState, socketCreateNewRoom }) => {
         participants.push({ userName: userState.userName, _id: userState._id, joinDate: dateStr });
 
         socketCreateNewRoom({ roomName, participants });
-        /*socket.emit('newRoom', { roomName, participants }, (roomId) => {
-            let conf = {
-                headers: {
-                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-                },
-            }
-            axios.post(USER_PATH + '/newRoom', { roomName, participants, roomId, newMsgs: true }, conf)
-                .then(() => {
-                    socket.emit('updateRooms', { participants, roomId }, () => {
-                        window.location.href = '/chat/';
-                    })
-                })
-                .catch(e => console.log(e));
-        });*/
+
     }
 
     return (

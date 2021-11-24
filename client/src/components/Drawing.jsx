@@ -69,12 +69,7 @@ const Drawing = (props) => {
         sendMessageAction(data);
 
     }
-    /*
-        function sendNewMessage(event, imageStr) {
-            let data = { event, userState, currentRoomId, imageStr }
-            sendMessageAction(data);
-        }
-    */
+
 
     function cancelDrawing({ setDrawingAreaOn }) {
         setDrawingAreaOn(false);

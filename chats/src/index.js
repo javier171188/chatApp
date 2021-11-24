@@ -5,10 +5,9 @@ const Chat = require("./model/chat");
 require("./db/mongoose");
 
 const port = process.env.PORT;
-// const routes = require('./routes.js');
+
 
 const app = express();
-// app.use(routes);
 const server = http.createServer(app);
 const io = socketIo(server, {
   path: "/mysocket",
@@ -23,13 +22,7 @@ const serverData = {
 
 io.on("connection", (socket) => {
   console.log("New connection");
-  /* let date = new Date();
-    let dateStr = date.getTime().toString();
-    serverData.date = dateStr;
-    serverData.message = 'Welcome!';
-    socket.emit('message', serverData);
-    serverData.message = 'A user has joined!'
-    socket.broadcast.emit('message', serverData); */
+
   socket.on("userAccepted", ({ acceptedId }, callback) => {
     io.emit("userAccepted", { acceptedId });
   });
@@ -99,10 +92,8 @@ io.on("connection", (socket) => {
 
   socket.on("newRoom", async (data, callback) => {
     const chat = new Chat(data);
-    // console.log(chat);
     await chat.save();
     callback(chat._id);
-    // socket.broadcast.emit('newRoom', {participants:data.participants, roomId:data.roomId});
   });
 
   socket.on("addUsers", async ({ roomId, newUsers }, callback) => {
@@ -114,18 +105,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("updateRooms", ({ participants, roomId }, callback) => {
-    // I think I am not using this.
+
     socket.broadcast.emit("newRoom", { participants, roomId });
     callback();
   });
 
   socket.on("disconnect", () => {
     console.log("A user has disconnected");
-    /* let date = new Date();
-        let dateStr = date.getTime().toString();
-        serverData.date = dateStr;
-        serverData.message = 'A user has left';
-        io.emit('message', serverData); */
+
   });
 });
 

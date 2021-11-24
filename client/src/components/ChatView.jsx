@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
     sendMessageAction,
@@ -45,8 +45,7 @@ function ChatView(props) {
             $messages.scrollTop = $messages.scrollHeight;
         }
     }, [currentMessages]);
-    //I have to modify this to get the correct users
-    //const [currentUsers, setCurrentUsers] = useState([]);
+
 
     subscribeRoomsAction(userState);
 
