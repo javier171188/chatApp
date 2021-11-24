@@ -237,37 +237,64 @@ function* register(data) {
             yield axios.post(USER_PATH + "/avatar/check", formData);
         }
 
-        const form = {
-            userName: event.target[0].value,
-            email: event.target[1].value,
-            password: event.target[2].value,
-        }
-
         if (event.target[2].value === event.target[3].value) {
-            const data = yield axios.post(USER_PATH + '/register', form)
-
+            let userName = event.target[0].value;
+            let email = event.target[1].value;
+            let password = event.target[2].value;
+            const mutation = `
+            mutation{
+                registerUser(
+                  userName: "${userName}"
+                  email: "${email}"
+                  password: "${password}"
+                ){
+                    user{
+                        _id
+                        userName
+                        email
+                        contacts {
+                            email
+                            newMsgs
+                            status
+                            userName
+                            _id
+                        }
+                        hasAvatar
+                        conversations {
+                            newMsgs
+                            participants{
+                                joinDate
+                                userName
+                                _id
+                            }
+                            roomId
+                            roomName
+                        }
+                        language
+                      }
+                      token
+                }
+              }
+            `
+            const data = yield request(USER_PATH + '/api', mutation)
             if (selectedFile) {
-                const conf = { headers: { 'Authorization': 'Bearer ' + data.data.token } };
+                const conf = { headers: { 'Authorization': 'Bearer ' + data.registerUser.token } };
                 var user = yield axios.post(USER_PATH + "/avatar", formData, conf);
-                //setUserState(user.data);
                 action({
                     type: type.SET_USER_STATE,
                     payload: user.data
                 })
                 window.sessionStorage.setItem('email', JSON.stringify(user.data.email));
             } else {
-                //setUserState(data.data.user);
+
                 action({
                     type: type.SET_USER_STATE,
-                    payload: data.data.user
+                    payload: data.registerUser.user
                 })
-                window.sessionStorage.setItem('email', JSON.stringify(data.data.user.email));
+                window.sessionStorage.setItem('email', JSON.stringify(data.registerUser.user.email));
             }
 
-
-            window.sessionStorage.setItem('token', data.data.token);
-            //setErrorMessages([]);
-            //setIsAuth(true);
+            window.sessionStorage.setItem('token', data.registerUser.token);
             action({
                 type: type.SET_ERROR,
                 payload: []
@@ -277,26 +304,23 @@ function* register(data) {
                 payload: true
             })
         } else {
-            //setErrorMessages([t('The password does not match the confirmation')]);
             action({
                 type: type.SET_ERROR,
                 payload: ['The password does not match the confirmation']
             })
         }
     } catch (error) {
-        let strError = error.response.data;
-        strError = strError.replace('Error: ', '');
-        //console.log(strError)
-        switch (strError) {
+        //let strError = error.response.data;
+        //strError = strError.replace('Error: ', '');
+        console.log(error)
+        switch (error) {
             case 'That e-mail is already registered':
-                //setErrorMessages([t('That e-mail is already registered')]);
                 action({
                     type: type.SET_ERROR,
                     payload: ['That e-mail is already registered']
                 })
                 break;
             default:
-                //setErrorMessages([t('Something went wrong')]);
                 action({
                     type: type.SET_ERROR,
                     payload: ['Something went wrong']

@@ -58,7 +58,7 @@ router.post('/users/login', passport.authenticate('local', { session: false }), 
     }
 });
 
-//This two could be joined in one. However /logout is not being used, it could be deleted.
+
 router.post('/users/logout', authToken, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {

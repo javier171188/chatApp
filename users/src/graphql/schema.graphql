@@ -111,3 +111,8 @@ type Mutation{
   "Update the state of the user"
   updateUser(token: String, senderId:String, receiver: UpdatedUser, newStatus: Boolean, roomId:String):String
 }
+
+type Mutation {
+  "Register a user"
+    registerUser(userName: String, email: String, password: String): LoginReturn
+  }

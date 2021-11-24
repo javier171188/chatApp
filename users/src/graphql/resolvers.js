@@ -137,6 +137,19 @@ module.exports = {
             } catch (e) {
                 return e;
             }
+        },
+        registerUser: async (root, { userName, email, password }) => {
+            try {
+                const form = {
+                    userName,
+                    email,
+                    password
+                }
+                const data = await axios.post(REST_PATH + '/register', form)
+                return data.data;
+            } catch (e) {
+                return e;
+            }
         }
     }
 }

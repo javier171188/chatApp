@@ -1,13 +1,11 @@
 'use strict';
 
-const { makeExecutableSchema } = require('graphql-tools');
-const express = require('express');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { graphqlHTTP } = require('express-graphql');
 const { readFileSync } = require('fs');
 const { join } = require('path');
 const resolvers = require('./resolvers');
 
-const app = express();
 
 const typeDefs = readFileSync(
   join(__dirname, 'schema.graphql'),
