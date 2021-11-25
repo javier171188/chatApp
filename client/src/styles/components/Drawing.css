@@ -16,17 +16,12 @@
 
 .drawing-box{
     border: solid;
-    //border-radius: 1em;
-    //border-color: gray;
     min-width: 280px;
-    //background: rgb(54, 123, 126);
     background-color:white;
 }
 
 .drawing-area{
     border: solid;
-    //color: rgb(88, 87, 87);
-    //border-radius: 5px;
     background-color: white;
     margin: auto;
     margin-left: 5px;
@@ -51,7 +46,5 @@
 #cancel-drawing-button.drawing-button{
     position: relative;
     right: 0;
-    //color: rgb(49, 49, 49);
     background-color: red;
-
 }

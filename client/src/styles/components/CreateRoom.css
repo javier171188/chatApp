@@ -32,8 +32,6 @@
 
 .new-room__contacts-list{
     overflow-x: scroll;
-    //box-shadow: -5px -5px -5px rgba(0, 0, 0, 0.9);
-    //background-color: rgb(83, 82, 82);
     background-color: rgb(123, 166, 206);
     height: 3em;
     padding-top: 1em;
