@@ -31,8 +31,8 @@
 
 .adding-box{
     border: solid;
-    border-radius: 1em;
-    border-color: gray;
+    //1border-radius: 1em;
+    //border-color: gray;
     width: 50vw;
     background: white;
 }
@@ -46,12 +46,14 @@
     float: right;
     text-transform: capitalize;
     margin: 10px;
+    background-color: red;
 }
 
 #adding-button{
     position: relative;
     text-transform: capitalize;
     margin: 10px;
+    background-color: green;
 }
 
 @media (max-width: 450px) {

@@ -16,18 +16,20 @@
 
 .drawing-box{
     border: solid;
-    border-radius: 1em;
-    border-color: gray;
+    //border-radius: 1em;
+    //border-color: gray;
     min-width: 280px;
-    background: gray;
+    //background: rgb(54, 123, 126);
+    background-color:white;
 }
 
 .drawing-area{
     border: solid;
-    color: rgb(88, 87, 87);
-    border-radius: 5px;
+    //color: rgb(88, 87, 87);
+    //border-radius: 5px;
     background-color: white;
     margin: auto;
+    margin-left: 5px;
 }
 
 .drawing-button-container{
@@ -38,18 +40,18 @@
 #cancel-drawing-button.drawing-button, #drawing-send-button.drawing-button{
     text-transform: capitalize;
     margin: 10px;
-    
 }
 
 #drawing-send-button.drawing-button{
     color: black;
-    background-color: white;
+    background-color: green;
     font-weight: bold;
 }
 
 #cancel-drawing-button.drawing-button{
     position: relative;
     right: 0;
-    color: rgb(49, 49, 49);
-    background-color: white;
+    //color: rgb(49, 49, 49);
+    background-color: red;
+
 }

@@ -72,12 +72,12 @@ button:hover {
     text-decoration: none;
 }
 .header__menu li:hover {
-    //color: rgb(66, 65, 65);
-    color: blue;
+    color: rgb(66, 65, 65);
+    //color: blue;
     background-color: white;
 }
 .header__menu li:hover a{
-    //color: rgb(66, 65, 65);
+    color: rgb(66, 65, 65);
     background-color: white;
     
 }

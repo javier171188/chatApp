@@ -4,8 +4,8 @@
     width: 100%;
 }
 .working-search{
-    color: rgb(77, 75, 75);
-    background-color: white;
+    //color: rgb(77, 75, 75);
+    //background-color: white;
     width: calc(100% - var(--button-width) - 25px);
     margin-right: 3px;
     
@@ -13,14 +13,14 @@
 
 #email-search{
     text-align: center;
-    color: rgb(77, 75, 75);
-    background-color: white;
+    //color: rgb(77, 75, 75);
+    //background-color: white;
     width: calc(100% - var(--button-width) - 20px);
     margin-right: 3px;
 }
 
 .working-search::placeholder, .chat-writing::placeholder{
-    color: rgb(68, 67, 67);
+    //color: rgb(68, 67, 67);
 }
 
 .chat-button {
@@ -32,9 +32,10 @@
     margin-left: 0;
     margin-right: 0;
     width: 92px;
-    background-color: rgb(219, 216, 216);
+    //background-color: rgb(219, 216, 216);
+    background-color: blue;
     text-transform: capitalize;
-    color: rgb(77, 75, 75);
+    //color: rgb(77, 75, 75);
     height: 1.8em;
 }
 
@@ -44,8 +45,8 @@
     background-color: white;
     border: solid;
     height: 300px;
-    color: rgb(66, 65, 65);
-    border-radius: 20px;
+    //color: rgb(66, 65, 65);
+    //border-radius: 20px;
     margin-bottom: -18px;
     overflow: auto;
     max-width: calc(100vw - 298px);
@@ -56,9 +57,13 @@
 }
 
 .found-user__user:hover {
-    color: gray;
-    text-shadow: 0px 0px 10px white;
+    color: blue;
+    //text-shadow: 0px 0px 10px white;
     cursor: default;
+}
+
+#found-user__add-button{
+    background-color: blue;
 }
 
 
