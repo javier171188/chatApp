@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { setGroupRoom, setCurrentUserChat, socketGetRoom } from "../redux/actions";
 
-require("dotenv").config();
 
 const { USER_PATH } = process.env;
 

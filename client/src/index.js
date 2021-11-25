@@ -6,6 +6,8 @@ import store from "./redux/store";
 import "./i18n";
 import App from "./routes/App";
 
+require("dotenv").config();
+
 ReactDOM.render(
     <Provider store={store}>
         <App />

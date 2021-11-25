@@ -10,9 +10,7 @@ import Input from "@mui/material/Input";
 import SearchIcon from "@mui/icons-material/Search";
 import * as type from "../redux/types";
 
-require("dotenv").config();
 
-const { USER_PATH } = process.env;
 
 const WorkingArea = (props) => {
   const {
@@ -47,42 +45,42 @@ const WorkingArea = (props) => {
     }
   }
   return (
-        <div className='working'>
-            <form className='working-nav' onSubmit={lookForUser}>
-                <Input id='email-search'
-                    className='working-search'
-                    type="text"
-                    placeholder={t("Type an e-mail...")}
-                />
-                <Button
-                    className='working-button'
-                    id='search-user-button'
-                    color='inherit'
-                    variant='contained'
-                    type='submit'
-                    startIcon={<SearchIcon />}
-                >
-                    {t("Search!")}
-                </Button>
-            </form>
-            <div className="found-user">
-                {t(searchMessage)}
-                {searchMessage === "One user found: " && <>
-                    <h2 className='found-user__user'>
-                        {searchUser.userName}
-                    </h2>
-                    <Button
-                        onClick={addContact}
-                        id='found-user__add-button'
-                        color='inherit'
-                        variant='contained'
-                    >
-                        {t("Add contact")}
-                    </Button>
-                </>}
-            </div>
-            <ChatView />
-        </div>
+    <div className='working'>
+      <form className='working-nav' onSubmit={lookForUser}>
+        <Input id='email-search'
+          className='working-search'
+          type="text"
+          placeholder={t("Type an e-mail...")}
+        />
+        <Button
+          className='working-button'
+          id='search-user-button'
+          color='inherit'
+          variant='contained'
+          type='submit'
+          startIcon={<SearchIcon />}
+        >
+          {t("Search!")}
+        </Button>
+      </form>
+      <div className="found-user">
+        {t(searchMessage)}
+        {searchMessage === "One user found: " && <>
+          <h2 className='found-user__user'>
+            {searchUser.userName}
+          </h2>
+          <Button
+            onClick={addContact}
+            id='found-user__add-button'
+            color='inherit'
+            variant='contained'
+          >
+            {t("Add contact")}
+          </Button>
+        </>}
+      </div>
+      <ChatView />
+    </div>
   );
 };
 

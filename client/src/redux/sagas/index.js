@@ -21,7 +21,6 @@ const action = ({ type, data, payload }) => store.dispatch({
   payload,
 });
 
-require("dotenv").config();
 
 const { USER_PATH } = process.env;
 

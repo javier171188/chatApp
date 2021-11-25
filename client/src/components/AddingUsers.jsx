@@ -5,8 +5,6 @@ import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 
-require("dotenv").config();
-
 
 const AddingUsers = (props) => {
   const {

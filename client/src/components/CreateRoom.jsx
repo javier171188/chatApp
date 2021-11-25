@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 
-require("dotenv").config();
 
 
 const CreateRoom = ({ userState, socketCreateNewRoom }) => {

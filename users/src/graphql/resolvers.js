@@ -1,6 +1,7 @@
 const axios = require("axios");
 
-const REST_PATH = "http://localhost/users";
+const restPath = process.env.REST_PATH;
+
 
 module.exports = {
   Query: {
@@ -15,7 +16,7 @@ module.exports = {
             selfUser,
           },
         };
-        const user = await axios.get(`${REST_PATH}/getUser`, conf);
+        const user = await axios.get(`${restPath}/getUser`, conf);
         return user.data;
       } catch (e) {
         return e;
@@ -25,7 +26,7 @@ module.exports = {
   Mutation: {
     login: async (root, { input }) => {
       try {
-        const response = await axios.post(`${REST_PATH}/login`, input);
+        const response = await axios.post(`${restPath}/login`, input);
         return response.data;
       } catch (e) {
         return e;
@@ -38,7 +39,7 @@ module.exports = {
             Authorization: `Bearer ${token}`,
           },
         };
-        await axios.post(`${REST_PATH}/logoutAll`, {}, conf);
+        await axios.post(`${restPath}/logoutAll`, {}, conf);
         return;
       } catch (e) {
         return e;
@@ -51,7 +52,7 @@ module.exports = {
             Authorization: `Bearer ${token}`,
           },
         };
-        axios.post(`${REST_PATH}/changeLanguage`, paramsLang, conf);
+        axios.post(`${restPath}/changeLanguage`, paramsLang, conf);
         return;
       } catch (e) {
         return e;
@@ -64,7 +65,7 @@ module.exports = {
             Authorization: `Bearer ${token}`,
           },
         };
-        await axios.patch(`${REST_PATH}/confirmAdding`, { participants }, conf);
+        await axios.patch(`${restPath}/confirmAdding`, { participants }, conf);
         return;
       } catch (e) {
         return e;
@@ -77,7 +78,7 @@ module.exports = {
             Authorization: `Bearer ${token}`,
           },
         };
-        axios.post(`${REST_PATH}/newRoom`, newRoomParams, conf);
+        axios.post(`${restPath}/newRoom`, newRoomParams, conf);
         return;
       } catch (e) {
         return e;
@@ -91,7 +92,7 @@ module.exports = {
             Authorization: `Bearer ${token}`,
           },
         };
-        const data = await axios.post(`${REST_PATH}/addContactNoConf`, {
+        const data = await axios.post(`${restPath}/addContactNoConf`, {
           logged: currentId,
           searched: searchUser,
         }, conf);
@@ -111,7 +112,7 @@ module.exports = {
           },
         };
 
-        axios.post(`${REST_PATH}/newRoom`, {
+        axios.post(`${restPath}/newRoom`, {
           roomName, participants, roomId, newMsgs,
         }, conf);
         return;
@@ -132,7 +133,7 @@ module.exports = {
           },
         };
 
-        await axios.post(`${REST_PATH}/updateUser`, conf);
+        await axios.post(`${restPath}/updateUser`, conf);
         return;
       } catch (e) {
         return e;
@@ -145,7 +146,7 @@ module.exports = {
           email,
           password,
         };
-        const data = await axios.post(`${REST_PATH}/register`, form);
+        const data = await axios.post(`${restPath}/register`, form);
         return data.data;
       } catch (e) {
         const strError = e.response.data;

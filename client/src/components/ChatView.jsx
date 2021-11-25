@@ -16,7 +16,6 @@ import AddingUsers from "./AddingUsers";
 import Drawing from "./Drawing";
 import "../styles/components/ChatView.css";
 
-require("dotenv").config();
 
 function ChatView(props) {
   const {
