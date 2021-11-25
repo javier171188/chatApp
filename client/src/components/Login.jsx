@@ -11,30 +11,30 @@ import { useInputValue } from "../hooks/useInputValue";
 import * as type from "../redux/types";
 
 const Login = (props) => {
-  const { errorMessages } = props;
-  const email = useInputValue("");
-  const password = useInputValue("");
+	const { errorMessages } = props;
+	const email = useInputValue("");
+	const password = useInputValue("");
 
-  const action = ({ type, data }) => store.dispatch({
-    type,
-    data,
-  });
-  function handleLogin(e) {
-    e.preventDefault();
-    action({
-      type: type.LOGIN,
-      data: e.target,
-    });
-  }
+	const action = ({ type, data }) => store.dispatch({
+		type,
+		data,
+	});
+	function handleLogin(e) {
+		e.preventDefault();
+		action({
+			type: type.LOGIN,
+			data: e.target,
+		});
+	}
 
-  function goRegister() {
-    props.setError({
-      errorMessages: "",
-    });
-  }
+	function goRegister() {
+		props.setError({
+			errorMessages: "",
+		});
+	}
 
-  const { t, i18n } = useTranslation();
-  return (
+	const { t, i18n } = useTranslation();
+	return (
 		<section className='login'>
 			<section className='login__container'>
 				<h2>{t("Login")}</h2>
@@ -65,8 +65,8 @@ const Login = (props) => {
 						{t("Log in")}
 					</Button>
 					{errorMessages.length >= 1
-					  ? <div className='login--error'> {t("Incorrect credentials")} </div>
-					  : ""
+						? <div className='login--error'> {t("Incorrect credentials")} </div>
+						: ""
 					}
 				</form>
 				<p className='login__container--register'>
@@ -74,15 +74,15 @@ const Login = (props) => {
 				</p>
 			</section>
 		</section>
-  );
+	);
 };
 
 const mapStateToProps = (state) => ({
-  errorMessages: state.errorMessages,
+	errorMessages: state.errorMessages,
 });
 
 const mapDispatchToProps = {
-  setError,
+	setError,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

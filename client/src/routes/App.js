@@ -26,6 +26,8 @@ const App = ({ isAuth }) => (
         <Route exact path='/chat' component={Login} />
         <Route exact path='/chat/login' component={Login} />
         <Route exact path='/chat/register' component={Register} />
+        <Route exact path='/chat/create-room' component={Login} />
+        <Route exact path='/chat/settings' component={Login} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
