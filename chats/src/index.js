@@ -6,13 +6,11 @@ require("./db/mongoose");
 
 const port = process.env.PORT;
 
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   path: "/mysocket",
 });
-
 
 io.on("connection", (socket) => {
   console.log("New connection");
@@ -23,14 +21,17 @@ io.on("connection", (socket) => {
 
   socket.on("getRoom", async ({ current, receiver, roomId }, callback) => {
     try {
+      var chat;
       if (!roomId) {
-        var chat = await Chat.findOne({ $and: [{ participants: current }, { participants: receiver }] });
+        chat = await Chat.findOne({
+          $and: [{ participants: current }, { participants: receiver }]
+        });
         if (!chat) {
           chat = new Chat({ participants: [current, receiver] });
           await chat.save();
         }
       } else {
-        var chat = await Chat.findById(roomId);
+        chat = await Chat.findById(roomId);
       }
 
       const lastMessages = chat.messages.slice(-20);
@@ -44,9 +45,11 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("joinPersonal", async ({ current, receiver }, callback) => {
+  socket.on("joinPersonal", async ({ current, receiver }) => {
     try {
-      let chat = await Chat.findOne({ $and: [{ participants: current }, { participants: receiver }] });
+      let chat = await Chat.findOne({
+        $and: [{ participants: current }, { participants: receiver }]
+      });
       if (!chat) {
         chat = new Chat({ participants: [current, receiver] });
         await chat.save();
@@ -57,7 +60,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("joinGroup", async ({ roomId }, callback) => {
+  socket.on("joinGroup", async ({ roomId }) => {
     try {
       const chat = await Chat.findOne({ _id: roomId });
       socket.join(chat._id.toString());
@@ -98,14 +101,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("updateRooms", ({ participants, roomId }, callback) => {
-
     socket.broadcast.emit("newRoom", { participants, roomId });
     callback();
   });
 
   socket.on("disconnect", () => {
     console.log("A user has disconnected");
-
   });
 });
 

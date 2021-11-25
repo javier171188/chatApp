@@ -1,4 +1,4 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery } from "redux-saga/effects";
 import socketIOClient from "socket.io-client";
 import { request } from "graphql-request";
 import * as type from "../types";
@@ -93,8 +93,7 @@ socket.on("newRoom", async ({ participants, roomId }) => {
         type: type.SET_USER_STATE,
         payload: user,
       });
-      socket.emit("joinGroup", { roomId }, ({ _id, lastMessages }) => {
-      });
+      socket.emit("joinGroup", { roomId });
     }
   } catch (e) {
     console.error(e);
@@ -205,12 +204,6 @@ function* openChat(data) {
       payload: "accepted",
     });
     const token = sessionStorage.getItem("token");
-    const conf = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params,
-    };
 
     const mutation = `
         mutation updateUserGQL($receiver:UpdatedUser){
@@ -290,13 +283,14 @@ function* sendMessageFromSaga(data) {
     event, userState, currentRoomId, imageStr,
   } = data.payload;
   let isImage;
+  var message;
   if (!imageStr) {
     event.preventDefault();
-    var message = event.target[0].value;
+    message = event.target[0].value;
     event.target[0].value = "";
     isImage = false;
   } else {
-    var message = imageStr;
+    message = imageStr;
     isImage = true;
   }
 
@@ -349,8 +343,7 @@ function* subscribeRoomsFS(data) {
   });
 
   userState.conversations.forEach((c) => {
-    socket.emit("joinGroup", { roomId: c.roomId }, ({ _id, lastMessages }) => {
-    });
+    socket.emit("joinGroup", { roomId: c.roomId });
   });
 }
 function* subscribeRoomsSaga() {

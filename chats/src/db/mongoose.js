@@ -7,4 +7,3 @@ mongoose.connect(`${connectionURL}/${databaseName}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { setError, registerAction } from '../redux/actions';
-import { Link } from 'react-router-dom';
-import '../styles/components/Register.css';
-import { useTranslation } from 'react-i18next';
-import Input from '@mui/material/Input';
-import Button from '@mui/material/Button';
+import React from "react";
+import { connect } from "react-redux";
+import { setError, registerAction } from "../redux/actions";
+import { Link } from "react-router-dom";
+import "../styles/components/Register.css";
+import { useTranslation } from "react-i18next";
+import Input from "@mui/material/Input";
+import Button from "@mui/material/Button";
 
 const Register = (props) => {
 	const { t, i18n } = useTranslation();
@@ -15,23 +15,21 @@ const Register = (props) => {
 		props.registerAction(e);
 	}
 
-
-
 	function setErrorMessages(eM) {
-		props.setError(eM)
+		props.setError(eM);
 	}
 
 	return (
 		<section className='register'>
 			<section className='register__container'>
-				<h2>{t('Register')}</h2>
+				<h2>{t("Register")}</h2>
 				<form className='register__container--form' onSubmit={registerUser}>
 					<Input
 						name='userName'
 						className='input'
 						id='input-user-name'
 						type='text'
-						placeholder={t('User name')}
+						placeholder={t("User name")}
 						required
 					/>
 					<Input
@@ -39,7 +37,7 @@ const Register = (props) => {
 						className='input'
 						id='input-email'
 						type='text'
-						placeholder={t('E-mail')}
+						placeholder={t("E-mail")}
 						required
 					/>
 					<Input
@@ -47,7 +45,7 @@ const Register = (props) => {
 						className='input'
 						id='input-password'
 						type='password'
-						placeholder={t('Password')}
+						placeholder={t("Password")}
 						required
 						minLength='6'
 					/>
@@ -57,12 +55,12 @@ const Register = (props) => {
 						className='input'
 						id='input-confirm-password'
 						type='password'
-						placeholder={t('Confirm your password')}
+						placeholder={t("Confirm your password")}
 						required
 						minLength='6'
 					/>
 					<label className='avatar-label'>
-						{t('Choose a profile image:')}
+						{t("Choose a profile image:")}
 					</label>
 					<Input
 						name='avatar'
@@ -71,7 +69,6 @@ const Register = (props) => {
 						type='file'
 					/>
 
-
 					<Button
 						className='button'
 						id='register-button'
@@ -79,7 +76,7 @@ const Register = (props) => {
 						variant='contained'
 						type='submit'
 					>
-						{t('Register')}
+						{t("Register")}
 					</Button>
 
 					{props.errorMessages.length >= 1
@@ -87,22 +84,20 @@ const Register = (props) => {
 					}
 				</form>
 				<p className='register__container--login'>
-					{t('Already a member?')}  <Link to='/chat/login' onClick={() => setErrorMessages([])}>{t('Log in')}</Link>
+					{t("Already a member?")}  <Link to='/chat/login' onClick={() => setErrorMessages([])}>{t("Log in")}</Link>
 				</p>
 			</section>
 		</section>
-	)
+	);
 };
 
-const mapStateToProps = (state) => {
-	return {
-		errorMessages: state.errorMessages
-	}
-}
+const mapStateToProps = (state) => ({
+	errorMessages: state.errorMessages,
+});
 
 const mapDispatchToProps = {
 	setError,
-	registerAction
-}
+	registerAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

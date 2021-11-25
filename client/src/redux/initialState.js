@@ -20,8 +20,7 @@ const initialState = {
   currentUserChat: "",
   currentRoomName: "",
   lastRoomChanged: "",
-  currentUsers: [],
-  drawingAreaOn: false,
+  currentUsers: []
 };
 
 export default initialState;

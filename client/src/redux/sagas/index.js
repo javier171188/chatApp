@@ -12,7 +12,7 @@ import {
   addUserToRoomSaga,
   addUserSocketSaga,
   acceptRequestSaga,
-} from "./socket";
+} from "./socket.js";
 import store from "../store";
 
 const action = ({ type, data, payload }) => store.dispatch({
@@ -24,7 +24,6 @@ const action = ({ type, data, payload }) => store.dispatch({
 require("dotenv").config();
 
 const { USER_PATH } = process.env;
-
 
 function* tryLogin(data) {
   try {
@@ -83,7 +82,6 @@ function* tryLogin(data) {
 function* loginSaga() {
   yield takeEvery(type.LOGIN, (data) => tryLogin(data));
 }
-
 
 let countUserLoad = 0;
 function* getUserState(refresh = true) {
@@ -144,8 +142,7 @@ function* getUserStateSaga() {
   yield takeEvery(type.GET_USER, () => getUserState(false));
 }
 
-
-function* logout(data) {
+function* logout() {
   try {
     const token = window.sessionStorage.getItem("token");
     const mutation = `
@@ -165,7 +162,6 @@ function* logout(data) {
 function* logoutSaga() {
   yield takeEvery(type.LOGOUT, logout);
 }
-
 
 function* lookForUser({ data }) {
   const { event } = data;
@@ -198,7 +194,6 @@ function* lookForUserSaga() {
   yield takeEvery(type.LOOK_FOR_USER, (data) => lookForUser(data));
 }
 
-
 function* setLanguage(data) {
   const token = sessionStorage.getItem("token");
   const { paramsLang } = data.payload;
@@ -215,7 +210,6 @@ function* setLanguage(data) {
 function* setLanguageSaga() {
   yield takeEvery(type.CHANGE_LANGUAGE, (data) => setLanguage(data));
 }
-
 
 function* register(data) {
   const event = data.payload;

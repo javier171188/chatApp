@@ -251,13 +251,13 @@ router.post("/users/avatar", authToken, upload.single("avatar"), async (req, res
   req.user.hasAvatar = true;
   await req.user.save();
   res.send(req.user);
-}, (error, req, res, next) => {
+}, (error, req, res) => {
   res.status(400).send({ error: error.message });
 });
 
 router.post("/users/avatar/check", upload.single("avatar"), async (req, res) => {
   res.send(true);
-}, (error, req, res, next) => {
+}, (error, req, res) => {
   error.toString();
   res.status(400).send(error.toString());
 });

@@ -1,12 +1,11 @@
-import React from 'react';
-import Header from './Header';
-import Sideview from './Sideview';
-import WorkingArea from './WorkingArea';
-import '../styles/components/Header.css';
-import '../styles/components/Home.css';
+import React from "react";
+import Header from "./Header";
+import Sideview from "./Sideview";
+import WorkingArea from "./WorkingArea";
+import "../styles/components/Header.css";
+import "../styles/components/Home.css";
 
-const Home = () => {
-    return (
+const Home = () => (
         <>
             <Header />
             <section className='main-area'>
@@ -15,7 +14,6 @@ const Home = () => {
             </section>
 
         </>
-    )
-}
+);
 
 export default Home;
