@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chats
+  labels:
+    app: chats
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chats
+  template:
+    metadata:
+      labels:
+        app: chats
+    spec:
+      containers:
+      - name: chats
+        image: javier171188/chats
+        ports:
+        - containerPort: 3001
+        env:
+        - name: PORT
+          value: "3001"
+        - name: DB_URL
+          value: "mongodb://chatsdb-service:27017"
+        - name: DB_NAME
+          value: "chats-chat"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chats-service
+spec:
+  selector:
+    app: chats
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001

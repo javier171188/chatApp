@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: javier171188/user
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+        - name: SECRET_SIGN
+          value: "secretsign"
+        - name: DB_URL
+          value: "mongodb://userdb-service:27017"
+        - name: DB_NAME
+          value: "users-chat"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

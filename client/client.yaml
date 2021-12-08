@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  labels:
+    app: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: javier171188/client:aws
+        ports:
+        - containerPort: 1234
+        env:
+        - name: SOCKET_ENDPOINT
+          value: "http://a938bdc87604b4c9db73f8ef00edcfb0-1033339092.us-east-2.elb.amazonaws.com:80/"
+        - name: SOCKET_PATH
+          value: "/mysocket"
+        - name: USER_PATH
+          value: "http://a938bdc87604b4c9db73f8ef00edcfb0-1033339092.us-east-2.elb.amazonaws.com:80/users"
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-service
+spec:
+  selector:
+    app: client
+  ports:
+    - protocol: TCP
+      port: 1234
+      targetPort: 1234
+      

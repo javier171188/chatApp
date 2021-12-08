@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    environment:
+      SOCKET_ENDPOINT: "http://proxy-service"
+      SOCKET_PATH: "/mysocket"
+      USER_PATH: "http://proxy-service/users"
+    ports:
+      - "1234:1234"

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatsdb
+  labels:
+    app: chatsdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatsdb
+  template:
+    metadata:
+      labels:
+        app: chatsdb
+    spec:
+      containers:
+      - name: chatsdb
+        image: mongo
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: chatsvolume
+          mountPath: /data/db
+      volumes:
+      - name: chatsvolume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatsdb-service
+spec:
+  selector:
+    app: chatsdb
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
