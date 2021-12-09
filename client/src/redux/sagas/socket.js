@@ -371,7 +371,7 @@ function* addUserToRoomSaga() {
 function* addUserSocket(data) {
   const state = store.getState();
   const { roomId, newUsers } = data.payload;
-  const { currentRoomName, currentRoomId } = state;
+  const { currentRoomName, currentRoomId } = state.chatArea;
 
   socket.emit("addUsers", { roomId, newUsers }, async (participants) => {
     try {
@@ -413,7 +413,7 @@ function* acceptRequestFS(data) {
             }`;
 
     const state = store.getState();
-    const { currentUserChat } = state;
+    const { currentUserChat } = state.chatArea;
 
     yield request(`${USER_PATH}/api`, mutation);
 
