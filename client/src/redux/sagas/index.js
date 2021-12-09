@@ -67,10 +67,11 @@ function* tryLogin(data) {
 
     const loginResponse = yield request(`${USER_PATH}/api`, mutation);
     const { login: user } = loginResponse;
-
     yield put({ type: type.SET_AUTH, payload: true });
     window.sessionStorage.setItem("email", JSON.stringify(user.user.email));
     window.sessionStorage.setItem("token", user.token);
+    console.log(user.user);
+
     yield put({ type: type.SET_USER_STATE, payload: user.user });
     yield put({ type: type.SET_ERROR, payload: [] });
   } catch (error) {

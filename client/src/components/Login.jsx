@@ -12,6 +12,7 @@ import * as type from "../redux/types";
 
 const Login = (props) => {
 	const { errorMessages } = props;
+
 	const email = useInputValue("");
 	const password = useInputValue("");
 
@@ -78,7 +79,7 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-	errorMessages: state.errorMessages,
+	errorMessages: state.loginLogout.errorMessages,
 });
 
 const mapDispatchToProps = {

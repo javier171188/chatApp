@@ -25,7 +25,7 @@ const App = ({ isAuth }) => (
 );
 
 const mapStateToProps = (state) => ({
-  isAuth: state.isAuth,
+  isAuth: state.loginLogout.isAuth,
 });
 
 export default connect(mapStateToProps, null)(App);

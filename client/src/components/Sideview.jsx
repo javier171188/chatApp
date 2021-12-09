@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { setGroupRoom, setCurrentUserChat, socketGetRoom } from "../redux/actions";
 
-
 const { USER_PATH } = process.env;
 
 const Sideview = (props) => {
@@ -51,6 +50,7 @@ const Sideview = (props) => {
     window.location.href = "/chat/create-room";
   }
   console.log("times"); // just to be sure the element does not render many times
+
   return (
     <Box className='user'>
       <div className='user-picture user-picture__container'>
@@ -132,7 +132,7 @@ const Sideview = (props) => {
 
 const mapStateToProps = (state) => ({
   userState: state.userState,
-  currentUserChat: state.currentUserChat,
+  currentUserChat: state.chatArea.currentUserChat,
 });
 
 const mapDispatchToProps = {

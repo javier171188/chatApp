@@ -81,9 +81,9 @@ const AddingUsers = (props) => {
 
 const mapStateToProps = (state) => ({
   userState: state.userState,
-  currentRoomName: state.currentRoomName,
-  currentRoomId: state.currentRoomId,
-  currentUsers: state.currentUsers,
+  currentRoomName: state.chatArea.currentRoomName,
+  currentRoomId: state.chatArea.currentRoomId,
+  currentUsers: state.chatArea.currentUsers,
 });
 
 const mapDispatchToProps = {

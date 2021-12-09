@@ -92,7 +92,7 @@ const Register = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-	errorMessages: state.errorMessages,
+	errorMessages: state.loginLogout.errorMessages,
 });
 
 const mapDispatchToProps = {

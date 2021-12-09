@@ -15,7 +15,7 @@ import MessageForm from "./MessageForm";
 import AddingUsers from "./AddingUsers";
 import Drawing from "./Drawing";
 import "../styles/components/ChatView.css";
-
+import store from "../redux/store";
 
 function ChatView(props) {
   const {
@@ -70,6 +70,9 @@ function ChatView(props) {
     };
     sendMessageAction(data);
   }
+
+  let state = store.getState();
+  console.log(state);
   return (
     <div className='chat'>
       {currentRoomId && (groupRoom
@@ -181,14 +184,14 @@ function ChatView(props) {
 
 const mapStateToProps = (state) => ({
   userState: state.userState,
-  currentMessages: state.currentMessages,
-  currentRoomId: state.currentRoomId,
-  contactStatus: state.contactStatus,
-  addingUser: state.addingUser,
-  drawingAreaOn: state.drawingAreaOn,
-  groupRoom: state.groupRoom,
-  currentRoomName: state.currentRoomName,
-  currentUserChat: state.currentUserChat,
+  currentMessages: state.chatArea.currentMessages,
+  currentRoomId: state.chatArea.currentRoomId,
+  contactStatus: state.sideChanges.contactStatus,
+  addingUser: state.modals.addingUser,
+  drawingAreaOn: state.modals.drawingAreaOn,
+  groupRoom: state.sideChanges.groupRoom,
+  currentRoomName: state.chatArea.currentRoomName,
+  currentUserChat: state.chatArea.currentUserChat,
 });
 
 const mapDispatchToProps = {

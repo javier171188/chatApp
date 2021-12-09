@@ -1,85 +1,19 @@
-import * as type from "../types";
+import { combineReducers } from 'redux';
+import chatArea from './chatArea';
+import loginLogout from './loginLogout';
+import modals from './modals';
+import searchArea from './searchArea';
+import sideChanges from './sideChanges';
+import userState from './userState';
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case type.SET_ERROR:
-      return {
-        ...state,
-        errorMessages: action.payload,
-      };
-    case type.SET_AUTH:
-      return {
-        ...state,
-        isAuth: action.payload,
-      };
-    case type.SET_USER_STATE:
-      return {
-        ...state,
-        userState: action.payload,
-      };
-    case type.SET_SEARCH_MESSAGE:
-      return {
-        ...state,
-        searchMessage: action.payload,
-      };
-    case type.SET_SEARCH_USER:
-      return {
-        ...state,
-        searchUser: action.payload,
-      };
-    case type.SET_GROUP_ROOM:
-      return {
-        ...state,
-        groupRoom: action.payload,
-      };
-    case type.SET_CURRENT_USER_CHAT:
-      return {
-        ...state,
-        currentUserChat: action.payload,
-      };
-    case type.SET_CURRENT_ROOM_ID:
-      return {
-        ...state,
-        currentRoomId: action.data,
-      };
-    case type.SET_CURRENT_MESSAGES:
-      return {
-        ...state,
-        currentMessages: action.data,
-      };
-    case type.SET_CURRENT_ROOM_NAME:
-      return {
-        ...state,
-        currentRoomName: action.data,
-      };
-    case type.SET_CONTACT_STATUS:
-      return {
-        ...state,
-        contactStatus: action.payload,
-      };
-    case type.SET_LAST_ROOM_CHANGED:
-      return {
-        ...state,
-        lastRoomChanged: action.payload,
-      };
-    case type.SET_CURRENT_USERS:
-      return {
-        ...state,
-        currentUsers: action.payload,
-      };
-    case type.SET_ADDING_USER:
-      return {
-        ...state,
-        addingUser: action.payload,
-      };
-    case type.SET_DRAWING_AREA_ON:
-      return {
-        ...state,
-        drawingAreaOn: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+
+const reducer = combineReducers({
+  chatArea,
+  loginLogout,
+  modals,
+  searchArea,
+  sideChanges,
+  userState,
+})
 
 export default reducer;

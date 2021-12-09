@@ -1,34 +1,15 @@
+import chatArea from "./state/chatAreaState";
+import loginLogout from "./state/loginLogoutState";
+import modalsState from "./state/modalsState";
+import searchArea from "./state/searchAreaState";
+import userState from "./state/userState";
+
 const initialState = {
-  //Login-logout
-  errorMessages: [],
-  isAuth: sessionStorage.getItem("token"),
-  //User state
-  userState: {
-    contacts: [],
-    email: "",
-    hasAvatar: false,
-    userName: "",
-    _id: "",
-    conversations: [],
-  },
-  //Chat area
-  currentMessages: [],
-  currentRoomId: "",
-  contactStatus: "",
-  groupRoom: false,
-  currentUserChat: "",
-  currentRoomName: "",
-  lastRoomChanged: "",
-  currentUsers: [],
-
-  //Open 
-  addingUser: false,
-  drawingAreaOn: false,
-
-  //Search area
-  searchMessage: "InitialMessage",
-  searchUser: null,
-
+  chatArea,
+  loginLogout,
+  modalsState,
+  searchArea,
+  userState
 };
 
 export default initialState;

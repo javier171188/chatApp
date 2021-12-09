@@ -73,49 +73,49 @@ const Drawing = (props) => {
   }
 
   return (
-        <div className='drawing-mod'>
-            <div className='drawing-box'>
-                <h2 className='drawing-title'>{t("Draw")}</h2>
-                <canvas
-                    onMouseDown={startDrawing}
-                    onMouseUp={finishDrawing}
-                    onMouseMove={draw}
-                    ref={canvasRef}
-                    className='drawing-area'
-                    id='the-drawing'
-                    width="260"
-                />
-                <div className='drawing-button-container'>
-                    <Button
-                        onClick={sendDrawing}
-                        color='inherit'
-                        variant='contained'
-                        className='drawing-button'
-                        id='drawing-send-button'
-                        startIcon={<SendIcon />}
-                    >
-                        {t("Send")}
-                    </Button>
-                    <Button
-                        onClick={() => cancelDrawing({ setDrawingAreaOn })}
-                        color='inherit'
-                        variant='contained'
-                        className='drawing-button'
-                        id='cancel-drawing-button'
-                        startIcon={<CancelIcon />}
-                    >
-                        {t("Cancel")}
-                    </Button>
-                </div>
-            </div>
+    <div className='drawing-mod'>
+      <div className='drawing-box'>
+        <h2 className='drawing-title'>{t("Draw")}</h2>
+        <canvas
+          onMouseDown={startDrawing}
+          onMouseUp={finishDrawing}
+          onMouseMove={draw}
+          ref={canvasRef}
+          className='drawing-area'
+          id='the-drawing'
+          width="260"
+        />
+        <div className='drawing-button-container'>
+          <Button
+            onClick={sendDrawing}
+            color='inherit'
+            variant='contained'
+            className='drawing-button'
+            id='drawing-send-button'
+            startIcon={<SendIcon />}
+          >
+            {t("Send")}
+          </Button>
+          <Button
+            onClick={() => cancelDrawing({ setDrawingAreaOn })}
+            color='inherit'
+            variant='contained'
+            className='drawing-button'
+            id='cancel-drawing-button'
+            startIcon={<CancelIcon />}
+          >
+            {t("Cancel")}
+          </Button>
         </div>
+      </div>
+    </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  drawingAreaOn: state.drawingAreaOn,
+  drawingAreaOn: state.modals.drawingAreaOn,
   userState: state.userState,
-  currentRoomId: state.currentRoomId,
+  currentRoomId: state.chatArea.currentRoomId,
 });
 
 const mapDispatchToProps = {

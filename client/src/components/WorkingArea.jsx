@@ -86,8 +86,8 @@ const WorkingArea = (props) => {
 
 const mapStateToProps = (state) => ({
   userState: state.userState,
-  searchMessage: state.searchMessage,
-  searchUser: state.searchUser,
+  searchMessage: state.searchArea.searchMessage,
+  searchUser: state.searchArea.searchUser,
 });
 
 const mapDispatchToProps = {
