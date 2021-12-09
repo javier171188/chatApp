@@ -17,12 +17,14 @@ const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
 });
 
 const updateLastRoom = function (roomId, returnedMessages, participants) {
+
   action({
     type: type.SET_LAST_ROOM_CHANGED,
     payload: roomId,
   });
   const state = store.getState();
-  const { currentRoomId } = state;
+  const { currentRoomId } = state.chatArea;
+
   if (roomId === currentRoomId) {
     action({
       type: type.SET_CURRENT_MESSAGES,

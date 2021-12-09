@@ -15,7 +15,6 @@ import MessageForm from "./MessageForm";
 import AddingUsers from "./AddingUsers";
 import Drawing from "./Drawing";
 import "../styles/components/ChatView.css";
-import store from "../redux/store";
 
 function ChatView(props) {
   const {
@@ -71,8 +70,7 @@ function ChatView(props) {
     sendMessageAction(data);
   }
 
-  let state = store.getState();
-  console.log(state);
+
   return (
     <div className='chat'>
       {currentRoomId && (groupRoom

@@ -83,6 +83,7 @@ io.on("connection", (socket) => {
     chat.messages = prevMessages;
     chat.save();
     callback(participants);
+
     io.to(message.roomId).emit("updateMessages", { participants, roomId: message.roomId, returnedMessages: prevMessages.slice(-20) });
   });
 
