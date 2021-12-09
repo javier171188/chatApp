@@ -1,6 +1,8 @@
 const initialState = {
+  //Login-logout
   errorMessages: [],
   isAuth: sessionStorage.getItem("token"),
+  //User state
   userState: {
     contacts: [],
     email: "",
@@ -9,18 +11,24 @@ const initialState = {
     _id: "",
     conversations: [],
   },
+  //Chat area
   currentMessages: [],
   currentRoomId: "",
   contactStatus: "",
-  addingUser: false,
-  drawingAreaOn: false,
-  searchMessage: "InitialMessage",
-  searchUser: null,
   groupRoom: false,
   currentUserChat: "",
   currentRoomName: "",
   lastRoomChanged: "",
-  currentUsers: []
+  currentUsers: [],
+
+  //Open 
+  addingUser: false,
+  drawingAreaOn: false,
+
+  //Search area
+  searchMessage: "InitialMessage",
+  searchUser: null,
+
 };
 
 export default initialState;
