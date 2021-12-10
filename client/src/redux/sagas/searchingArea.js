@@ -1,5 +1,17 @@
 import * as type from "../types";
 import socket from './socket';
+import store from "../store";
+import { request } from "graphql-request";
+import { put, takeEvery } from "redux-saga/effects";
+
+
+const { USER_PATH } = process.env;
+
+const action = ({ type, data, payload }) => store.dispatch({
+    type,
+    data,
+    payload,
+});
 
 function* lookForUser({ data }) {
     const { event } = data;
@@ -140,7 +152,7 @@ function* addUserSaga() {
     yield takeEvery(type.ADD_CONTACT, (data) => addUser(data));
 }
 
-module.export = {
+module.exports = {
     addUserSaga,
     addUserSocketSaga,
     acceptRequestSaga,

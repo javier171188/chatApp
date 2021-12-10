@@ -3,6 +3,10 @@ import { request } from "graphql-request";
 import * as type from "../types";
 import store from "../store";
 
+
+const { USER_PATH } = process.env;
+
+
 const action = ({ type, data, payload }) => store.dispatch({
   type,
   data,

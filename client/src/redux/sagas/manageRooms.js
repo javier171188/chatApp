@@ -1,5 +1,17 @@
 import * as type from "../types";
 import socket from './socket';
+import store from "../store";
+import { takeEvery } from "redux-saga/effects";
+import { request } from "graphql-request";
+
+
+const { USER_PATH } = process.env;
+
+const action = ({ type, data, payload }) => store.dispatch({
+    type,
+    data,
+    payload,
+});
 
 function* createNewRoom(data) {
     const { roomName, participants } = data.payload;
@@ -52,7 +64,7 @@ function* addUserToRoomSaga() {
     yield takeEvery(type.ADD_USER_TO_ROOM, (data) => addUserToRoomFS(data));
 }
 
-module.export = {
+module.exports = {
     addUserToRoomSaga,
     createNewRoomSaga,
     subscribeRoomsSaga,

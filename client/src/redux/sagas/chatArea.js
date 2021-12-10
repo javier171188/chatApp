@@ -1,5 +1,17 @@
 import * as type from "../types";
+import { request } from "graphql-request";
+import store from "../store";
 import socket from './socket';
+import { takeEvery } from "redux-saga/effects";
+
+
+const { USER_PATH } = process.env;
+
+const action = ({ type, data, payload }) => store.dispatch({
+    type,
+    data,
+    payload,
+});
 
 function* sendMessageFromSaga(data) {
     const {
@@ -165,7 +177,7 @@ function* openChatSaga() {
     yield takeEvery(type.SOCKET_GET_ROOM, (data) => openChat(data));
 }
 
-module.export = {
+module.exports = {
     openChatSaga,
     sendMessageSaga,
 }

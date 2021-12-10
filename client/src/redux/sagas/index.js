@@ -6,7 +6,6 @@ import { addUserSaga, addUserSocketSaga, acceptRequestSaga, lookForUserSaga } fr
 import { setLanguageSaga } from './settings';
 import { getUserStateSaga } from './userState';
 
-console.log(loginSaga)
 export default function* rootSaga() {
   yield all([
     loginSaga(),

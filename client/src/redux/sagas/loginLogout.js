@@ -1,6 +1,10 @@
 import * as type from "../types";
 import store from "../store";
 import axios from "axios";
+import { request } from "graphql-request";
+import { put, takeEvery } from "redux-saga/effects";
+
+const { USER_PATH } = process.env;
 
 const action = ({ type, data, payload }) => store.dispatch({
     type,
@@ -55,7 +59,6 @@ function* tryLogin(data) {
         yield put({ type: type.SET_AUTH, payload: true });
         window.sessionStorage.setItem("email", JSON.stringify(user.user.email));
         window.sessionStorage.setItem("token", user.token);
-        console.log(user.user);
 
         yield put({ type: type.SET_USER_STATE, payload: user.user });
         yield put({ type: type.SET_ERROR, payload: [] });
@@ -202,7 +205,7 @@ function* registerSaga() {
     yield takeEvery(type.REGISTER, (data) => register(data));
 }
 
-export default {
+module.exports = {
     loginSaga,
     logoutSaga,
     registerSaga
