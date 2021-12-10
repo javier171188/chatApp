@@ -3,6 +3,7 @@ import { request } from "graphql-request";
 import store from "../store";
 import socket from './socket';
 import { takeEvery } from "redux-saga/effects";
+import { updateUserGQL } from "../../graphql/mutations";
 
 
 const { USER_PATH } = process.env;
@@ -56,12 +57,9 @@ function* sendMessageFromSaga(data) {
 
             notCurrentParticipants.forEach((p) => {
                 const receiver = { _id: p, individualRoom: true };
-                const mutation = `
-                  mutation updateUserGQL($receiver:UpdatedUser) {
-                      updateUser(token: "${token}", senderId: "${userState._id}", receiver:$receiver, newStatus:true, roomId:"${currentRoomId}" )
-                  }`;
 
-                request(`${USER_PATH}/api`, mutation, { receiver });
+                let parameters = { token, senderId: userState._id, receiver, newStatus: true, roomId: currentRoomId }
+                request(`${USER_PATH}/api`, updateUserGQL, parameters);
             });
         });
     }
@@ -166,11 +164,9 @@ function* openChat(data) {
         });
         const token = sessionStorage.getItem("token");
 
-        const mutation = `
-          mutation updateUserGQL($receiver:UpdatedUser){
-              updateUser(token: "${token}", senderId: "${params.senderId}", receiver:$receiver, newStatus:${params.newStatus}, roomId:"${params.roomId}" )
-              }`;
-        request(`${USER_PATH}/api`, mutation, { receiver: params.receiver });
+
+        let parameters = { token, ...params };
+        request(`${USER_PATH}/api`, updateUserGQL, parameters);
     });
 }
 function* openChatSaga() {

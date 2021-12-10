@@ -3,6 +3,8 @@ import socket from './socket';
 import store from "../store";
 import { request } from "graphql-request";
 import { put, takeEvery } from "redux-saga/effects";
+import { lookForUserGQL } from "../../graphql/queries";
+import { addUserGql, addUsersToRoom, confirmAddingGql } from "../../graphql/mutations";
 
 
 const { USER_PATH } = process.env;
@@ -19,14 +21,9 @@ function* lookForUser({ data }) {
         const token = window.sessionStorage.getItem("token");
         const email = event.target[0].value;
 
-        const query = `query{getUser(email:"${email}", token:"${token}", selfUser:false) {
-              _id
-              userName
-              email
-                  }
-              }`;
+
         event.target[0].value = "";
-        const userGQL = yield request(`${USER_PATH}/api`, query);
+        const userGQL = yield request(`${USER_PATH}/api`, lookForUserGQL, { email, token });
         const user = userGQL.getUser;
 
         user.newMsgs = false;
@@ -49,15 +46,11 @@ function* acceptRequestFS(data) {
         const { participants } = data.payload;
         const token = sessionStorage.getItem("token");
 
-        const mutation = `
-              mutation{
-                  confirmAdding(token: "${token}", participants: ["${participants[0]}", "${participants[1]}"] )
-              }`;
 
         const state = store.getState();
         const { currentUserChat } = state.chatArea;
 
-        yield request(`${USER_PATH}/api`, mutation);
+        yield request(`${USER_PATH}/api`, confirmAddingGql, { token, participants });
 
         socket.emit("userAccepted", { acceptedId: currentUserChat }, () => {
         });
@@ -87,14 +80,9 @@ function* addUserSocket(data) {
             const newRoomParams = {
                 roomName: currentRoomName, participants, roomId: currentRoomId, newMsgs: true,
             };
-            const mutation = `
-                  mutation addUsersToRoom($newRoomParams:NewRoomParams){
-                      newRoom(token:"${token}",
-                      newRoomParams: $newRoomParams)
-                  }
-                  `;
-            const data = { newRoomParams };
-            await request(`${USER_PATH}/api`, mutation, data);
+
+            const data = { token, newRoomParams };
+            await request(`${USER_PATH}/api`, addUsersToRoom, data);
             socket.emit("updateRooms", { participants, currentRoomName }, () => {
             });
         } catch (e) {
@@ -114,34 +102,8 @@ function* addUser(payload) {
     const { currentId, searchUser } = payload.payload;
     const token = window.sessionStorage.getItem("token");
 
-    const mutation = `
-      mutation addUserGql($searchUser:AddedUser){
-          addUser(token: "${token}", currentId: "${currentId}", searchUser:$searchUser ){
-              _id
-              userName
-              email
-              hasAvatar
-              language
-                      contacts{
-                email
-                newMsgs
-                status
-                userName
-                _id
-              }
-                      conversations{
-                newMsgs
-                participants{
-                                      joinDate
-                    userName
-                    _id
-                }
-                roomId
-                roomName
-              }
-          }
-      }`;
-    const dataGQL = yield request(`${USER_PATH}/api`, mutation, { searchUser });
+
+    const dataGQL = yield request(`${USER_PATH}/api`, addUserGql, { token, currentId, searchUser });
     const data = dataGQL.addUser;
 
     action({ type: type.SET_USER_STATE, payload: data });

@@ -3,7 +3,7 @@ import socket from './socket';
 import store from "../store";
 import { takeEvery } from "redux-saga/effects";
 import { request } from "graphql-request";
-
+import { createNewRoomGQL } from '../../graphql/mutations';
 
 const { USER_PATH } = process.env;
 
@@ -18,12 +18,8 @@ function* createNewRoom(data) {
     socket.emit("newRoom", { roomName, participants }, async (roomId) => {
         const token = sessionStorage.getItem("token");
 
-        const mutation = `
-          mutation createNewRoomGQL($participants:[RoomParticipant]){
-              createNewRoom(token: "${token}", roomName: "${roomName}",  participants:$participants, roomId:"${roomId}", newMsgs:true )
-                             
-          }`;
-        await request(`${USER_PATH}/api`, mutation, { participants });
+        let parameters = { token, roomName, participants, roomId }
+        await request(`${USER_PATH}/api`, createNewRoomGQL, parameters);
         socket.emit("updateRooms", { participants, roomId }, () => {
             window.location.href = "/chat/";
         });

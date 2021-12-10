@@ -2,6 +2,7 @@ import * as type from "../types";
 import { request } from "graphql-request";
 import { put, takeEvery } from "redux-saga/effects";
 import i18n from "i18next";
+import { getUser } from "../../graphql/queries";
 
 const { USER_PATH } = process.env;
 
@@ -23,33 +24,8 @@ function* getUserState(refresh = true) {
         });
     }
 
-    const query = `query{getUser(email:"${email}", token:"${token}", selfUser:true) {
-            _id
-            userName
-            email
-            hasAvatar
-            language
-    				contacts{
-              email
-              newMsgs
-              status
-              userName
-              _id
-            }
-    				conversations{
-              newMsgs
-              participants{
-									joinDate
-                  userName
-                  _id
-              }
-              roomId
-              roomName
-            }
-        }
-    }`;
 
-    const userGQL = yield request(`${USER_PATH}/api`, query);
+    const userGQL = yield request(`${USER_PATH}/api`, getUser, { email, token });
     const user = userGQL.getUser;
 
     localStorage.setItem("language", user.language);

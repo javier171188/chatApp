@@ -1,6 +1,7 @@
 import * as type from "../types";
 import { takeEvery } from "redux-saga/effects";
 import { request } from "graphql-request";
+import { changeLanguage } from '../../graphql/mutations';
 
 const { USER_PATH } = process.env;
 
@@ -9,13 +10,8 @@ function* setLanguage(data) {
   const token = sessionStorage.getItem("token");
   const { paramsLang } = data.payload;
 
-  const mutation = `
-      mutation{
-          changeLanguage(token:"${token}",
-          paramsLang:{email:"${paramsLang.email}", language:"${paramsLang.language}"})
-        }
-      `;
-  yield request(`${USER_PATH}/api`, mutation);
+
+  yield request(`${USER_PATH}/api`, changeLanguage, { token, paramsLang });
   yield localStorage.setItem("language", paramsLang.chosenLanguage);
 }
 function* setLanguageSaga() {

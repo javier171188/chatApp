@@ -3,6 +3,7 @@ import store from "../store";
 import axios from "axios";
 import { request } from "graphql-request";
 import { put, takeEvery } from "redux-saga/effects";
+import { loginGQL, logoutGQL, registerUserGQL } from '../../graphql/mutations';
 
 const { USER_PATH } = process.env;
 
@@ -18,43 +19,8 @@ function* tryLogin(data) {
         const email = data.data[0].value;
         const password = data.data[1].value;
 
-        const mutation = `
-          mutation{
-              login(input:{
-                email: "${email}"
-                password: "${password}"
-                    
-              }){
-                user{
-                  _id
-                  userName
-                  email
-                  contacts {
-                      email
-                      newMsgs
-                      status
-                      userName
-                      _id
-                  }
-                  hasAvatar
-                  conversations {
-                      newMsgs
-                      participants{
-                          joinDate
-                          userName
-                          _id
-                      }
-                      roomId
-                      roomName
-                  }
-                  language
-                }
-                token
-              }
-            }
-          `;
-
-        const loginResponse = yield request(`${USER_PATH}/api`, mutation);
+        let input = { email, password }
+        const loginResponse = yield request(`${USER_PATH}/api`, loginGQL, { input });
         const { login: user } = loginResponse;
         yield put({ type: type.SET_AUTH, payload: true });
         window.sessionStorage.setItem("email", JSON.stringify(user.user.email));
@@ -74,12 +40,8 @@ function* loginSaga() {
 function* logout() {
     try {
         const token = window.sessionStorage.getItem("token");
-        const mutation = `
-          mutation{
-              logout(token:"${token}")
-            }
-          `;
-        yield request(`${USER_PATH}/api`, mutation);
+
+        yield request(`${USER_PATH}/api`, logoutGQL, { token });
         yield put({ type: type.SET_AUTH, payload: false });
         window.sessionStorage.removeItem("token");
         window.sessionStorage.removeItem("email");
@@ -112,42 +74,8 @@ function* register(data) {
             const userName = event.target[0].value;
             const email = event.target[1].value;
             const password = event.target[2].value;
-            const mutation = `
-              mutation{
-                  registerUser(
-                    userName: "${userName}"
-                    email: "${email}"
-                    password: "${password}"
-                  ){
-                      user{
-                          _id
-                          userName
-                          email
-                          contacts {
-                              email
-                              newMsgs
-                              status
-                              userName
-                              _id
-                          }
-                          hasAvatar
-                          conversations {
-                              newMsgs
-                              participants{
-                                  joinDate
-                                  userName
-                                  _id
-                              }
-                              roomId
-                              roomName
-                          }
-                          language
-                        }
-                        token
-                  }
-                }
-              `;
-            const data = yield request(`${USER_PATH}/api`, mutation);
+
+            const data = yield request(`${USER_PATH}/api`, registerUserGQL, { userName, email, password });
             if (data.registerUser.token.startsWith("Error:")) {
                 throw new Error(data.registerUser.token.replace("Error: ", ""));
             }
@@ -184,7 +112,7 @@ function* register(data) {
         }
     } catch (error) {
         const strError = error.toString().replace("Error: ", "");
-
+        console.log(error)
         switch (strError) {
             case "That e-mail is already registered":
                 action({

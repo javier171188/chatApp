@@ -2,7 +2,7 @@ import socketIOClient from "socket.io-client";
 import { request } from "graphql-request";
 import * as type from "../types";
 import store from "../store";
-
+import { getUser } from "../../graphql/queries";
 
 const { USER_PATH } = process.env;
 
@@ -64,33 +64,8 @@ socket.on("newRoom", async ({ participants, roomId }) => {
       const token = sessionStorage.getItem("token");
       const email = JSON.parse(sessionStorage.getItem("email"));
 
-      const query = `query{getUser(email:"${email}", token:"${token}", selfUser:true) {
-                _id
-                userName
-                email
-                hasAvatar
-                language
-                        contacts{
-                  email
-                  newMsgs
-                  status
-                  userName
-                  _id
-                }
-                        conversations{
-                  newMsgs
-                  participants{
-                                        joinDate
-                      userName
-                      _id
-                  }
-                  roomId
-                  roomName
-                }
-            }
-               }`;
 
-      const userGQL = await request(`${USER_PATH}/api`, query);
+      const userGQL = await request(`${USER_PATH}/api`, getUser, { email, token });
       const user = userGQL.getUser;
       action({
         type: type.SET_USER_STATE,
