@@ -11,21 +11,21 @@ function MessageForm(props) {
   }
   if (props.isImage) {
     return (
-            <p className={messageClass} >
-                {selfUser
-                  ? <>{t("SelfUser")}  <img src={props.message} /></>
-                  : <>{props.sender.userName}: <img src={props.message} /> </>
-                }
-            </p>
+      <p className={messageClass} >
+        {selfUser
+          ? <>{t("SelfUser")}  <img src={props.message} /></>
+          : <>{props.sender.userName}: <img src={props.message} /> </>
+        }
+      </p>
     );
   }
   return (
-            <p className={messageClass} >
-                {selfUser
-                  ? t("SelfUser") + props.message
-                  : `${props.sender.userName}: ${props.message}`
-                }
-            </p>
+    <p className={messageClass} >
+      {selfUser
+        ? t("SelfUser") + props.message
+        : `${props.sender.userName}: ${props.message}`
+      }
+    </p>
   );
 }
 

@@ -6,14 +6,14 @@ import "../styles/components/Header.css";
 import "../styles/components/Home.css";
 
 const Home = () => (
-        <>
-            <Header />
-            <section className='main-area'>
-                <Sideview />
-                <WorkingArea />
-            </section>
+    <>
+        <Header />
+        <section className='main-area'>
+            <Sideview />
+            <WorkingArea />
+        </section>
 
-        </>
+    </>
 );
 
 export default Home;

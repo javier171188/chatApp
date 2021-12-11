@@ -1,5 +1,5 @@
 .adding-mod{
-    background: rgba(32,35,41,.9);
+    //background: rgba(32,35,41,.9);
     position: fixed;
     top: -10px;
     left: -10px;
@@ -8,8 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: black;
-    
+    //color: black;
 }
 
 .adding-title{
@@ -32,7 +31,7 @@
 .adding-box{
     border: solid;
     width: 50vw;
-    background: white;
+    //background: white;
 }
 
 .adding-contacts__contact{
@@ -44,14 +43,14 @@
     float: right;
     text-transform: capitalize;
     margin: 10px;
-    background-color: red;
+    //background-color: red;
 }
 
 #adding-button{
     position: relative;
     text-transform: capitalize;
     margin: 10px;
-    background-color: green;
+    //background-color: green;
 }
 
 @media (max-width: 450px) {

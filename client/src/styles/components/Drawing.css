@@ -1,5 +1,5 @@
 .drawing-mod{
-    background: rgba(32,35,41,.9);
+    //background: rgba(32,35,41,.9);
     position: fixed;
     top: -10px;
     left: -10px;
@@ -15,14 +15,14 @@
 }
 
 .drawing-box{
-    border: solid;
+    //border: solid;
     min-width: 280px;
-    background-color:white;
+    //background-color:white;
 }
 
 .drawing-area{
-    border: solid;
-    background-color: white;
+    //border: solid;
+    //background-color: white;
     margin: auto;
     margin-left: 5px;
 }
@@ -38,13 +38,13 @@
 }
 
 #drawing-send-button.drawing-button{
-    color: black;
-    background-color: green;
-    font-weight: bold;
+    //color: black;
+    //background-color: green;
+    //font-weight: bold;
 }
 
 #cancel-drawing-button.drawing-button{
     position: relative;
     right: 0;
-    background-color: red;
+    //background-color: red;
 }

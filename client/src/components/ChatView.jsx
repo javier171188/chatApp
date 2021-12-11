@@ -15,7 +15,8 @@ import MessageForm from "./MessageForm";
 import AddingUsers from "./AddingUsers";
 import Drawing from "./Drawing";
 import "../styles/components/ChatView.css";
-//import store from "../redux/store";
+import Box from '@mui/material/Box';
+
 
 function ChatView(props) {
   const {
@@ -71,10 +72,9 @@ function ChatView(props) {
     sendMessageAction(data);
   }
 
-  //let state = store.getState();
-  //console.log(state);
+
   return (
-    <div className='chat'>
+    <Box className='chat'>
       {currentRoomId && (groupRoom
         ? <div className='chat-header'>
           <h1 className='chat-header__name'>{currentRoomName}</h1>
@@ -179,7 +179,7 @@ function ChatView(props) {
       {drawingAreaOn
         && <Drawing />
       }
-    </div>);
+    </Box>);
 }
 
 const mapStateToProps = (state) => ({
