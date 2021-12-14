@@ -9,6 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import Box from "@mui/material/Box";
+import Typography from '@mui/material/Typography';
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { setGroupRoom, setCurrentUserChat, socketGetRoom } from "../redux/actions";
 import { useHistory } from "react-router-dom";
@@ -74,14 +75,28 @@ const Sideview = (props) => {
         sx={commonStyles}
       >
         <div className='user-name--container'>
-          <h1 className='user-name--text'>
+          <Typography
+            variant="h4"
+            component="h2"
+            className='user-name--text'
+            color="primary"
+            sx={{ my: 1 }}
+          >
             {userState.userName}
-          </h1>
+          </Typography>
         </div>
         <Divider />
         <Divider />
+        <Typography
+          variant="h5"
+          component="h3"
+          className="contacts-title"
+          color="primary"
+          sx={{ my: 1 }}
+        >
+          {t("ContactHeader")}
+        </Typography>
         <div className='user-contacts'>
-          <h1 className="contacts">{t("ContactHeader")}</h1>
           <List>
             {userState.contacts.map((child) => {
               const newMsgs = child.newMsgs ? "new-messages"
@@ -113,7 +128,14 @@ const Sideview = (props) => {
         sx={commonStyles}
       >
         <div className='chats-header'>
-          <h1>{t("Group Chats:")}</h1>
+          <Typography
+            variant="h5"
+            component="h3"
+            color="primary"
+            sx={{ my: 2 }}
+          >
+            {t("Group Chats:")}
+          </Typography>
           <Box
             className='chats-button'
             onClick={createGroupChat}

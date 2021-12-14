@@ -7,6 +7,8 @@ import "../styles/components/Drawing.css";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Typography from '@mui/material/Typography';
+
 
 const Drawing = (props) => {
   const {
@@ -75,7 +77,15 @@ const Drawing = (props) => {
   return (
     <div className='drawing-mod'>
       <div className='drawing-box'>
-        <h2 className='drawing-title'>{t("Draw")}</h2>
+        <Typography
+          variant="h5"
+          component="h2"
+          className='drawing-title'
+          color="primary"
+          sx={{ m: 2 }}
+        >
+          {t("Draw")}
+        </Typography>
         <canvas
           onMouseDown={startDrawing}
           onMouseUp={finishDrawing}

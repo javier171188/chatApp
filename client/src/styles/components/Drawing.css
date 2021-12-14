@@ -22,6 +22,7 @@
 
 .drawing-area{
     border: solid;
+    border-color: blue;
     //background-color: white;
     margin: auto;
     margin-left: 5px;

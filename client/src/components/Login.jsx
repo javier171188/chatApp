@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { Input, Button, Container } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import { useInputValue } from "../hooks/useInputValue";
 import * as type from "../redux/types";
 
@@ -39,9 +41,22 @@ const Login = (props) => {
 	const { t, i18n } = useTranslation();
 	return (
 		<section className='login'>
-			<section className='login__container'>
-
-				<h2 >{t("Login")}</h2>
+			<Box
+				component="section"
+				className='login__container'
+				sx={{
+					border: 3,
+					borderColor: 'primary.main'
+				}}
+			>
+				<Typography
+					variant="h4"
+					component="h2"
+					className='settings__title'
+					color="primary"
+				>
+					{t("Login")}
+				</Typography>
 				<Container>
 					<form
 						className='login__container--form'
@@ -87,8 +102,8 @@ const Login = (props) => {
 					{t("Not a user yet?")} <Link to='/chat/register' onClick={goRegister}> {t("Register")}</Link>
 				</p>
 
-			</section>
-		</section>
+			</Box>
+		</section >
 	);
 };
 

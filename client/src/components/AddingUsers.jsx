@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 
 const AddingUsers = (props) => {
@@ -36,7 +37,15 @@ const AddingUsers = (props) => {
   return (
     <div className='adding-mod'>
       <div className='adding-box'>
-        <h1 className='adding-title'>{t("Add users to")} {currentRoomName}</h1>
+        <Typography
+          variant="h5"
+          component="h2"
+          className='adding-title'
+          color="primary"
+          sx={{ m: 2 }}
+        >
+          {t("Add users to")} {currentRoomName}
+        </Typography>
         <Divider />
         <Divider />
         {<form className='adding-form'

@@ -6,8 +6,11 @@ import "../styles/components/Register.css";
 import { useTranslation } from "react-i18next";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
+import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import Typography from '@mui/material/Typography';
+
 
 const Register = (props) => {
 	const { t, i18n } = useTranslation();
@@ -23,8 +26,22 @@ const Register = (props) => {
 
 	return (
 		<section className='register'>
-			<section className='register__container'>
-				<h2>{t("Register")}</h2>
+			<Box
+				component="section"
+				className='register__container'
+				sx={{
+					border: 3,
+					borderColor: 'primary.main'
+				}}
+			>
+				<Typography
+					variant="h4"
+					component="h2"
+					className='settings__title'
+					color="primary"
+				>
+					{t("Register")}
+				</Typography>
 				<form className='register__container--form' onSubmit={registerUser}>
 					<Input
 						name='userName'
@@ -90,8 +107,8 @@ const Register = (props) => {
 				<p className='register__container--login'>
 					{t("Already a member?")}  <Link to='/chat/login' onClick={() => setErrorMessages([])}>{t("Log in")}</Link>
 				</p>
-			</section>
-		</section>
+			</Box>
+		</section >
 	);
 };
 
