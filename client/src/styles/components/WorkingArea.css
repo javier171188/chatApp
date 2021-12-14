@@ -61,7 +61,11 @@
 }
 
 @media (max-width: 600px){
-    .chat-messages{
+    .chat-messages {
         max-width: calc(100vw - 6px);
+    }
+
+    .chat-header{
+        width: calc(100vw - 63px);
     }
 }

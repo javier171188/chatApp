@@ -16,6 +16,8 @@ import AddingUsers from "./AddingUsers";
 import Drawing from "./Drawing";
 import "../styles/components/ChatView.css";
 import Box from '@mui/material/Box';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 
@@ -76,7 +78,12 @@ function ChatView(props) {
 
   return (
     <Box className='chat'>
-      <div className='chat-header'>
+      <Toolbar
+        sx={{
+          bgcolor: 'primary.main',
+          color: '#fff'
+        }}
+        className='chat-header'>
         {currentRoomId && (<>
           <h1 className='chat-header__name'>{currentRoomName}</h1>
           {groupRoom && <>
@@ -103,44 +110,44 @@ function ChatView(props) {
           }
         </>
         )}
-      </div>
-      <div className='chat-messages'>
-        <Box sx={{
-          border: 3,
-          borderColor: 'primary.main'
-        }}>
-          {currentMessages.map((message) => (
-            <MessageForm
-              key={message.date + message.sender._id}
-              userState={userState}
-              sender={message.sender}
-              message={message.message}
-              date={message.date.toString()}
-              isImage={message.isImage}
-            />
-          ))
-          }
-          {
-            !currentRoomId && <h1 className='chat-start'>{t("Click a user or a conversation to start chatting.")}</h1>
-          }
-          {
-            contactStatus === "pending" && <h1 className='chat-start'>{currentRoomName + t(" has not accepted your request yet.")}</h1>
-          }
-          {
-            contactStatus === "request" && <>
-              <h1 className='chat-start'>{currentRoomName + t(" wants to add you as a contact.")}</h1>
-              <Button
-                className='chat-accept'
-                id='chat-accept-button'
-                variant='contained'
-                onClick={acceptRequest}
-              >
-                {t("Accept")}
-              </Button>
-            </>
-          }
-        </Box>
-      </div>
+      </Toolbar>
+
+      <Box sx={{
+        border: 3,
+        borderColor: 'primary.main'
+      }} className='chat-messages'>
+
+        {currentMessages.map((message) => (
+          <MessageForm
+            key={message.date + message.sender._id}
+            userState={userState}
+            sender={message.sender}
+            message={message.message}
+            date={message.date.toString()}
+            isImage={message.isImage}
+          />
+        ))
+        }
+        {
+          !currentRoomId && <h1 className='chat-start'>{t("Click a user or a conversation to start chatting.")}</h1>
+        }
+        {
+          contactStatus === "pending" && <h1 className='chat-start'>{currentRoomName + t(" has not accepted your request yet.")}</h1>
+        }
+        {
+          contactStatus === "request" && <>
+            <h1 className='chat-start'>{currentRoomName + t(" wants to add you as a contact.")}</h1>
+            <Button
+              className='chat-accept'
+              id='chat-accept-button'
+              variant='contained'
+              onClick={acceptRequest}
+            >
+              {t("Accept")}
+            </Button>
+          </>
+        }
+      </Box>
       {(currentRoomId && currentRoomId !== "1")
         && <div className='chat-submit-bar'>
           <form onSubmit={(event) => sendNewMessage(event)}

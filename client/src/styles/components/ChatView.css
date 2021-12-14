@@ -8,12 +8,13 @@
     //border-color: black;
     display: flex;
     justify-content: space-between;
-    margin-bottom: -2.5em;
+    margin-bottom: -1.4em;
     margin-top: 1em;
     //box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
     padding: 0.5em;
     width: 95%;
     //color: rgb(78, 77, 77);
+    width: calc(100vw - 340px);;
 }
 
 .chat-header__buttons{
