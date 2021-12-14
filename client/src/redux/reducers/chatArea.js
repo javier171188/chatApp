@@ -1,6 +1,7 @@
 import * as type from "../types";
 import chatAreaState from "../state/chatAreaState";
 
+
 const chatAreaReducer = (state = chatAreaState, action) => {
     switch (action.type) {
         case type.SET_CURRENT_USER_CHAT:

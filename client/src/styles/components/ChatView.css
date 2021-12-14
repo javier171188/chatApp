@@ -4,16 +4,12 @@
 }
 
 .chat-header {
-    //background-color: rgb(143, 209, 206);
-    //border-color: black;
     display: flex;
     justify-content: space-between;
     margin-bottom: -1.4em;
     margin-top: 1em;
-    //box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
     padding: 0.5em;
     width: 95%;
-    //color: rgb(78, 77, 77);
     width: calc(100vw - 340px);;
 }
 
@@ -30,17 +26,10 @@
     width: 5em;
 }
 
-
-
 #chat-accept-button, #found-user__add-button{
     height: 2em;
     text-transform: capitalize;
     margin-left: 25px;
-    //background-color: blue;
-}
-
-#found-user__add-button{
-    //color: rgb(32, 32, 32);
 }
 
 .chat-submit-bar{
@@ -59,23 +48,18 @@
     text-transform: capitalize;
     margin-right: 2px;
     margin-top: 4px;
-    //background-color: rgb(149, 245, 149);
-    //color: black;
 }
 
 #remove-user-button{
     text-transform: capitalize;
     margin-left: 2px;
     margin-top: 4px;
-    //background-color: rgb(233, 115, 115);
-    //color: black;
 }
 
 #send-message__button{
     height: 1.8em;
     text-transform: capitalize;
     margin-top: 25px;
-    //background-color: blue;
 }
 
 #drawing-button{
@@ -83,7 +67,6 @@
     margin-top: 25px;
     margin-left: -10px;
     height: 1.8em;
-    //background-color: peru;
 }
 
 

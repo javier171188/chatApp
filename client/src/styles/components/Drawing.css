@@ -15,7 +15,6 @@
 }
 
 .drawing-box{
-    //border: solid;
     min-width: 280px;
     background-color:white;
 }
@@ -23,7 +22,6 @@
 .drawing-area{
     border: solid;
     border-color: blue;
-    //background-color: white;
     margin: auto;
     margin-left: 5px;
 }
@@ -38,14 +36,7 @@
     margin: 10px;
 }
 
-#drawing-send-button.drawing-button{
-    //color: black;
-    //background-color: green;
-    //font-weight: bold;
-}
-
 #cancel-drawing-button.drawing-button{
     position: relative;
     right: 0;
-    //background-color: red;
 }

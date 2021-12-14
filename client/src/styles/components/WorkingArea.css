@@ -24,7 +24,6 @@
     margin-left: 0;
     margin-right: 0;
     width: 92px;
-    //background-color: blue;
     text-transform: capitalize;
     height: 1.8em;
 }
@@ -32,8 +31,6 @@
 
 .chat-messages{
     margin-top: 20px;
-    //background-color: white;
-    //border: solid;
     height: 300px;
     margin-bottom: -18px;
     overflow: auto;
@@ -45,12 +42,7 @@
 }
 
 .found-user__user:hover {
-    //color: blue;
     cursor: default;
-}
-
-#found-user__add-button{
-    //background-color: blue;
 }
 
 

@@ -8,15 +8,12 @@
   }
   
 .register__container {
-  //border: 2px solid white;
-  //box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   min-height: 700px;
   padding: 60px 60px 40px;
   width: calc(100% / 2);
-  //border: solid blue;
 }
 
 .register__container--form {
@@ -45,32 +42,15 @@
 }
 
 .input {
-  /*background-color: transparent;
-  border-bottom: 2px solid;
-  border-left: 0px;
-  border-right: 0px;*/
-  //border-top: 0px;
-  //font-family: 'Muli', sans-serif;
-  //font-size: 16px;
   height: 50px;
   margin-bottom: 20px;
-  //outline: none;
   padding: 0px 20px;
   min-width: 100%;
-}
-  
-#input-user-name::placeholder, 
-#input-email::placeholder,
-#input-password::placeholder,
-#input-confirm-password::placeholder{
-    //color: black;
-    //font-weight: bolder;
 }
 
 
 #register-button {
     text-transform: capitalize;
-    //background-color: blue;
 }
 
  .avatar-input {

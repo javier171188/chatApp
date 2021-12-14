@@ -1,36 +1,18 @@
-body{
-    //background-color: transparent;
-}
-
 .header {
     align-items: right;
-    //border: solid;
     display: flex;
     font-size: 150%;
     justify-content: space-between;
     margin-bottom: 20px;
     padding-right: 0px;
-    //box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
-    //border-color: blue;
-}
-
-.to-center{
-    //color:white;
-}
-.to-center:hover{
-    cursor: default;
 }
 
 
 button {
     margin: 20px;
     height: 200%;
-    //color: rgb(70, 69, 69);
-    //background-color: white;
 }
 button:hover {
-    //box-shadow: 2px -2px 2px rgb(71, 70, 70);
-    //color: rgb(71, 70, 70);
     cursor: pointer;
 }
 
@@ -55,40 +37,22 @@ button:hover {
 .header__menu li {
     font-size: 1rem;
     display: flex;
-    //background-color: blue;
-    //color: white;   
     justify-content: center;
 }
 
 .header__menu--options{
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
-
 }
 
 .header__menu li a{
-    //color: white;
     text-decoration: none;
-}
-.header__menu li:hover {
-    //color: rgb(66, 65, 65);
-    //background-color: white;
-}
-.header__menu li:hover a{
-  //  color: rgb(66, 65, 65);
-//    background-color: white;
 }
 
 .header__menu--item:hover {
     cursor: pointer;
-    //color: rgb(66, 65, 65);
-    //background-color: white;
 }
 
 
-
-.header__menu--item:hover a{
-    //color: rgb(66, 65, 65);
-}
 
 .header__menu--button{
     margin-right: 8px;
@@ -99,11 +63,8 @@ button:hover {
     width: 2em;
     height: 1em;
     text-align: center;
-    //border-radius: 5px;
     margin-right: -0.5em;
     margin-top: 0.5em;
-    //background-color: blue;
-    //box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
 }
 
 .header__menu--button:hover{
@@ -117,7 +78,6 @@ button:hover {
 }
 .header__menu--button p{
     margin: 0px;
-    //color: white;
 }
 
 .header-title:hover{

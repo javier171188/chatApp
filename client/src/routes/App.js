@@ -10,7 +10,6 @@ import Settings from "../components/Settings.jsx";
 import SecureRoute from "../components/SecureRoute.jsx";
 
 const App = ({ isAuth }) => (
-
   <BrowserRouter>
     <Switch>
       <SecureRoute exact path='/chat' isAuth={isAuth} component={Home} />
@@ -21,7 +20,6 @@ const App = ({ isAuth }) => (
       <SecureRoute isAuth={isAuth} component={NotFound} />
     </Switch>
   </BrowserRouter>
-
 );
 
 const mapStateToProps = (state) => ({

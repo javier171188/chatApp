@@ -3,25 +3,17 @@
 }
 
 .settings__user-title {
-    //background-color: rgb(150, 182, 224);
-    //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.658);
     padding-left: 0.5em;
     padding-top: 0.5em;
     height: 2em;
-    //border: solid;
     margin-bottom: 0;
     width: 45%;
-    //border-color: blue;
 }
 
 .settings__user div{
-    //border: solid;
     min-height: 5em;
     margin-top: 1em;
     margin-left: 2em;
-    //background-color: white;
-    //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.658);
-    //border-color: blue;
 }
 
 .settings__user{
@@ -33,15 +25,11 @@
 }
 
 .settings__language-title{
-    //background-color: rgb(150, 182, 224);
-    //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.658);
     padding-left: 0.5em;
     padding-top: 0.5em;
     height: 2em;
-    //border: solid;
     margin-bottom: 0;
     width: 45%;
-    //border-color: blue;
 }
 
 .settings__language{
@@ -50,32 +38,22 @@
 }
 
 .settings__language-container {
-    //border: solid;
     min-height: 5em;
-    //margin-top: -1em;
-    //background-color: white;
-    //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.658);
     padding-top: 1em;
     padding-left: 1em;
     padding-bottom: 0;
-    //border-color: blue;
 }
 
 #settings__language-button{
     margin-left: 0.5em;
     margin-bottom: 0em;
     margin-top: 10px;
-    //text-transform: capitalize;
-    //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.658);
-    //background-color: blue;
 }
 
 #settings__cancel-button{
     position: relative;
     float: right;
-    //text-transform: capitalize;
     margin-top: 10px;
-    //box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.658);
 }
 
 @media (max-width: 560px) and (min-width: 340px) {

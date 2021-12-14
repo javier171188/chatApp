@@ -8,7 +8,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    //color: black;
 }
 
 .adding-title{
@@ -43,14 +42,12 @@
     float: right;
     text-transform: capitalize;
     margin: 10px;
-    //background-color: red;
 }
 
 #adding-button{
     position: relative;
     text-transform: capitalize;
     margin: 10px;
-    //background-color: green;
 }
 
 @media (max-width: 450px) {

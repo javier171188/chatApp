@@ -1,5 +1,4 @@
 .user-picture {
-    //border: solid;
     width: 230px;
     height: 220px;
     background-image: url('../../../media/genuser.png');
@@ -8,8 +7,6 @@
     -o-background-size: cover;
     background-size: cover;
     margin-bottom: 10px;
-    //box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
-    //border-color: blue;
 }
 
 
@@ -29,17 +26,13 @@
 }
 .contacts:hover {
     cursor: pointer;
-    //color: blue;
     font-size: 125%;
 }
 
 
 .user-info, .chats {
-    //border: solid;
     width: 220px;
-    //box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.658);
     max-height: 300px;
-    //border-color: blue;
 }
 
 
@@ -67,23 +60,13 @@
 
 
 
-.chats-button{
-    //border-radius: 50%;
-    //height: 120%;
-    //margin-top: 0.7em;
-    //font-size: 1.5em;
-    //font-weight: bold;
-    //color: green;
-}
 
 .chats-button:hover {
-    /*Create new room button*/
     cursor: pointer;
 }
 
 .room:hover {
     cursor: pointer;
-    //color: blue;
 }
 
 
