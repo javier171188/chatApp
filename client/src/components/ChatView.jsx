@@ -16,6 +16,7 @@ import AddingUsers from "./AddingUsers";
 import Drawing from "./Drawing";
 import "../styles/components/ChatView.css";
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 
 function ChatView(props) {
@@ -75,65 +76,70 @@ function ChatView(props) {
 
   return (
     <Box className='chat'>
-      {currentRoomId && (groupRoom
-        ? <div className='chat-header'>
+      <div className='chat-header'>
+        {currentRoomId && (<>
           <h1 className='chat-header__name'>{currentRoomName}</h1>
-          <div className='chat-header__buttons'>
-            <Button
-              className='chat-header__add'
-              onClick={() => { addUserToRoom(currentRoomId); }}
-              color='primary'
-              variant='contained'
-              id='add-user-button'
-            >
-              {t("Add")}
-            </Button>
-            <Button
-              className='chat-header__remove'
-              onClick={removeUserFromRoom}
-              color='error'
-              variant='contained'
-              id='remove-user-button'
-            >
-              {t("Remove")}
-            </Button>
-          </div>
-        </div>
-        : <div className='chat-header'>
-          <h1 className='chat-header__name'>{currentRoomName}</h1>
-        </div>
-      )}
+          {groupRoom && <>
+            <div className='chat-header__buttons'>
+              <Button
+                className='chat-header__add'
+                onClick={() => { addUserToRoom(currentRoomId); }}
+                color='primary'
+                variant='contained'
+                id='add-user-button'
+              >
+                {t("Add")}
+              </Button>
+              <Button
+                className='chat-header__remove'
+                onClick={removeUserFromRoom}
+                color='error'
+                variant='contained'
+                id='remove-user-button'
+              >
+                {t("Remove")}
+              </Button>
+            </div></>
+          }
+        </>
+        )}
+      </div>
       <div className='chat-messages'>
-        {currentMessages.map((message) => (
-          <MessageForm
-            key={message.date + message.sender._id}
-            userState={userState}
-            sender={message.sender}
-            message={message.message}
-            date={message.date.toString()}
-            isImage={message.isImage}
-          />
-        ))
-        }
-        {
-          !currentRoomId && <h1 className='chat-start'>{t("Click a user or a conversation to start chatting.")}</h1>
-        }
-        {
-          contactStatus === "pending" && <h1 className='chat-start'>{currentRoomName + t(" has not accepted your request yet.")}</h1>
-        }
-        {
-          contactStatus === "request" && <>
-            <h1 className='chat-start'>{currentRoomName + t(" wants to add you as a contact.")}</h1>
-            <Button
-              className='chat-accept'
-              id='chat-accept-button'
-              variant='contained'
-              onClick={acceptRequest}
-            >
-              {t("Accept")}
-            </Button>
-          </>
-        }
+        <Box sx={{
+          border: 3,
+          borderColor: 'primary.main'
+        }}>
+          {currentMessages.map((message) => (
+            <MessageForm
+              key={message.date + message.sender._id}
+              userState={userState}
+              sender={message.sender}
+              message={message.message}
+              date={message.date.toString()}
+              isImage={message.isImage}
+            />
+          ))
+          }
+          {
+            !currentRoomId && <h1 className='chat-start'>{t("Click a user or a conversation to start chatting.")}</h1>
+          }
+          {
+            contactStatus === "pending" && <h1 className='chat-start'>{currentRoomName + t(" has not accepted your request yet.")}</h1>
+          }
+          {
+            contactStatus === "request" && <>
+              <h1 className='chat-start'>{currentRoomName + t(" wants to add you as a contact.")}</h1>
+              <Button
+                className='chat-accept'
+                id='chat-accept-button'
+                variant='contained'
+                onClick={acceptRequest}
+              >
+                {t("Accept")}
+              </Button>
+            </>
+          }
+        </Box>
       </div>
       {(currentRoomId && currentRoomId !== "1")
         && <div className='chat-submit-bar'>
