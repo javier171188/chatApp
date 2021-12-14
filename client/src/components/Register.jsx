@@ -6,6 +6,8 @@ import "../styles/components/Register.css";
 import { useTranslation } from "react-i18next";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const Register = (props) => {
 	const { t, i18n } = useTranslation();
@@ -72,7 +74,6 @@ const Register = (props) => {
 					<Button
 						className='button'
 						id='register-button'
-						color='inherit'
 						variant='contained'
 						type='submit'
 					>
@@ -80,7 +81,10 @@ const Register = (props) => {
 					</Button>
 
 					{props.errorMessages.length >= 1
-						&& <div className='login--error' >{t(props.errorMessages[0])}</div>
+						&& <Alert severity="error">
+							<AlertTitle></AlertTitle>
+							{t(props.errorMessages[0])}
+						</Alert>
 					}
 				</form>
 				<p className='register__container--login'>

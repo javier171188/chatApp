@@ -82,7 +82,7 @@ function ChatView(props) {
             <Button
               className='chat-header__add'
               onClick={() => { addUserToRoom(currentRoomId); }}
-              color='inherit'
+              color='primary'
               variant='contained'
               id='add-user-button'
             >
@@ -91,7 +91,7 @@ function ChatView(props) {
             <Button
               className='chat-header__remove'
               onClick={removeUserFromRoom}
-              color='inherit'
+              color='error'
               variant='contained'
               id='remove-user-button'
             >
@@ -127,7 +127,6 @@ function ChatView(props) {
             <Button
               className='chat-accept'
               id='chat-accept-button'
-              color='inherit'
               variant='contained'
               onClick={acceptRequest}
             >
@@ -154,7 +153,7 @@ function ChatView(props) {
             <Button
               className='chat-button'
               id='send-message__button'
-              color='inherit'
+              color='primary'
               variant='contained'
               type="submit"
             >
@@ -166,7 +165,7 @@ function ChatView(props) {
             id='drawing-button'
             onClick={openDrawingArea}
             variant="contained"
-            color='inherit'
+            color='secondary'
             startIcon={<BrushIcon />}
           >
             {t("Draw")}

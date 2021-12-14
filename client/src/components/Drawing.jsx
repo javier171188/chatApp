@@ -88,7 +88,7 @@ const Drawing = (props) => {
         <div className='drawing-button-container'>
           <Button
             onClick={sendDrawing}
-            color='inherit'
+            color='secondary'
             variant='contained'
             className='drawing-button'
             id='drawing-send-button'
@@ -98,8 +98,8 @@ const Drawing = (props) => {
           </Button>
           <Button
             onClick={() => cancelDrawing({ setDrawingAreaOn })}
-            color='inherit'
-            variant='contained'
+            color='primary'
+            variant='outlined'
             className='drawing-button'
             id='cancel-drawing-button'
             startIcon={<CancelIcon />}

@@ -33,6 +33,7 @@
     font-size: 125%;
 }
 
+
 .user-info, .chats {
     //border: solid;
     width: 220px;
@@ -61,7 +62,9 @@
 .chats-header{
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
+
 
 .chats-button{
     //border-radius: 50%;

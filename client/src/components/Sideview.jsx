@@ -11,12 +11,15 @@ import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 import Box from "@mui/material/Box";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { setGroupRoom, setCurrentUserChat, socketGetRoom } from "../redux/actions";
+import { useHistory } from "react-router-dom";
+
 
 const { USER_PATH } = process.env;
 
 const Sideview = (props) => {
   const { t, i18n } = useTranslation();
   const { userState } = props;
+  const history = useHistory();
 
   function openOneToOneChat(e, current, receiver, userState) {
     let clickedElement = e.target;
@@ -47,18 +50,29 @@ const Sideview = (props) => {
   }
 
   function createGroupChat() {
-    window.location.href = "/chat/create-room";
+    history.push("/chat/create-room");
   }
   console.log("times"); // just to be sure the element does not render many times
 
+  let commonStyles = {
+    border: 3,
+    borderColor: 'primary.main'
+  }
+
   return (
     <Box className='user'>
-      <div className='user-picture user-picture__container'>
+      <Box
+        className='user-picture user-picture__container'
+        sx={commonStyles}
+      >
         {
           userState.hasAvatar && <img className='user-picture' src={`${USER_PATH}/${userState._id}/avatar`} alt="User's avatar" />
         }
-      </div>
-      <div className='user-info'>
+      </Box>
+      <Box
+        className='user-info'
+        sx={commonStyles}
+      >
         <div className='user-name--container'>
           <h1 className='user-name--text'>
             {userState.userName}
@@ -67,7 +81,7 @@ const Sideview = (props) => {
         <Divider />
         <Divider />
         <div className='user-contacts'>
-          <h1>{t("ContactHeader")}</h1>
+          <h1 className="contacts">{t("ContactHeader")}</h1>
           <List>
             {userState.contacts.map((child) => {
               const newMsgs = child.newMsgs ? "new-messages"
@@ -93,13 +107,20 @@ const Sideview = (props) => {
             })}
           </List>
         </div>
-      </div>
-      <div className='chats'>
+      </Box >
+      <Box
+        className='chats'
+        sx={commonStyles}
+      >
         <div className='chats-header'>
           <h1>{t("Group Chats:")}</h1>
-          <div className='chats-button' onClick={createGroupChat}>
-            <AddCircleIcon></AddCircleIcon>
-          </div>
+          <Box
+            className='chats-button'
+            onClick={createGroupChat}
+
+          >
+            <AddCircleIcon color='primary'></AddCircleIcon>
+          </Box>
         </div>
         <Divider />
         <Divider />
@@ -125,7 +146,7 @@ const Sideview = (props) => {
             </List>
         }
         </nav>
-      </div>
+      </Box>
     </Box>
   );
 };

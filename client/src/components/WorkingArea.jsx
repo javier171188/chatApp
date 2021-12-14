@@ -11,7 +11,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import * as type from "../redux/types";
 
 
-
 const WorkingArea = (props) => {
   const {
     userState, searchMessage, searchUser, setSearchMessage, addContactAction,
@@ -55,7 +54,6 @@ const WorkingArea = (props) => {
         <Button
           className='working-button'
           id='search-user-button'
-          color='inherit'
           variant='contained'
           type='submit'
           startIcon={<SearchIcon />}
@@ -72,7 +70,6 @@ const WorkingArea = (props) => {
           <Button
             onClick={addContact}
             id='found-user__add-button'
-            color='inherit'
             variant='contained'
           >
             {t("Add contact")}

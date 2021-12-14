@@ -1,5 +1,5 @@
 .drawing-mod{
-    //background: rgba(32,35,41,.9);
+    background: rgba(32,35,41,.9);
     position: fixed;
     top: -10px;
     left: -10px;
@@ -17,11 +17,11 @@
 .drawing-box{
     //border: solid;
     min-width: 280px;
-    //background-color:white;
+    background-color:white;
 }
 
 .drawing-area{
-    //border: solid;
+    border: solid;
     //background-color: white;
     margin: auto;
     margin-left: 5px;

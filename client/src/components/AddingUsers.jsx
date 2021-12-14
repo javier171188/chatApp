@@ -4,6 +4,7 @@ import "../styles/components/AddingUsers.css";
 import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import Container from '@mui/material/Container';
 
 
 const AddingUsers = (props) => {
@@ -41,26 +42,34 @@ const AddingUsers = (props) => {
         {<form className='adding-form'
           onSubmit={addUser}
         >
-          {<div className='adding-contacts'>
+          {<Container
+            className='adding-contacts'
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
             {userState.contacts.map((c) => {
               if (!currentUsersIds.includes(c._id) && c.status === "accepted") {
-                return (<label htmlFor={c._id} key={c._id} className='adding-contacts__contact'>
-                  <input
-                    id={c._id}
-                    type="checkbox"
-                    name="participants"
-                    value={c.userName} /> {c.userName}
-                </label>);
+                return (
+                  <label htmlFor={c._id} key={c._id} className='adding-contacts__contact'>
+                    <input
+                      id={c._id}
+                      type="checkbox"
+                      name="participants"
+                      value={c.userName} /> {c.userName}
+                  </label>
+                );
               }
             })
             }
-          </div>
+          </Container>
           }
           <Button
             className='adding-button'
             id='adding-button'
             type='submit'
-            color='inherit'
+            color='primary'
             variant='contained'
           >
             {t("Add")}
@@ -70,7 +79,7 @@ const AddingUsers = (props) => {
           className='adding-button__cancel'
           id='adding-button__cancel'
           onClick={goBack}
-          color='inherit'
+          color='error'
           variant='contained'
         >
           {t("Cancel")}

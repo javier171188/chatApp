@@ -6,7 +6,10 @@ import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import Button from "@mui/material/Button";
-
+import { Link } from "react-router-dom";
+import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 
 
 const LANGUAGES = [
@@ -19,9 +22,10 @@ const Settings = ({ userState, changeLanguageAction }) => {
   const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(localStorage.getItem("language"));
 
-  function goBack(e) {
-    e.preventDefault();
-    window.location.href = "/chat/";
+
+  let commonStyles = {
+    border: 3,
+    borderColor: 'primary.main'
   }
 
   function changeLanguage(event) {
@@ -45,44 +49,79 @@ const Settings = ({ userState, changeLanguageAction }) => {
   return (
     <>
       <Header />
-      <h1 className='settings__title'>{t("Settings")}</h1>
-      <div className='settings__user'>
-        <h2 className='settings__user-title'>{t("User Options")} </h2>
-        <div className='setting__user--options'>{t("User Options")}...</div>
-      </div>
-      <form onSubmit={(e) => changeLanguage(e)} className='settings__language'>
-        <h2 className='settings__language-title'>{t("Choose your language")}</h2>
-        <div className='settings__language-container'>
-          <div className='settings__language-list'>
-            {LANGUAGES.map((l) => (<label htmlFor={l.code} key={l.code} className='settings__language-label'>
-              <input
-                id={l.code}
-                type="radio"
-                name="participants"
-                value={l.code}
-                checked={l.code === language}
-                onChange={(e) => handleChange(e)}
-              />
-              {t(l.name)}
-            </label>))}
-          </div>
-          <Button
-            className='settings__language-button'
-            id='settings__language-button'
-            type='submit'
-            color='inherit'
-            variant='contained'
+      <Typography
+        variant="h4"
+        component="h2"
+        className='settings__title'
+        color="primary"
+      >
+        {t("Settings")}
+      </Typography>
+      <Box
+        className='settings__user'
+        sx={commonStyles}
+      >
+        <Typography
+          className='settings__user-title'
+          variant="h5"
+          component="h3"
+          color="primary"
+        >
+          {t("User Options")}
+        </Typography>
+        <Divider />
+        <Typography
+          variant="h6"
+          component="div"
+          color="textSecondary"
+          className='setting__user--options'>
+          {t("User Options")}...
+        </Typography>
+      </Box>
+      <Box sx={commonStyles}>
+        <form onSubmit={(e) => changeLanguage(e)} className='settings__language'>
+          <Typography
+            variant="h5"
+            component="h3"
+            className='settings__language-title'
+            color="primary"
           >
-            {t("Choose")}
-          </Button>
-        </div>
-      </form>
+            {t("Choose your language")}
+          </Typography>
+          <Divider />
+          <div className='settings__language-container'>
+            <div className='settings__language-list'>
+              {LANGUAGES.map((l) => (<label htmlFor={l.code} key={l.code} className='settings__language-label'>
+                <input
+                  id={l.code}
+                  type="radio"
+                  name="participants"
+                  value={l.code}
+                  checked={l.code === language}
+                  onChange={(e) => handleChange(e)}
+                />
+                {t(l.name)}
+              </label>))}
+            </div>
+            <Button
+              className='settings__language-button'
+              id='settings__language-button'
+              type='submit'
+              variant='contained'
+              style={{ textTransform: 'none' }}
+            >
+              {t("Choose")}
+            </Button>
+          </div>
+        </form>
+      </Box>
       <Button
-        onClick={goBack}
+        component={Link}
+        to='/chat/'
         className='settings__cancel-button'
         id='settings__cancel-button'
-        color='inherit'
-        variant='contained'
+        variant='outlined'
+        style={{ textTransform: 'none' }}
       >
         {t("Go back")}
       </Button>
