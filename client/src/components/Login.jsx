@@ -10,15 +10,33 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useInputValue } from "../hooks/useInputValue";
+import { useReducer } from "react";
+import { initialStateLogin, loginFormReducer } from "../hooks/useReduxLogin";
 import * as type from "../redux/types";
 
 
 const Login = (props) => {
 	const { errorMessages } = props;
 
-	const email = useInputValue("");
-	const password = useInputValue("");
+	const [state, dispatch] = useReducer(loginFormReducer, initialStateLogin);
+
+	const {
+		email,
+		password
+	} = state;
+
+	const handleMailWrite = (e) => {
+		dispatch({
+			type: 'WRITE_EMAIL',
+			payload: e.currentTarget.value,
+		})
+	}
+	const handlePasswordWrite = (e) => {
+		dispatch({
+			type: 'WRITE_PASSWORD',
+			payload: e.currentTarget.value
+		})
+	}
 
 	const action = ({ type, data }) => store.dispatch({
 		type,
@@ -70,7 +88,8 @@ const Login = (props) => {
 							id='login-input__mail'
 							type='text'
 							placeholder={t("E-mail")}
-							{...email}
+							value={email}
+							onChange={handleMailWrite}
 						/>
 						<Input
 							name='password'
@@ -78,7 +97,8 @@ const Login = (props) => {
 							id='login-input__password'
 							type='password'
 							placeholder={t("Password")}
-							{...password}
+							value={password}
+							onChange={handlePasswordWrite}
 						/>
 						<Button
 							className='button'

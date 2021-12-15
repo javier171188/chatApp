@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { setError, registerAction } from "../redux/actions";
 import { Link } from "react-router-dom";
 import "../styles/components/Register.css";
+import { initialStateRegister, registerFormReducer } from "../hooks/useReduxRegister";
 import { useTranslation } from "react-i18next";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
@@ -14,6 +15,22 @@ import Typography from '@mui/material/Typography';
 
 const Register = (props) => {
 	const { t, i18n } = useTranslation();
+
+	const [state, dispatch] = useReducer(registerFormReducer, initialStateRegister);
+
+	const {
+		userName,
+		email,
+		password,
+		confirmPassword
+	} = state;
+
+	const handleUserNameWrite = (e) => {
+		dispatch({
+			type: 'WRITE_EMAIL',
+			payload: e.currentTarget.value,
+		})
+	}
 
 	function registerUser(e) {
 		e.preventDefault();
