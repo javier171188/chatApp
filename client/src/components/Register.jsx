@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "../styles/components/Register.css";
 import { initialStateRegister, registerFormReducer } from "../hooks/useReduxRegister";
 import { useTranslation } from "react-i18next";
+import { useReducer } from "react";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
@@ -27,7 +28,28 @@ const Register = (props) => {
 
 	const handleUserNameWrite = (e) => {
 		dispatch({
+			type: 'WRITE_USER_NAME',
+			payload: e.currentTarget.value,
+		})
+	}
+
+	const handleEMailWrite = (e) => {
+		dispatch({
 			type: 'WRITE_EMAIL',
+			payload: e.currentTarget.value,
+		})
+	}
+
+	const handlePasswordWrite = (e) => {
+		dispatch({
+			type: 'WRITE_PASSWORD',
+			payload: e.currentTarget.value,
+		})
+	}
+
+	const handleConfirmPasswordWrite = (e) => {
+		dispatch({
+			type: 'WRITE_CONFIRM_PASSWORD',
 			payload: e.currentTarget.value,
 		})
 	}
@@ -67,6 +89,8 @@ const Register = (props) => {
 						type='text'
 						placeholder={t("User name")}
 						required
+						value={userName}
+						onChange={handleUserNameWrite}
 					/>
 					<Input
 						name="email"
@@ -75,6 +99,8 @@ const Register = (props) => {
 						type='text'
 						placeholder={t("E-mail")}
 						required
+						value={email}
+						onChange={handleEMailWrite}
 					/>
 					<Input
 						name='password'
@@ -84,6 +110,8 @@ const Register = (props) => {
 						placeholder={t("Password")}
 						required
 						minLength='6'
+						value={password}
+						onChange={handlePasswordWrite}
 					/>
 
 					<Input
@@ -94,6 +122,8 @@ const Register = (props) => {
 						placeholder={t("Confirm your password")}
 						required
 						minLength='6'
+						value={confirmPassword}
+						onChange={handleConfirmPasswordWrite}
 					/>
 					<label className='avatar-label'>
 						{t("Choose a profile image:")}
