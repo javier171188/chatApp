@@ -96,7 +96,29 @@ add the following
 ```
 
 ### Environment Variables
-- (I have not implemented them yet)
+- For the client service, saved in the file .env
+
+	- SOCKET_ENDPOINT=http://proxy-service:80
+	- SOCKET_PATH=/mysocket
+	- USER_PATH=http://proxy-service:80/users
+
+  
+
+- For the user service,  saved in the file config/dev.env
+
+	- PORT=3000
+	- SECRET_SIGN=secretsign
+	- DB_URL=mongodb://userdb-service.1:27017
+	- DB_NAME=users-chat
+
+  
+
+- For the chats service, saved in the file config/dev.env
+	- PORT=3001
+	- DB_URL=mongodb://chatsdb-service:27017
+	- DB_NAME=chats-chat
+
+
 
  ### Ports
  - 3000: Service users.
