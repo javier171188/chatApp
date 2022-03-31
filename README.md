@@ -3,6 +3,8 @@ This is a web app in which a user can add contacts, chat in one to one conversat
 ## Setup
 The app is formed by 4 services:  users, chats, notifications, and client. The services are (will be) mounted in their own docker container and the communication is through an Nginx proxy service. 
 
+To start the users, chats or client services, use the command npm run dev
+
 ![Diagram](./chatAV1.png) {:height="36px"
 ### Required Technologies (so far)
 * Chats:
@@ -36,7 +38,8 @@ If you install the db in a folder, downloads for example, you can start it with:
 /home/javier/Downloads/mongodb/bin/mongod --dbpath=/home/javier/Downloads/mongodb-data
 
 ### Nginx
-To start nginx in localhost,  sudo service nginx start
+To start nginx in localhost,  sudo service nginx start.  Then, you will not need to specify the port: go to  http://localhost/chat/ instead of  http://localhost:1234/chat/.
+
 In the file /etc/nginx/sites-available/default, after 
 ```
 server_name _;
