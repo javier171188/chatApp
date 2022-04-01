@@ -124,3 +124,8 @@ export const registerAction = (payload) => ({
   type: type.REGISTER,
   payload,
 });
+
+export const startCallAction = (payload) => ({
+  type: type.START_CALL,
+  payload,
+});

@@ -8,6 +8,7 @@ import NotFound from "../components/NotFound.jsx";
 import CreateRoom from "../components/CreateRoom.jsx";
 import Settings from "../components/Settings.jsx";
 import SecureRoute from "../components/SecureRoute.jsx";
+import Conference from "../components/Conference.jsx";
 
 const App = ({ isAuth }) => (
   <BrowserRouter>
@@ -17,6 +18,7 @@ const App = ({ isAuth }) => (
       <SecureRoute exact path='/chat/register' isAuth={isAuth} component={Register} />
       <SecureRoute exact path='/chat/create-room' isAuth={isAuth} component={CreateRoom} />
       <SecureRoute exact path='/chat/settings' isAuth={isAuth} component={Settings} />
+      <SecureRoute exact path='/chat/call' isAuth={isAuth} component={Conference} />
       <SecureRoute isAuth={isAuth} component={NotFound} />
     </Switch>
   </BrowserRouter>

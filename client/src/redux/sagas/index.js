@@ -1,5 +1,5 @@
 import { all } from "redux-saga/effects";
-import { openChatSaga, sendMessageSaga } from './chatArea';
+import { openChatSaga, sendMessageSaga, startCallSaga } from './chatArea';
 import { loginSaga, logoutSaga, registerSaga } from './loginLogout';
 import { addUserToRoomSaga, createNewRoomSaga, subscribeRoomsSaga } from './manageRooms';
 import { addUserSaga, addUserSocketSaga, acceptRequestSaga, lookForUserSaga } from './searchingArea';
@@ -10,6 +10,7 @@ export default function* rootSaga() {
   yield all([
     loginSaga(),
     getUserStateSaga(),
+    startCallSaga(),
     logoutSaga(),
     lookForUserSaga(),
     openChatSaga(),

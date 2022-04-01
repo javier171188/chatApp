@@ -173,7 +173,15 @@ function* openChatSaga() {
     yield takeEvery(type.SOCKET_GET_ROOM, (data) => openChat(data));
 }
 
+function* startCallFromSaga(data) {
+    console.log(data);
+}
+function* startCallSaga() {
+    yield takeEvery(type.START_CALL, (data) => startCallFromSaga(data));
+}
+
 module.exports = {
     openChatSaga,
     sendMessageSaga,
+    startCallSaga,
 }

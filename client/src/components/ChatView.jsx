@@ -10,6 +10,7 @@ import {
   addUserToRoomAction,
   setDrawingAreaOn,
   acceptRequestAction,
+  startCallAction
 } from "../redux/actions";
 import MessageForm from "./MessageForm";
 import AddingUsers from "./AddingUsers";
@@ -19,6 +20,7 @@ import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useHistory } from "react-router-dom";
 
 
 function ChatView(props) {
@@ -37,8 +39,10 @@ function ChatView(props) {
     setDrawingAreaOn,
     acceptRequestAction,
     currentUserChat,
+    startCallAction,
   } = props;
   const { t, i18n } = useTranslation();
+  const history = useHistory();
 
   useEffect(() => {
     const $messages = document.querySelector(".chat-messages");
@@ -75,6 +79,12 @@ function ChatView(props) {
     sendMessageAction(data);
   }
 
+  function startCall() {
+
+    history.push('/chat/call/');
+    startCallAction('hello');
+  }
+
 
   return (
     <Box className='chat'>
@@ -88,6 +98,15 @@ function ChatView(props) {
           <h1 className='chat-header__name'>{currentRoomName}</h1>
           {groupRoom && <>
             <div className='chat-header__buttons'>
+              <Button
+                className='chat-header__call'
+                onClick={startCall}
+                color='primary'
+                variant='contained'
+                id='start-call-button'
+              >
+                {t("Call")}
+              </Button>
               <Button
                 className='chat-header__add'
                 onClick={() => { addUserToRoom(currentRoomId); }}
@@ -212,6 +231,7 @@ const mapDispatchToProps = {
   addUserToRoomAction,
   setDrawingAreaOn,
   acceptRequestAction,
+  startCallAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatView);
