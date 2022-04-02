@@ -39,10 +39,14 @@ function ChatView(props) {
     setDrawingAreaOn,
     acceptRequestAction,
     currentUserChat,
-    startCallAction,
   } = props;
   const { t, i18n } = useTranslation();
   const history = useHistory();
+
+  useEffect(() => {
+    //Wait to load window...
+    //Try to delete
+  }, []);
 
   useEffect(() => {
     const $messages = document.querySelector(".chat-messages");
@@ -82,7 +86,11 @@ function ChatView(props) {
   function startCall() {
 
     history.push('/chat/call/');
-    startCallAction('hello');
+    // startCallAction({
+    //   userName: userState.userName,
+    //   currentRoomId,
+    //   document
+    // });
   }
 
 

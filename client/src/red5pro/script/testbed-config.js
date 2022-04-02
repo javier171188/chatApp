@@ -194,4 +194,4 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   sessionStorage.setItem('r5proServerSettings', JSON.stringify(serverSettings));
   return json;
 
-})(this, window.adapter);
+})(window, window.adapter);

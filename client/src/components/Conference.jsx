@@ -1,10 +1,55 @@
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { startCallAction } from "../redux/actions";
+import { connect } from "react-redux";
 
-function Conference() {
+
+function Conference(props) {
+    const {
+        userState,
+        currentRoomId,
+        startCallAction,
+    } = props;
     const history = useHistory();
+
+    // function addScript(document, src) {
+    //     const script = document.createElement('script');
+    //     script.src = src;
+    //     document.body.appendChild(script);
+    // }
+    // const scriptSrcs = [
+    //     "../lib/screenfull/screenfull.min.js",
+    //     "../script/testbed-config.js",
+    //     "../script/red5pro-utils.js",
+    //     "../script/reachability.js",
+    //     "./adapter-latest.js",
+    //     "../script/reachability.js",
+    //     "../script/subscription-status.js",
+    //     "../script/publisher-status.js",
+    //     "../conference-subscriber.js",
+    //     "../device-selector-util.js",
+    //     "../lib/es6/es6-promise.min.js",
+    //     "../lib/es6/es6-bind.js",
+    //     "../lib/es6/es6-array.js",
+    //     "../lib/es6/es6-object-assign.js",
+    //     "../lib/es6/es6-fetch.js"
+    // ]
+
+    useEffect(() => {
+        //console.log(window);
+        // scriptSrcs.forEach(element => addScript(document, element));
+        startCallAction({
+            userName: userState.userName,
+            currentRoomId,
+            document,
+            window,
+        });
+
+    }, []);
 
     function hangUp() {
         history.push('/chat/');
+
     }
     return (<>
         <div id="app">
@@ -70,4 +115,14 @@ function Conference() {
     </>)
 }
 
-export default Conference;
+
+const mapStateToProps = (state) => ({
+    userState: state.userState,
+    currentRoomId: state.chatArea.currentRoomId,
+});
+
+const mapDispatchToProps = {
+    startCallAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Conference);

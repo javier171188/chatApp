@@ -4,6 +4,8 @@ import store from "../store";
 import socket from './socket';
 import { takeEvery } from "redux-saga/effects";
 import { updateUserGQL } from "../../graphql/mutations";
+import { startCall } from "../../red5pro/index.js";
+import * as red5prosdk from 'red5pro-webrtc-sdk';
 
 
 const { USER_PATH } = process.env;
@@ -174,7 +176,12 @@ function* openChatSaga() {
 }
 
 function* startCallFromSaga(data) {
-    console.log(data);
+    let roomName = data.payload.currentRoomId;
+    let streamName = data.payload.userName;
+    let document = data.payload.document;
+    let window = data.payload.window;
+
+    startCall(window, document, red5prosdk, roomName, streamName);
 }
 function* startCallSaga() {
     yield takeEvery(type.START_CALL, (data) => startCallFromSaga(data));
