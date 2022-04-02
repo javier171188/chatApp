@@ -25,10 +25,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import './red5Scripts';
+import publisherStatus from './script/publisher-status.js';
 
 function startCall(window, document, red5prosdk, roomName, streamName) {
   'use strict';
 
+  const { red5proHandlePublisherEvent } = publisherStatus(document);
   var isPublishing = false;
 
   var serverSettings = (function () {
@@ -53,8 +55,8 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
     return {}
   })();
   red5prosdk.setLogLevel(configuration.verboseLogging ? red5prosdk.LOG_LEVELS.TRACE : red5prosdk.LOG_LEVELS.WARN);
-  console.log('here: ', red5prosdk.red5proHandlePublisherEvent);
-  var updateStatusFromEvent = window.red5proHandlePublisherEvent; // defined in src/template/partial/status-field-publisher.hbs
+
+  var updateStatusFromEvent = red5proHandlePublisherEvent; // defined in src/template/partial/status-field-publisher.hbs
 
   var targetPublisher;
   var hostSocket;

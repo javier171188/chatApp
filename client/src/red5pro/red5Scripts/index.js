@@ -7,7 +7,7 @@ import '../script/reachability.js';
 import './adapter-latest.js';
 import '../script/reachability.js';
 import '../script/subscription-status.js';
-import '../script/publisher-status.js';
+//import '../script/publisher-status.js';
 
 import "../conference-subscriber.js";
 import "../device-selector-util.js";
