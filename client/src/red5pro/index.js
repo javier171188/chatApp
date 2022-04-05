@@ -479,6 +479,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
 
   var streamsList = [];
   var subscribersEl = document.getElementById("subscribers");
+
   function processStreams(streamlist, exclusion) {
     var nonPublishers = streamlist.filter(function (name) {
       return name !== exclusion;
@@ -492,6 +493,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
     var subscribers = list.map(function (name, index) {
       return new window.ConferenceSubscriberItem(name, subscribersEl, index);
     });
+    console.log("HERE: I am exploring", window.ConferenceSubscriberItem);
     var i,
       length = subscribers.length - 1;
     var sub;
