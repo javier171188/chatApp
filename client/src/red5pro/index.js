@@ -121,6 +121,12 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   //   setPublishingUI(streamName);
   // });
 
+  function joinStream() {
+    saveSettings();
+    doPublish(streamName);
+    setPublishingUI(streamName);
+  }
+
 
 
   //audioCheck.addEventListener('change', updateMutedAudioOnPublisher);
@@ -295,7 +301,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
 
   function setPublishingUI(streamName) {
     publisherNameField.innerText = streamName;
-    roomField.setAttribute('disabled', true);
+    //roomField.setAttribute('disabled', true);
     publisherSession.classList.remove('hidden');
     publisherNameField.classList.remove('hidden');
     publisherMuteControls.classList.remove('hidden');
@@ -407,6 +413,9 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
       targetPublisher.on('*', onPublisherEvent);
       return targetPublisher.preview();
     })
+    .then((r)=>{
+      console.log('Here:',streamName);
+      joinStream()})
     .catch(function (error) {
       var jsonError = typeof error === 'string' ? error : JSON.stringify(error, null, 2);
       console.error('[Red5ProPublisher] :: Error in publishing - ' + jsonError);
