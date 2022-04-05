@@ -147,4 +147,4 @@ packages/react-devtools-scheduling-profiler/dist
 ## More
 *.txt
 *.mdb
-.parce-cache/
+.parcel-cache/
