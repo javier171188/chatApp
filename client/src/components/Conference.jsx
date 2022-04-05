@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { startCallAction } from "../redux/actions";
+import { startCallAction, stopCallAction } from "../redux/actions";
 import { connect } from "react-redux";
 
 
@@ -9,6 +9,7 @@ function Conference(props) {
         userState,
         currentRoomId,
         startCallAction,
+        stopCallAction,
     } = props;
     const history = useHistory();
 
@@ -49,6 +50,11 @@ function Conference(props) {
 
     function hangUp() {
         history.push('/chat/');
+        window.location.reload(false)
+        stopCallAction({
+
+        })
+        
 
     }
     return (<>
@@ -123,6 +129,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     startCallAction,
+    stopCallAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Conference);

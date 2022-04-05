@@ -424,7 +424,7 @@ function getProperties(window) {
 
   return {
     trackBitrate,
-    trackBitrate,
+    untrackBitrate,
   };
 }
 

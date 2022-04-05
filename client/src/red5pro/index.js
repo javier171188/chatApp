@@ -26,7 +26,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import "./red5Scripts";
 import publisherStatus from "./script/publisher-status.js";
-import { trackBitrate, trackBitrate } from "./script/red5pro-utils.js";
+import { trackBitrate, untrackBitrate } from "./script/red5pro-utils.js";
 
 function startCall(window, document, red5prosdk, roomName, streamName) {
   "use strict";
@@ -276,7 +276,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
     try {
       var pc = publisher.getPeerConnection();
       var stream = publisher.getMediaStream();
-      console.log("HERE: ", window.trackBitrate);
+
       bitrateTrackingTicket = trackBitrate(
         pc,
         onBitrateUpdate,
@@ -472,7 +472,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
       targetPublisher = undefined;
     }
     unpublish().then(clearRefs).catch(clearRefs);
-    window.untrackBitrate(bitrateTrackingTicket);
+    untrackBitrate(bitrateTrackingTicket);
   }
   window.addEventListener("beforeunload", shutdown);
   window.addEventListener("pagehide", shutdown);
