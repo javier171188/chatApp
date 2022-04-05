@@ -24,37 +24,44 @@ WHETHER IN  AN  ACTION  OF  CONTRACT,  TORT  OR  OTHERWISE,  ARISING  FROM,  OUT
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import './red5Scripts';
-import publisherStatus from './script/publisher-status.js';
+import "./red5Scripts";
+import publisherStatus from "./script/publisher-status.js";
+import { trackBitrate, trackBitrate } from "./script/red5pro-utils.js";
 
 function startCall(window, document, red5prosdk, roomName, streamName) {
-  'use strict';
+  "use strict";
 
   const { red5proHandlePublisherEvent } = publisherStatus(document);
   var isPublishing = false;
 
   var serverSettings = (function () {
-    var settings = sessionStorage.getItem('r5proServerSettings');
+    var settings = sessionStorage.getItem("r5proServerSettings");
     try {
       return JSON.parse(settings);
-    }
-    catch (e) {
-      console.error('Could not read server settings from sessionstorage: ' + e.message);
+    } catch (e) {
+      console.error(
+        "Could not read server settings from sessionstorage: " + e.message
+      );
     }
     return {};
   })();
 
   var configuration = (function () {
-    var conf = sessionStorage.getItem('r5proTestBed');
+    var conf = sessionStorage.getItem("r5proTestBed");
     try {
       return JSON.parse(conf);
+    } catch (e) {
+      console.error(
+        "Could not read testbed configuration from sessionstorage: " + e.message
+      );
     }
-    catch (e) {
-      console.error('Could not read testbed configuration from sessionstorage: ' + e.message);
-    }
-    return {}
+    return {};
   })();
-  red5prosdk.setLogLevel(configuration.verboseLogging ? red5prosdk.LOG_LEVELS.TRACE : red5prosdk.LOG_LEVELS.WARN);
+  red5prosdk.setLogLevel(
+    configuration.verboseLogging
+      ? red5prosdk.LOG_LEVELS.TRACE
+      : red5prosdk.LOG_LEVELS.WARN
+  );
 
   var updateStatusFromEvent = red5proHandlePublisherEvent; // defined in src/template/partial/status-field-publisher.hbs
 
@@ -63,25 +70,27 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   // var roomName = window.query('room') || 'red5pro'; // eslint-disable-line no-unused-vars
   // var streamName = window.query('streamName') || ['publisher', Math.floor(Math.random() * 0x10000).toString(16)].join('-');
   //var socketEndpoint = window.query('socket') || 'localhost:8001'
-  var socketEndpoint = 'localhost:8001';
+  var socketEndpoint = "localhost:8001";
 
   var roomField = {};
   roomField.value = roomName;
   // eslint-disable-next-line no-unused-vars
-  var publisherContainer = document.getElementById('publisher-container');
-  var publisherMuteControls = document.getElementById('publisher-mute-controls');
-  var publisherSession = document.getElementById('publisher-session');
-  var publisherNameField = document.getElementById('publisher-name-field');
+  var publisherContainer = document.getElementById("publisher-container");
+  var publisherMuteControls = document.getElementById(
+    "publisher-mute-controls"
+  );
+  var publisherSession = document.getElementById("publisher-session");
+  var publisherNameField = document.getElementById("publisher-name-field");
   var streamNameField = {};
   streamNameField.value = streamName;
-  var publisherVideo = document.getElementById('red5pro-publisher');
+  var publisherVideo = document.getElementById("red5pro-publisher");
   //var audioCheck = document.getElementById('audio-check');
   //var videoCheck = document.getElementById('video-check');
   //var joinButton = document.getElementById('join-button');
-  var statisticsField = document.getElementById('statistics-field');
-  var bitrateField = document.getElementById('bitrate-field');
-  var packetsField = document.getElementById('packets-field');
-  var resolutionField = document.getElementById('resolution-field');
+  var statisticsField = document.getElementById("statistics-field");
+  var bitrateField = document.getElementById("bitrate-field");
+  var packetsField = document.getElementById("packets-field");
+  var resolutionField = document.getElementById("resolution-field");
   var bitrateTrackingTicket;
   var bitrate = 0;
   var packetsSent = 0;
@@ -89,10 +98,10 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   var frameHeight = 0;
 
   function updateStatistics(b, p, w, h) {
-    statisticsField.classList.remove('hidden');
-    bitrateField.innerText = b === 0 ? 'N/A' : Math.floor(b);
+    statisticsField.classList.remove("hidden");
+    bitrateField.innerText = b === 0 ? "N/A" : Math.floor(b);
     packetsField.innerText = p;
-    resolutionField.innerText = (w || 0) + 'x' + (h || 0);
+    resolutionField.innerText = (w || 0) + "x" + (h || 0);
   }
 
   function onBitrateUpdate(b, p) {
@@ -100,7 +109,11 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
     packetsSent = p;
     updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
     if (packetsSent > 100) {
-      establishSocketHost(targetPublisher, roomField.value, streamNameField.value);
+      establishSocketHost(
+        targetPublisher,
+        roomField.value,
+        streamNameField.value
+      );
     }
   }
 
@@ -127,13 +140,11 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
     setPublishingUI(streamName);
   }
 
-
-
   //audioCheck.addEventListener('change', updateMutedAudioOnPublisher);
   //videoCheck.addEventListener('change', updateMutedVideoOnPublisher);
 
   var protocol = serverSettings.protocol;
-  var isSecure = protocol == 'https';
+  var isSecure = protocol == "https";
 
   function saveSettings() {
     streamName = streamNameField.value;
@@ -203,6 +214,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
       var audioTrack = targetPublisher.getMediaStream().getAudioTracks()[0];
       var videoTrack = targetPublisher.getMediaStream().getVideoTracks()[0];
       var connection = targetPublisher.getPeerConnection();
+
       //if (!videoCheck.checked) {
       if (false) {
         videoTrackClone = videoTrack.clone();
@@ -219,95 +231,114 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   }
 
   function showVideoPoster() {
-    publisherVideo.classList.add('hidden');
+    publisherVideo.classList.add("hidden");
   }
 
   function hideVideoPoster() {
-    publisherVideo.classList.remove('hidden');
+    publisherVideo.classList.remove("hidden");
   }
 
   function getSocketLocationFromProtocol() {
     return !isSecure
-      ? { protocol: 'ws', port: serverSettings.wsport }
-      : { protocol: 'wss', port: serverSettings.wssport };
+      ? { protocol: "ws", port: serverSettings.wsport }
+      : { protocol: "wss", port: serverSettings.wssport };
   }
 
   function onPublisherEvent(event) {
-    console.log('[Red5ProPublisher] ' + event.type + '.');
-    if (event.type === 'WebSocket.Message.Unhandled') {
+    console.log("[Red5ProPublisher] " + event.type + ".");
+    if (event.type === "WebSocket.Message.Unhandled") {
       console.log(event);
-    } else if (event.type === red5prosdk.RTCPublisherEventTypes.MEDIA_STREAM_AVAILABLE) {
-      window.allowMediaStreamSwap(targetPublisher, targetPublisher.getOptions().mediaConstraints, document.getElementById('red5pro-publisher'));
+    } else if (
+      event.type === red5prosdk.RTCPublisherEventTypes.MEDIA_STREAM_AVAILABLE
+    ) {
+      window.allowMediaStreamSwap(
+        targetPublisher,
+        targetPublisher.getOptions().mediaConstraints,
+        document.getElementById("red5pro-publisher")
+      );
     }
     updateStatusFromEvent(event);
   }
   function onPublishFail(message) {
     isPublishing = false;
-    console.error('[Red5ProPublisher] Publish Error :: ' + message);
+    console.error("[Red5ProPublisher] Publish Error :: " + message);
   }
   function onPublishSuccess(publisher) {
     isPublishing = true;
     window.red5propublisher = publisher;
-    console.log('[Red5ProPublisher] Publish Complete.');
+    console.log("[Red5ProPublisher] Publish Complete.");
     // [NOTE] Moving SO setup until Package Sent amount is sufficient.
     //    establishSharedObject(publisher, roomField.value, streamNameField.value);
-    if (publisher.getType().toUpperCase() !== 'RTC') {
+    if (publisher.getType().toUpperCase() !== "RTC") {
       // It's flash, let it go.
       establishSocketHost(publisher, roomField.value, streamNameField.value);
     }
     try {
       var pc = publisher.getPeerConnection();
       var stream = publisher.getMediaStream();
-      bitrateTrackingTicket = window.trackBitrate(pc, onBitrateUpdate, null, null, true);
-      statisticsField.classList.remove('hidden');
+      console.log("HERE: ", window.trackBitrate);
+      bitrateTrackingTicket = trackBitrate(
+        pc,
+        onBitrateUpdate,
+        null,
+        null,
+        true
+      );
+      statisticsField.classList.remove("hidden");
       stream.getVideoTracks().forEach(function (track) {
         var settings = track.getSettings();
         onResolutionUpdate(settings.width, settings.height);
       });
-    }
-    catch (e) {
+    } catch (e) {
       // no tracking for you!
     }
   }
   function onUnpublishFail(message) {
     isPublishing = false;
-    console.error('[Red5ProPublisher] Unpublish Error :: ' + message);
+    console.error("[Red5ProPublisher] Unpublish Error :: " + message);
   }
   function onUnpublishSuccess() {
     isPublishing = false;
-    console.log('[Red5ProPublisher] Unpublish Complete.');
+    console.log("[Red5ProPublisher] Unpublish Complete.");
   }
 
   function getAuthenticationParams() {
     var auth = configuration.authentication;
     return auth && auth.enabled
       ? {
-        connectionParams: {
-          username: auth.username,
-          password: auth.password
+          connectionParams: {
+            username: auth.username,
+            password: auth.password,
+          },
         }
-      }
       : {};
   }
 
   function getUserMediaConfiguration() {
     return {
       mediaConstraints: {
-        audio: configuration.useAudio ? configuration.mediaConstraints.audio : false,
-        video: configuration.useVideo ? configuration.mediaConstraints.video : false
-      }
+        audio: configuration.useAudio
+          ? configuration.mediaConstraints.audio
+          : false,
+        video: configuration.useVideo
+          ? configuration.mediaConstraints.video
+          : false,
+      },
     };
   }
 
   function setPublishingUI(streamName) {
     publisherNameField.innerText = streamName;
     //roomField.setAttribute('disabled', true);
-    publisherSession.classList.remove('hidden');
-    publisherNameField.classList.remove('hidden');
-    publisherMuteControls.classList.remove('hidden');
-    Array.prototype.forEach.call(document.getElementsByClassName('remove-on-broadcast'), function (el) {
-      el.classList.add('hidden');
-    });
+    publisherSession.classList.remove("hidden");
+    publisherNameField.classList.remove("hidden");
+    publisherMuteControls.classList.remove("hidden");
+    Array.prototype.forEach.call(
+      document.getElementsByClassName("remove-on-broadcast"),
+      function (el) {
+        el.classList.add("hidden");
+      }
+    );
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -322,66 +353,70 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   }
 
   function establishSocketHost(publisher, roomName, streamName) {
-    if (hostSocket) return
-    var wsProtocol = isSecure ? 'wss' : 'ws'
-    var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`
-    hostSocket = new WebSocket(url)
+    if (hostSocket) return;
+    var wsProtocol = isSecure ? "wss" : "ws";
+    var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`;
+    hostSocket = new WebSocket(url);
     hostSocket.onmessage = function (message) {
-      var payload = JSON.parse(message.data)
+      var payload = JSON.parse(message.data);
       if (roomName === payload.room) {
-        streamsList = payload.streams
+        streamsList = payload.streams;
         processStreams(streamsList, streamName);
       }
-    }
+    };
   }
 
   function determinePublisher() {
-
-    var config = Object.assign({},
+    var config = Object.assign(
+      {},
       configuration,
       {
-        streamMode: configuration.recordBroadcast ? 'record' : 'live'
+        streamMode: configuration.recordBroadcast ? "record" : "live",
       },
       getAuthenticationParams(),
-      getUserMediaConfiguration());
+      getUserMediaConfiguration()
+    );
 
     var rtcConfig = Object.assign({}, config, {
       protocol: getSocketLocationFromProtocol().protocol,
       port: getSocketLocationFromProtocol().port,
       bandwidth: {
-        video: 256
+        video: 256,
       },
       mediaConstraints: {
         audio: true,
         video: {
           width: {
-            exact: 320
+            exact: 320,
           },
           height: {
-            exact: 240
+            exact: 240,
           },
           frameRate: {
-            exact: 15
-          }
-        }
+            exact: 15,
+          },
+        },
       },
-      streamName: streamName
+      streamName: streamName,
     });
 
     var publisher = new red5prosdk.RTCPublisher();
     return publisher.init(rtcConfig);
-
   }
 
   function doPublish(name) {
-    targetPublisher.publish(name)
+    targetPublisher
+      .publish(name)
       .then(function () {
         onPublishSuccess(targetPublisher);
         updateInitialMediaOnPublisher();
       })
       .catch(function (error) {
-        var jsonError = typeof error === 'string' ? error : JSON.stringify(error, null, 2);
-        console.error('[Red5ProPublisher] :: Error in publishing - ' + jsonError);
+        var jsonError =
+          typeof error === "string" ? error : JSON.stringify(error, null, 2);
+        console.error(
+          "[Red5ProPublisher] :: Error in publishing - " + jsonError
+        );
         console.error(error);
         onPublishFail(jsonError);
       });
@@ -389,18 +424,20 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
 
   function unpublish() {
     if (hostSocket !== undefined) {
-      hostSocket.close()
+      hostSocket.close();
     }
     return new Promise(function (resolve, reject) {
       var publisher = targetPublisher;
-      publisher.unpublish()
+      publisher
+        .unpublish()
         .then(function () {
           onUnpublishSuccess();
           resolve();
         })
         .catch(function (error) {
-          var jsonError = typeof error === 'string' ? error : JSON.stringify(error, 2, null);
-          onUnpublishFail('Unmount Error ' + jsonError);
+          var jsonError =
+            typeof error === "string" ? error : JSON.stringify(error, 2, null);
+          onUnpublishFail("Unmount Error " + jsonError);
           reject(error);
         });
     });
@@ -410,15 +447,16 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   determinePublisher()
     .then(function (publisherImpl) {
       targetPublisher = publisherImpl;
-      targetPublisher.on('*', onPublisherEvent);
+      targetPublisher.on("*", onPublisherEvent);
       return targetPublisher.preview();
     })
-    .then((r)=>{
-      console.log('Here:',streamName);
-      joinStream()})
+    .then((r) => {
+      joinStream();
+    })
     .catch(function (error) {
-      var jsonError = typeof error === 'string' ? error : JSON.stringify(error, null, 2);
-      console.error('[Red5ProPublisher] :: Error in publishing - ' + jsonError);
+      var jsonError =
+        typeof error === "string" ? error : JSON.stringify(error, null, 2);
+      console.error("[Red5ProPublisher] :: Error in publishing - " + jsonError);
       console.error(error);
       onPublishFail(jsonError);
     });
@@ -429,50 +467,54 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
     shuttingDown = true;
     function clearRefs() {
       if (targetPublisher) {
-        targetPublisher.off('*', onPublisherEvent);
+        targetPublisher.off("*", onPublisherEvent);
       }
       targetPublisher = undefined;
     }
     unpublish().then(clearRefs).catch(clearRefs);
     window.untrackBitrate(bitrateTrackingTicket);
   }
-  window.addEventListener('beforeunload', shutdown);
-  window.addEventListener('pagehide', shutdown);
+  window.addEventListener("beforeunload", shutdown);
+  window.addEventListener("pagehide", shutdown);
 
   var streamsList = [];
-  var subscribersEl = document.getElementById('subscribers');
+  var subscribersEl = document.getElementById("subscribers");
   function processStreams(streamlist, exclusion) {
     var nonPublishers = streamlist.filter(function (name) {
       return name !== exclusion;
     });
     var list = nonPublishers.filter(function (name, index, self) {
-      return (index == self.indexOf(name)) &&
-        !document.getElementById(window.getConferenceSubscriberElementId(name));
+      return (
+        index == self.indexOf(name) &&
+        !document.getElementById(window.getConferenceSubscriberElementId(name))
+      );
     });
     var subscribers = list.map(function (name, index) {
       return new window.ConferenceSubscriberItem(name, subscribersEl, index);
     });
-    var i, length = subscribers.length - 1;
+    var i,
+      length = subscribers.length - 1;
     var sub;
     for (i = 0; i < length; i++) {
       sub = subscribers[i];
       sub.next = subscribers[sub.index + 1];
     }
     if (subscribers.length > 0) {
-      var baseSubscriberConfig = Object.assign({},
+      var baseSubscriberConfig = Object.assign(
+        {},
         configuration,
         {
           protocol: getSocketLocationFromProtocol().protocol,
-          port: getSocketLocationFromProtocol().port
+          port: getSocketLocationFromProtocol().port,
         },
         getAuthenticationParams(),
-        getUserMediaConfiguration());
+        getUserMediaConfiguration()
+      );
       subscribers[0].execute(baseSubscriberConfig);
     }
 
     updatePublishingUIOnStreamCount(nonPublishers.length);
   }
-
 }
 
 module.exports = { startCall };

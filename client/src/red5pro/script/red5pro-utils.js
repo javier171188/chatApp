@@ -23,8 +23,10 @@ NONINFRINGEMENT.   IN  NO  EVENT  SHALL INFRARED5, INC. BE LIABLE FOR ANY CLAIM,
 WHETHER IN  AN  ACTION  OF  CONTRACT,  TORT  OR  OTHERWISE,  ARISING  FROM,  OUT  OF  OR  IN CONNECTION 
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-(function (window) {
-  'use strict';
+const properties = getProperties(this);
+
+function getProperties(window) {
+  "use strict";
 
   var vRegex = /VideoStream/;
   var aRegex = /AudioStream/;
@@ -56,50 +58,64 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           var packets;
           var now = report.timestamp;
           var bitrate;
-          if (!isSubscriber &&
-            ((report.type === 'outboundrtp') ||
-              (report.type === 'outbound-rtp') ||
-              (report.type === 'ssrc' && report.bytesSent))) {
+          if (
+            !isSubscriber &&
+            (report.type === "outboundrtp" ||
+              report.type === "outbound-rtp" ||
+              (report.type === "ssrc" && report.bytesSent))
+          ) {
             bytes = report.bytesSent;
             packets = report.packetsSent;
-            if (report.mediaType === 'video' || report.id.match(vRegex)) {
+            if (report.mediaType === "video" || report.id.match(vRegex)) {
               if (lastResult && lastResult.get(report.id)) {
                 // calculate bitrate
-                bitrate = 8 * (bytes - lastResult.get(report.id).bytesSent) /
+                bitrate =
+                  (8 * (bytes - lastResult.get(report.id).bytesSent)) /
                   (now - lastResult.get(report.id).timestamp);
                 cb(bitrate, packets);
               }
             }
           }
           // playback.
-          else if (isSubscriber &&
-            ((report.type === 'inboundrtp') ||
-              (report.type === 'inbound-rtp') ||
-              (report.type === 'ssrc' && report.bytesReceived))) {
+          else if (
+            isSubscriber &&
+            (report.type === "inboundrtp" ||
+              report.type === "inbound-rtp" ||
+              (report.type === "ssrc" && report.bytesReceived))
+          ) {
             bytes = report.bytesReceived;
             packets = report.packetsReceived;
-            if (ticket.audioOnly && (report.mediaType === 'audio' || report.id.match(aRegex))) {
+            if (
+              ticket.audioOnly &&
+              (report.mediaType === "audio" || report.id.match(aRegex))
+            ) {
               if (lastResult && lastResult.get(report.id)) {
                 // calculate bitrate
-                bitrate = 8 * (bytes - lastResult.get(report.id).bytesReceived) /
+                bitrate =
+                  (8 * (bytes - lastResult.get(report.id).bytesReceived)) /
+                  (now - lastResult.get(report.id).timestamp);
+                cb(bitrate, packets);
+              }
+            } else if (
+              !ticket.audioOnly &&
+              (report.mediaType === "video" || report.id.match(vRegex))
+            ) {
+              if (lastResult && lastResult.get(report.id)) {
+                // calculate bitrate
+                bitrate =
+                  (8 * (bytes - lastResult.get(report.id).bytesReceived)) /
                   (now - lastResult.get(report.id).timestamp);
                 cb(bitrate, packets);
               }
             }
-            else if (!ticket.audioOnly && (report.mediaType === 'video' || report.id.match(vRegex))) {
-              if (lastResult && lastResult.get(report.id)) {
-                // calculate bitrate
-                bitrate = 8 * (bytes - lastResult.get(report.id).bytesReceived) /
-                  (now - lastResult.get(report.id).timestamp);
-                cb(bitrate, packets);
-              }
-            }
-          }
-          else if (resolutionCb && report.type === 'track') {
+          } else if (resolutionCb && report.type === "track") {
             var fw = 0;
             var fh = 0;
-            if (report.kind === 'video' ||
-              (report.frameWidth || report.frameHeight)) {
+            if (
+              report.kind === "video" ||
+              report.frameWidth ||
+              report.frameHeight
+            ) {
               fw = report.frameWidth;
               fh = report.frameHeight;
               if (fw > 0 || fh > 0) {
@@ -119,10 +135,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     this.audioOnly = true;
   };
 
-  window.trackBitrate = function (connection, cb, resolutionCb, isSubscriber, withTicket) {
+  function trackBitrate(
+    connection,
+    cb,
+    resolutionCb,
+    isSubscriber,
+    withTicket
+  ) {
     var t = new BitrateTicket(connection, cb, resolutionCb, isSubscriber);
     if (withTicket) {
-      var ticket = ['bitrateTicket', Math.floor(Math.random() * 0x10000).toString(16)].join('-');
+      var ticket = [
+        "bitrateTicket",
+        Math.floor(Math.random() * 0x10000).toString(16),
+      ].join("-");
       bitrateTickets[ticket] = t;
       t.start();
       return ticket;
@@ -134,7 +159,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     return globalBitrateTicket;
   }
 
-  window.untrackBitrate = function (ticket) {
+  function untrackBitrate(ticket) {
     if (!ticket && globalBitrateTicket) {
       globalBitrateTicket.stop();
     } else if (bitrateTickets[ticket]) {
@@ -146,9 +171,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   // easy access query variables.
   function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
-    var vars = query.split('&');
+    var vars = query.split("&");
     for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split('=');
+      var pair = vars[i].split("=");
       if (decodeURIComponent(pair[0]) == variable) {
         return decodeURIComponent(pair[1]);
       }
@@ -156,208 +181,222 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     return undefined;
   }
 
-
   /**
    * Requests and returns flag of streamName being available on the server.
    * If requiresStreamManager, it additionally filters the listing based on `edge` type.
    */
-  const getIsStreamAvailable = async (url, streamName, requiresStreamManager) => {
+  const getIsStreamAvailable = async (
+    url,
+    streamName,
+    requiresStreamManager
+  ) => {
     try {
-      let payload
-      const response = await fetch(url)
-      if (response.headers.get('content-type') &&
-        response.headers.get('content-type').toLowerCase().indexOf('application/json') >= 0) {
-        payload = await response.json()
+      let payload;
+      const response = await fetch(url);
+      if (
+        response.headers.get("content-type") &&
+        response.headers
+          .get("content-type")
+          .toLowerCase()
+          .indexOf("application/json") >= 0
+      ) {
+        payload = await response.json();
       } else {
-        payload = await response.text()
+        payload = await response.text();
       }
 
-      let json = payload
-      if (typeof payload === 'string') {
-        json = JSON.parse(payload)
+      let json = payload;
+      if (typeof payload === "string") {
+        json = JSON.parse(payload);
       }
 
       if (requiresStreamManager) {
-        return json.filter(stream => (stream.name === streamName && stream.type === 'edge')).length > 0
+        return (
+          json.filter(
+            (stream) => stream.name === streamName && stream.type === "edge"
+          ).length > 0
+        );
       } else {
-        return json.filter(stream => (stream.name === streamName)).length > 0
+        return json.filter((stream) => stream.name === streamName).length > 0;
       }
     } catch (e) {
-      console.error(e)
-      return false
+      console.error(e);
+      return false;
     }
-  }
+  };
 
   /**
    * Returns the stream listing on the server.
    */
   const getCompleteStreamList = async (url) => {
     try {
-      let payload
-      let streamList
-      const response = await fetch(url)
-      if (response.headers.get('content-type') &&
-        response.headers.get('content-type')
-          .toLowerCase().indexOf('application/json') >= 0) {
-        payload = await response.json()
+      let payload;
+      let streamList;
+      const response = await fetch(url);
+      if (
+        response.headers.get("content-type") &&
+        response.headers
+          .get("content-type")
+          .toLowerCase()
+          .indexOf("application/json") >= 0
+      ) {
+        payload = await response.json();
       } else {
-        payload = await response.text()
+        payload = await response.text();
       }
-      streamList = payload
-      if (typeof payload === 'string') {
+      streamList = payload;
+      if (typeof payload === "string") {
         try {
-          streamList = JSON.parse(payload)
+          streamList = JSON.parse(payload);
         } catch (e) {
-          console.error(`Stream list error from: ${payload}`)
-          throw new TypeError('Could not properly parse stream list response: ' + e.message)
+          console.error(`Stream list error from: ${payload}`);
+          throw new TypeError(
+            "Could not properly parse stream list response: " + e.message
+          );
         }
       }
-      return streamList
+      return streamList;
     } catch (e) {
-      throw e
+      throw e;
     }
-  }
-
-
+  };
 
   /**
    * Returns if stream name is available on the stream manager.
    */
   const getIsAvailable = async (url, streamName) => {
     try {
-      const isAvailable = await getIsStreamAvailable(url, streamName, true)
-      return isAvailable
+      const isAvailable = await getIsStreamAvailable(url, streamName, true);
+      return isAvailable;
     } catch (e) {
-      console.error(e)
-      return false
+      console.error(e);
+      return false;
     }
-  }
+  };
 
   /**
    * Requests stream list from stream manager and filters on scope/app.
    */
   const getStreamList = async (url, scope) => {
     try {
-      const list = await getCompleteStreamList(url)
-      const filtered = list.filter(item => {
-        return item.scope === scope && item.type === 'edge'
-      })
-      return filtered
+      const list = await getCompleteStreamList(url);
+      const filtered = list.filter((item) => {
+        return item.scope === scope && item.type === "edge";
+      });
+      return filtered;
     } catch (e) {
-      throw e
+      throw e;
     }
-  }
+  };
 
   /**
    * Request to get Origin data to broadcast on stream manager proxy.
    */
   const getOrigin = async (host, context, streamName, transcode = false) => {
     try {
-      let url = `https://${host}/streammanager/api/4.0/event/${context}/${streamName}?action=broadcast`
+      let url = `https://${host}/streammanager/api/4.0/event/${context}/${streamName}?action=broadcast`;
       if (transcode) {
-        url += '&transcode=true'
+        url += "&transcode=true";
       }
-      const result = await fetch(url)
-      const json = await result.json()
+      const result = await fetch(url);
+      const json = await result.json();
       if (json.errorMessage) {
-        throw new Error(json.errorMessage)
+        throw new Error(json.errorMessage);
       }
-      return json
+      return json;
     } catch (e) {
-      throw e
+      throw e;
     }
-  }
-
+  };
 
   /**
    * Request to get Origin data to broadcast for conference stream manager proxy.
    */
   const getOriginForConference = async (host, context) => {
     try {
-      let url = `https://${host}/streammanager/api/4.0/event/${context}/join`
-      const result = await fetch(url)
-      const json = await result.json()
+      let url = `https://${host}/streammanager/api/4.0/event/${context}/join`;
+      const result = await fetch(url);
+      const json = await result.json();
       if (json.errorMessage) {
-        throw new Error(json.errorMessage)
+        throw new Error(json.errorMessage);
       }
-      return json
+      return json;
     } catch (e) {
-      throw e
+      throw e;
     }
-  }
-
+  };
 
   /**
    * Request to get Edge on stream managaer to consume stream from stream manager proxy.
    */
   const getEdge = async (host, context, streamName) => {
     try {
-      const url = `https://${host}/streammanager/api/4.0/event/${context}/${streamName}?action=subscribe`
-      const result = await fetch(url)
-      const json = await result.json()
+      const url = `https://${host}/streammanager/api/4.0/event/${context}/${streamName}?action=subscribe`;
+      const result = await fetch(url);
+      const json = await result.json();
       if (json.errorMessage) {
-        throw new Error(json.errorMessage)
+        throw new Error(json.errorMessage);
       }
-      return json
+      return json;
     } catch (e) {
-      throw e
+      throw e;
     }
-  }
+  };
 
   /**
    * Request to post a transcode provision detailing variants.
    */
-  const postTranscode = async (host, context, streamName, provision, smPass = '123xyz') => {
+  const postTranscode = async (
+    host,
+    context,
+    streamName,
+    provision,
+    smPass = "123xyz"
+  ) => {
     try {
-      const url = `https://${host}/streammanager/api/4.0/admin/event/meta/${context}/${streamName}?accessToken=${smPass}`
+      const url = `https://${host}/streammanager/api/4.0/admin/event/meta/${context}/${streamName}?accessToken=${smPass}`;
       const result = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(provision)
-      })
-      const json = await result.json()
+        body: JSON.stringify(provision),
+      });
+      const json = await result.json();
       if (json && json.errorMessage) {
-        throw new Error(json.errorMessage)
+        throw new Error(json.errorMessage);
       }
-      return json
+      return json;
     } catch (e) {
-      throw e
+      throw e;
     }
-  }
+  };
 
-  const postProvision = async (host, provision, smPass = '123xyz') => {
-    const {
-      context,
-      name
-    } = provision
+  const postProvision = async (host, provision, smPass = "123xyz") => {
+    const { context, name } = provision;
     try {
-      const url = `https://${host}/streammanager/api/4.0/admin/event/meta/${context}/${name}?accessToken=${smPass}`
+      const url = `https://${host}/streammanager/api/4.0/admin/event/meta/${context}/${name}?accessToken=${smPass}`;
       const result = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(provision)
-      })
-      const json = await result.json()
+        body: JSON.stringify(provision),
+      });
+      const json = await result.json();
       if (json && json.errorMessage) {
-
-        if (json.errorMessage.indexOf('Provision already exists') < 0) {
-          throw new Error(json.errorMessage)
-        }
-        else {
-          console.log('Provision already exists')
+        if (json.errorMessage.indexOf("Provision already exists") < 0) {
+          throw new Error(json.errorMessage);
+        } else {
+          console.log("Provision already exists");
         }
       }
 
-
-      return json
+      return json;
     } catch (e) {
-      throw e
+      throw e;
     }
-  }
+  };
 
   window.streamManagerUtil = {
     getIsStreamAvailable: getIsAvailable,
@@ -366,21 +405,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     getOriginForConference: getOriginForConference,
     getEdge: getEdge,
     postTranscode: postTranscode,
-    postProvision: postProvision
-  }
+    postProvision: postProvision,
+  };
 
-  window.getStreamList = getCompleteStreamList
-  window.getIsStreamAvailable = getIsStreamAvailable
+  window.getStreamList = getCompleteStreamList;
+  window.getIsStreamAvailable = getIsStreamAvailable;
 
   window.isEmpty = function (str) {
-    return (str && str.length === 0) || !!str
-  }
+    return (str && str.length === 0) || !!str;
+  };
   window.query = getQueryVariable;
   window.exposePublisherGlobally = function (publisher) {
     window.r5pro_publisher = publisher;
-  }
+  };
   window.exposeSubscriberGlobally = function (subscriber) {
     window.r5pro_subscriber = subscriber;
-  }
+  };
 
-})(this);
+  return {
+    trackBitrate,
+    trackBitrate,
+  };
+}
+
+module.exports = properties;
