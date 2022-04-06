@@ -28,6 +28,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 import * as red5prosdk from "red5pro-webrtc-sdk";
+import { red5proHandleSubscriberEvent } from "./script/subscription-status.js";
+import store from "../redux/store.js";
 
 (function (window, document, red5prosdk) {
   "use strict";
@@ -40,7 +42,7 @@ import * as red5prosdk from "red5pro-webrtc-sdk";
   var subscriberMap = {};
   //var streamNameField = document.getElementById("streamname-field");
   var streamNameField = { value: "This user name is hardcoded" };
-  var updateSuscriberStatusFromEvent = window.red5proHandleSubscriberEvent;
+  var updateSuscriberStatusFromEvent = red5proHandleSubscriberEvent;
   var subscriberTemplate =
     "" +
     '<div class="subscriber-session centered">' +
@@ -147,6 +149,7 @@ import * as red5prosdk from "red5pro-webrtc-sdk";
     this.statusField = this.card.getElementsByClassName(
       "subscriber-status-field"
     )[0];
+    //console.log("Here, statusField: ", this.statusField);
     this.toggleVideoPoster = this.toggleVideoPoster.bind(this);
     this.handleAudioDecoyVolumeChange =
       this.handleAudioDecoyVolumeChange.bind(this);
@@ -281,10 +284,16 @@ import * as red5prosdk from "red5pro-webrtc-sdk";
     this.subscriber
       .init(rtcConfig)
       .then(function (subscriber) {
+        console.log("Here init was done");
         subscriberMap[name] = subscriber;
-        return subscriber.subscribe();
+        //return subscriber.subscribe();
+        subscriber.subscribe();
+        // .then((r1, r2, r3) => {
+        //   console.log("Here subscription was done", r1, r2, r3);
+        // });
       })
       .catch(function (error) {
+        console.log("Here, but there was an error :/");
         console.log("[subscriber:" + name + "] Error");
         reject(error);
       });
@@ -293,3 +302,5 @@ import * as red5prosdk from "red5pro-webrtc-sdk";
   window.getConferenceSubscriberElementId = getSubscriberElementId;
   window.ConferenceSubscriberItem = SubscriberItem;
 })(window, document, red5prosdk);
+
+console.log("here the store ", store);

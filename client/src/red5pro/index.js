@@ -490,10 +490,11 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
         !document.getElementById(window.getConferenceSubscriberElementId(name))
       );
     });
+    console.log("Here, this is the list: ", list);
     var subscribers = list.map(function (name, index) {
       return new window.ConferenceSubscriberItem(name, subscribersEl, index);
     });
-    console.log("HERE: I am exploring", window.ConferenceSubscriberItem);
+    console.log("Here, subscribers: ", subscribers);
     var i,
       length = subscribers.length - 1;
     var sub;

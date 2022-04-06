@@ -6,23 +6,23 @@ import { getUser } from "../../graphql/queries";
 
 const { USER_PATH } = process.env;
 
-
-const action = ({ type, data, payload }) => store.dispatch({
-  type,
-  data,
-  payload,
-});
+const action = ({ type, data, payload }) =>
+  store.dispatch({
+    type,
+    data,
+    payload,
+  });
 
 const socket = socketIOClient(process.env.SOCKET_ENDPOINT, {
   path: process.env.SOCKET_PATH,
 });
 
 const updateLastRoom = function (roomId, returnedMessages, participants) {
-
   action({
     type: type.SET_LAST_ROOM_CHANGED,
     payload: roomId,
   });
+
   const state = store.getState();
   const { currentRoomId } = state.chatArea;
 
@@ -64,8 +64,10 @@ socket.on("newRoom", async ({ participants, roomId }) => {
       const token = sessionStorage.getItem("token");
       const email = JSON.parse(sessionStorage.getItem("email"));
 
-
-      const userGQL = await request(`${USER_PATH}/api`, getUser, { email, token });
+      const userGQL = await request(`${USER_PATH}/api`, getUser, {
+        email,
+        token,
+      });
       const user = userGQL.getUser;
       action({
         type: type.SET_USER_STATE,
@@ -86,6 +88,5 @@ socket.on("userAccepted", ({ acceptedId }) => {
     });
   }
 });
-
 
 export default socket;

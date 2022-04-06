@@ -149,3 +149,5 @@ packages/react-devtools-scheduling-profiler/dist
 *.mdb
 .parcel-cache/
 client/.parcel-cache/
+.parcel-cache
+client/.parcel-cache
