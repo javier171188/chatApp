@@ -29,9 +29,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import * as red5prosdk from "red5pro-webrtc-sdk";
 import { red5proHandleSubscriberEvent } from "./script/subscription-status.js";
-import store from "../redux/store.js";
 
-(function (window, document, red5prosdk) {
+//(function (window, document, red5prosdk) {
+function startSubscriptions(streamNameValue) {
   "use strict";
 
   var isMoz = false;
@@ -41,7 +41,7 @@ import store from "../redux/store.js";
 
   var subscriberMap = {};
   //var streamNameField = document.getElementById("streamname-field");
-  var streamNameField = { value: "This user name is hardcoded" };
+  var streamNameField = { value: streamNameValue };
   var updateSuscriberStatusFromEvent = red5proHandleSubscriberEvent;
   var subscriberTemplate =
     "" +
@@ -301,6 +301,7 @@ import store from "../redux/store.js";
 
   window.getConferenceSubscriberElementId = getSubscriberElementId;
   window.ConferenceSubscriberItem = SubscriberItem;
-})(window, document, red5prosdk);
+}
+//)(window, document, red5prosdk);
 
-console.log("here the store ", store);
+module.exports = startSubscriptions;

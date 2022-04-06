@@ -5,6 +5,7 @@ import socket from "./socket";
 import { takeEvery } from "redux-saga/effects";
 import { updateUserGQL } from "../../graphql/mutations";
 import { startCall } from "../../red5pro/index.js";
+import startSubscriptions from "../../red5pro/conference-subscriber.js";
 import * as red5prosdk from "red5pro-webrtc-sdk";
 
 const { USER_PATH } = process.env;
@@ -193,6 +194,7 @@ function* startCallFromSaga(data) {
   let window = data.payload.window;
 
   startCall(window, document, red5prosdk, roomName, streamName);
+  startSubscriptions(streamName);
 }
 function* startCallSaga() {
   yield takeEvery(type.START_CALL, (data) => startCallFromSaga(data));
