@@ -27,6 +27,7 @@
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.5",
+    "@parcel/optimizer-css": "^2.4.1",
     "axios": "^0.21.1",
     "graphql-request": "^3.6.1",
     "i18next": "^21.2.3",
