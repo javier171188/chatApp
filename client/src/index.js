@@ -6,11 +6,9 @@ import store from "./redux/store";
 import "./i18n";
 import App from "./routes/App";
 
-
-
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById("root"),
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
 );

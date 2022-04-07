@@ -1,11 +1,11 @@
-import { combineReducers } from 'redux';
-import chatArea from './chatArea';
-import loginLogout from './loginLogout';
-import modals from './modals';
-import searchArea from './searchArea';
-import sideChanges from './sideChanges';
-import userState from './userState';
-
+import { combineReducers } from "redux";
+import chatArea from "./chatArea";
+import loginLogout from "./loginLogout";
+import modals from "./modals";
+import searchArea from "./searchArea";
+import sideChanges from "./sideChanges";
+import userState from "./userState";
+import conferenceArea from "./conferenceArea";
 
 const reducer = combineReducers({
   chatArea,
@@ -14,6 +14,7 @@ const reducer = combineReducers({
   searchArea,
   sideChanges,
   userState,
-})
+  conferenceArea,
+});
 
 export default reducer;

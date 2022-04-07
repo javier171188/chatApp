@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 import Input from "@mui/material/Input";
 import BrushIcon from "@mui/icons-material/Brush";
 import Button from "@mui/material/Button";
@@ -39,6 +40,7 @@ function ChatView(props) {
     currentUserChat,
   } = props;
   const { t, i18n } = useTranslation();
+  const history = useHistory();
 
   useEffect(() => {
     const $messages = document.querySelector(".chat-messages");
@@ -75,7 +77,9 @@ function ChatView(props) {
     sendMessageAction(data);
   }
 
-
+  function handleClickCall(){
+    history.push('/chat/conference');
+  }
   return (
     <Box className='chat'>
       <Toolbar
@@ -88,6 +92,15 @@ function ChatView(props) {
           <h1 className='chat-header__name'>{currentRoomName}</h1>
           {groupRoom && <>
             <div className='chat-header__buttons'>
+            <Button
+                className='chat-header__add'
+                onClick={handleClickCall}
+                color='primary'
+                variant='contained'
+                id='start-conference-button'
+              >
+                {t("Call")}
+              </Button>
               <Button
                 className='chat-header__add'
                 onClick={() => { addUserToRoom(currentRoomId); }}
