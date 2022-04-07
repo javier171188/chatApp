@@ -148,3 +148,4 @@ packages/react-devtools-scheduling-profiler/dist
 *.txt
 *.mdb
 .parcel-cache
+*.mp4
