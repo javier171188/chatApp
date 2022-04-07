@@ -11,6 +11,8 @@ import {
   addUserToRoomAction,
   setDrawingAreaOn,
   acceptRequestAction,
+  startCallAction,
+  
 } from "../redux/actions";
 import MessageForm from "./MessageForm";
 import AddingUsers from "./AddingUsers";
@@ -38,6 +40,7 @@ function ChatView(props) {
     setDrawingAreaOn,
     acceptRequestAction,
     currentUserChat,
+    startCallAction,
   } = props;
   const { t, i18n } = useTranslation();
   const history = useHistory();
@@ -79,6 +82,7 @@ function ChatView(props) {
 
   function handleClickCall(){
     history.push('/chat/conference');
+    startCallAction();
   }
   return (
     <Box className='chat'>
@@ -225,6 +229,7 @@ const mapDispatchToProps = {
   addUserToRoomAction,
   setDrawingAreaOn,
   acceptRequestAction,
+  startCallAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatView);
