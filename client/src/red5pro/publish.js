@@ -22,13 +22,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // import "./red5Scripts";
 // import publisherStatus from "./script/publisher-status.js";
-// import { trackBitrate, untrackBitrate } from "./script/red5pro-utils.js";
+import { trackBitrate, untrackBitrate } from "./script/red5pro-utils.js";
 import * as red5prosdk from "red5pro-webrtc-sdk";
 import {
   getUserMediaConfiguration,
   getAuthenticationParams,
   getSocketLocationFromProtocol,
   updateInitialMediaOnPublisher,
+  establishSocketHost,
 } from "./settings.js";
 import allowMediaStreamSwap from "./device-selector-utils.js";
 
@@ -72,7 +73,6 @@ red5prosdk.setLogLevel(red5prosdk.LOG_LEVELS.WARN);
 //var updateStatusFromEvent = red5proHandlePublisherEvent;
 
 var targetPublisher;
-var hostSocket;
 // var roomName = window.query('room') || 'red5pro'; // eslint-disable-line no-unused-vars
 // var streamName = window.query('streamName') || ['publisher', Math.floor(Math.random() * 0x10000).toString(16)].join('-');
 //var socketEndpoint = window.query('socket') || 'localhost:8001'
@@ -162,9 +162,19 @@ function onPublishFail(message) {
   isPublishing = false;
   console.error("[Red5ProPublisher] Publish Error :: " + message);
 }
+
+function onBitrateUpdate(b, p) {
+  // bitrate = b;
+  // packetsSent = p;
+  //updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
+  if (packetsSent > 100) {
+    establishSocketHost(targetPublisher, roomName, streamName);
+  }
+}
+
 function onPublishSuccess(publisher, roomName, streamName) {
   isPublishing = true;
-  window.red5propublisher = publisher;
+  //window.red5propublisher = publisher;
   console.log("[Red5ProPublisher] Publish Complete.");
   // [NOTE] Moving SO setup until Package Sent amount is sufficient.
   //    establishSharedObject(publisher, roomField.value, streamNameField.value);
@@ -177,13 +187,14 @@ function onPublishSuccess(publisher, roomName, streamName) {
     var stream = publisher.getMediaStream();
 
     bitrateTrackingTicket = trackBitrate(pc, onBitrateUpdate, null, null, true);
-    statisticsField.classList.remove("hidden");
+    //statisticsField.classList.remove("hidden");
     stream.getVideoTracks().forEach(function (track) {
       var settings = track.getSettings();
-      onResolutionUpdate(settings.width, settings.height);
+      //onResolutionUpdate(settings.width, settings.height);
     });
   } catch (e) {
     // no tracking for you!
+    console.error(e);
   }
 }
 
@@ -202,20 +213,6 @@ function setPublishingUI(streamName) {
 }
 
 // eslint-disable-next-line no-unused-vars
-
-function establishSocketHost(publisher, roomName, streamName) {
-  if (hostSocket) return;
-  var wsProtocol = isSecure ? "wss" : "ws";
-  var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`;
-  hostSocket = new WebSocket(url);
-  hostSocket.onmessage = function (message) {
-    var payload = JSON.parse(message.data);
-    if (roomName === payload.room) {
-      streamsList = payload.streams;
-      processStreams(streamsList, streamName);
-    }
-  };
-}
 
 function determinePublisher(recording, audio, video, streamName) {
   var config = Object.assign(

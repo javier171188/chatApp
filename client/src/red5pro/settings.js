@@ -45,23 +45,10 @@ function updateStatistics(b, p, w, h) {
   resolutionField.innerText = (w || 0) + "x" + (h || 0);
 }
 
-function onBitrateUpdate(b, p) {
-  bitrate = b;
-  packetsSent = p;
-  updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
-  if (packetsSent > 100) {
-    establishSocketHost(
-      targetPublisher,
-      roomField.value,
-      streamNameField.value
-    );
-  }
-}
-
 function onResolutionUpdate(w, h) {
-  frameWidth = w;
-  frameHeight = h;
-  updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
+  // frameWidth = w;
+  // frameHeight = h;
+  // updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
 }
 
 function updateMutedVideoOnPublisher() {
@@ -145,9 +132,25 @@ function getSocketLocationFromProtocol() {
   };
 }
 
+var hostSocket;
+function establishSocketHost(publisher, roomName, streamName) {
+  if (hostSocket) return;
+  var wsProtocol = isSecure ? "wss" : "ws";
+  var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`;
+  hostSocket = new WebSocket(url);
+  hostSocket.onmessage = function (message) {
+    var payload = JSON.parse(message.data);
+    if (roomName === payload.room) {
+      streamsList = payload.streams;
+      processStreams(streamsList, streamName);
+    }
+  };
+}
+
 module.exports = {
   getAuthenticationParams,
   getUserMediaConfiguration,
   getSocketLocationFromProtocol,
   updateInitialMediaOnPublisher,
+  establishSocketHost,
 };
