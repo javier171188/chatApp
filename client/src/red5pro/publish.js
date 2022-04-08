@@ -50,18 +50,18 @@ var isPublishing = false;
 //   return {};
 // })();
 
-// var configuration = (function () {
-//   var conf = sessionStorage.getItem("r5proTestBed");
-//   try {
-//     return JSON.parse(conf);
-//   } catch (e) {
-//     console.error(
-//       "Could not read testbed configuration from sessionstorage: " + e.message
-//     );
-//   }
-//   console.log(conf);
-//   return {};
-// })();
+var configuration = (function () {
+  var conf = sessionStorage.getItem("r5proTestBed");
+  try {
+    return JSON.parse(conf);
+  } catch (e) {
+    console.error(
+      "Could not read testbed configuration from sessionstorage: " + e.message
+    );
+  }
+  console.log(conf);
+  return {};
+})();
 // red5prosdk.setLogLevel(
 //   configuration.verboseLogging
 //     ? red5prosdk.LOG_LEVELS.TRACE
@@ -224,7 +224,7 @@ function determinePublisher(recording, audio, video, streamName) {
       streamMode: recording ? "record" : "live",
     },
     //getAuthenticationParams(),
-    getUserMediaConfiguration({ audio, video })
+    getUserMediaConfiguration({ audio, video }, configuration)
   );
 
   var rtcConfig = Object.assign({}, config, {
