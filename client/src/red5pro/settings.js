@@ -114,7 +114,7 @@ function getUserMediaConfiguration(configuration) {
   };
 }
 
-function updateInitialMediaOnPublisher() {
+function updateInitialMediaOnPublisher(targetPublisher) {
   var t = setTimeout(function () {
     // If we have requested no audio and/or no video in our initial broadcast,
     // wipe the track from the connection.
@@ -135,12 +135,13 @@ function updateInitialMediaOnPublisher() {
     clearTimeout(t);
   }, 2000);
   // a bit of a hack. had to put a timeout to ensure the video track bits at least started flowing :/
+  //This hack came with the example ._.
 }
 
 function getSocketLocationFromProtocol() {
   return {
     protocol: process.env.SOCKET_PROTOCOL || "ws",
-    port: process.env.WS_PORT || "8001",
+    port: process.env.WS_PORT || "5080",
   };
 }
 
@@ -148,4 +149,5 @@ module.exports = {
   getAuthenticationParams,
   getUserMediaConfiguration,
   getSocketLocationFromProtocol,
+  updateInitialMediaOnPublisher,
 };

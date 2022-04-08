@@ -28,6 +28,7 @@ import {
   getUserMediaConfiguration,
   getAuthenticationParams,
   getSocketLocationFromProtocol,
+  updateInitialMediaOnPublisher,
 } from "./settings.js";
 import allowMediaStreamSwap from "./device-selector-utils.js";
 
@@ -124,7 +125,7 @@ function doPublish(streamName) {
     .publish(streamName)
     .then(function () {
       onPublishSuccess(targetPublisher, streamName);
-      updateInitialMediaOnPublisher();
+      updateInitialMediaOnPublisher(targetPublisher);
     })
     .catch(function (error) {
       var jsonError =
@@ -232,7 +233,7 @@ function determinePublisher(recording, audio, video, streamName) {
     bandwidth: {
       video: 256,
     },
-    host: "localhost",
+    host: process.env.RED5_CONF_HOST || "localhost",
     mediaConstraints: {
       audio,
       video: {
@@ -248,10 +249,11 @@ function determinePublisher(recording, audio, video, streamName) {
       },
     },
     streamName: streamName,
-    room: "one",
+    room: "Roomy", //<-----------------------------------hardcoded
   });
 
   var publisher = new red5prosdk.RTCPublisher();
+  console.log(rtcConfig);
   return publisher.init(rtcConfig);
 }
 
