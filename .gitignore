@@ -151,3 +151,4 @@ packages/react-devtools-scheduling-profiler/dist
 client/.parcel-cache/
 .parcel-cache
 client/.parcel-cache
+*.mp4
