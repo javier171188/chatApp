@@ -401,6 +401,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
     });
 
     var publisher = new red5prosdk.RTCPublisher();
+    console.log("HERE: ", rtcConfig);
     return publisher.init(rtcConfig);
   }
 
