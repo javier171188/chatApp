@@ -232,6 +232,7 @@ function determinePublisher(recording, audio, video, streamName) {
     bandwidth: {
       video: 256,
     },
+    host: "localhost",
     mediaConstraints: {
       audio,
       video: {
@@ -247,6 +248,7 @@ function determinePublisher(recording, audio, video, streamName) {
       },
     },
     streamName: streamName,
+    room: "one",
   });
 
   var publisher = new red5prosdk.RTCPublisher();

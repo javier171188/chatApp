@@ -138,7 +138,10 @@ function updateInitialMediaOnPublisher() {
 }
 
 function getSocketLocationFromProtocol() {
-  return { protocol: process.env.SOCKET_PROTOCOL, port: process.env.WS_PORT };
+  return {
+    protocol: process.env.SOCKET_PROTOCOL || "ws",
+    port: process.env.WS_PORT || "8001",
+  };
 }
 
 module.exports = {
