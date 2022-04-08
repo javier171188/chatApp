@@ -107,8 +107,9 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   function onBitrateUpdate(b, p) {
     bitrate = b;
     packetsSent = p;
-    updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
+    //updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
     if (packetsSent > 100) {
+      //Here we connect to the conference server.
       establishSocketHost(
         targetPublisher,
         roomField.value,
@@ -265,7 +266,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
   }
   function onPublishSuccess(publisher) {
     isPublishing = true;
-    window.red5propublisher = publisher;
+    //window.red5propublisher = publisher;
     console.log("[Red5ProPublisher] Publish Complete.");
     // [NOTE] Moving SO setup until Package Sent amount is sufficient.
     //    establishSharedObject(publisher, roomField.value, streamNameField.value);
@@ -277,6 +278,7 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
       var pc = publisher.getPeerConnection();
       var stream = publisher.getMediaStream();
 
+      //This seems to connect to the conference server
       bitrateTrackingTicket = trackBitrate(
         pc,
         onBitrateUpdate,
@@ -284,13 +286,14 @@ function startCall(window, document, red5prosdk, roomName, streamName) {
         null,
         true
       );
-      statisticsField.classList.remove("hidden");
+      //statisticsField.classList.remove("hidden");
       stream.getVideoTracks().forEach(function (track) {
         var settings = track.getSettings();
         onResolutionUpdate(settings.width, settings.height);
       });
     } catch (e) {
       // no tracking for you!
+      console.error(e);
     }
   }
   function onUnpublishFail(message) {
