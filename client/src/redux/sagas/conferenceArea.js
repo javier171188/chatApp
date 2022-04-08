@@ -12,8 +12,8 @@ const action = ({ type, data, payload }) =>
   });
 
 function* startCallFromSaga(data) {
-  console.log("calling");
-  startCall();
+  let { recording, audio, video, streamName } = data.payload;
+  startCall(recording, audio, video, streamName);
 }
 function* startCallSaga() {
   yield takeEvery(type.START_CALL, (data) => {

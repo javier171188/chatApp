@@ -1,15 +1,36 @@
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { startCallAction} from "../redux/actions";
 
-// let streams = ['Andy', 'John'];
-// let currentRoomName = ['Video'];
+
 
 function Conference(props){
+    const { 
+        recording, 
+        startCallAction, 
+        currentRoomName, 
+        streams, 
+        streamName,
+        audio,
+        video, 
+    } = props;
+   
     const history = useHistory();
-    const {streams, currentRoomName}= props;
+   
+
+    useEffect(() => {
+        startCallAction({
+            recording, 
+            streamName,
+            audio,
+            video, 
+        });
+
+    }, []);
 
     function handleHangUpClick(){
         history.push('/chat/');
@@ -30,8 +51,7 @@ return(
             muted 
             width={320} 
             height={240}
-        >
-            <source src="https://youtu.be/mFY0J5W8Udk" />
+       >
         </video>
     </Box>
 
@@ -59,6 +79,15 @@ return(
 const mapStateToProps = (state) => ({
     currentRoomName: state.chatArea.currentRoomName,
     streams: state.conferenceArea.streams,
+    streamName: state.userState._id,
+    recording: state.conferenceArea.recording,
+    video: state.conferenceArea.videoOn,
+    audio: state.conferenceArea.microphoneOn,
   });
 
-  export default connect(mapStateToProps, null)(Conference);
+  const mapDispatchToProps = {
+        startCallAction,
+  };
+  
+
+  export default connect(mapStateToProps, mapDispatchToProps)(Conference);

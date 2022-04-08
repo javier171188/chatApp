@@ -1,10 +1,10 @@
 var audioTrackClone;
 var videoTrackClone;
 
-function saveSettings() {
-  streamName = streamNameField.value;
-  roomName = roomField.value;
-}
+// function saveSettings() {
+//   streamName = streamNameField.value;
+//   roomName = roomField.value;
+// }
 function updateMutedAudioOnPublisher() {
   if (targetPublisher && isPublishing) {
     var c = targetPublisher.getPeerConnection();

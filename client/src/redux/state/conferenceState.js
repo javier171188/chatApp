@@ -1,7 +1,7 @@
 let conferenceState = {
   streams: ["Andy", "Dominick", "John"],
-  microphoneOn: undefined,
-  videoOn: undefined,
+  microphoneOn: true,
+  videoOn: true,
   recording: false,
   red5proStatus: "",
   serverSettings: {},

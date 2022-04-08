@@ -29,6 +29,8 @@ import {
   getAuthenticationParams,
   getSocketLocationFromProtocol,
 } from "./settings.js";
+import allowMediaStreamSwap from "./device-selector-utils.js";
+
 //Currently does nothing, we are not updating the state,
 //this modified the logs at the top of the user video.
 //const { red5proHandlePublisherEvent } = publisherStatus();
@@ -84,7 +86,8 @@ var publisherSession = document.getElementById("publisher-session");
 var publisherNameField = document.getElementById("publisher-name-field");
 // var streamNameField = {};
 // streamNameField.value = streamName;
-var publisherVideo = document.getElementById("red5pro-publisher");
+// var publisherVideo = document.getElementById("red5pro-publisher");
+// console.log("here", publisherVideo);
 //var audioCheck = document.getElementById('audio-check');
 //var videoCheck = document.getElementById('video-check');
 //var joinButton = document.getElementById('join-button');
@@ -110,9 +113,26 @@ var frameHeight = 0;
 // });
 
 function publishStream(streamName) {
-  saveSettings();
+  //saveSettings();
+  // streamName = streamNameField.value;
+  // roomName = roomField.value;
   doPublish(streamName);
   // setPublishingUI(streamName);
+}
+function doPublish(streamName) {
+  targetPublisher
+    .publish(streamName)
+    .then(function () {
+      onPublishSuccess(targetPublisher, streamName);
+      updateInitialMediaOnPublisher();
+    })
+    .catch(function (error) {
+      var jsonError =
+        typeof error === "string" ? error : JSON.stringify(error, null, 2);
+      console.error("[Red5ProPublisher] :: Error in publishing - " + jsonError);
+      console.error(error);
+      onPublishFail(jsonError);
+    });
 }
 
 //audioCheck.addEventListener('change', updateMutedAudioOnPublisher);
@@ -129,7 +149,7 @@ function onPublisherEvent(event) {
   } else if (
     event.type === red5prosdk.RTCPublisherEventTypes.MEDIA_STREAM_AVAILABLE
   ) {
-    window.allowMediaStreamSwap(
+    allowMediaStreamSwap(
       targetPublisher,
       targetPublisher.getOptions().mediaConstraints,
       document.getElementById("red5pro-publisher")
@@ -233,22 +253,6 @@ function determinePublisher(recording, audio, video, streamName) {
   return publisher.init(rtcConfig);
 }
 
-function doPublish(streamName) {
-  targetPublisher
-    .publish(streamName)
-    .then(function () {
-      onPublishSuccess(targetPublisher, streamName);
-      updateInitialMediaOnPublisher();
-    })
-    .catch(function (error) {
-      var jsonError =
-        typeof error === "string" ? error : JSON.stringify(error, null, 2);
-      console.error("[Red5ProPublisher] :: Error in publishing - " + jsonError);
-      console.error(error);
-      onPublishFail(jsonError);
-    });
-}
-
 // function startCall(roomName, streamName) {
 function startCall(recording, audio, video, streamName) {
   determinePublisher(recording, audio, video, streamName)
@@ -259,6 +263,7 @@ function startCall(recording, audio, video, streamName) {
     })
     .then((r) => {
       publishStream(streamName);
+      //publishStream("First");
     })
     .catch(function (error) {
       var jsonError =

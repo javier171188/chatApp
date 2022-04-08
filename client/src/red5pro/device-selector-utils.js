@@ -18,7 +18,8 @@ NONINFRINGEMENT.   IN  NO  EVENT  SHALL INFRARED5, INC. BE LIABLE FOR ANY CLAIM,
 WHETHER IN  AN  ACTION  OF  CONTRACT,  TORT  OR  OTHERWISE,  ARISING  FROM,  OUT  OF  OR  IN CONNECTION 
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-(function (window, navigator, red5prosdk) {
+
+function getAllowMedia(navigator) {
   // eslint-disable-line no-unused-vars
   "use strict";
 
@@ -212,11 +213,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   var hasBegunMonitor = false;
-  window.allowMediaStreamSwap = function (publisher, constraints, viewElement) {
+  function allowMediaStreamSwap(publisher, constraints, viewElement) {
     if (hasBegunMonitor) return;
     hasBegunMonitor = true;
     targetPublisher = publisher;
     mediaConstraints = constraints;
     beginMediaMonitor(targetPublisher, mediaConstraints, viewElement);
-  };
-})(window, navigator, window.red5prosdk);
+  }
+
+  return allowMediaStreamSwap;
+}
+
+const allowMediaStreamSwap = getAllowMedia(navigator);
+
+module.exports = allowMediaStreamSwap;
