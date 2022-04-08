@@ -224,7 +224,8 @@ function determinePublisher(recording, audio, video, streamName) {
       streamMode: recording ? "record" : "live",
     },
     //getAuthenticationParams(),
-    getUserMediaConfiguration({ audio, video }, configuration)
+    getUserMediaConfiguration({ audio, video }),
+    configuration
   );
 
   var rtcConfig = Object.assign({}, config, {

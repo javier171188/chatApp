@@ -105,13 +105,12 @@ function getAuthenticationParams(configuration) {
     : {};
 }
 
-function getUserMediaConfiguration(configuration, sessionStorageConf) {
+function getUserMediaConfiguration(configuration) {
   return {
     mediaConstraints: {
       audio: configuration.audio,
       video: configuration.video,
     },
-    sessionStorageConf,
   };
 }
 
