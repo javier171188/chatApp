@@ -132,25 +132,9 @@ function getSocketLocationFromProtocol() {
   };
 }
 
-var hostSocket;
-function establishSocketHost(publisher, roomName, streamName) {
-  if (hostSocket) return;
-  var wsProtocol = isSecure ? "wss" : "ws";
-  var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`;
-  hostSocket = new WebSocket(url);
-  hostSocket.onmessage = function (message) {
-    var payload = JSON.parse(message.data);
-    if (roomName === payload.room) {
-      streamsList = payload.streams;
-      processStreams(streamsList, streamName);
-    }
-  };
-}
-
 module.exports = {
   getAuthenticationParams,
   getUserMediaConfiguration,
   getSocketLocationFromProtocol,
   updateInitialMediaOnPublisher,
-  establishSocketHost,
 };

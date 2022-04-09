@@ -49,3 +49,22 @@ function updatePublishingUIOnStreamCount(streamCount) {
     }
     */
 }
+
+var hostSocket;
+function establishSocketHost(publisher, roomName, streamName) {
+  if (hostSocket) return;
+  var wsProtocol = process.env.SOCKET_PROTOCOL || "ws";
+  const socketEndpoint = process.env.CONFERENCE_ENDPOINT || "localhost:8001";
+  var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`;
+  console.log("Here: ", url);
+  hostSocket = new WebSocket(url);
+  hostSocket.onmessage = function (message) {
+    var payload = JSON.parse(message.data);
+    if (roomName === payload.room) {
+      streamsList = payload.streams;
+      processStreams(streamsList, streamName);
+    }
+  };
+}
+
+module.exports = { establishSocketHost };

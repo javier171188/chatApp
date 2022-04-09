@@ -29,9 +29,10 @@ import {
   getAuthenticationParams,
   getSocketLocationFromProtocol,
   updateInitialMediaOnPublisher,
-  establishSocketHost,
 } from "./settings.js";
+import { establishSocketHost } from "./subscribe.js";
 import allowMediaStreamSwap from "./device-selector-utils.js";
+import store from "../redux/store.js";
 
 //Currently does nothing, we are not updating the state,
 //this modified the logs at the top of the user video.
@@ -167,7 +168,14 @@ function onBitrateUpdate(b, p) {
   // bitrate = b;
   // packetsSent = p;
   //updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
-  if (packetsSent > 100) {
+  console.log("I come here", packetsSent);
+
+  //if (packetsSent > 100) {
+  if (true) {
+    const state = store.getState();
+    const roomName = state.chatArea.currentRoomId;
+    const streamName = state.userState._id;
+    console.log("But not here");
     establishSocketHost(targetPublisher, roomName, streamName);
   }
 }
