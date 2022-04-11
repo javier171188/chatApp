@@ -37,17 +37,7 @@ function processStreams(streamlist, exclusion) {
     subscribers[0].execute(baseSubscriberConfig);
   }
 
-  updatePublishingUIOnStreamCount(nonPublishers.length);
-}
-
-function updatePublishingUIOnStreamCount(streamCount) {
-  /*
-    if (streamCount > 0) {
-      publisherContainer.classList.remove('margin-center');
-    } else {
-      publisherContainer.classList.add('margin-center');
-    }
-    */
+  //updatePublishingUIOnStreamCount(nonPublishers.length);
 }
 
 var hostSocket;
@@ -65,6 +55,16 @@ function establishSocketHost(publisher, roomName, streamName) {
       processStreams(streamsList, streamName);
     }
   };
+}
+
+function updatePublishingUIOnStreamCount(streamCount) {
+  /*
+    if (streamCount > 0) {
+      publisherContainer.classList.remove('margin-center');
+    } else {
+      publisherContainer.classList.add('margin-center');
+    }
+    */
 }
 
 module.exports = { establishSocketHost };
