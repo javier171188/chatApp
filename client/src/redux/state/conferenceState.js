@@ -4,7 +4,7 @@ let conferenceState = {
   videoOn: true,
   recording: false,
   red5proStatus: "",
-  serverSettings: {},
+  configuration: {},
 };
 
 export default conferenceState;

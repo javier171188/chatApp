@@ -4,6 +4,11 @@ import {
   getConferenceSubscriberElementId,
   ConferenceSubscriberItem,
 } from "./conference-subscriber.js";
+import {
+  getSocketLocationFromProtocol,
+  getAuthenticationParams,
+  getUserMediaConfiguration,
+} from "./settings.js";
 
 const action = ({ type, payload }) =>
   store.dispatch({
@@ -15,6 +20,9 @@ var streamsList = [];
 var subscribersEl = document.getElementById("subscribers");
 
 function processStreams(streamlist, exclusion) {
+  const state = store.getState();
+  const configuration = state.conferenceArea.configuration;
+  console.log(configuration);
   var nonPublishers = streamlist.filter(function (name) {
     return name !== exclusion;
   });
@@ -46,8 +54,11 @@ function processStreams(streamlist, exclusion) {
         protocol: getSocketLocationFromProtocol().protocol,
         port: getSocketLocationFromProtocol().port,
       },
-      getAuthenticationParams(),
-      getUserMediaConfiguration()
+      //getAuthenticationParams(),
+      getUserMediaConfiguration({
+        audio: configuration.useAudio,
+        video: configuration.useVideo,
+      })
     );
     subscribers[0].execute(baseSubscriberConfig);
   }

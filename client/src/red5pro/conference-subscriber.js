@@ -72,9 +72,8 @@ function startSubscriptions() {
     return ["red5pro", "subscriber", streamName, "audio"].join("-");
   }
 
-  function generateNewSubscriberDOM(streamName, subId, parent) {
+  function generateNewSubscriberDOM(streamName, subId) {
     var card = templateContent(subscriberTemplate);
-    parent.appendChild(card);
     var videoId = getSubscriberElementId(streamName);
     var audioId = getSubscriberAudioElementId(streamName);
     var videoElement = card.getElementsByClassName("red5pro-media")[0];
@@ -128,7 +127,7 @@ function startSubscriptions() {
     decoy.unsubscribe();
   }
 
-  var SubscriberItem = function (subStreamName, parent, index) {
+  var SubscriberItem = function (subStreamName, index) {
     const state = store.getState();
     const storeName = state.userState._id;
     //this.subscriptionId = [streamNameField.value, "sub"].join("-");
@@ -140,17 +139,12 @@ function startSubscriptions() {
     this.audioDecoy = undefined; // Used when initial mode is `Audio`.
     this.index = index;
     this.next = undefined;
-    this.parent = parent;
-    this.card = generateNewSubscriberDOM(
-      this.streamName,
-      this.subscriptionId,
-      this.parent
-    );
+    this.card = generateNewSubscriberDOM(this.streamName, this.subscriptionId);
     this.statusField = this.card.getElementsByClassName(
       "subscriber-status-field"
     )[0];
     //console.log("Here, statusField: ", this.statusField);
-    this.toggleVideoPoster = this.toggleVideoPoster.bind(this);
+    //this.toggleVideoPoster = this.toggleVideoPoster.bind(this);
     this.handleAudioDecoyVolumeChange =
       this.handleAudioDecoyVolumeChange.bind(this);
     this.handleStreamingModeMetadata =
@@ -195,16 +189,16 @@ function startSubscriptions() {
     }
     this.streamingMode = streamingMode;
   };
-  SubscriberItem.prototype.toggleVideoPoster = function (showPoster) {
-    var video = document.getElementById(
-      getSubscriberElementId(this.streamName)
-    );
-    if (showPoster) {
-      video.classList.add("hidden");
-    } else {
-      video.classList.remove("hidden");
-    }
-  };
+  // SubscriberItem.prototype.toggleVideoPoster = function (showPoster) {
+  //   var video = document.getElementById(
+  //     getSubscriberElementId(this.streamName)
+  //   );
+  //   if (showPoster) {
+  //     video.classList.add("hidden");
+  //   } else {
+  //     video.classList.remove("hidden");
+  //   }
+  // };
   SubscriberItem.prototype.resolve = function () {
     if (this.next) {
       this.next.execute(this.baseConfiguration);
@@ -231,7 +225,7 @@ function startSubscriptions() {
     this.subscriber.on("Connect.Failure", this.reject.bind(this));
     var sub = this.subscriber;
     var handleStreamingModeMetadata = this.handleStreamingModeMetadata;
-    var toggleVideoPoster = this.toggleVideoPoster;
+    //var toggleVideoPoster = this.toggleVideoPoster;
     var statusField = this.statusField;
     var reject = this.reject.bind(this);
     var closeCalled = false;
@@ -240,10 +234,9 @@ function startSubscriptions() {
       if (closeCalled) return;
       closeCalled = true;
       function cleanup() {
-        var el = document.getElementById(
-          getSubscriberElementId(name) + "-container"
-        );
-        el.parentNode.removeChild(el);
+        // var el = document.getElementById(
+        //   getSubscriberElementId(name) + "-container"
+        // );
         sub.off("*", respond);
         sub.off("Subscribe.Fail", fail);
       }
@@ -259,7 +252,7 @@ function startSubscriptions() {
       close();
       var t = setTimeout(function () {
         clearTimeout(t);
-        new SubscriberItem(self.streamName, self.parent, self.index).execute();
+        new SubscriberItem(self.streamName, self.index).execute();
       }, 2000);
     };
     var respond = function (event) {
@@ -269,7 +262,7 @@ function startSubscriptions() {
       if (event.type === "Subscribe.Metadata") {
         if (event.data.streamingMode) {
           handleStreamingModeMetadata(event.data.streamingMode);
-          toggleVideoPoster(!event.data.streamingMode.match(/Video/));
+          //toggleVideoPoster(!event.data.streamingMode.match(/Video/));
         }
       }
       if (inFailedState) {

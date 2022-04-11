@@ -8,6 +8,11 @@ const conferenceReducer = (state = conferenceState, action) => {
         ...state,
         streams: action.payload,
       };
+    case type.SET_RED5PRO_CONFIG:
+      return {
+        ...state,
+        configuration: action.payload,
+      };
     default:
       return state;
   }

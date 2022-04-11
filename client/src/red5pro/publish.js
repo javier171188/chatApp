@@ -33,6 +33,7 @@ import {
 import { establishSocketHost } from "./subscribe.js";
 import allowMediaStreamSwap from "./device-selector-utils.js";
 import store from "../redux/store.js";
+import * as types from "../redux/types.js";
 
 //Currently does nothing, we are not updating the state,
 //this modified the logs at the top of the user video.
@@ -64,6 +65,7 @@ var configuration = (function () {
   //console.log(conf);
   return {};
 })();
+
 // red5prosdk.setLogLevel(
 //   configuration.verboseLogging
 //     ? red5prosdk.LOG_LEVELS.TRACE
@@ -263,6 +265,8 @@ function determinePublisher(recording, audio, video, streamName) {
 
 // function startCall(roomName, streamName) {
 function startCall(recording, audio, video, streamName) {
+  store.dispatch({ type: types.SET_RED5PRO_CONFIG, payload: configuration });
+
   determinePublisher(recording, audio, video, streamName)
     .then(function (publisherImpl) {
       targetPublisher = publisherImpl;

@@ -58,7 +58,7 @@ return(
     <Stack className='participants' spacing={2} direction="row" >
         {streams.map(s =>(
             <video 
-            id={s} 
+            id={`red5pro-subscriber-${s}`} 
             className="red5pro-subscriber" 
             controls 
             autoPlay 
