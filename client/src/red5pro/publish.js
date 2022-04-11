@@ -61,7 +61,7 @@ var configuration = (function () {
       "Could not read testbed configuration from sessionstorage: " + e.message
     );
   }
-  console.log(conf);
+  //console.log(conf);
   return {};
 })();
 // red5prosdk.setLogLevel(
@@ -168,14 +168,12 @@ function onBitrateUpdate(b, p) {
   // bitrate = b;
   // packetsSent = p;
   //updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
-  console.log("I come here", packetsSent);
 
-  //if (packetsSent > 100) {
+  //if (packetsSent > 100) { //<-----------------------Where should I define packetsSent?
   if (true) {
     const state = store.getState();
     const roomName = state.chatArea.currentRoomId;
     const streamName = state.userState._id;
-    console.log("But not here");
     establishSocketHost(targetPublisher, roomName, streamName);
   }
 }
@@ -255,11 +253,11 @@ function determinePublisher(recording, audio, video, streamName) {
       },
     },
     streamName: streamName,
-    room: "Roomy", //<-----------------------------------hardcoded
+    room: "Roomy", //<---------------------------------------------------hardcoded
   });
 
   var publisher = new red5prosdk.RTCPublisher();
-  console.log(rtcConfig);
+  //console.log(rtcConfig);
   return publisher.init(rtcConfig);
 }
 
