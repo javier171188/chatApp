@@ -211,6 +211,7 @@ function startSubscriptions() {
     }
   };
   SubscriberItem.prototype.execute = function (config) {
+    config.host = process.env.RED5_HOST || "localhost";
     this.baseConfiguration = config;
     var self = this;
     var name = this.streamName;
@@ -252,7 +253,9 @@ function startSubscriptions() {
       close();
       var t = setTimeout(function () {
         clearTimeout(t);
-        new SubscriberItem(self.streamName, self.index).execute();
+        new SubscriberItem(self.streamName, self.index).execute(
+          this.baseConfiguration
+        );
       }, 2000);
     };
     var respond = function (event) {
@@ -274,6 +277,7 @@ function startSubscriptions() {
     this.subscriber.on("Subscribe.Fail", fail);
     this.subscriber.on("*", respond);
 
+    console.log("Is empty? ", rtcConfig);
     this.subscriber
       .init(rtcConfig)
       .then(function (subscriber) {

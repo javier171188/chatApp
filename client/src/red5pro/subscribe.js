@@ -21,7 +21,7 @@ var subscribersEl = document.getElementById("subscribers");
 
 function processStreams(streamlist, exclusion) {
   const state = store.getState();
-  const configuration = state.conferenceArea.configuration;
+  const configuration = state.conferenceArea.configuration || {};
   console.log(configuration);
   var nonPublishers = streamlist.filter(function (name) {
     return name !== exclusion;

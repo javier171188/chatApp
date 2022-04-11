@@ -68,7 +68,7 @@ return(
             height={240}
             key={s}
         >
-            <source src="" />
+            <source  />
         </video>
         ))}
     </Stack>
