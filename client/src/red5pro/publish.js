@@ -167,15 +167,16 @@ function onPublishFail(message) {
 }
 
 function onBitrateUpdate(b, p) {
-  // bitrate = b;
-  // packetsSent = p;
+  bitrate = b;
+  packetsSent = p;
   //updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
 
-  //if (packetsSent > 100) { //<-----------------------Where should I define packetsSent?
-  if (true) {
+  if (packetsSent > 100) {
+    //if (true) {
     const state = store.getState();
     const roomName = state.chatArea.currentRoomId;
     const streamName = state.userState._id;
+    //const streamName = state.userState.userName;
     establishSocketHost(targetPublisher, roomName, streamName);
   }
 }
@@ -255,7 +256,7 @@ function determinePublisher(recording, audio, video, streamName) {
       },
     },
     streamName: streamName,
-    room: "Roomy", //<---------------------------------------------------hardcoded
+    //room: "Roomy", //<---------------------------------------------------hardcoded
   });
 
   var publisher = new red5prosdk.RTCPublisher();

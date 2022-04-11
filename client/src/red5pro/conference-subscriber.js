@@ -130,6 +130,7 @@ function startSubscriptions() {
   var SubscriberItem = function (subStreamName, index) {
     const state = store.getState();
     const storeName = state.userState._id;
+    //const storeName = state.userState.userName;
     //this.subscriptionId = [streamNameField.value, "sub"].join("-");
     this.subscriptionId = [storeName, "sub"].join("-");
     this.streamName = subStreamName;
@@ -211,7 +212,7 @@ function startSubscriptions() {
     }
   };
   SubscriberItem.prototype.execute = function (config) {
-    config.host = process.env.RED5_HOST || "localhost";
+    config.host = process.env.RED5_CONF_HOST || "localhost";
     this.baseConfiguration = config;
     var self = this;
     var name = this.streamName;

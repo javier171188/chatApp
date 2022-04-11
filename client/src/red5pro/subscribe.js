@@ -16,7 +16,7 @@ const action = ({ type, payload }) =>
     payload,
   });
 
-var streamsList = [];
+//var streamsList = [];
 var subscribersEl = document.getElementById("subscribers");
 
 function processStreams(streamlist, exclusion) {
@@ -32,8 +32,16 @@ function processStreams(streamlist, exclusion) {
       !document.getElementById(getConferenceSubscriberElementId(name))
     );
   });
+
+  let streams = state.conferenceArea.streams;
+  nonPublishers.forEach((element) => {
+    if (!streams.includes(element)) {
+      streams.push(element);
+    }
+  });
+
   console.log("Here, this is the list: ", list);
-  action({ type: types.UPDATE_STREAMS, payload: list });
+  action({ type: types.UPDATE_STREAMS, payload: streams });
 
   var subscribers = list.map(function (name, index) {
     return new ConferenceSubscriberItem(name, subscribersEl, index);
@@ -77,7 +85,7 @@ function establishSocketHost(publisher, roomName, streamName) {
   hostSocket.onmessage = function (message) {
     var payload = JSON.parse(message.data);
     if (roomName === payload.room) {
-      streamsList = payload.streams;
+      let streamsList = payload.streams;
       processStreams(streamsList, streamName);
     }
   };
