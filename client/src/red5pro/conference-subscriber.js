@@ -24,9 +24,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import * as red5prosdk from "red5pro-webrtc-sdk";
 import { red5proHandleSubscriberEvent } from "./script/subscription-status.js";
+import store from "../redux/store.js";
 
 //(function (window, document, red5prosdk) {
-function startSubscriptions(streamNameValue) {
+function startSubscriptions() {
   "use strict";
 
   var isMoz = false;
@@ -35,8 +36,9 @@ function startSubscriptions(streamNameValue) {
   }
 
   var subscriberMap = {};
+
   //var streamNameField = document.getElementById("streamname-field");
-  var streamNameField = { value: streamNameValue };
+  //var streamNameField = { value: streamNameValue };
   var updateSuscriberStatusFromEvent = red5proHandleSubscriberEvent;
   var subscriberTemplate =
     "" +
@@ -127,7 +129,10 @@ function startSubscriptions(streamNameValue) {
   }
 
   var SubscriberItem = function (subStreamName, parent, index) {
-    this.subscriptionId = [streamNameField.value, "sub"].join("-");
+    const state = store.getState();
+    const storeName = state.userState._id;
+    //this.subscriptionId = [streamNameField.value, "sub"].join("-");
+    this.subscriptionId = [storeName, "sub"].join("-");
     this.streamName = subStreamName;
     this.subscriber = undefined;
     this.baseConfiguration = undefined;
@@ -294,9 +299,15 @@ function startSubscriptions(streamNameValue) {
       });
   };
 
-  window.getConferenceSubscriberElementId = getSubscriberElementId;
-  window.ConferenceSubscriberItem = SubscriberItem;
+  const getConferenceSubscriberElementId = getSubscriberElementId;
+  const ConferenceSubscriberItem = SubscriberItem;
+
+  return { getConferenceSubscriberElementId, ConferenceSubscriberItem };
 }
 //)(window, document, red5prosdk);
 
-module.exports = startSubscriptions;
+const exportingFunctions = startSubscriptions();
+
+module.exports = exportingFunctions;
+
+// module.exports = startSubscriptions;

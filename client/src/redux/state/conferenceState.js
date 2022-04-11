@@ -1,5 +1,5 @@
 let conferenceState = {
-  streams: ["Andy", "Dominick", "John"],
+  streams: [],
   microphoneOn: true,
   videoOn: true,
   recording: false,

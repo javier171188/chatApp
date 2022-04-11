@@ -1,3 +1,16 @@
+import store from "../redux/store.js";
+import * as types from "../redux/types.js";
+import {
+  getConferenceSubscriberElementId,
+  ConferenceSubscriberItem,
+} from "./conference-subscriber.js";
+
+const action = ({ type, payload }) =>
+  store.dispatch({
+    type,
+    payload,
+  });
+
 var streamsList = [];
 var subscribersEl = document.getElementById("subscribers");
 
@@ -8,12 +21,14 @@ function processStreams(streamlist, exclusion) {
   var list = nonPublishers.filter(function (name, index, self) {
     return (
       index == self.indexOf(name) &&
-      !document.getElementById(window.getConferenceSubscriberElementId(name))
+      !document.getElementById(getConferenceSubscriberElementId(name))
     );
   });
   console.log("Here, this is the list: ", list);
+  action({ type: types.UPDATE_STREAMS, payload: list });
+
   var subscribers = list.map(function (name, index) {
-    return new window.ConferenceSubscriberItem(name, subscribersEl, index);
+    return new ConferenceSubscriberItem(name, subscribersEl, index);
   });
   console.log("Here, subscribers: ", subscribers);
   var i,
