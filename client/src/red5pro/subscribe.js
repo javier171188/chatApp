@@ -33,12 +33,12 @@ function processStreams(streamlist, exclusion) {
     );
   });
 
-  // let streams = state.conferenceArea.streams;
-  // nonPublishers.forEach((element) => {
-  //   if (!streams.includes(element)) {
-  //     streams.push(element);
-  //   }
-  // });
+  let streams = state.conferenceArea.streams;
+  nonPublishers.forEach((element) => {
+    if (!streams.includes(element)) {
+      streams.push(element);
+    }
+  });
 
   console.log("Here, this is the list: ", list);
   action({ type: types.UPDATE_STREAMS, payload: list });
