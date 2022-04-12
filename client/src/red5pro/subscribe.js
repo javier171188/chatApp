@@ -22,7 +22,8 @@ var subscribersEl = document.getElementById("subscribers");
 function processStreams(streamlist, exclusion) {
   const state = store.getState();
   const configuration = state.conferenceArea.configuration || {};
-  console.log(configuration);
+
+  console.log("streamlist: ", streamlist);
   var nonPublishers = streamlist.filter(function (name) {
     return name !== exclusion;
   });
@@ -33,10 +34,7 @@ function processStreams(streamlist, exclusion) {
     );
   });
 
-  // let newStreams = state.conferenceArea.streams;
-
-  // console.log("All the streams: ", streamlist);
-  action({ type: types.UPDATE_STREAMS, payload: list });
+  action({ type: types.UPDATE_STREAMS, payload: nonPublishers });
 
   var subscribers = list.map(function (name, index) {
     return new ConferenceSubscriberItem(name, subscribersEl, index);

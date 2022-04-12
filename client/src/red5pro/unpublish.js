@@ -27,6 +27,7 @@ function unpublish() {
     track.stop();
   });
   console.log("Have stopped");
+  action({ type: types.UPDATE_STREAMS, payload: [] });
 
   return new Promise(function (resolve, reject) {
     var publisher = targetPublisher;

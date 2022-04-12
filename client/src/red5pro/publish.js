@@ -34,10 +34,7 @@ import {
 import { establishSocketHost } from "./subscribe.js";
 import store from "../redux/store.js";
 import * as types from "../redux/types.js";
-import {
-  setBitrateTrackingTicketAction,
-  setTargetPublisherAction,
-} from "../redux/actions";
+import { setBitrateTrackingTicketAction } from "../redux/actions";
 
 const action = ({ type, payload }) =>
   store.dispatch({
