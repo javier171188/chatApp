@@ -41,5 +41,9 @@ function shutdown() {
   unpublish().then(clearRefs).catch(clearRefs);
   untrackBitrate(bitrateTrackingTicket);
 }
-window.addEventListener("beforeunload", shutdown);
-window.addEventListener("pagehide", shutdown);
+
+module.exports = shutdown;
+
+// window.addEventListener("beforeunload", shutdown);
+// window.addEventListener("pagehide", shutdown);
+// console.log("The event listeners were added");

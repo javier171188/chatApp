@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { startCallAction} from "../redux/actions";
+import { startCallAction, stopCallAction} from "../redux/actions";
 
 
 
@@ -12,6 +12,7 @@ function Conference(props){
     const { 
         recording, 
         startCallAction, 
+        stopCallAction,
         currentRoomName, 
         streams, 
         streamName,
@@ -33,6 +34,7 @@ function Conference(props){
     }, []);
 
     function handleHangUpClick(){
+        stopCallAction();
         history.push('/chat/');
     }
 
@@ -88,6 +90,7 @@ const mapStateToProps = (state) => ({
 
   const mapDispatchToProps = {
         startCallAction,
+        stopCallAction,
   };
   
 

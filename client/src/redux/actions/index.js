@@ -131,3 +131,10 @@ export const startCallAction = (payload) => {
     payload,
   };
 };
+
+export const stopCallAction = (payload) => {
+  return {
+    type: type.STOP_CALL,
+    payload,
+  };
+};

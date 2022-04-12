@@ -3,6 +3,7 @@ import store from "../store";
 import { takeEvery } from "redux-saga/effects";
 
 import { startCall } from "../../red5pro/publish.js";
+import shutdown from "../../red5pro/unpublish";
 
 const action = ({ type, data, payload }) =>
   store.dispatch({
@@ -20,6 +21,17 @@ function* startCallSaga() {
     return startCallFromSaga(data);
   });
 }
+
+function* stopCallFromSaga(data) {
+  console.log("I want to hang up");
+  shutdown();
+}
+function* stopCallSaga() {
+  yield takeEvery(type.STOP_CALL, (data) => {
+    return stopCallFromSaga(data);
+  });
+}
 module.exports = {
   startCallSaga,
+  stopCallSaga,
 };

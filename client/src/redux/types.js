@@ -30,4 +30,5 @@ export const ACCEPT_REQUEST = "ACCEPT_REQUEST";
 export const REGISTER = "REGISTER";
 export const UPDATE_STREAMS = "UPDATE_STREAMS";
 export const START_CALL = "START_CALL";
+export const STOP_CALL = "STOP_CALL";
 export const SET_RED5PRO_CONFIG = "SET_RED5PRO_CONFIG";
