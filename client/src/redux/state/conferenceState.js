@@ -7,6 +7,7 @@ let conferenceState = {
   configuration: {},
   hostSocket: undefined,
   bitrateTrackingTicket: undefined,
+  targetPublisher: undefined,
 };
 
 export default conferenceState;

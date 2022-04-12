@@ -1,5 +1,6 @@
 import store from "../redux/store.js";
 import * as types from "../redux/types.js";
+import { setTargetPublisherAction } from "../redux/actions";
 
 import { untrackBitrate } from "./script/red5pro-utils.js";
 
@@ -12,6 +13,8 @@ const action = ({ type, payload }) =>
 function unpublish() {
   const state = store.getState();
   let hostSocket = state.conferenceArea.hostSocket;
+  let targetPublisher = state.conferenceArea.targetPublisher;
+
   if (hostSocket !== undefined) {
     hostSocket.close();
     action({ type: types.SET_HOST_SOCKET, payload: undefined });
@@ -47,10 +50,12 @@ function shutdown() {
   if (shuttingDown) return;
   shuttingDown = true;
   function clearRefs() {
+    const state = store.getState();
+    let targetPublisher = state.conferenceArea.targetPublisher;
     if (targetPublisher) {
       targetPublisher.off("*", onPublisherEvent);
     }
-    targetPublisher = undefined;
+    setTargetPublisherAction(undefined);
   }
   unpublish().then(clearRefs).catch(clearRefs);
 

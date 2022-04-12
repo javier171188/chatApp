@@ -34,7 +34,16 @@ import { establishSocketHost } from "./subscribe.js";
 import allowMediaStreamSwap from "./device-selector-utils.js";
 import store from "../redux/store.js";
 import * as types from "../redux/types.js";
-import { setBitrateTrackingTicket } from "../redux/actions";
+import {
+  setBitrateTrackingTicketAction,
+  setTargetPublisherAction,
+} from "../redux/actions";
+
+const action = ({ type, payload }) =>
+  store.dispatch({
+    type,
+    payload,
+  });
 
 //Currently does nothing, we are not updating the state,
 //this modified the logs at the top of the user video.
@@ -76,7 +85,7 @@ red5prosdk.setLogLevel(red5prosdk.LOG_LEVELS.WARN);
 
 //var updateStatusFromEvent = red5proHandlePublisherEvent;
 
-var targetPublisher;
+//var targetPublisher;
 // var roomName = window.query('room') || 'red5pro'; // eslint-disable-line no-unused-vars
 // var streamName = window.query('streamName') || ['publisher', Math.floor(Math.random() * 0x10000).toString(16)].join('-');
 //var socketEndpoint = window.query('socket') || 'localhost:8001'
@@ -124,6 +133,8 @@ function publishStream(streamName) {
   // setPublishingUI(streamName);
 }
 function doPublish(streamName) {
+  const state = store.getState();
+  let targetPublisher = state.conferenceArea.targetPublisher;
   targetPublisher
     .publish(streamName)
     .then(function () {
@@ -148,6 +159,10 @@ var isSecure = protocol == "https";
 
 function onPublisherEvent(event) {
   console.log("[Red5ProPublisher] " + event.type + ".");
+
+  const state = store.getState();
+  let targetPublisher = state.conferenceArea.targetPublisher;
+
   if (event.type === "WebSocket.Message.Unhandled") {
     console.log(event);
   } else if (
@@ -176,6 +191,7 @@ function onBitrateUpdate(b, p) {
     const state = store.getState();
     const roomName = state.chatArea.currentRoomId;
     const streamName = state.userState._id;
+    const targetPublisher = state.conferenceArea.targetPublisher;
     //const streamName = state.userState.userName;
     establishSocketHost(targetPublisher, roomName, streamName);
   }
@@ -202,7 +218,7 @@ function onPublishSuccess(publisher, roomName, streamName) {
       null,
       true
     );
-    setBitrateTrackingTicket(bitrateTrackingTicket);
+    setBitrateTrackingTicketAction(bitrateTrackingTicket);
     //statisticsField.classList.remove("hidden");
     stream.getVideoTracks().forEach(function (track) {
       //var settings = track.getSettings();
@@ -277,7 +293,12 @@ function startCall(recording, audio, video, streamName) {
 
   determinePublisher(recording, audio, video, streamName)
     .then(function (publisherImpl) {
-      targetPublisher = publisherImpl;
+      //setTargetPublisherAction(publisherImpl);
+      action({ type: types.SET_TARGET_PUBLISHER, payload: publisherImpl });
+
+      const state = store.getState();
+      let targetPublisher = state.conferenceArea.targetPublisher;
+
       targetPublisher.on("*", onPublisherEvent);
       return targetPublisher.preview();
     })

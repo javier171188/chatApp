@@ -18,6 +18,11 @@ const conferenceReducer = (state = conferenceState, action) => {
         ...state,
         hostSocket: action.payload,
       };
+    case type.SET_TARGET_PUBLISHER:
+      return {
+        ...state,
+        targetPublisher: action.payload,
+      };
     default:
       return state;
   }

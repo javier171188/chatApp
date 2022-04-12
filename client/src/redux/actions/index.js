@@ -139,9 +139,17 @@ export const stopCallAction = (payload) => {
   };
 };
 
-export const setBitrateTrackingTicket = (payload) => {
+export const setBitrateTrackingTicketAction = (payload) => {
   return {
     type: type.SET_BITRATE_TRACKING_TICKET,
+    payload,
+  };
+};
+
+export const setTargetPublisherAction = (payload) => {
+  console.log("Inside action");
+  return {
+    type: type.SET_TARGET_PUBLISHER,
     payload,
   };
 };
