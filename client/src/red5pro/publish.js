@@ -29,9 +29,9 @@ import {
   getAuthenticationParams,
   getSocketLocationFromProtocol,
   updateInitialMediaOnPublisher,
+  onPublisherEvent,
 } from "./settings.js";
 import { establishSocketHost } from "./subscribe.js";
-import allowMediaStreamSwap from "./device-selector-utils.js";
 import store from "../redux/store.js";
 import * as types from "../redux/types.js";
 import {
@@ -157,25 +157,6 @@ function doPublish(streamName) {
 let protocol = process.env.RED5_PROTOCOL;
 var isSecure = protocol == "https";
 
-function onPublisherEvent(event) {
-  console.log("[Red5ProPublisher] " + event.type + ".");
-
-  const state = store.getState();
-  let targetPublisher = state.conferenceArea.targetPublisher;
-
-  if (event.type === "WebSocket.Message.Unhandled") {
-    console.log(event);
-  } else if (
-    event.type === red5prosdk.RTCPublisherEventTypes.MEDIA_STREAM_AVAILABLE
-  ) {
-    allowMediaStreamSwap(
-      targetPublisher,
-      targetPublisher.getOptions().mediaConstraints,
-      document.getElementById("red5pro-publisher")
-    );
-  }
-  //updateStatusFromEvent(event);
-}
 function onPublishFail(message) {
   isPublishing = false;
   console.error("[Red5ProPublisher] Publish Error :: " + message);

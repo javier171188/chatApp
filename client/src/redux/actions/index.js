@@ -147,7 +147,6 @@ export const setBitrateTrackingTicketAction = (payload) => {
 };
 
 export const setTargetPublisherAction = (payload) => {
-  console.log("Inside action");
   return {
     type: type.SET_TARGET_PUBLISHER,
     payload,

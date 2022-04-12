@@ -1,6 +1,7 @@
 import store from "../redux/store.js";
 import * as types from "../redux/types.js";
 import { setTargetPublisherAction } from "../redux/actions";
+import { onPublisherEvent } from "./settings.js";
 
 import { untrackBitrate } from "./script/red5pro-utils.js";
 
@@ -17,8 +18,16 @@ function unpublish() {
 
   if (hostSocket !== undefined) {
     hostSocket.close();
+    console.log("This is closed");
     action({ type: types.SET_HOST_SOCKET, payload: undefined });
   }
+
+  const tracks = targetPublisher.getMediaStream().getTracks();
+  tracks.forEach((track) => {
+    track.stop();
+  });
+  console.log("Have stopped");
+
   return new Promise(function (resolve, reject) {
     var publisher = targetPublisher;
     publisher

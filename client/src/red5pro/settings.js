@@ -1,3 +1,8 @@
+import store from "../redux/store.js";
+import * as red5prosdk from "red5pro-webrtc-sdk";
+
+import allowMediaStreamSwap from "./device-selector-utils.js";
+
 var audioTrackClone;
 var videoTrackClone;
 
@@ -132,9 +137,30 @@ function getSocketLocationFromProtocol() {
   };
 }
 
+function onPublisherEvent(event) {
+  console.log("[Red5ProPublisher] " + event.type + ".");
+
+  const state = store.getState();
+  let targetPublisher = state.conferenceArea.targetPublisher;
+
+  if (event.type === "WebSocket.Message.Unhandled") {
+    console.log(event);
+  } else if (
+    event.type === red5prosdk.RTCPublisherEventTypes.MEDIA_STREAM_AVAILABLE
+  ) {
+    allowMediaStreamSwap(
+      targetPublisher,
+      targetPublisher.getOptions().mediaConstraints,
+      document.getElementById("red5pro-publisher")
+    );
+  }
+  //updateStatusFromEvent(event);
+}
+
 module.exports = {
   getAuthenticationParams,
   getUserMediaConfiguration,
   getSocketLocationFromProtocol,
   updateInitialMediaOnPublisher,
+  onPublisherEvent,
 };
