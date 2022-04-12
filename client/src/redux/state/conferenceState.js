@@ -6,6 +6,7 @@ let conferenceState = {
   red5proStatus: "",
   configuration: {},
   hostSocket: undefined,
+  bitrateTrackingTicket: undefined,
 };
 
 export default conferenceState;

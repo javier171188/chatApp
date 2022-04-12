@@ -34,6 +34,7 @@ import { establishSocketHost } from "./subscribe.js";
 import allowMediaStreamSwap from "./device-selector-utils.js";
 import store from "../redux/store.js";
 import * as types from "../redux/types.js";
+import { setBitrateTrackingTicket } from "../redux/actions";
 
 //Currently does nothing, we are not updating the state,
 //this modified the logs at the top of the user video.
@@ -79,7 +80,7 @@ var targetPublisher;
 // var roomName = window.query('room') || 'red5pro'; // eslint-disable-line no-unused-vars
 // var streamName = window.query('streamName') || ['publisher', Math.floor(Math.random() * 0x10000).toString(16)].join('-');
 //var socketEndpoint = window.query('socket') || 'localhost:8001'
-var socketEndpoint = process.env.SOCKET_ENDPOINT || "localhost:8001";
+//var socketEndpoint = process.env.SOCKET_ENDPOINT || "localhost:8001";
 
 // var roomField = {};
 // roomField.value = roomName;
@@ -99,7 +100,6 @@ var socketEndpoint = process.env.SOCKET_ENDPOINT || "localhost:8001";
 // var bitrateField = document.getElementById("bitrate-field");
 // var packetsField = document.getElementById("packets-field");
 // var resolutionField = document.getElementById("resolution-field");
-var bitrateTrackingTicket;
 var bitrate = 0;
 var packetsSent = 0;
 var frameWidth = 0;
@@ -195,10 +195,17 @@ function onPublishSuccess(publisher, roomName, streamName) {
     var pc = publisher.getPeerConnection();
     var stream = publisher.getMediaStream();
 
-    bitrateTrackingTicket = trackBitrate(pc, onBitrateUpdate, null, null, true);
+    const bitrateTrackingTicket = trackBitrate(
+      pc,
+      onBitrateUpdate,
+      null,
+      null,
+      true
+    );
+    setBitrateTrackingTicket(bitrateTrackingTicket);
     //statisticsField.classList.remove("hidden");
     stream.getVideoTracks().forEach(function (track) {
-      var settings = track.getSettings();
+      //var settings = track.getSettings();
       //onResolutionUpdate(settings.width, settings.height);
     });
   } catch (e) {

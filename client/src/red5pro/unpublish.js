@@ -53,6 +53,10 @@ function shutdown() {
     targetPublisher = undefined;
   }
   unpublish().then(clearRefs).catch(clearRefs);
+
+  const state = store.getState();
+  let bitrateTrackingTicket = state.conferenceArea.bitrateTrackingTicket;
+
   untrackBitrate(bitrateTrackingTicket);
 }
 

@@ -138,3 +138,10 @@ export const stopCallAction = (payload) => {
     payload,
   };
 };
+
+export const setBitrateTrackingTicket = (payload) => {
+  return {
+    type: type.SET_BITRATE_TRACKING_TICKET,
+    payload,
+  };
+};
