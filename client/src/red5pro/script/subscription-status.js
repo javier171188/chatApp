@@ -20,6 +20,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import * as red5prosdk from "red5pro-webrtc-sdk";
+import { untrackBitrate } from "../script/red5pro-utils.js";
 
 function setSubscriberEvents(window, document) {
   "use strict";
@@ -50,7 +51,7 @@ function setSubscriberEvents(window, document) {
         break;
       case subTypes.CONNECTION_CLOSED:
         status = "Connection closed.";
-        window.untrackBitrate();
+        untrackBitrate();
         inFailedState = false;
         break;
       case subTypes.CONNECT_SUCCESS:
