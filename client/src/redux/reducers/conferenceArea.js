@@ -6,7 +6,7 @@ const conferenceReducer = (state = conferenceState, action) => {
     case type.UPDATE_STREAMS:
       return {
         ...state,
-        streams: action.payload,
+        streams: [...state.streams, ...action.payload],
       };
     case type.SET_RED5PRO_CONFIG:
       return {

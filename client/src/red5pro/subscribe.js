@@ -33,14 +33,9 @@ function processStreams(streamlist, exclusion) {
     );
   });
 
-  let streams = state.conferenceArea.streams;
-  nonPublishers.forEach((element) => {
-    if (!streams.includes(element)) {
-      streams.push(element);
-    }
-  });
+  // let newStreams = state.conferenceArea.streams;
 
-  console.log("Here, this is the list: ", list);
+  // console.log("All the streams: ", streamlist);
   action({ type: types.UPDATE_STREAMS, payload: list });
 
   var subscribers = list.map(function (name, index) {
