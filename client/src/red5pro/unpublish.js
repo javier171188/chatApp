@@ -1,6 +1,20 @@
+import store from "../redux/store.js";
+import * as types from "../redux/types.js";
+
+import { untrackBitrate } from "./script/red5pro-utils.js";
+
+const action = ({ type, payload }) =>
+  store.dispatch({
+    type,
+    payload,
+  });
+
 function unpublish() {
+  const state = store.getState();
+  let hostSocket = state.conferenceArea.hostSocket;
   if (hostSocket !== undefined) {
     hostSocket.close();
+    action({ type: types.SET_HOST_SOCKET, payload: undefined });
   }
   return new Promise(function (resolve, reject) {
     var publisher = targetPublisher;

@@ -13,6 +13,11 @@ const conferenceReducer = (state = conferenceState, action) => {
         ...state,
         configuration: action.payload,
       };
+    case type.SET_HOST_SOCKET:
+      return {
+        ...state,
+        hostSocket: action.payload,
+      };
     default:
       return state;
   }

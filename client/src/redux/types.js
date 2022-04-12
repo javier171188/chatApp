@@ -32,3 +32,4 @@ export const UPDATE_STREAMS = "UPDATE_STREAMS";
 export const START_CALL = "START_CALL";
 export const STOP_CALL = "STOP_CALL";
 export const SET_RED5PRO_CONFIG = "SET_RED5PRO_CONFIG";
+export const SET_HOST_SOCKET = "SET_HOST_SOCKET";

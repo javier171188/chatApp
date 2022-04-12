@@ -23,7 +23,6 @@ function* startCallSaga() {
 }
 
 function* stopCallFromSaga(data) {
-  console.log("I want to hang up");
   shutdown();
 }
 function* stopCallSaga() {

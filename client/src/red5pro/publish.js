@@ -22,7 +22,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // import "./red5Scripts";
 // import publisherStatus from "./script/publisher-status.js";
-import { trackBitrate, untrackBitrate } from "./script/red5pro-utils.js";
+import { trackBitrate } from "./script/red5pro-utils.js";
 import * as red5prosdk from "red5pro-webrtc-sdk";
 import {
   getUserMediaConfiguration,

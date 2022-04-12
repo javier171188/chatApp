@@ -69,14 +69,16 @@ function processStreams(streamlist, exclusion) {
   //updatePublishingUIOnStreamCount(nonPublishers.length);
 }
 
-var hostSocket;
 function establishSocketHost(publisher, roomName, streamName) {
+  const state = store.getState();
+  let hostSocket = state.conferenceArea.hostSocket;
   if (hostSocket) return;
   var wsProtocol = process.env.SOCKET_PROTOCOL || "ws";
   const socketEndpoint = process.env.CONFERENCE_ENDPOINT || "localhost:8001";
   var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`;
   console.log("Here: ", url);
   hostSocket = new WebSocket(url);
+  action({ type: types.SET_HOST_SOCKET, payload: hostSocket });
   hostSocket.onmessage = function (message) {
     var payload = JSON.parse(message.data);
     if (roomName === payload.room) {
