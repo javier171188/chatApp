@@ -20,8 +20,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 "use strict";
 
-// import "./red5Scripts";
-// import publisherStatus from "./script/publisher-status.js";
 import { trackBitrate } from "./script/red5pro-utils.js";
 import * as red5prosdk from "red5pro-webrtc-sdk";
 import {
@@ -41,10 +39,6 @@ const action = ({ type, payload }) =>
     type,
     payload,
   });
-
-//Currently does nothing, we are not updating the state,
-//this modified the logs at the top of the user video.
-//const { red5proHandlePublisherEvent } = publisherStatus();
 
 var isPublishing = false;
 
@@ -256,8 +250,8 @@ function determinePublisher(recording, audio, video, streamName) {
         },
       },
     },
-    streamName: streamName,
-    //room: "Roomy", //<---------------------------------------------------hardcoded
+    streamName,
+    clearMediaOnUnpublish: true,
   });
 
   var publisher = new red5prosdk.RTCPublisher();
