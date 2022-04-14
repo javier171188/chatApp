@@ -6,10 +6,6 @@ import allowMediaStreamSwap from "./device-selector-utils.js";
 var audioTrackClone;
 var videoTrackClone;
 
-// function saveSettings() {
-//   streamName = streamNameField.value;
-//   roomName = roomField.value;
-// }
 function updateMutedAudioOnPublisher() {
   if (targetPublisher && isPublishing) {
     var c = targetPublisher.getPeerConnection();
@@ -50,12 +46,6 @@ function updateStatistics(b, p, w, h) {
   resolutionField.innerText = (w || 0) + "x" + (h || 0);
 }
 
-function onResolutionUpdate(w, h) {
-  // frameWidth = w;
-  // frameHeight = h;
-  // updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
-}
-
 function updateMutedVideoOnPublisher() {
   if (targetPublisher && isPublishing) {
     //if (videoCheck.checked) {
@@ -72,8 +62,7 @@ function updateMutedVideoOnPublisher() {
       targetPublisher.muteVideo();
     }
   }
-  // !videoCheck.checked && showVideoPoster();
-  // videoCheck.checked && hideVideoPoster();
+
   true && hideVideoPoster();
 }
 
@@ -154,7 +143,6 @@ function onPublisherEvent(event) {
       document.getElementById("red5pro-publisher")
     );
   }
-  //updateStatusFromEvent(event);
 }
 
 module.exports = {

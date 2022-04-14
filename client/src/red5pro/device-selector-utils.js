@@ -20,7 +20,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 function getAllowMedia(navigator) {
-  // eslint-disable-line no-unused-vars
   "use strict";
 
   var targetPublisher;
@@ -28,11 +27,6 @@ function getAllowMedia(navigator) {
   var cameraSelect = document.getElementById("camera-select");
   var microphoneSelect = document.getElementById("microphone-select");
 
-  /*
-    function getPeerConnection () {
-      return targetPublisher.getPeerConnection();
-    }
-    */
   function updateMediaStreamTrack(constraints, trackKind, publisher, element) {
     var connection = publisher.getPeerConnection();
     // 1. Grap new MediaStream from updated constraints.

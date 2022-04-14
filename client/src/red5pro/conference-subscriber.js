@@ -37,8 +37,6 @@ function startSubscriptions() {
 
   var subscriberMap = {};
 
-  //var streamNameField = document.getElementById("streamname-field");
-  //var streamNameField = { value: streamNameValue };
   var updateSuscriberStatusFromEvent = red5proHandleSubscriberEvent;
   var subscriberTemplate =
     "" +
@@ -130,8 +128,7 @@ function startSubscriptions() {
   var SubscriberItem = function (subStreamName, index) {
     const state = store.getState();
     const storeName = state.userState._id;
-    //const storeName = state.userState.userName;
-    //this.subscriptionId = [streamNameField.value, "sub"].join("-");
+
     this.subscriptionId = [storeName, "sub"].join("-");
     this.streamName = subStreamName;
     this.subscriber = undefined;
@@ -144,8 +141,6 @@ function startSubscriptions() {
     this.statusField = this.card.getElementsByClassName(
       "subscriber-status-field"
     )[0];
-    //console.log("Here, statusField: ", this.statusField);
-    //this.toggleVideoPoster = this.toggleVideoPoster.bind(this);
     this.handleAudioDecoyVolumeChange =
       this.handleAudioDecoyVolumeChange.bind(this);
     this.handleStreamingModeMetadata =
@@ -190,16 +185,7 @@ function startSubscriptions() {
     }
     this.streamingMode = streamingMode;
   };
-  // SubscriberItem.prototype.toggleVideoPoster = function (showPoster) {
-  //   var video = document.getElementById(
-  //     getSubscriberElementId(this.streamName)
-  //   );
-  //   if (showPoster) {
-  //     video.classList.add("hidden");
-  //   } else {
-  //     video.classList.remove("hidden");
-  //   }
-  // };
+
   SubscriberItem.prototype.resolve = function () {
     if (this.next) {
       this.next.execute(this.baseConfiguration);
@@ -227,7 +213,6 @@ function startSubscriptions() {
     this.subscriber.on("Connect.Failure", this.reject.bind(this));
     var sub = this.subscriber;
     var handleStreamingModeMetadata = this.handleStreamingModeMetadata;
-    //var toggleVideoPoster = this.toggleVideoPoster;
     var statusField = this.statusField;
     var reject = this.reject.bind(this);
     var closeCalled = false;
@@ -236,9 +221,6 @@ function startSubscriptions() {
       if (closeCalled) return;
       closeCalled = true;
       function cleanup() {
-        // var el = document.getElementById(
-        //   getSubscriberElementId(name) + "-container"
-        // );
         sub.off("*", respond);
         sub.off("Subscribe.Fail", fail);
       }
@@ -266,7 +248,6 @@ function startSubscriptions() {
       if (event.type === "Subscribe.Metadata") {
         if (event.data.streamingMode) {
           handleStreamingModeMetadata(event.data.streamingMode);
-          //toggleVideoPoster(!event.data.streamingMode.match(/Video/));
         }
       }
       if (inFailedState) {
@@ -278,20 +259,14 @@ function startSubscriptions() {
     this.subscriber.on("Subscribe.Fail", fail);
     this.subscriber.on("*", respond);
 
-    console.log("Is empty? ", rtcConfig);
     this.subscriber
       .init(rtcConfig)
       .then(function (subscriber) {
-        console.log("Here init was done");
         subscriberMap[name] = subscriber;
-        //return subscriber.subscribe();
-        subscriber.subscribe();
-        // .then((r1, r2, r3) => {
-        //   console.log("Here subscription was done", r1, r2, r3);
-        // });
+        return subscriber.subscribe();
+        //subscriber.subscribe();
       })
       .catch(function (error) {
-        console.log("Here, but there was an error :/");
         console.log("[subscriber:" + name + "] Error");
         reject(error);
       });
@@ -302,10 +277,7 @@ function startSubscriptions() {
 
   return { getConferenceSubscriberElementId, ConferenceSubscriberItem };
 }
-//)(window, document, red5prosdk);
 
 const exportingFunctions = startSubscriptions();
 
 module.exports = exportingFunctions;
-
-// module.exports = startSubscriptions;

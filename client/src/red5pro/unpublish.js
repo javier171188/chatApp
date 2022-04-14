@@ -76,7 +76,3 @@ function shutdown() {
 }
 
 module.exports = shutdown;
-
-// window.addEventListener("beforeunload", shutdown);
-// window.addEventListener("pagehide", shutdown);
-// console.log("The event listeners were added");

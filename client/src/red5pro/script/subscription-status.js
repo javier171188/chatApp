@@ -124,7 +124,7 @@ function setSubscriberEvents(window, document) {
     statusField = typeof statusField !== "undefined" ? statusField : field;
     statusField.innerText = "";
   }
-  //This has to be exported
+
   return {
     red5proHandleSubscriberEvent: updateStatusFromEvent,
     red5proClearSubscriberEvent: clearStatusEvent,

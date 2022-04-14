@@ -16,14 +16,12 @@ const action = ({ type, payload }) =>
     payload,
   });
 
-//var streamsList = [];
 var subscribersEl = document.getElementById("subscribers");
 
 function processStreams(streamlist, exclusion) {
   const state = store.getState();
   const configuration = state.conferenceArea.configuration || {};
 
-  console.log("streamlist: ", streamlist);
   var nonPublishers = streamlist.filter(function (name) {
     return name !== exclusion;
   });
@@ -39,7 +37,6 @@ function processStreams(streamlist, exclusion) {
   var subscribers = list.map(function (name, index) {
     return new ConferenceSubscriberItem(name, subscribersEl, index);
   });
-  console.log("Here, subscribers: ", subscribers);
   var i,
     length = subscribers.length - 1;
   var sub;
@@ -55,7 +52,6 @@ function processStreams(streamlist, exclusion) {
         protocol: getSocketLocationFromProtocol().protocol,
         port: getSocketLocationFromProtocol().port,
       },
-      //getAuthenticationParams(),
       getUserMediaConfiguration({
         audio: configuration.useAudio,
         video: configuration.useVideo,
@@ -63,8 +59,6 @@ function processStreams(streamlist, exclusion) {
     );
     subscribers[0].execute(baseSubscriberConfig);
   }
-
-  //updatePublishingUIOnStreamCount(nonPublishers.length);
 }
 
 function establishSocketHost(publisher, roomName, streamName) {
@@ -74,7 +68,6 @@ function establishSocketHost(publisher, roomName, streamName) {
   var wsProtocol = process.env.SOCKET_PROTOCOL || "ws";
   const socketEndpoint = process.env.CONFERENCE_ENDPOINT || "localhost:8001";
   var url = `${wsProtocol}://${socketEndpoint}?room=${roomName}&streamName=${streamName}`;
-  console.log("Here: ", url);
   hostSocket = new WebSocket(url);
   action({ type: types.SET_HOST_SOCKET, payload: hostSocket });
   hostSocket.onmessage = function (message) {
@@ -84,16 +77,6 @@ function establishSocketHost(publisher, roomName, streamName) {
       processStreams(streamsList, streamName);
     }
   };
-}
-
-function updatePublishingUIOnStreamCount(streamCount) {
-  /*
-    if (streamCount > 0) {
-      publisherContainer.classList.remove('margin-center');
-    } else {
-      publisherContainer.classList.add('margin-center');
-    }
-    */
 }
 
 module.exports = { establishSocketHost };

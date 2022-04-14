@@ -24,7 +24,6 @@ import { trackBitrate } from "./script/red5pro-utils.js";
 import * as red5prosdk from "red5pro-webrtc-sdk";
 import {
   getUserMediaConfiguration,
-  getAuthenticationParams,
   getSocketLocationFromProtocol,
   updateInitialMediaOnPublisher,
   onPublisherEvent,
@@ -40,20 +39,6 @@ const action = ({ type, payload }) =>
     payload,
   });
 
-var isPublishing = false;
-
-// var serverSettings = (function () {
-//   var settings = sessionStorage.getItem("r5proServerSettings");
-//   try {
-//     return JSON.parse(settings);
-//   } catch (e) {
-//     console.error(
-//       "Could not read server settings from sessionstorage: " + e.message
-//     );
-//   }
-//   return {};
-// })();
-
 var configuration = (function () {
   var conf = sessionStorage.getItem("r5proTestBed");
   try {
@@ -63,65 +48,18 @@ var configuration = (function () {
       "Could not read testbed configuration from sessionstorage: " + e.message
     );
   }
-  //console.log(conf);
   return {};
 })();
 
-// red5prosdk.setLogLevel(
-//   configuration.verboseLogging
-//     ? red5prosdk.LOG_LEVELS.TRACE
-//     : red5prosdk.LOG_LEVELS.WARN
-// );
 red5prosdk.setLogLevel(red5prosdk.LOG_LEVELS.WARN);
 
-//var updateStatusFromEvent = red5proHandlePublisherEvent;
-
-//var targetPublisher;
-// var roomName = window.query('room') || 'red5pro'; // eslint-disable-line no-unused-vars
-// var streamName = window.query('streamName') || ['publisher', Math.floor(Math.random() * 0x10000).toString(16)].join('-');
-//var socketEndpoint = window.query('socket') || 'localhost:8001'
-//var socketEndpoint = process.env.SOCKET_ENDPOINT || "localhost:8001";
-
-// var roomField = {};
-// roomField.value = roomName;
-// eslint-disable-next-line no-unused-vars
-// var publisherContainer = document.getElementById("publisher-container");
-// var publisherMuteControls = document.getElementById("publisher-mute-controls");
-// var publisherSession = document.getElementById("publisher-session");
-// var publisherNameField = document.getElementById("publisher-name-field");
-// var streamNameField = {};
-// streamNameField.value = streamName;
-// var publisherVideo = document.getElementById("red5pro-publisher");
-// console.log("here", publisherVideo);
-//var audioCheck = document.getElementById('audio-check');
-//var videoCheck = document.getElementById('video-check');
-//var joinButton = document.getElementById('join-button');
-// var statisticsField = document.getElementById("statistics-field");
-// var bitrateField = document.getElementById("bitrate-field");
-// var packetsField = document.getElementById("packets-field");
-// var resolutionField = document.getElementById("resolution-field");
 var bitrate = 0;
 var packetsSent = 0;
 var frameWidth = 0;
 var frameHeight = 0;
 
-//roomField.value = roomName;
-//streamNameField.value = streamName;
-//audioCheck.checked = configuration.useAudio;
-//videoCheck.checked = configuration.useVideo;
-
-// joinButton.addEventListener('click', function () {
-//   saveSettings();
-//   doPublish(streamName);
-//   setPublishingUI(streamName);
-// });
-
 function publishStream(streamName) {
-  //saveSettings();
-  // streamName = streamNameField.value;
-  // roomName = roomField.value;
   doPublish(streamName);
-  // setPublishingUI(streamName);
 }
 function doPublish(streamName) {
   const state = store.getState();
@@ -141,12 +79,10 @@ function doPublish(streamName) {
     });
 }
 
-//audioCheck.addEventListener('change', updateMutedAudioOnPublisher);
-//videoCheck.addEventListener('change', updateMutedVideoOnPublisher);
-
-// var protocol = serverSettings.protocol;
 let protocol = process.env.RED5_PROTOCOL;
 var isSecure = protocol == "https";
+
+var isPublishing = false;
 
 function onPublishFail(message) {
   isPublishing = false;
@@ -156,22 +92,18 @@ function onPublishFail(message) {
 function onBitrateUpdate(b, p) {
   bitrate = b;
   packetsSent = p;
-  //updateStatistics(bitrate, packetsSent, frameWidth, frameHeight);
 
   if (packetsSent > 100) {
-    //if (true) {
     const state = store.getState();
     const roomName = state.chatArea.currentRoomId;
     const streamName = state.userState._id;
     const targetPublisher = state.conferenceArea.targetPublisher;
-    //const streamName = state.userState.userName;
     establishSocketHost(targetPublisher, roomName, streamName);
   }
 }
 
 function onPublishSuccess(publisher, roomName, streamName) {
   isPublishing = true;
-  //window.red5propublisher = publisher;
   console.log("[Red5ProPublisher] Publish Complete.");
   // [NOTE] Moving SO setup until Package Sent amount is sufficient.
   //    establishSharedObject(publisher, roomField.value, streamNameField.value);
@@ -191,7 +123,6 @@ function onPublishSuccess(publisher, roomName, streamName) {
       true
     );
     setBitrateTrackingTicketAction(bitrateTrackingTicket);
-    //statisticsField.classList.remove("hidden");
     stream.getVideoTracks().forEach(function (track) {
       //var settings = track.getSettings();
       //onResolutionUpdate(settings.width, settings.height);
@@ -202,29 +133,12 @@ function onPublishSuccess(publisher, roomName, streamName) {
   }
 }
 
-function setPublishingUI(streamName) {
-  //publisherNameField.innerText = streamName;
-  //roomField.setAttribute('disabled', true);
-  // publisherSession.classList.remove("hidden");
-  // publisherNameField.classList.remove("hidden");
-  // publisherMuteControls.classList.remove("hidden");
-  // Array.prototype.forEach.call(
-  //   document.getElementsByClassName("remove-on-broadcast"),
-  //   function (el) {
-  //     el.classList.add("hidden");
-  //   }
-  // );
-}
-
-// eslint-disable-next-line no-unused-vars
-
 function determinePublisher(recording, audio, video, streamName) {
   var config = Object.assign(
     {},
     {
       streamMode: recording ? "record" : "live",
     },
-    //getAuthenticationParams(),
     getUserMediaConfiguration({ audio, video }),
     configuration
   );
@@ -255,11 +169,10 @@ function determinePublisher(recording, audio, video, streamName) {
   });
 
   var publisher = new red5prosdk.RTCPublisher();
-  //console.log(rtcConfig);
+
   return publisher.init(rtcConfig);
 }
 
-// function startCall(roomName, streamName) {
 function startCall(recording, audio, video, streamName) {
   store.dispatch({ type: types.SET_RED5PRO_CONFIG, payload: configuration });
 
@@ -276,7 +189,6 @@ function startCall(recording, audio, video, streamName) {
     })
     .then((r) => {
       publishStream(streamName);
-      //publishStream("First");
     })
     .catch(function (error) {
       var jsonError =
