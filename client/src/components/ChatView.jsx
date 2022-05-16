@@ -16,10 +16,8 @@ import AddingUsers from "./AddingUsers";
 import Drawing from "./Drawing";
 import "../styles/components/ChatView.css";
 import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-
+import { useHistory } from "react-router-dom";
 
 function ChatView(props) {
   const {
@@ -39,6 +37,7 @@ function ChatView(props) {
     currentUserChat,
   } = props;
   const { t, i18n } = useTranslation();
+  const history = useHistory();
 
   useEffect(() => {
     const $messages = document.querySelector(".chat-messages");
@@ -75,6 +74,9 @@ function ChatView(props) {
     sendMessageAction(data);
   }
 
+  function startCall(){
+    history.push('/chat/conference');
+  }
 
   return (
     <Box className='chat'>
@@ -88,6 +90,15 @@ function ChatView(props) {
           <h1 className='chat-header__name'>{currentRoomName}</h1>
           {groupRoom && <>
             <div className='chat-header__buttons'>
+            <Button
+                className='chat-header__add'
+                onClick={startCall }
+                color='primary'
+                variant='contained'
+                id='add-user-button'
+              >
+                {t("Call")}
+              </Button>
               <Button
                 className='chat-header__add'
                 onClick={() => { addUserToRoom(currentRoomId); }}
