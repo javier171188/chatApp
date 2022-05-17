@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import OvenLiveKit from 'ovenlivekit';
 import {getRoomUsers} from '../redux/actions';
+import OvenPlayer from 'ovenplayer';
 
 localInput;
 localVideo;
@@ -33,6 +34,25 @@ function Conference(props){
 
     }, [])
 
+    useEffect(()=>{
+        currentUsers.forEach((user)=>{
+            if (user._id === userId) return;
+            const player = OvenPlayer.create(`${currentRoomId}-${user._id}`, {
+                sources: [
+                            {
+                        label: 'label_for_webrtc',
+                        // Set the type to 'webrtc'
+                        type: 'webrtc',
+                        // Set the file to WebRTC Signaling URL with OvenMediaEngine 
+                        file: `ws://localhost:3333/app/${currentRoomId}-${user._id}`
+                    }
+                ]
+            });
+        },[])
+
+        
+    })
+
     
     function goHome(){
         localVideo.srcObject = null;
@@ -41,6 +61,7 @@ function Conference(props){
         //localInput.stopStreaming();
         history.push('/chat/');
     }
+
     console.log('times');
     return (
         <>
@@ -51,7 +72,7 @@ function Conference(props){
                 {currentUsers.map((user)=>{
                    if (user._id !== userId){
                     return <div key={user._id}>
-                        <video src=""></video>
+                        <div id={`${currentRoomId}-${user._id}`}></div>
                         <div > {user.userName}</div>
                    </div>
                    }
