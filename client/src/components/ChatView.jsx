@@ -35,6 +35,7 @@ function ChatView(props) {
     setDrawingAreaOn,
     acceptRequestAction,
     currentUserChat,
+    currentUsers
   } = props;
   const { t, i18n } = useTranslation();
   const history = useHistory();
@@ -78,6 +79,7 @@ function ChatView(props) {
     history.push('/chat/conference');
   }
 
+  console.log(currentUsers)
   return (
     <Box className='chat'>
       <Toolbar
@@ -215,6 +217,7 @@ const mapStateToProps = (state) => ({
   groupRoom: state.sideChanges.groupRoom,
   currentRoomName: state.chatArea.currentRoomName,
   currentUserChat: state.chatArea.currentUserChat,
+  currentUsers: state.chatArea.currentUsers,
 });
 
 const mapDispatchToProps = {

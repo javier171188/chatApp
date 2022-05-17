@@ -124,3 +124,8 @@ export const registerAction = (payload) => ({
   type: type.REGISTER,
   payload,
 });
+
+export const getRoomUsers = (payload) => ({
+  type: type.GET_ROOM_USERS,
+  payload,
+});
