@@ -9,10 +9,10 @@ localVideo;
 
 function Conference(props){
     const{currentRoomName, userState, currentUsers, getRoomUsers, currentRoomId} = props;
-    const {userId} = userState;
+    const {_id:userId} = userState;
     const history = useHistory();
-    
 
+    
     useEffect(()=>{
         getRoomUsers(currentRoomId);
         localInput = OvenLiveKit.create();
@@ -23,7 +23,7 @@ function Conference(props){
                 localVideo.srcObject = localInput.stream;
                 // Got device stream and start streaming to OvenMediaEngine
                 localInput.startStreaming(
-                    `ws://localhost:3333/app/stream0?direction=send&transport=tcp`,
+                    `ws://localhost:3333/app/${currentRoomId}-${userId}?direction=send&transport=tcp`,
                     {
                       maxVideoBitrate: 500,
                     }
@@ -35,9 +35,9 @@ function Conference(props){
 
     
     function goHome(){
-        console.log('Remember to finish all the calls.')
         localVideo.srcObject = null;
         localInput.remove();
+        //The documentation mentions stopStreaming, but it doesn't seem to be defined.
         //localInput.stopStreaming();
         history.push('/chat/');
     }
@@ -49,7 +49,12 @@ function Conference(props){
             <button onClick={goHome}>Hang up!</button>
             <div>
                 {currentUsers.map((user)=>{
-                   return <div key={user._id}> {user._id}</div>
+                   if (user._id !== userId){
+                    return <div key={user._id}>
+                        <video src=""></video>
+                        <div > {user.userName}</div>
+                   </div>
+                   }
                 })}
             </div>
         </>
