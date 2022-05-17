@@ -50,11 +50,12 @@ function Conference(props){
             });
         },[])
 
-        
+        setInterval(console.log, 2500, 'check the streams')
     })
 
     
     function goHome(){
+        console.log('Remember to clear the setInterval')
         localVideo.srcObject = null;
         localInput.remove();
         //The documentation mentions stopStreaming, but it doesn't seem to be defined.
