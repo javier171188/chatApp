@@ -6,7 +6,8 @@ import OvenLiveKit from 'ovenlivekit';
 
 
 function Conference(props){
-    const{currentRoomName} = props;
+    const{currentRoomName, userState} = props;
+    const {userId} = userState;
     const history = useHistory();
     const localInput = OvenLiveKit.create();
     let localVideo;
@@ -19,6 +20,13 @@ function Conference(props){
                 localVideo.srcObject = localInput.stream;
                 // Got device stream and start streaming to OvenMediaEngine
                 //localInput.startStreaming('wss://your_oven_media_engine:3333/app/stream?direction=send');
+
+                localInput.startStreaming(
+                    `ws://localhost:3333/app/stream0?direction=send&transport=tcp`,
+                    {
+                      maxVideoBitrate: 500,
+                    }
+                  );
         });
     }, [])
     
@@ -40,6 +48,7 @@ function Conference(props){
 
 const mapStateToProps = (state) => ({
     currentRoomName: state.chatArea.currentRoomName,
+    userState: state.userState,
   });
 
 export default connect(mapStateToProps, null)(Conference);
