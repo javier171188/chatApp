@@ -2,7 +2,16 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const Chat = require("./model/chat");
+const axios = require("axios");
 require("./db/mongoose");
+
+const apiUrl = "http://localhost:8081/v1/vhosts/default/apps/app/streams";
+const OVEN_MEDIA_TOKEN = "dG9rZW4=";
+let config = {
+  headers: {
+    authorization: "Basic " + OVEN_MEDIA_TOKEN,
+  },
+};
 
 const port = process.env.PORT;
 
@@ -19,12 +28,30 @@ io.on("connection", (socket) => {
     io.emit("userAccepted", { acceptedId });
   });
 
+  socket.on("getStreams", ({ roomId }, callback) => {
+    axios
+      .get(apiUrl, config)
+      .then(({ data }) => {
+        const allStreams = data.response;
+        const roomStreams = allStreams.filter((stream) => {
+          let streamRoom = stream.split("-")[0];
+          return streamRoom === roomId;
+        });
+
+        callback(roomStreams);
+      })
+      .catch((e) => {
+        console.error(e);
+        callback([]);
+      });
+  });
+
   socket.on("getRoom", async ({ current, receiver, roomId }, callback) => {
     try {
       var chat;
       if (!roomId) {
         chat = await Chat.findOne({
-          $and: [{ participants: current }, { participants: receiver }]
+          $and: [{ participants: current }, { participants: receiver }],
         });
         if (!chat) {
           chat = new Chat({ participants: [current, receiver] });
@@ -38,7 +65,10 @@ io.on("connection", (socket) => {
       const { participants } = chat;
       const { roomName } = chat;
       callback({
-        _id: chat._id.toString(), lastMessages, participants, roomName,
+        _id: chat._id.toString(),
+        lastMessages,
+        participants,
+        roomName,
       });
     } catch (e) {
       console.error(e.toString());
@@ -48,7 +78,7 @@ io.on("connection", (socket) => {
   socket.on("joinPersonal", async ({ current, receiver }) => {
     try {
       let chat = await Chat.findOne({
-        $and: [{ participants: current }, { participants: receiver }]
+        $and: [{ participants: current }, { participants: receiver }],
       });
       if (!chat) {
         chat = new Chat({ participants: [current, receiver] });
@@ -84,7 +114,11 @@ io.on("connection", (socket) => {
     chat.save();
     callback(participants);
 
-    io.to(message.roomId).emit("updateMessages", { participants, roomId: message.roomId, returnedMessages: prevMessages.slice(-20) });
+    io.to(message.roomId).emit("updateMessages", {
+      participants,
+      roomId: message.roomId,
+      returnedMessages: prevMessages.slice(-20),
+    });
   });
 
   socket.on("newRoom", async (data, callback) => {

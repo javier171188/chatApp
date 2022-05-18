@@ -23,7 +23,26 @@ function* updateRoomUsersSaga() {
 }
 
 function* checkStreamsFromSaga({ payload }) {
-  console.log("checking the streams");
+  socket.emit("getStreams", { roomId: payload }, (participants) => {
+    console.log(participants);
+    const state = store.getState();
+    const prevStreams = state.chatArea.currentStreams;
+
+    let streamChanges = false;
+    for (let p of participants) {
+      if (!prevStreams.includes(p)) {
+        streamChanges = true;
+        break;
+      }
+    }
+
+    if (participants.length !== prevStreams.length || streamChanges) {
+      action({
+        type: type.SET_CURRENT_STREAMS,
+        payload: participants,
+      });
+    }
+  });
 }
 function* checkStreamsSaga() {
   yield takeEvery(type.CHECK_STREAMS, (data) => checkStreamsFromSaga(data));
