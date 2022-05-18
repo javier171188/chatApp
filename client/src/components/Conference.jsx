@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import OvenLiveKit from 'ovenlivekit';
 import {getRoomUsers, checkStreamsAction, setCurrentStreamsAction} from '../redux/actions';
 import OvenPlayer from 'ovenplayer';
+import OvenLiveKit from 'ovenlivekit';
+//require('hls.js');
 
 let localInput;
 let localVideo;
@@ -48,13 +49,16 @@ function Conference(props){
             if (sId === userId) return;
             const player = OvenPlayer.create(`${currentRoomId}-${sId}`, {
                 sources: [
-                            {
-                        label: 'label_for_webrtc',
-                        // Set the type to 'webrtc'
-                        type: 'webrtc',
-                        // Set the file to WebRTC Signaling URL with OvenMediaEngine 
-                        file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
-                    }
+                    //         {
+                    //     label: 'label_for_webrtc',
+                    //     // Set the type to 'webrtc'
+                    //     type: 'webrtc',
+                    //     // Set the file to WebRTC Signaling URL with OvenMediaEngine 
+                    //     file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
+                    // },   
+                    {type : "hls", 
+                    file :  `http://localhost:8080/app/${currentRoomId}-${sId}/playlist.m3u8`, 
+                    label: "hls"}
                 ]
             });
         })
