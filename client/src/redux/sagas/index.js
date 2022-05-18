@@ -14,13 +14,14 @@ import {
 } from "./searchingArea";
 import { setLanguageSaga } from "./settings";
 import { getUserStateSaga } from "./userState";
-import { updateRoomUsersSaga } from "./conference";
+import { updateRoomUsersSaga, checkStreamsSaga } from "./conference";
 
 export default function* rootSaga() {
   yield all([
     loginSaga(),
     getUserStateSaga(),
     updateRoomUsersSaga(),
+    checkStreamsSaga(),
     logoutSaga(),
     lookForUserSaga(),
     openChatSaga(),

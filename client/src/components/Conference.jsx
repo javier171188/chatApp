@@ -2,14 +2,21 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import OvenLiveKit from 'ovenlivekit';
-import {getRoomUsers} from '../redux/actions';
+import {getRoomUsers, checkStreamsAction} from '../redux/actions';
 import OvenPlayer from 'ovenplayer';
 
-localInput;
-localVideo;
+let localInput;
+let localVideo;
+let checkStreamsInterval;
 
 function Conference(props){
-    const{currentRoomName, userState, currentUsers, getRoomUsers, currentRoomId} = props;
+    const{currentRoomName, 
+        userState, 
+        currentUsers, 
+        getRoomUsers, 
+        currentRoomId,
+        checkStreamsAction
+    } = props;
     const {_id:userId} = userState;
     const history = useHistory();
 
@@ -50,7 +57,12 @@ function Conference(props){
             });
         },[])
 
-        setInterval(console.log, 2500, 'check the streams')
+        if (!checkStreamsInterval){
+            checkStreamsInterval = setInterval(()=>{
+                checkStreamsAction();
+            }, 2500 );
+        }
+        
     })
 
     
@@ -60,6 +72,7 @@ function Conference(props){
         localInput.remove();
         //The documentation mentions stopStreaming, but it doesn't seem to be defined.
         //localInput.stopStreaming();
+        clearInterval(checkStreamsInterval);
         history.push('/chat/');
     }
 
@@ -93,6 +106,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     getRoomUsers,
+    checkStreamsAction
   };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Conference);

@@ -22,6 +22,14 @@ function* updateRoomUsersSaga() {
   yield takeEvery(type.GET_ROOM_USERS, (data) => updateRoomUsersFromSaga(data));
 }
 
+function* checkStreamsFromSaga({ payload }) {
+  console.log("checking the streams");
+}
+function* checkStreamsSaga() {
+  yield takeEvery(type.CHECK_STREAMS, (data) => checkStreamsFromSaga(data));
+}
+
 module.exports = {
   updateRoomUsersSaga,
+  checkStreamsSaga,
 };

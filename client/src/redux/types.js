@@ -29,3 +29,4 @@ export const SET_DRAWING_AREA_ON = "SET_DRAWING_AREA_ON";
 export const ACCEPT_REQUEST = "ACCEPT_REQUEST";
 export const REGISTER = "REGISTER";
 export const GET_ROOM_USERS = "GET_ROOM_USERS";
+export const CHECK_STREAMS = "CHECK_STREAMS";

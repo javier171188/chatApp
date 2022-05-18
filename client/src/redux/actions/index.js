@@ -129,3 +129,10 @@ export const getRoomUsers = (payload) => ({
   type: type.GET_ROOM_USERS,
   payload,
 });
+
+export const checkStreamsAction = (payload) => {
+  return {
+    type: type.CHECK_STREAMS,
+    payload,
+  };
+};
