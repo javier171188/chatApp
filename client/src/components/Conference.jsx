@@ -93,8 +93,11 @@ function Conference(props){
                    </div>
                    }
                 })} */}
-                {currentStreams.map((stream)=>{
-                    let currentUser =currentUsers.filter(u => u._id === stream)[0];
+                {streamIds.map((stream)=>{
+                    let currentUser =currentUsers.filter(u =>{
+                        console.log(stream);  
+                        return  u._id === stream})[0];
+                    
                     let currentUserId = currentUser._id;
                    if (currentUserId !== userId ){
                     return <div key={currentUser._id}>
