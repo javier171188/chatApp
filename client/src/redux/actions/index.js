@@ -136,3 +136,10 @@ export const checkStreamsAction = (payload) => {
     payload,
   };
 };
+
+export const setCurrentStreamsAction = (payload) => {
+  return {
+    type: type.SET_CURRENT_STREAMS,
+    payload,
+  };
+};

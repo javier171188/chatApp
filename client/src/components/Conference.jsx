@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import OvenLiveKit from 'ovenlivekit';
-import {getRoomUsers, checkStreamsAction} from '../redux/actions';
+import {getRoomUsers, checkStreamsAction, setCurrentStreamsAction} from '../redux/actions';
 import OvenPlayer from 'ovenplayer';
 
 let localInput;
@@ -17,6 +17,7 @@ function Conference(props){
         currentRoomId,
         checkStreamsAction,
         currentStreams,
+        setCurrentStreamsAction,
     } = props;
     const {_id:userId} = userState;
     const history = useHistory();
@@ -62,7 +63,7 @@ function Conference(props){
             checkStreamsInterval = setInterval(checkStreamsAction, 2500,currentRoomId );
         }
         
-    },[])
+    },[currentStreams]);
 
     
     function goHome(){
@@ -74,6 +75,7 @@ function Conference(props){
         clearInterval(checkStreamsInterval);
         checkStreamsInterval = null;
         history.push('/chat/');
+        setCurrentStreamsAction([]);
     }
 
     console.log('times');
@@ -122,7 +124,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     getRoomUsers,
-    checkStreamsAction
+    checkStreamsAction,
+    setCurrentStreamsAction,
   };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Conference);
