@@ -5,6 +5,7 @@ let chatAreaState = {
   currentRoomName: "",
   currentUsers: [],
   currentStreams: [],
+  remotePlayers: [],
 };
 
 export default chatAreaState;

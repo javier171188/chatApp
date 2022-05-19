@@ -42,33 +42,77 @@ function Conference(props){
                 
         });
 
-    }, [])
-
-    useEffect(()=>{
-        streamIds.forEach((sId)=>{
-            if (sId === userId) return;
-            const player = OvenPlayer.create(`${currentRoomId}-${sId}`, {
-                sources: [
-                            {
-                        label: 'label_for_webrtc',
-                        // Set the type to 'webrtc'
-                        type: 'webrtc',
-                        // Set the file to WebRTC Signaling URL with OvenMediaEngine 
-                        file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
-                    },   
-                    // {type : "hls", 
-                    // file :  `http://localhost:8080/app/${currentRoomId}-${sId}/playlist.m3u8`, 
-                    // label: "hls"}
-                ]
-            });
-        })
-
         if (!checkStreamsInterval){
             checkStreamsInterval = setInterval(checkStreamsAction, 2500,currentRoomId );
-        }
-        
-    },[currentStreams]);
+        };
 
+    }, [])
+
+    // useEffect(()=>{
+    //     streamIds.forEach((sId)=>{
+    //         if (sId === userId) return;
+    //         const player = OvenPlayer.create(`${currentRoomId}-${sId}`, {
+    //             sources: [
+    //                 //         {
+    //                 //     label: 'label_for_webrtc',
+    //                 //     // Set the type to 'webrtc'
+    //                 //     type: 'webrtc',
+    //                 //     // Set the file to WebRTC Signaling URL with OvenMediaEngine 
+    //                 //     file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
+    //                 // },   
+    //                 {type : "hls", 
+    //                 file :  `http://localhost:8080/app/${currentRoomId}-${sId}/playlist.m3u8`, 
+    //                 label: "hls"}
+    //             ],
+    //             autoStart: true,
+    //         });
+    //     })
+
+    //     if (!checkStreamsInterval){
+    //         checkStreamsInterval = setInterval(checkStreamsAction, 2500,currentRoomId );
+    //     }
+        
+    // },[currentStreams]);
+
+
+    useEffect(()=>{
+        console.log('streams: ',streamIds);
+
+        streamIds.forEach(stId => {
+            if (stId === userId) return;
+            
+            let player = OvenPlayer.getPlayerByContainerId(`${currentRoomId}-${stId}`);
+
+            if (player) return;
+
+            player = OvenPlayer.create(`${currentRoomId}-${stId}`, {
+                            sources: [
+                                //         {
+                                //     label: 'label_for_webrtc',
+                                //     // Set the type to 'webrtc'
+                                //     type: 'webrtc',
+                                //     // Set the file to WebRTC Signaling URL with OvenMediaEngine 
+                                //     file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
+                                // },   
+                                {type : "hls", 
+                                file :  `http://localhost:8080/app/${currentRoomId}-${stId}/playlist.m3u8`, 
+                                label: "hls"}
+                            ],
+                            autoStart: true,
+                        });
+        });
+
+        currentUsers.forEach(u =>{
+            if (!streamIds.includes(u._id)){
+                let player = OvenPlayer.getPlayerByContainerId(`${currentRoomId}-${u._id}`);
+
+                if (player){
+                    player.remove()
+                }
+            }
+        })
+
+    }, [currentStreams]);
     
     function goHome(){
         console.log('Remember to clear the setInterval')
@@ -78,6 +122,16 @@ function Conference(props){
         //localInput.stopStreaming();
         clearInterval(checkStreamsInterval);
         checkStreamsInterval = null;
+
+        currentUsers.forEach(u =>{
+                let player = OvenPlayer.getPlayerByContainerId(`${currentRoomId}-${u._id}`);
+
+                if (player){
+                    player.remove()
+                }
+            }
+        )
+
         history.push('/chat/');
         setCurrentStreamsAction([]);
     }
@@ -90,15 +144,6 @@ function Conference(props){
             <video id='local-video'></video>
             <button onClick={goHome}>Hang up!</button>
             <div>
-                {/* {currentUsers.map((user)=>{
-                    let currentUserId =user._id;
-                   if (currentUserId !== userId && currentStreams.includes(currentUserId)){
-                    return <div key={user._id}>
-                        <div id={`${currentRoomId}-${user._id}`}></div>
-                        <div > {user.userName}</div>
-                   </div>
-                   }
-                })} */}
                 {streamIds.map((stream)=>{
                     let currentUser =currentUsers.filter(u =>{
                         console.log(stream);  
@@ -106,6 +151,7 @@ function Conference(props){
                     
                     let currentUserId = currentUser._id;
                    if (currentUserId !== userId ){
+                    
                     return <div key={currentUser._id}>
                         <div id={`${currentRoomId}-${stream}`}></div>
                         <div > {currentUser.userName}</div>
