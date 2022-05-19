@@ -28,10 +28,10 @@ function Conference(props){
         getRoomUsers(currentRoomId);
         localInput = OvenLiveKit.create();
         localVideo = document.getElementById('local-video');
-        localInput.attachMedia(localVideo);
+        //localInput.attachMedia(localVideo);
         // Get media stream from user device
         localInput.getUserMedia().then(function () {
-                localVideo.srcObject = localInput.stream;
+                //localVideo.srcObject = localInput.stream;
                 // Got device stream and start streaming to OvenMediaEngine
                 localInput.startStreaming(
                     `ws://localhost:3333/app/${currentRoomId}-${userId}?direction=send&transport=tcp`,
@@ -48,31 +48,7 @@ function Conference(props){
 
     }, [])
 
-    // useEffect(()=>{
-    //     streamIds.forEach((sId)=>{
-    //         if (sId === userId) return;
-    //         const player = OvenPlayer.create(`${currentRoomId}-${sId}`, {
-    //             sources: [
-    //                 //         {
-    //                 //     label: 'label_for_webrtc',
-    //                 //     // Set the type to 'webrtc'
-    //                 //     type: 'webrtc',
-    //                 //     // Set the file to WebRTC Signaling URL with OvenMediaEngine 
-    //                 //     file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
-    //                 // },   
-    //                 {type : "hls", 
-    //                 file :  `http://localhost:8080/app/${currentRoomId}-${sId}/playlist.m3u8`, 
-    //                 label: "hls"}
-    //             ],
-    //             autoStart: true,
-    //         });
-    //     })
-
-    //     if (!checkStreamsInterval){
-    //         checkStreamsInterval = setInterval(checkStreamsAction, 2500,currentRoomId );
-    //     }
-        
-    // },[currentStreams]);
+    
 
 
     useEffect(()=>{
@@ -92,10 +68,10 @@ function Conference(props){
                                 //     // Set the type to 'webrtc'
                                 //     type: 'webrtc',
                                 //     // Set the file to WebRTC Signaling URL with OvenMediaEngine 
-                                //     file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
+                                //     file: `ws://localhost:3333/app/${currentRoomId}-${stId}_bypass`
                                 // },   
                                 {type : "hls", 
-                                file :  `http://localhost:8080/app/${currentRoomId}-${stId}/playlist.m3u8`, 
+                                file :  `http://localhost:8080/app/${currentRoomId}-${stId}_bypass/playlist.m3u8`, 
                                 label: "hls"}
                             ],
                             autoStart: true,
