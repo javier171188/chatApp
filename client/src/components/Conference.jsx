@@ -49,16 +49,16 @@ function Conference(props){
             if (sId === userId) return;
             const player = OvenPlayer.create(`${currentRoomId}-${sId}`, {
                 sources: [
-                    //         {
-                    //     label: 'label_for_webrtc',
-                    //     // Set the type to 'webrtc'
-                    //     type: 'webrtc',
-                    //     // Set the file to WebRTC Signaling URL with OvenMediaEngine 
-                    //     file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
-                    // },   
-                    {type : "hls", 
-                    file :  `http://localhost:8080/app/${currentRoomId}-${sId}/playlist.m3u8`, 
-                    label: "hls"}
+                            {
+                        label: 'label_for_webrtc',
+                        // Set the type to 'webrtc'
+                        type: 'webrtc',
+                        // Set the file to WebRTC Signaling URL with OvenMediaEngine 
+                        file: `ws://localhost:3333/app/${currentRoomId}-${sId}`
+                    },   
+                    // {type : "hls", 
+                    // file :  `http://localhost:8080/app/${currentRoomId}-${sId}/playlist.m3u8`, 
+                    // label: "hls"}
                 ]
             });
         })
